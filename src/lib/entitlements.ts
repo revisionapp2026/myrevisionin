@@ -11,7 +11,7 @@ export const PLAN_LIMITS = {
     label: "Free",
     bookmarksPerUnit: 20,
     highlightsPerUnit: 10,
-    aiQuestionsPerDay: 10,
+    aiQuestionsPerDay: 100,
     paidPapers: false,
     progressTracker: false,
   },

@@ -1,0 +1,1 @@
+import{r as e}from"./useRouter-BOAPZDg1.js";import{a as t,r as n,t as r}from"./legal-I244wmVa.js";var i=e(),a=()=>(0,i.jsx)(t,{title:`Refund & Cancellation Policy`,intro:`What happens if a premium payment goes wrong, and how to ask for a refund.`,updated:r,sections:n});export{a as component};

@@ -1,0 +1,1 @@
+var e=`/assets/revision-logo-ByGO4CVP.png`;export{e as t};

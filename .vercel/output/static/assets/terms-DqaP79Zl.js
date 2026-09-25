@@ -1,0 +1,1 @@
+import{r as e}from"./useRouter-BOAPZDg1.js";import{a as t,i as n,t as r}from"./legal-I244wmVa.js";var i=e(),a=()=>(0,i.jsx)(t,{title:`Terms of Use`,intro:`These terms cover your account, how the study material may be used, and what premium includes.`,updated:r,sections:n});export{a as component};
