@@ -83,7 +83,9 @@ function PaymentScreen() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to create payment order");
+        const errorText = await response.text();
+        console.error("Payment order creation failed:", errorText);
+        throw new Error(`Failed to create payment order: ${errorText}`);
       }
 
       const orderData = await response.json();
