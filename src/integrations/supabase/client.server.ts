@@ -32,18 +32,42 @@ function createSupabaseFetch(supabaseKey: string): typeof fetch {
   };
 }
 
-function createSupabaseAdminClient() {
-  const SUPABASE_URL = process.env["SUPABASE_URL"];
-  const SUPABASE_SERVICE_ROLE_KEY = process.env["SUPABASE_SERVICE_ROLE_KEY"];
+function getSupabaseAdminConfig() {
+  const url = process.env["SUPABASE_URL"];
+  const key = process.env["SUPABASE_SERVICE_ROLE_KEY"];
 
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+  if (!url || !key) {
     const missing = [
-      ...(!SUPABASE_URL ? ["SUPABASE_URL"] : []),
-      ...(!SUPABASE_SERVICE_ROLE_KEY ? ["SUPABASE_SERVICE_ROLE_KEY"] : []),
+      ...(!url ? ["SUPABASE_URL"] : []),
+      ...(!key ? ["SUPABASE_SERVICE_ROLE_KEY"] : []),
     ];
     const message = `Missing Supabase environment variable(s): ${missing.join(", ")}. Connect Supabase in Lovable Cloud.`;
-    console.error(`[Supabase] ${message}`);
-    throw new Error(message);
+    console.warn(`[Supabase] ${message}`);
+    return {
+      url: "https://placeholder.supabase.co",
+      key: "sb_secret_placeholder",
+      isConfigured: false,
+    };
+  }
+
+  return { url, key, isConfigured: true };
+}
+
+function createSupabaseAdminClient() {
+  const { url: SUPABASE_URL, key: SUPABASE_SERVICE_ROLE_KEY, isConfigured } =
+    getSupabaseAdminConfig();
+
+  if (!isConfigured) {
+    return createClient<Database>(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+      global: {
+        fetch: createSupabaseFetch(SUPABASE_SERVICE_ROLE_KEY),
+      },
+      auth: {
+        storage: undefined,
+        persistSession: false,
+        autoRefreshToken: false,
+      },
+    });
   }
 
   return createClient<Database>(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
