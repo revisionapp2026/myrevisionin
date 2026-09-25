@@ -70,9 +70,7 @@ function PaymentScreen() {
     setPending(true);
     setSheet("processing");
 
-    let checkoutWindow: Window | null = null;
     try {
-      checkoutWindow = window.open("", "_blank", "noopener,noreferrer");
       const amount = Number(plan.price.replace(/[^\d]/g, "")) || 0;
 
       const response = await fetch("/api/cashfree/create-order", {
@@ -96,16 +94,12 @@ function PaymentScreen() {
       const orderData = await response.json();
       const checkoutUrl = `https://payments.cashfree.com/billpay/checkout/${orderData.payment_session_id}`;
 
-      if (checkoutWindow) {
-        checkoutWindow.location.href = checkoutUrl;
-      } else {
-        window.location.assign(checkoutUrl);
+      const checkoutWindow = window.open(checkoutUrl, "_blank", "noopener,noreferrer");
+      if (!checkoutWindow) {
+        window.location.href = checkoutUrl;
       }
     } catch (error) {
       console.error("Payment error:", error);
-      if (checkoutWindow) {
-        checkoutWindow.close();
-      }
       setSheet(null);
       setPending(false);
       alert("Failed to initiate payment. Please try again.");
