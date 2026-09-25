@@ -54,8 +54,11 @@ function getSupabaseAdminConfig() {
 }
 
 function createSupabaseAdminClient() {
-  const { url: SUPABASE_URL, key: SUPABASE_SERVICE_ROLE_KEY, isConfigured } =
-    getSupabaseAdminConfig();
+  const {
+    url: SUPABASE_URL,
+    key: SUPABASE_SERVICE_ROLE_KEY,
+    isConfigured,
+  } = getSupabaseAdminConfig();
 
   if (!isConfigured) {
     return createClient<Database>(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {

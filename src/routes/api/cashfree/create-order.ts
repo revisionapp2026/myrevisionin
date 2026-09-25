@@ -5,8 +5,9 @@ export const Route = createFileRoute("/api/cashfree/create-order")({
     handlers: {
       POST: async ({ request }) => {
         const appId = process.env["CASHFREE_APP_ID"] || process.env["VITE_CASHFREE_APP_ID"];
-        const secretKey = process.env["CASHFREE_SECRET_KEY"] || process.env["VITE_CASHFREE_SECRET_KEY"];
-        
+        const secretKey =
+          process.env["CASHFREE_SECRET_KEY"] || process.env["VITE_CASHFREE_SECRET_KEY"];
+
         if (!appId || !secretKey) {
           return new Response("Cashfree credentials not configured", { status: 500 });
         }
@@ -27,9 +28,18 @@ export const Route = createFileRoute("/api/cashfree/create-order")({
           }
 
           const orderId = `ORDER_${Date.now()}_${Math.random().toString(36).substring(2, 9).toUpperCase()}`;
-          const sanitizedPhone = String(customerPhone ?? "").replace(/\D/g, "").slice(0, 10);
-          const customerId = (customerEmail || "user").replace(/[^a-zA-Z0-9]/g, "") || "user";
+          const sanitizedPhone = String(customerPhone ?? "")
+            .replace(/\D/g, "")
+            .slice(0, 10);
+          const customerId =
+            (customerEmail || "user").replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 45) ||
+            `user_${Date.now()}`;
           const baseUrl = process.env["VITE_APP_URL"] || "https://myrevision.in";
+          const isSandbox =
+            (process.env["CASHFREE_MODE"] || process.env["VITE_CASHFREE_MODE"]) === "sandbox";
+          const pgEndpoint = isSandbox
+            ? "https://sandbox.cashfree.com/pg/orders"
+            : "https://api.cashfree.com/pg/orders";
 
           const orderPayload = {
             order_id: orderId,
@@ -42,22 +52,23 @@ export const Route = createFileRoute("/api/cashfree/create-order")({
               customer_phone: sanitizedPhone.length === 10 ? sanitizedPhone : "9999999999",
             },
             order_meta: {
-              return_url: `${baseUrl}/payment?cf_success=true`,
+              return_url: `${baseUrl}/payment?cf_success=true&order_id={order_id}&plan=${planId}`,
               notify_url: `${baseUrl}/api/cashfree/webhook`,
             },
             order_note: `REVISION Premium - ${planId}`,
           };
 
-          // Create order via Cashfree API (production)
+          // Create order via Cashfree API
           console.log("[cashfree] Creating payment order", {
             orderId,
             amount,
             customerEmail,
             planId,
             baseUrl,
+            isSandbox,
           });
 
-          const cashfreeResponse = await fetch("https://api.cashfree.com/pg/orders", {
+          const cashfreeResponse = await fetch(pgEndpoint, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -104,7 +115,7 @@ export const Route = createFileRoute("/api/cashfree/create-order")({
             }),
             {
               headers: { "Content-Type": "application/json" },
-            }
+            },
           );
         } catch (error) {
           console.error("Cashfree order creation error:", error);

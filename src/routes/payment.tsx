@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { Check, Crown, Lock, Loader2 } from "lucide-react";
+import { load } from "@cashfreepayments/cashfree-js";
 import { plans, premiumBenefits } from "@/lib/mock-data";
 import { useAppState } from "@/lib/app-state";
 import { Screen, ScreenHeader } from "@/components/app-chrome";
@@ -22,19 +23,30 @@ export const Route = createFileRoute("/payment")({
       { property: "og:description", content: "₹199 / year or ₹399 lifetime. Secure UPI payments." },
     ],
   }),
-  validateSearch: (s: Record<string, unknown>): { promo?: "lifetime"; cf_success?: string } => {
-    const promo = s["promo"] === "lifetime" ? "lifetime" : undefined;
+  validateSearch: (
+    s: Record<string, unknown>,
+  ): { promo?: "lifetime"; cf_success?: string; plan?: string; order_id?: string } => {
+    const promo = s["promo"] === "lifetime" ? ("lifetime" as const) : undefined;
     const cf_success = s["cf_success"] === "true" ? "true" : undefined;
-    return { ...(promo ? { promo } : {}), ...(cf_success ? { cf_success } : {}) };
+    const plan = typeof s["plan"] === "string" ? s["plan"] : undefined;
+    const order_id = typeof s["order_id"] === "string" ? s["order_id"] : undefined;
+    return {
+      ...(promo ? { promo } : {}),
+      ...(cf_success ? { cf_success } : {}),
+      ...(plan ? { plan } : {}),
+      ...(order_id ? { order_id } : {}),
+    };
   },
   component: PaymentScreen,
 });
 
 function PaymentScreen() {
-  const { promo, cf_success } = Route.useSearch();
+  const { promo, cf_success, plan: planFromUrl } = Route.useSearch();
   const { user, profile, saveProfile } = useAuth();
   const { isLifetime } = useEntitlements();
-  const [selected, setSelected] = useState(promo ? "lifetime" : plans[0]!.id);
+  const [selected, setSelected] = useState(
+    planFromUrl ? planFromUrl : promo ? "lifetime" : plans[0]!.id,
+  );
   const [pending, setPending] = useState(false);
   const [sheet, setSheet] = useState<null | "processing" | "done">(null);
   const { isPremium, setPremium } = useAppState();
@@ -47,16 +59,17 @@ function PaymentScreen() {
 
   // Handle Cashfree success callback
   useEffect(() => {
-    if (cf_success === "true" && !isPremium && profile) {
+    if (cf_success === "true" && profile) {
       setPremium(true);
       setSheet("done");
+      const activePlan = planFromUrl || selected;
       void saveProfile({
         is_premium: true,
-        plan: selected,
+        plan: activePlan,
         premium_since: new Date().toISOString(),
       }).catch((e) => console.error("Could not save premium to account", e));
     }
-  }, [cf_success, isPremium, profile, saveProfile, selected]);
+  }, [cf_success, profile, saveProfile, selected, planFromUrl, setPremium]);
 
   const pay = async () => {
     if (!user || !profile) {
@@ -97,10 +110,25 @@ function PaymentScreen() {
         throw new Error("Cashfree session id missing from payment response");
       }
 
-      const checkoutUrl = `https://payments.cashfree.com/billpay/checkout/${paymentSessionId}`;
+      const cashfree = await load({
+        mode: (import.meta.env.VITE_CASHFREE_MODE as "sandbox" | "production") || "production",
+      });
 
-      // Open the hosted checkout in the same tab to avoid browser popup blocking and blank about:blank tabs.
-      window.location.assign(checkoutUrl);
+      if (!cashfree) {
+        throw new Error("Cashfree SDK failed to initialize");
+      }
+
+      const checkoutRes = await cashfree.checkout({
+        paymentSessionId,
+        redirectTarget: "_self",
+      });
+
+      if (checkoutRes?.error) {
+        console.error("Cashfree checkout error:", checkoutRes.error);
+        setSheet(null);
+        setPending(false);
+        alert(checkoutRes.error.message || "Failed to open payment gateway. Please try again.");
+      }
       return;
     } catch (error) {
       console.error("Payment error:", error);

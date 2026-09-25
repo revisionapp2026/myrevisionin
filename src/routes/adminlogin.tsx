@@ -33,7 +33,7 @@ function AdminLoginScreen() {
     e.preventDefault();
     setBusy(true);
     setError(null);
-    
+
     if (password !== ADMIN_PASSWORD) {
       setError("Invalid admin password");
       setBusy(false);
@@ -56,9 +56,7 @@ function AdminLoginScreen() {
           <img src={logo} alt="REVISION" className="size-[76px] object-cover" />
         </span>
         <h1 className="mt-4 text-[26px] font-extrabold tracking-tight">REVISION</h1>
-        <p className="mt-1 text-[13px] font-medium text-primary-foreground/80">
-          Admin Access
-        </p>
+        <p className="mt-1 text-[13px] font-medium text-primary-foreground/80">Admin Access</p>
       </div>
 
       <Screen className="-mt-6">

@@ -337,7 +337,9 @@ export const Route = createFileRoute("/api/study-help")({
         }
 
         console.error("[study] All AI providers failed");
-        return new Response("Study buddy temporarily unavailable. Please try again.", { status: 500 });
+        return new Response("Study buddy temporarily unavailable. Please try again.", {
+          status: 500,
+        });
       },
     },
   },
