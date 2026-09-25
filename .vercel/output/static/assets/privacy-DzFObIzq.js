@@ -1,1 +1,0 @@
-import{r as e}from"./useRouter-BOAPZDg1.js";import{a as t,n,t as r}from"./legal-I244wmVa.js";var i=e(),a=()=>(0,i.jsx)(t,{title:`Privacy Policy`,intro:`This policy explains what REVISION collects when you revise, how we use it, and the control you have over it.`,updated:r,sections:n});export{a as component};
