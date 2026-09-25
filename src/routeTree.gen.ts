@@ -37,6 +37,8 @@ import { Route as ModelPaperPaperIdRouteImport } from './routes/model-paper.$pap
 import { Route as ModelPapersSubjectIdRouteImport } from './routes/model-papers.$subjectId'
 import { Route as SubjectSubjectIdRouteImport } from './routes/subject.$subjectId'
 import { Route as UnitUnitIdRouteImport } from './routes/unit.$unitId'
+import { Route as ApiCashfreeCreateOrderRouteImport } from './routes/api/cashfree/create-order'
+import { Route as ApiCashfreeWebhookRouteImport } from './routes/api/cashfree/webhook'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -177,6 +179,16 @@ const UnitUnitIdRoute = UnitUnitIdRouteImport.update({
   path: '/unit/$unitId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiCashfreeCreateOrderRoute = ApiCashfreeCreateOrderRouteImport.update({
+  id: '/api/cashfree/create-order',
+  path: '/api/cashfree/create-order',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCashfreeWebhookRoute = ApiCashfreeWebhookRouteImport.update({
+  id: '/api/cashfree/webhook',
+  path: '/api/cashfree/webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -206,6 +218,8 @@ export interface FileRoutesByFullPath {
   '/model-papers/$subjectId': typeof ModelPapersSubjectIdRoute
   '/subject/$subjectId': typeof SubjectSubjectIdRoute
   '/unit/$unitId': typeof UnitUnitIdRoute
+  '/api/cashfree/create-order': typeof ApiCashfreeCreateOrderRoute
+  '/api/cashfree/webhook': typeof ApiCashfreeWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -235,6 +249,8 @@ export interface FileRoutesByTo {
   '/model-papers/$subjectId': typeof ModelPapersSubjectIdRoute
   '/subject/$subjectId': typeof SubjectSubjectIdRoute
   '/unit/$unitId': typeof UnitUnitIdRoute
+  '/api/cashfree/create-order': typeof ApiCashfreeCreateOrderRoute
+  '/api/cashfree/webhook': typeof ApiCashfreeWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -266,6 +282,8 @@ export interface FileRoutesById {
   '/model-papers/$subjectId': typeof ModelPapersSubjectIdRoute
   '/subject/$subjectId': typeof SubjectSubjectIdRoute
   '/unit/$unitId': typeof UnitUnitIdRoute
+  '/api/cashfree/create-order': typeof ApiCashfreeCreateOrderRoute
+  '/api/cashfree/webhook': typeof ApiCashfreeWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -297,6 +315,8 @@ export interface FileRouteTypes {
     | '/model-papers/$subjectId'
     | '/subject/$subjectId'
     | '/unit/$unitId'
+    | '/api/cashfree/create-order'
+    | '/api/cashfree/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -326,6 +346,8 @@ export interface FileRouteTypes {
     | '/model-papers/$subjectId'
     | '/subject/$subjectId'
     | '/unit/$unitId'
+    | '/api/cashfree/create-order'
+    | '/api/cashfree/webhook'
   id:
     | '__root__'
     | '/'
@@ -356,6 +378,8 @@ export interface FileRouteTypes {
     | '/model-papers/$subjectId'
     | '/subject/$subjectId'
     | '/unit/$unitId'
+    | '/api/cashfree/create-order'
+    | '/api/cashfree/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -386,6 +410,8 @@ export interface RootRouteChildren {
   ModelPapersSubjectIdRoute: typeof ModelPapersSubjectIdRoute
   SubjectSubjectIdRoute: typeof SubjectSubjectIdRoute
   UnitUnitIdRoute: typeof UnitUnitIdRoute
+  ApiCashfreeCreateOrderRoute: typeof ApiCashfreeCreateOrderRoute
+  ApiCashfreeWebhookRoute: typeof ApiCashfreeWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -586,6 +612,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UnitUnitIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/cashfree/create-order': {
+      id: '/api/cashfree/create-order'
+      path: '/api/cashfree/create-order'
+      fullPath: '/api/cashfree/create-order'
+      preLoaderRoute: typeof ApiCashfreeCreateOrderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/cashfree/webhook': {
+      id: '/api/cashfree/webhook'
+      path: '/api/cashfree/webhook'
+      fullPath: '/api/cashfree/webhook'
+      preLoaderRoute: typeof ApiCashfreeWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -628,6 +668,8 @@ const rootRouteChildren: RootRouteChildren = {
   ModelPapersSubjectIdRoute: ModelPapersSubjectIdRoute,
   SubjectSubjectIdRoute: SubjectSubjectIdRoute,
   UnitUnitIdRoute: UnitUnitIdRoute,
+  ApiCashfreeCreateOrderRoute: ApiCashfreeCreateOrderRoute,
+  ApiCashfreeWebhookRoute: ApiCashfreeWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
