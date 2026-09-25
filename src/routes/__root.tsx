@@ -122,7 +122,6 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
-        <script src="https://sdk.cashfree.com/js/v3/cashfree.js" async></script>
       </head>
       <body>
         {children}
