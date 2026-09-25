@@ -88,9 +88,9 @@ function PaymentScreen() {
 
       const orderData = await response.json();
 
-      // Redirect to Cashfree hosted checkout
+      // Redirect to Cashfree hosted checkout (production)
       const appUrl = import.meta.env["VITE_APP_URL"] || "https://myrevision.in";
-      const checkoutUrl = `https://sandbox.cashfree.com/billpay/checkout/${orderData.payment_session_id}`;
+      const checkoutUrl = `https://payments.cashfree.com/billpay/checkout/${orderData.payment_session_id}`;
       
       // Open in new tab
       window.open(checkoutUrl, "_blank");
