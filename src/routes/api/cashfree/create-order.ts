@@ -23,11 +23,15 @@ export const Route = createFileRoute("/api/cashfree/create-order")({
 
           const { planId, amount, customerEmail, customerName, customerPhone } = body;
 
+          if (!customerEmail || !amount || Number(amount) <= 0) {
+            return new Response("Invalid payment request", { status: 400 });
+          }
+
           const orderId = `ORDER_${Date.now()}_${Math.random().toString(36).substring(2, 9).toUpperCase()}`;
-          
-          // Generate valid customer_id (alphanumeric only) from email
-          const customerId = customerEmail.replace(/[^a-zA-Z0-9]/g, '');
-          
+          const sanitizedPhone = String(customerPhone ?? "").replace(/\D/g, "").slice(0, 10);
+          const customerId = (customerEmail || "user").replace(/[^a-zA-Z0-9]/g, "") || "user";
+          const baseUrl = process.env["VITE_APP_URL"] || "https://myrevision.in";
+
           const orderPayload = {
             order_id: orderId,
             order_amount: amount,
@@ -35,12 +39,12 @@ export const Route = createFileRoute("/api/cashfree/create-order")({
             customer_details: {
               customer_id: customerId,
               customer_email: customerEmail,
-              customer_name: customerName,
-              customer_phone: customerPhone,
+              customer_name: customerName || "REVISION User",
+              customer_phone: sanitizedPhone.length === 10 ? sanitizedPhone : "9999999999",
             },
             order_meta: {
-              return_url: `${process.env["VITE_APP_URL"] || "https://myrevision.in"}/payment?cf_success=true`,
-              notify_url: `${process.env["VITE_APP_URL"] || "https://myrevision.in"}/api/cashfree/webhook`,
+              return_url: `${baseUrl}/payment?cf_success=true`,
+              notify_url: `${baseUrl}/api/cashfree/webhook`,
             },
             order_note: `REVISION Premium - ${planId}`,
           };

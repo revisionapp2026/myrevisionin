@@ -64,10 +64,15 @@ function PaymentScreen() {
       return;
     }
 
+    const customerPhone = (user.phone || "9999999999").replace(/\D/g, "").slice(0, 10);
+    const safePhone = customerPhone.length === 10 ? customerPhone : "9999999999";
+
     setPending(true);
     setSheet("processing");
 
+    let checkoutWindow: Window | null = null;
     try {
+      checkoutWindow = window.open("", "_blank", "noopener,noreferrer");
       const amount = Number(plan.price.replace(/[^\d]/g, "")) || 0;
 
       const response = await fetch("/api/cashfree/create-order", {
@@ -77,8 +82,8 @@ function PaymentScreen() {
           planId: plan.id,
           amount,
           customerEmail: profile.email || user.email || "",
-          customerName: profile.full_name || "User",
-          customerPhone: "9999999999",
+          customerName: profile.full_name || user.email?.split("@")[0] || "User",
+          customerPhone: safePhone,
         }),
       });
 
@@ -89,23 +94,25 @@ function PaymentScreen() {
       }
 
       const orderData = await response.json();
-
-      // Redirect to Cashfree hosted checkout (production)
-      const appUrl = import.meta.env["VITE_APP_URL"] || "https://myrevision.in";
       const checkoutUrl = `https://payments.cashfree.com/billpay/checkout/${orderData.payment_session_id}`;
-      
-      // Open in new tab
-      window.open(checkoutUrl, "_blank");
-      
-      // Show success message (actual verification happens via webhook)
-      setSheet("done");
-      setPending(false);
+
+      if (checkoutWindow) {
+        checkoutWindow.location.href = checkoutUrl;
+      } else {
+        window.location.assign(checkoutUrl);
+      }
     } catch (error) {
       console.error("Payment error:", error);
+      if (checkoutWindow) {
+        checkoutWindow.close();
+      }
       setSheet(null);
       setPending(false);
       alert("Failed to initiate payment. Please try again.");
+      return;
     }
+
+    setPending(false);
   };
 
   return (
