@@ -1,8 +1,8 @@
 import crypto from "crypto";
 
 export async function POST({ request }: { request: Request }) {
-  const appId = process.env["CASHFREE_APP_ID"];
-  const secretKey = process.env["CASHFREE_SECRET_KEY"];
+  const appId = process.env["CASHFREE_APP_ID"] || process.env["VITE_CASHFREE_APP_ID"];
+  const secretKey = process.env["CASHFREE_SECRET_KEY"] || process.env["VITE_CASHFREE_SECRET_KEY"];
   
   if (!appId || !secretKey) {
     return new Response("Cashfree credentials not configured", { status: 500 });
@@ -38,9 +38,9 @@ export async function POST({ request }: { request: Request }) {
       order_note: `REVISION Premium - ${planId}`,
     };
 
-    // Create order via Cashfree API
+    // Create order via Cashfree API (production)
     const cashfreeResponse = await fetch(
-      "https://sandbox.cashfree.com/pg/orders",
+      "https://api.cashfree.com/pg/orders",
       {
         method: "POST",
         headers: {

@@ -2,7 +2,7 @@ import crypto from "crypto";
 import { supabase } from "@/integrations/supabase/client";
 
 export async function POST({ request }: { request: Request }) {
-  const secretKey = process.env["CASHFREE_SECRET_KEY"];
+  const secretKey = process.env["CASHFREE_SECRET_KEY"] || process.env["VITE_CASHFREE_SECRET_KEY"];
   
   if (!secretKey) {
     return new Response("Cashfree secret key not configured", { status: 500 });
