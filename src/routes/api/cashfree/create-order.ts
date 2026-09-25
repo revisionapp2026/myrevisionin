@@ -25,12 +25,15 @@ export const Route = createFileRoute("/api/cashfree/create-order")({
 
           const orderId = `ORDER_${Date.now()}_${Math.random().toString(36).substring(2, 9).toUpperCase()}`;
           
+          // Generate valid customer_id (alphanumeric only) from email
+          const customerId = customerEmail.replace(/[^a-zA-Z0-9]/g, '');
+          
           const orderPayload = {
             order_id: orderId,
             order_amount: amount,
             order_currency: "INR",
             customer_details: {
-              customer_id: customerEmail,
+              customer_id: customerId,
               customer_email: customerEmail,
               customer_name: customerName,
               customer_phone: customerPhone,
