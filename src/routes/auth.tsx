@@ -1,4 +1,4 @@
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, ChevronLeft } from "lucide-react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Loader2, BookOpenCheck, Bookmark, Crown, ShieldCheck } from "lucide-react";
@@ -12,6 +12,12 @@ import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
+  validateSearch: (search: Record<string, unknown>): { mode?: string } => {
+    const mode = search["mode"];
+    return typeof mode === "string" && (mode === "signin" || mode === "signup" || mode === "admin")
+      ? { mode }
+      : {};
+  },
   head: () => ({
     meta: [
       { title: "Sign in — REVISION" },
@@ -39,6 +45,17 @@ const perks = [
 
 function AuthScreen() {
   const { signIn, signUp, sendReset, user, loading } = useAuth();
+  const searchMode = Route.useSearch().mode as Mode | undefined;
+  const { program } = useAppState();
+  const navigate = useNavigate();
+  const [mode, setMode] = useState<Mode>(searchMode === "admin" ? "admin" : "signin");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [google, setGoogle] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
 
   async function handleResetPassword() {
     if (!email.trim()) {
@@ -57,16 +74,6 @@ function AuthScreen() {
       setBusy(false);
     }
   }
-  const { program } = useAppState();
-  const navigate = useNavigate();
-  const [mode, setMode] = useState<Mode>("signin");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [busy, setBusy] = useState(false);
-  const [google, setGoogle] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [notice, setNotice] = useState<string | null>(null);
 
   // Admins land in the admin panel; students pick their program, then the dashboard.
   useEffect(() => {
@@ -118,10 +125,11 @@ function AuthScreen() {
     // Google blocks its sign-in page inside an embedded frame (that is the 403).
     // Inside the preview frame we open a real browser window instead.
     const framed = typeof window !== "undefined" && window.top !== window.self;
+    const appUrl = import.meta.env["VITE_APP_URL"] || window.location.origin;
     const { data, error: err } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: window.location.origin + "/auth",
+        redirectTo: `${appUrl}/auth`,
         skipBrowserRedirect: framed,
         queryParams: { prompt: "select_account" },
       },
@@ -162,32 +170,47 @@ function AuthScreen() {
 
       <Screen className="-mt-6">
         <div className="surface-card px-5 py-5">
-          <div className="grid grid-cols-3 gap-1 rounded-xl bg-muted p-1">
-            {(["signin", "signup", "admin"] as Mode[]).map((m) => (
+          {mode !== "admin" && (
+            <div className="grid grid-cols-2 gap-1 rounded-xl bg-muted p-1">
+              {(["signin", "signup"] as Mode[]).map((m) => (
+                <button
+                  key={m}
+                  type="button"
+                  onClick={() => {
+                    setMode(m);
+                    setError(null);
+                    setNotice(null);
+                  }}
+                  className={cn(
+                    "rounded-lg py-2 text-[12.5px] font-bold transition-colors",
+                    mode === m ? "bg-card text-primary shadow-sm" : "text-muted-foreground",
+                  )}
+                >
+                  {m === "signin" ? "Sign in" : "Create"}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {mode === "admin" && (
+            <>
               <button
-                key={m}
                 type="button"
                 onClick={() => {
-                  setMode(m);
+                  setMode("signin");
                   setError(null);
                   setNotice(null);
                 }}
-                className={cn(
-                  "rounded-lg py-2 text-[12.5px] font-bold transition-colors",
-                  mode === m ? "bg-card text-primary shadow-sm" : "text-muted-foreground",
-                )}
+                className="mb-3 flex items-center gap-1 text-[13px] font-semibold text-primary"
               >
-                {m === "signin" ? "Sign in" : m === "signup" ? "Create" : "Admin"}
+                <ChevronLeft className="size-4" /> Back to sign in
               </button>
-            ))}
-          </div>
-
-          {mode === "admin" && (
-            <p className="mt-4 flex items-center gap-2 rounded-xl bg-primary-soft px-3 py-2.5 text-[12.5px] font-semibold text-primary">
-              <ShieldCheck className="size-4 shrink-0" />
-              Admin access — enter the admin password to manage subjects, units, papers and
-              students.
-            </p>
+              <p className="flex items-center gap-2 rounded-xl bg-primary-soft px-3 py-2.5 text-[12.5px] font-semibold text-primary">
+                <ShieldCheck className="size-4 shrink-0" />
+                Admin access — enter the admin password to manage subjects, units, papers and
+                students.
+              </p>
+            </>
           )}
 
           <form onSubmit={submit} className="mt-4 grid gap-3">

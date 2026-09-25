@@ -43,8 +43,8 @@ export default defineConfig({
               handler: "NetworkFirst",
               options: {
                 cacheName: "revision-pages",
-                networkTimeoutSeconds: 5,
-                expiration: { maxEntries: 40, maxAgeSeconds: 60 * 60 * 24 * 7 },
+                networkTimeoutSeconds: 3,
+                expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 * 7 },
               },
             },
             {
@@ -53,7 +53,7 @@ export default defineConfig({
               handler: "CacheFirst",
               options: {
                 cacheName: "revision-assets",
-                expiration: { maxEntries: 200, maxAgeSeconds: 60 * 60 * 24 * 30 },
+                expiration: { maxEntries: 150, maxAgeSeconds: 60 * 60 * 24 * 30 },
               },
             },
             {
@@ -63,9 +63,9 @@ export default defineConfig({
               handler: "NetworkFirst",
               options: {
                 cacheName: "revision-study-data",
-                networkTimeoutSeconds: 6,
+                networkTimeoutSeconds: 4,
                 cacheableResponse: { statuses: [200] },
-                expiration: { maxEntries: 500, maxAgeSeconds: 60 * 60 * 24 * 30 },
+                expiration: { maxEntries: 300, maxAgeSeconds: 60 * 60 * 24 * 30 },
               },
             },
             {
@@ -74,6 +74,14 @@ export default defineConfig({
               options: {
                 cacheName: "revision-fonts",
                 expiration: { maxEntries: 20, maxAgeSeconds: 60 * 60 * 24 * 365 },
+              },
+            },
+            {
+              urlPattern: ({ url }) => url.origin === "https://fonts.googleapis.com",
+              handler: "CacheFirst",
+              options: {
+                cacheName: "revision-fonts-css",
+                expiration: { maxEntries: 30, maxAgeSeconds: 60 * 60 * 24 * 365 },
               },
             },
           ],

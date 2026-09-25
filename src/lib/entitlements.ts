@@ -7,11 +7,11 @@ import { useAppState } from "@/lib/app-state";
 import { useAuth } from "@/lib/auth";
 
 export const PLAN_LIMITS = {
-  free: {
+  FREE: {
     label: "Free",
     bookmarksPerUnit: 20,
     highlightsPerUnit: 10,
-    aiQuestionsPerDay: 5,
+    aiQuestionsPerDay: 10,
     paidPapers: false,
     progressTracker: false,
   },

@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AdminloginRouteImport } from './routes/adminlogin'
 import { Route as AiHelpRouteImport } from './routes/ai-help'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BookmarksRouteImport } from './routes/bookmarks'
@@ -44,6 +45,11 @@ const IndexRoute = IndexRouteImport.update({
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminloginRoute = AdminloginRouteImport.update({
+  id: '/adminlogin',
+  path: '/adminlogin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AiHelpRoute = AiHelpRouteImport.update({
@@ -174,6 +180,7 @@ const UnitUnitIdRoute = UnitUnitIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/adminlogin': typeof AdminloginRoute
   '/ai-help': typeof AiHelpRoute
   '/auth': typeof AuthRoute
   '/bookmarks': typeof BookmarksRoute
@@ -202,6 +209,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/adminlogin': typeof AdminloginRoute
   '/ai-help': typeof AiHelpRoute
   '/auth': typeof AuthRoute
   '/bookmarks': typeof BookmarksRoute
@@ -232,6 +240,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/adminlogin': typeof AdminloginRoute
   '/ai-help': typeof AiHelpRoute
   '/auth': typeof AuthRoute
   '/bookmarks': typeof BookmarksRoute
@@ -262,6 +271,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/adminlogin'
     | '/ai-help'
     | '/auth'
     | '/bookmarks'
@@ -290,6 +300,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/adminlogin'
     | '/ai-help'
     | '/auth'
     | '/bookmarks'
@@ -319,6 +330,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/adminlogin'
     | '/ai-help'
     | '/auth'
     | '/bookmarks'
@@ -349,6 +361,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AdminloginRoute: typeof AdminloginRoute
   AiHelpRoute: typeof AiHelpRoute
   AuthRoute: typeof AuthRoute
   BookmarksRoute: typeof BookmarksRoute
@@ -389,6 +402,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/adminlogin': {
+      id: '/adminlogin'
+      path: '/adminlogin'
+      fullPath: '/adminlogin'
+      preLoaderRoute: typeof AdminloginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ai-help': {
@@ -583,6 +603,7 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AdminloginRoute: AdminloginRoute,
   AiHelpRoute: AiHelpRoute,
   AuthRoute: AuthRoute,
   BookmarksRoute: BookmarksRoute,

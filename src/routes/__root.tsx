@@ -83,6 +83,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
+      { name: "google-site-verification", content: "Qhv9zV3dgLFbpiYOyadw9L4G6ty4UefQFmyrhlebDgU" },
       { title: "REVISION — Last Minute Revision That Actually Works" },
       {
         name: "description",
@@ -135,6 +136,23 @@ function RootComponent() {
 
   useEffect(() => {
     registerServiceWorker();
+  }, []);
+
+  useEffect(() => {
+    // Google Analytics - only runs on client
+    const script1 = document.createElement("script");
+    script1.async = true;
+    script1.src = "https://www.googletagmanager.com/gtag/js?id=G-8ELX5TW41X";
+    document.head.appendChild(script1);
+
+    const script2 = document.createElement("script");
+    script2.innerHTML = `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-8ELX5TW41X');
+    `;
+    document.head.appendChild(script2);
   }, []);
 
   return (

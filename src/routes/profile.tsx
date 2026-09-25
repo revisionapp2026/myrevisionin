@@ -79,25 +79,29 @@ function ProfileScreen() {
         )}
 
         <div className="mt-4 grid gap-2.5">
-          <ListRow
-            to="/payment"
-            title="My Subscriptions"
-            leading={
-              <IconTile>
-                <CreditCard className="size-[19px]" />
-              </IconTile>
-            }
-          />
-          <ListRow
-            to="/payment"
-            title="Payment History"
-            meta={isPremium ? "1 payment" : "No payments yet"}
-            leading={
-              <IconTile>
-                <Receipt className="size-[19px]" />
-              </IconTile>
-            }
-          />
+          {isPremium && (
+            <>
+              <ListRow
+                to="/payment"
+                title="My Subscriptions"
+                leading={
+                  <IconTile>
+                    <CreditCard className="size-[19px]" />
+                  </IconTile>
+                }
+              />
+              <ListRow
+                to="/payment"
+                title="Payment History"
+                meta="1 payment"
+                leading={
+                  <IconTile>
+                    <Receipt className="size-[19px]" />
+                  </IconTile>
+                }
+              />
+            </>
+          )}
           <ListRow
             to="/bookmarks"
             title="Bookmarks"

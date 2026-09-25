@@ -35,19 +35,153 @@ const MODE_INSTRUCTIONS: Record<Mode, string> = {
   ].join("\n"),
 };
 
+type AIProvider = "lovable" | "gemini" | "deepseek" | "bazar";
+
+async function callLovableAI(
+  systemPrompt: string,
+  grounding: string,
+  instructions: string,
+  apiKey: string,
+): Promise<Response> {
+  const response = await fetch("https://api.lovable.ai/gateway/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      model: "gpt-4o-mini",
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "system", content: `Syllabus context:\n${grounding}` },
+        { role: "user", content: instructions },
+      ],
+      stream: true,
+    }),
+  });
+  return response;
+}
+
+async function callGeminiAI(
+  systemPrompt: string,
+  grounding: string,
+  instructions: string,
+  apiKey: string,
+): Promise<Response> {
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [
+              { text: `${systemPrompt}\n\nSyllabus context:\n${grounding}\n\n${instructions}` },
+            ],
+          },
+        ],
+      }),
+    },
+  );
+  return response;
+}
+
+async function callDeepSeekAI(
+  systemPrompt: string,
+  grounding: string,
+  instructions: string,
+  apiKey: string,
+): Promise<Response> {
+  const response = await fetch("https://deepseek-v31.p.rapidapi.com/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-rapidapi-host": "deepseek-v31.p.rapidapi.com",
+      "x-rapidapi-key": apiKey,
+    },
+    body: JSON.stringify({
+      messages: [
+        { role: "system", content: `${systemPrompt}\n\nSyllabus context:\n${grounding}` },
+        { role: "user", content: instructions },
+      ],
+      model: "DeepSeek-V3.2",
+    }),
+  });
+  return response;
+}
+
+async function callBazarAI(
+  systemPrompt: string,
+  grounding: string,
+  instructions: string,
+  apiKey: string,
+): Promise<Response> {
+  const response = await fetch("https://api.bazar.ai/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      model: "gpt-4o-mini",
+      messages: [
+        { role: "system", content: `${systemPrompt}\n\nSyllabus context:\n${grounding}` },
+        { role: "user", content: instructions },
+      ],
+      stream: true,
+    }),
+  });
+  return response;
+}
+
+async function callAIWithFallback(
+  systemPrompt: string,
+  grounding: string,
+  instructions: string,
+): Promise<Response> {
+  const providers: AIProvider[] = ["lovable", "gemini", "deepseek", "bazar"];
+  const keys: Record<AIProvider, string | undefined> = {
+    lovable: process.env["LOVABLE_API_KEY"],
+    gemini: process.env["GEMINI_API_KEY"],
+    deepseek: process.env["DEEPSEEK_API_KEY"],
+    bazar: process.env["BAZAR_API_KEY"],
+  };
+
+  const callFunctions: Record<AIProvider, typeof callLovableAI> = {
+    lovable: callLovableAI,
+    gemini: callGeminiAI,
+    deepseek: callDeepSeekAI,
+    bazar: callBazarAI,
+  };
+
+  for (const provider of providers) {
+    const apiKey = keys[provider];
+    if (!apiKey) {
+      console.log(`[study] ${provider} API key not configured, skipping`);
+      continue;
+    }
+
+    try {
+      console.log(`[study] Trying ${provider} AI...`);
+      const response = await callFunctions[provider](systemPrompt, grounding, instructions, apiKey);
+      if (response.ok) {
+        console.log(`[study] ${provider} AI succeeded`);
+        return response;
+      }
+      console.log(`[study] ${provider} AI failed with status ${response.status}`);
+    } catch (error) {
+      console.log(`[study] ${provider} AI error:`, error);
+    }
+  }
+
+  throw new Error("All AI providers failed");
+}
+
 export const Route = createFileRoute("/api/study-help")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const apiKey = process.env["LOVABLE_API_KEY"];
-        if (!apiKey) {
-          console.error("[study] LOVABLE_API_KEY is missing in this deployment's environment");
-          return new Response(
-            "The study buddy is temporarily unavailable on this server. Please try again later.",
-            { status: 500 },
-          );
-        }
-
         let body: Record<string, unknown>;
         try {
           body = (await request.json()) as Record<string, unknown>;
@@ -98,81 +232,112 @@ export const Route = createFileRoute("/api/study-help")({
           .filter(Boolean)
           .join("\n");
 
-        const input = grounding.context
-          ? `Topic or question: ${topic}\n\nSTUDY MATERIAL\n${grounding.context}`
-          : `Topic or question: ${topic}`;
+        const fullPrompt = `${instructions}\n\nTopic: ${topic}${grounding.context ? `\n\nContext:\n${grounding.context}` : ""}`;
 
-        const upstream = await fetch("https://ai.gateway.lovable.dev/v1/responses", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Lovable-API-Key": apiKey,
-            "X-Lovable-AIG-SDK": "fetch",
-          },
-          body: JSON.stringify({
-            model: "openai/gpt-6-astra",
-            instructions,
-            input,
-            stream: true,
-            store: false,
-            reasoning: { effort: "low" },
-          }),
-        });
+        // Try Gemini first (free API)
+        const geminiKey = process.env["GEMINI_API_KEY"];
+        if (geminiKey) {
+          try {
+            console.log("[study] Trying Gemini AI...");
+            const response = await fetch(
+              `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${geminiKey}`,
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  contents: [{ parts: [{ text: fullPrompt }] }],
+                }),
+              },
+            );
 
-        if (!upstream.ok || !upstream.body) {
-          const detail = await upstream.text().catch(() => "");
-          const message =
-            upstream.status === 402
-              ? "AI study help is temporarily unavailable — the workspace is out of AI credits."
-              : upstream.status === 429
-                ? "Too many requests right now. Please try again in a moment."
-                : `Study help failed (${upstream.status}). ${detail.slice(0, 200)}`;
-          return new Response(message, { status: upstream.status || 500 });
+            if (response.ok) {
+              const data = await response.json();
+              const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+              return new Response(text, {
+                headers: {
+                  "Content-Type": "text/plain; charset=utf-8",
+                  "Cache-Control": "no-store",
+                  "X-Grounded-Sources": String(grounding.sources.length),
+                },
+              });
+            }
+            console.log("[study] Gemini failed:", response.status);
+          } catch (error) {
+            console.log("[study] Gemini error:", error);
+          }
         }
 
-        const { readable, writable } = new TransformStream<Uint8Array, Uint8Array>();
-        const writer = writable.getWriter();
-        const encoder = new TextEncoder();
-
-        void (async () => {
-          const reader = upstream.body!.getReader();
-          const decoder = new TextDecoder();
-          let buffer = "";
+        // Try DeepSeek
+        const deepseekKey = process.env["DEEPSEEK_API_KEY"];
+        if (deepseekKey) {
           try {
-            while (true) {
-              const { done, value } = await reader.read();
-              if (done) break;
-              buffer += decoder.decode(value, { stream: true });
-              const lines = buffer.split("\n");
-              buffer = lines.pop() ?? "";
-              for (const line of lines) {
-                if (!line.startsWith("data:")) continue;
-                const payload = line.slice(5).trim();
-                if (!payload || payload === "[DONE]") continue;
-                try {
-                  const event = JSON.parse(payload) as { type?: string; delta?: string };
-                  if (event.type === "response.output_text.delta" && event.delta) {
-                    await writer.write(encoder.encode(event.delta));
-                  }
-                } catch {
-                  /* ignore partial frames */
-                }
-              }
-            }
-          } catch {
-            /* upstream ended unexpectedly */
-          } finally {
-            await writer.close().catch(() => {});
-          }
-        })();
+            console.log("[study] Trying DeepSeek AI...");
+            const response = await fetch("https://deepseek-v31.p.rapidapi.com/", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "x-rapidapi-host": "deepseek-v31.p.rapidapi.com",
+                "x-rapidapi-key": deepseekKey,
+              },
+              body: JSON.stringify({
+                messages: [{ role: "user", content: fullPrompt }],
+                model: "DeepSeek-V3.2",
+              }),
+            });
 
-        return new Response(readable, {
-          headers: {
-            "Content-Type": "text/plain; charset=utf-8",
-            "Cache-Control": "no-store",
-            "X-Grounded-Sources": String(grounding.sources.length),
-          },
-        });
+            if (response.ok) {
+              const data = await response.json();
+              const text = data.choices?.[0]?.message?.content || "";
+              return new Response(text, {
+                headers: {
+                  "Content-Type": "text/plain; charset=utf-8",
+                  "Cache-Control": "no-store",
+                  "X-Grounded-Sources": String(grounding.sources.length),
+                },
+              });
+            }
+            console.log("[study] DeepSeek failed:", response.status);
+          } catch (error) {
+            console.log("[study] DeepSeek error:", error);
+          }
+        }
+
+        // Try Bazar
+        const bazarKey = process.env["BAZAR_API_KEY"];
+        if (bazarKey) {
+          try {
+            console.log("[study] Trying Bazar AI...");
+            const response = await fetch("https://api.bazar.ai/v1/chat/completions", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${bazarKey}`,
+              },
+              body: JSON.stringify({
+                model: "gpt-4o-mini",
+                messages: [{ role: "user", content: fullPrompt }],
+              }),
+            });
+
+            if (response.ok) {
+              const data = await response.json();
+              const text = data.choices?.[0]?.message?.content || "";
+              return new Response(text, {
+                headers: {
+                  "Content-Type": "text/plain; charset=utf-8",
+                  "Cache-Control": "no-store",
+                  "X-Grounded-Sources": String(grounding.sources.length),
+                },
+              });
+            }
+            console.log("[study] Bazar failed:", response.status);
+          } catch (error) {
+            console.log("[study] Bazar error:", error);
+          }
+        }
+
+        console.error("[study] All AI providers failed");
+        return new Response("Study buddy temporarily unavailable. Please try again.", { status: 500 });
       },
     },
   },

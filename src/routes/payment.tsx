@@ -1,35 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
-import { Check, Crown, Lock } from "lucide-react";
-import { plans, premiumBenefits, upiMethods } from "@/lib/mock-data";
+import { useState, useEffect } from "react";
+import { Check, Crown, Lock, Loader2 } from "lucide-react";
+import { plans, premiumBenefits } from "@/lib/mock-data";
 import { useAppState } from "@/lib/app-state";
 import { Screen, ScreenHeader } from "@/components/app-chrome";
 import { Button } from "@/components/ui-bits";
 import { cn } from "@/lib/utils";
-import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { useEntitlements } from "@/lib/entitlements";
-
-/** Saves the demo purchase so it shows in the admin payment records. */
-async function recordDemoPayment(p: {
-  plan: string;
-  amount: number;
-  method: string;
-  reference: string;
-}) {
-  const { data } = await supabase.auth.getUser();
-  const user = data.user;
-  if (!user) return;
-  await supabase.from("payments").insert({
-    user_id: user.id,
-    plan: p.plan,
-    amount: p.amount,
-    method: p.method,
-    status: "paid",
-    reference: p.reference,
-    is_demo: true,
-  });
-}
 
 export const Route = createFileRoute("/payment")({
   head: () => ({
@@ -44,19 +22,21 @@ export const Route = createFileRoute("/payment")({
       { property: "og:description", content: "₹199 / year or ₹399 lifetime. Secure UPI payments." },
     ],
   }),
-  validateSearch: (s: Record<string, unknown>): { promo?: "lifetime" } =>
-    s["promo"] === "lifetime" ? { promo: "lifetime" } : {},
+  validateSearch: (s: Record<string, unknown>): { promo?: "lifetime"; cf_success?: string } => {
+    const promo = s["promo"] === "lifetime" ? "lifetime" : undefined;
+    const cf_success = s["cf_success"] === "true" ? "true" : undefined;
+    return { ...(promo ? { promo } : {}), ...(cf_success ? { cf_success } : {}) };
+  },
   component: PaymentScreen,
 });
 
 function PaymentScreen() {
-  const { promo } = Route.useSearch();
-  const { saveProfile } = useAuth();
+  const { promo, cf_success } = Route.useSearch();
+  const { user, profile, saveProfile } = useAuth();
   const { isLifetime } = useEntitlements();
   const [selected, setSelected] = useState(promo ? "lifetime" : plans[0]!.id);
   const [pending, setPending] = useState(false);
-  const [sheet, setSheet] = useState<null | "choose" | "processing" | "done">(null);
-  const [method, setMethod] = useState(upiMethods[0]!);
+  const [sheet, setSheet] = useState<null | "processing" | "done">(null);
   const { isPremium, setPremium } = useAppState();
   const basePlan = plans.find((p) => p.id === selected) ?? plans[0]!;
   // Promotional lifetime price (₹399) applies only when arriving from the promo banner/popup.
@@ -65,21 +45,65 @@ function PaymentScreen() {
       ? { ...basePlan, price: "₹399", note: "Limited offer" }
       : basePlan;
 
-  const pay = (m: string) => {
-    setMethod(m);
-    setSheet("processing");
-    const amount = Number(plan.price.replace(/[^\d]/g, "")) || 0;
-    const reference = `DEMO-${Date.now().toString(36).toUpperCase()}`;
-    setTimeout(() => {
+  // Handle Cashfree success callback
+  useEffect(() => {
+    if (cf_success === "true" && !isPremium && profile) {
       setPremium(true);
       setSheet("done");
-      void recordDemoPayment({ plan: plan.id, amount, method: m, reference });
       void saveProfile({
         is_premium: true,
-        plan: plan.id,
+        plan: selected,
         premium_since: new Date().toISOString(),
       }).catch((e) => console.error("Could not save premium to account", e));
-    }, 1800);
+    }
+  }, [cf_success, isPremium, profile, saveProfile, selected]);
+
+  const pay = async () => {
+    if (!user || !profile) {
+      alert("Please sign in to continue");
+      return;
+    }
+
+    setPending(true);
+    setSheet("processing");
+
+    try {
+      const amount = Number(plan.price.replace(/[^\d]/g, "")) || 0;
+
+      const response = await fetch("/api/cashfree/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          planId: plan.id,
+          amount,
+          customerEmail: profile.email || user.email || "",
+          customerName: profile.full_name || "User",
+          customerPhone: "9999999999",
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create payment order");
+      }
+
+      const orderData = await response.json();
+
+      // Redirect to Cashfree hosted checkout
+      const appUrl = import.meta.env["VITE_APP_URL"] || "https://myrevision.in";
+      const checkoutUrl = `https://sandbox.cashfree.com/billpay/checkout/${orderData.payment_session_id}`;
+      
+      // Open in new tab
+      window.open(checkoutUrl, "_blank");
+      
+      // Show success message (actual verification happens via webhook)
+      setSheet("done");
+      setPending(false);
+    } catch (error) {
+      console.error("Payment error:", error);
+      setSheet(null);
+      setPending(false);
+      alert("Failed to initiate payment. Please try again.");
+    }
   };
 
   return (
@@ -154,39 +178,22 @@ function PaymentScreen() {
           variant="accent"
           className="mt-4 w-full"
           disabled={pending || isLifetime || (isPremium && selected === "yearly")}
-          onClick={() => setSheet("choose")}
+          onClick={() => void pay()}
         >
-          {isLifetime || (isPremium && selected === "yearly")
-            ? "Premium active"
-            : pending
-              ? "Opening UPI…"
-              : `Pay ${plan.price}`}
+          {pending ? (
+            <>
+              <Loader2 className="size-4 animate-spin" /> Processing…
+            </>
+          ) : isLifetime || (isPremium && selected === "yearly") ? (
+            "Premium active"
+          ) : (
+            `Pay ${plan.price}`
+          )}
         </Button>
-
-        {isPremium && (
-          <button
-            type="button"
-            onClick={() => setPremium(false)}
-            className="mt-2 w-full text-center text-[12px] font-semibold text-muted-foreground underline"
-          >
-            Reset demo premium
-          </button>
-        )}
-
-        <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-          {upiMethods.map((m) => (
-            <span
-              key={m}
-              className="rounded-lg border border-border bg-card px-2.5 py-1.5 text-[11.5px] font-semibold text-muted-foreground"
-            >
-              {m}
-            </span>
-          ))}
-        </div>
 
         <p className="mt-4 flex items-center justify-center gap-1.5 text-[12px] font-medium text-muted-foreground">
           <Lock className="size-3.5" />
-          Secure UPI Payments
+          Secure payments powered by Cashfree
         </p>
       </Screen>
 
@@ -195,50 +202,11 @@ function PaymentScreen() {
           <div className="screen-enter w-full rounded-t-3xl bg-card px-5 pb-8 pt-5">
             <div className="mx-auto mb-4 h-1.5 w-12 rounded-full bg-border" />
 
-            {sheet === "choose" && (
-              <>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-[15px] font-extrabold">REVISION Premium</p>
-                    <p className="text-[12.5px] text-muted-foreground">
-                      {plan.price} {plan.period} · Demo checkout
-                    </p>
-                  </div>
-                  <span className="rounded-full bg-primary-soft px-2.5 py-1 text-[11px] font-bold text-primary">
-                    TEST MODE
-                  </span>
-                </div>
-                <p className="mt-4 text-[12.5px] font-bold uppercase tracking-wide text-muted-foreground">
-                  Pay using
-                </p>
-                <div className="mt-2 grid gap-2">
-                  {upiMethods.map((m) => (
-                    <button
-                      key={m}
-                      type="button"
-                      onClick={() => pay(m)}
-                      className="surface-card press flex items-center justify-between px-4 py-3.5 text-left text-[14px] font-semibold"
-                    >
-                      {m}
-                      <span className="text-[12.5px] font-bold text-primary">Pay {plan.price}</span>
-                    </button>
-                  ))}
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setSheet(null)}
-                  className="mt-4 w-full text-center text-[13px] font-semibold text-muted-foreground"
-                >
-                  Cancel
-                </button>
-              </>
-            )}
-
             {sheet === "processing" && (
               <div className="py-8 text-center">
                 <span className="mx-auto block size-9 animate-spin rounded-full border-[3px] border-border border-t-primary" />
-                <p className="mt-4 text-[15px] font-bold">Confirming payment…</p>
-                <p className="mt-1 text-[12.5px] text-muted-foreground">via {method}</p>
+                <p className="mt-4 text-[15px] font-bold">Processing payment…</p>
+                <p className="mt-1 text-[12.5px] text-muted-foreground">via Cashfree</p>
               </div>
             )}
 
@@ -249,8 +217,7 @@ function PaymentScreen() {
                 </span>
                 <p className="mt-3 text-[17px] font-extrabold">Payment successful</p>
                 <p className="mt-1 text-[12.5px] text-muted-foreground">
-                  Premium unlocked — all model papers and answers are now open. This is a demo
-                  payment; no money was charged.
+                  Premium unlocked — all model papers and answers are now open.
                 </p>
                 <Button
                   size="lg"
