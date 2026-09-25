@@ -110,9 +110,21 @@ function PaymentScreen() {
         throw new Error("Cashfree session id missing from payment response");
       }
 
-      const cashfree = await load({
-        mode: (import.meta.env.VITE_CASHFREE_MODE as "sandbox" | "production") || "production",
-      });
+      const mode = (import.meta.env.VITE_CASHFREE_MODE as "sandbox" | "production") || "production";
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let cashfree: any = null;
+
+      try {
+        cashfree = await load({ mode });
+      } catch (sdkErr) {
+        console.warn("Cashfree load() failed, falling back to window.Cashfree", sdkErr);
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if (!cashfree && typeof window !== "undefined" && (window as any).Cashfree) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        cashfree = (window as any).Cashfree({ mode });
+      }
 
       if (!cashfree) {
         throw new Error("Cashfree SDK failed to initialize");
