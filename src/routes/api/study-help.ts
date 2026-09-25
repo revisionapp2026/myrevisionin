@@ -235,7 +235,7 @@ export const Route = createFileRoute("/api/study-help")({
         const fullPrompt = `${instructions}\n\nTopic: ${topic}${grounding.context ? `\n\nContext:\n${grounding.context}` : ""}`;
 
         // Try Gemini first (free API)
-        const geminiKey = process.env["GEMINI_API_KEY"];
+        const geminiKey = process.env["GEMINI_API_KEY"] || process.env["VITE_GEMINI_API_KEY"];
         if (geminiKey) {
           try {
             console.log("[study] Trying Gemini AI...");
@@ -268,7 +268,7 @@ export const Route = createFileRoute("/api/study-help")({
         }
 
         // Try DeepSeek
-        const deepseekKey = process.env["DEEPSEEK_API_KEY"];
+        const deepseekKey = process.env["DEEPSEEK_API_KEY"] || process.env["VITE_DEEPSEEK_API_KEY"];
         if (deepseekKey) {
           try {
             console.log("[study] Trying DeepSeek AI...");
@@ -303,7 +303,7 @@ export const Route = createFileRoute("/api/study-help")({
         }
 
         // Try Bazar
-        const bazarKey = process.env["BAZAR_API_KEY"];
+        const bazarKey = process.env["BAZAR_API_KEY"] || process.env["VITE_BAZAR_API_KEY"];
         if (bazarKey) {
           try {
             console.log("[study] Trying Bazar AI...");

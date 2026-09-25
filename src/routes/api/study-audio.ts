@@ -7,7 +7,7 @@ export const Route = createFileRoute("/api/study-audio")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const apiKey = process.env["LOVABLE_API_KEY"];
+        const apiKey = process.env["LOVABLE_API_KEY"] || process.env["VITE_LOVABLE_API_KEY"];
         if (!apiKey)
           return new Response(
             "The study buddy is temporarily unavailable on this server. Please try again later.",
