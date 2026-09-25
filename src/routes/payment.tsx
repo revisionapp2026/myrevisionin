@@ -92,12 +92,16 @@ function PaymentScreen() {
       }
 
       const orderData = await response.json();
-      const checkoutUrl = `https://payments.cashfree.com/billpay/checkout/${orderData.payment_session_id}`;
-
-      const checkoutWindow = window.open(checkoutUrl, "_blank", "noopener,noreferrer");
-      if (!checkoutWindow) {
-        window.location.href = checkoutUrl;
+      const paymentSessionId = orderData?.payment_session_id;
+      if (!paymentSessionId) {
+        throw new Error("Cashfree session id missing from payment response");
       }
+
+      const checkoutUrl = `https://payments.cashfree.com/billpay/checkout/${paymentSessionId}`;
+
+      // Open the hosted checkout in the same tab to avoid browser popup blocking and blank about:blank tabs.
+      window.location.assign(checkoutUrl);
+      return;
     } catch (error) {
       console.error("Payment error:", error);
       setSheet(null);
@@ -105,8 +109,6 @@ function PaymentScreen() {
       alert("Failed to initiate payment. Please try again.");
       return;
     }
-
-    setPending(false);
   };
 
   return (
