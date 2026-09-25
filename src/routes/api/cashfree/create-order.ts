@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import crypto from "crypto";
 
 export const Route = createFileRoute("/api/cashfree/create-order")({
   server: {
@@ -50,27 +49,51 @@ export const Route = createFileRoute("/api/cashfree/create-order")({
           };
 
           // Create order via Cashfree API (production)
-          const cashfreeResponse = await fetch(
-            "https://api.cashfree.com/pg/orders",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "x-api-version": "2023-08-01",
-                "x-client-id": appId,
-                "x-client-secret": secretKey,
-              },
-              body: JSON.stringify(orderPayload),
-            }
-          );
+          console.log("[cashfree] Creating payment order", {
+            orderId,
+            amount,
+            customerEmail,
+            planId,
+            baseUrl,
+          });
+
+          const cashfreeResponse = await fetch("https://api.cashfree.com/pg/orders", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "x-api-version": "2023-08-01",
+              "x-client-id": appId,
+              "x-client-secret": secretKey,
+            },
+            body: JSON.stringify(orderPayload),
+          });
+
+          const responseText = await cashfreeResponse.text();
 
           if (!cashfreeResponse.ok) {
-            const error = await cashfreeResponse.text();
-            console.error("Cashfree order creation failed:", error);
-            return new Response(`Failed to create order: ${error}`, { status: 500 });
+            console.error("Cashfree order creation failed:", responseText);
+            return new Response(
+              JSON.stringify({
+                error: "Failed to create payment order",
+                details: responseText,
+              }),
+              {
+                status: 500,
+                headers: { "Content-Type": "application/json" },
+              },
+            );
           }
 
-          const orderData = await cashfreeResponse.json();
+          let orderData: Record<string, unknown>;
+          try {
+            orderData = JSON.parse(responseText) as Record<string, unknown>;
+          } catch {
+            console.error("Cashfree responded with a non-JSON body:", responseText);
+            return new Response(
+              JSON.stringify({ error: "Cashfree returned an unexpected response" }),
+              { status: 502, headers: { "Content-Type": "application/json" } },
+            );
+          }
 
           return new Response(
             JSON.stringify({

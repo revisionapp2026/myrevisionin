@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import crypto from "crypto";
+import { createHmac } from "node:crypto";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/api/cashfree/webhook")({
@@ -37,8 +37,7 @@ export const Route = createFileRoute("/api/cashfree/webhook")({
             return new Response("Missing signature", { status: 400 });
           }
 
-          const expectedSignature = crypto
-            .createHmac("sha256", secretKey)
+          const expectedSignature = createHmac("sha256", secretKey)
             .update(JSON.stringify(body.data))
             .digest("hex");
 
