@@ -67,54 +67,109 @@ function AuthScreen() {
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
 
-  // Handle incoming OAuth callback (PKCE code or OAuth error params)
+  // Handle incoming OAuth callback (detect session safely without double-exchange collision)
   useEffect(() => {
     if (typeof window === "undefined") return;
     const urlParams = new URLSearchParams(window.location.search);
     const code = search.code || urlParams.get("code");
-    const errParam = search.error_description || search.error || urlParams.get("error_description") || urlParams.get("error");
+    const hasHash = window.location.hash && window.location.hash.length > 1;
+    const errParam =
+      search.error_description ||
+      search.error ||
+      urlParams.get("error_description") ||
+      urlParams.get("error");
 
     if (errParam) {
       setError(decodeURIComponent(errParam));
       return;
     }
 
-    if (code) {
+    if (code || hasHash) {
       setOauthResolving(true);
-      void (async () => {
+      let handled = false;
+
+      const finishOAuth = async (userId: string) => {
+        if (handled) return;
+        handled = true;
+
         try {
-          const { data, error: exchangeErr } = await supabase.auth.exchangeCodeForSession(code);
-          if (exchangeErr) {
-            console.warn("[Auth] exchangeCodeForSession notice:", exchangeErr);
-          }
-          const sessionUser =
-            data?.session?.user ?? (await supabase.auth.getSession()).data.session?.user;
-          if (sessionUser) {
-            const { data: dbProfile } = await supabase
-              .from("profiles")
-              .select("program_id, semester")
-              .eq("id", sessionUser.id)
-              .maybeSingle();
-
-            const targetProg = dbProfile?.program_id || program;
-            const targetSem = dbProfile?.semester || semester;
-
-            const target =
-              targetProg && targetSem
-                ? "/dashboard"
-                : targetProg
-                  ? "/semester-selection"
-                  : "/program-selection";
-
-            window.location.href = target;
-            return;
-          }
-        } catch (e) {
-          console.error("[Auth] OAuth exchange failure:", e);
-        } finally {
-          setOauthResolving(false);
+          window.history.replaceState({}, document.title, window.location.pathname);
+        } catch {
+          /* ignore */
         }
-      })();
+
+        let targetProg = program;
+        let targetSem = semester;
+
+        try {
+          const { data: dbProfile } = await supabase
+            .from("profiles")
+            .select("program_id, semester")
+            .eq("id", userId)
+            .maybeSingle();
+
+          if (dbProfile?.program_id) targetProg = dbProfile.program_id;
+          if (dbProfile?.semester) targetSem = dbProfile.semester;
+        } catch {
+          /* fallback */
+        }
+
+        const target =
+          targetProg && targetSem
+            ? "/dashboard"
+            : targetProg
+              ? "/semester-selection"
+              : "/program-selection";
+
+        // If this tab was opened as a popup from another window, close self and notify opener!
+        if (window.opener && window.opener !== window) {
+          try {
+            window.opener.postMessage({ type: "REVISION_AUTH_SUCCESS", target }, "*");
+            window.opener.location.href = target;
+          } catch {
+            /* ignore cross-origin */
+          }
+          try {
+            window.close();
+            return;
+          } catch {
+            /* ignore */
+          }
+        }
+
+        window.location.href = target;
+      };
+
+      // 1. Check existing session immediately
+      void supabase.auth.getSession().then(({ data }) => {
+        if (data?.session?.user) {
+          void finishOAuth(data.session.user.id);
+        }
+      });
+
+      // 2. Listen to Supabase's automatic URL session extraction
+      const { data: authSub } = supabase.auth.onAuthStateChange((event, s) => {
+        if ((event === "SIGNED_IN" || event === "INITIAL_SESSION") && s?.user) {
+          void finishOAuth(s.user.id);
+        }
+      });
+
+      // 3. Fallback safety timer: never spin infinitely
+      const safetyTimer = setTimeout(async () => {
+        if (handled) return;
+        const { data } = await supabase.auth.getSession();
+        if (data?.session?.user) {
+          void finishOAuth(data.session.user.id);
+        } else {
+          setOauthResolving(false);
+          setError("Sign-in is taking longer than expected. Please try again.");
+        }
+      }, 4000);
+
+      return () => {
+        clearTimeout(safetyTimer);
+        authSub.subscription.unsubscribe();
+      };
     }
   }, [search.code, search.error, search.error_description, program, semester]);
 
@@ -310,15 +365,27 @@ function AuthScreen() {
   async function withGoogle() {
     setGoogle(true);
     setError(null);
+    setNotice(null);
 
-    // Google blocks its sign-in page inside an embedded frame (that is the 403).
-    // Inside the preview frame we open a real browser window instead.
     const framed = typeof window !== "undefined" && window.top !== window.self;
-    const appUrl = import.meta.env["VITE_APP_URL"] || window.location.origin;
+    const origin = typeof window !== "undefined" ? window.location.origin : "https://myrevision.in";
+    const callbackUrl = `${origin}/auth/callback`;
+
+    // Listen for postMessage from popup if one is opened
+    const handleAuthMessage = (e: MessageEvent) => {
+      if (e.data?.type === "REVISION_AUTH_SUCCESS") {
+        window.removeEventListener("message", handleAuthMessage);
+        window.location.href = e.data.target || "/dashboard";
+      }
+    };
+    if (typeof window !== "undefined") {
+      window.addEventListener("message", handleAuthMessage);
+    }
+
     const { data, error: err } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${appUrl}/auth`,
+        redirectTo: callbackUrl,
         skipBrowserRedirect: framed,
         queryParams: { prompt: "select_account" },
       },
@@ -331,17 +398,43 @@ function AuthScreen() {
           : err.message,
       );
       setGoogle(false);
+      if (typeof window !== "undefined") {
+        window.removeEventListener("message", handleAuthMessage);
+      }
       return;
     }
 
     if (framed && data?.url) {
-      const opened = window.open(data.url, "_blank", "noopener,noreferrer");
+      // Open without "noopener,noreferrer" so window.opener is retained and popup can auto-close
+      const opened = window.open(
+        data.url,
+        "revision_google_auth",
+        "width=520,height=680,left=100,top=100,scrollbars=yes,resizable=yes",
+      );
       if (!opened) {
-        setError("Please allow pop-ups, or open the app in its own browser tab to use Google.");
+        setError("Please allow pop-ups, or open the app directly in your browser tab to use Google.");
+        setGoogle(false);
+        if (typeof window !== "undefined") {
+          window.removeEventListener("message", handleAuthMessage);
+        }
       } else {
-        setNotice("Finish signing in with Google in the new tab, then come back here.");
+        setNotice("Select your Google account in the popup. This window will sync automatically.");
+        // Poll popup closure as a safety fallback
+        const pollTimer = setInterval(async () => {
+          if (opened.closed) {
+            clearInterval(pollTimer);
+            if (typeof window !== "undefined") {
+              window.removeEventListener("message", handleAuthMessage);
+            }
+            const { data: s } = await supabase.auth.getSession();
+            if (s?.session?.user) {
+              window.location.href = "/dashboard";
+            } else {
+              setGoogle(false);
+            }
+          }
+        }, 1000);
       }
-      setGoogle(false);
     }
   }
 

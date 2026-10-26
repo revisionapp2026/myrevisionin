@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import katex from "katex";
-import { Sigma, Copy, Check, Bookmark, BookmarkCheck } from "lucide-react";
+import { Sigma, Copy, Check, Bookmark, BookmarkCheck, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -43,6 +43,45 @@ export function unescapeHtmlAndEntities(str: string): string {
     .replace(/&#92;/g, "\\")
     // Fix double-escaped backslashes from JSON while preserving \\ in matrices/aligned
     .replace(/\\\\([a-zA-Z]+)/g, "\\$1");
+}
+
+/**
+ * Adjusts and breaks long LaTeX formulas into aligned multi-line equations
+ * so they fit smoothly on mobile screens without requiring horizontal scrollbars.
+ */
+export function fitLatexForDisplay(raw: string): string {
+  if (!raw) return "";
+  const cleaned = cleanLatex(raw);
+
+  // If already wrapped in an aligned/matrix environment, return as is
+  if (
+    cleaned.includes("\\begin{aligned}") ||
+    cleaned.includes("\\begin{matrix}") ||
+    cleaned.includes("\\begin{cases}") ||
+    cleaned.includes("\\begin{gather}")
+  ) {
+    return cleaned;
+  }
+
+  // Multi-step equalities: e.g. A = B = C
+  const equalsCount = (cleaned.match(/=/g) || []).length;
+  if (equalsCount >= 2 && !cleaned.includes("&")) {
+    const parts = cleaned.split(/\s*=\s*/);
+    if (parts.length >= 3) {
+      const [lhs, ...rhs] = parts;
+      return `\\begin{aligned} ${lhs} &= ${rhs.join(" \\\\[5pt] &= ")} \\end{aligned}`;
+    }
+  }
+
+  // Comma-separated equations on one line: e.g. "x = 1, y = 2"
+  if (cleaned.includes(",") && equalsCount >= 2 && !cleaned.includes("&")) {
+    const subEqs = cleaned.split(/\s*,\s*/);
+    if (subEqs.length >= 2 && subEqs.every((p) => p.includes("="))) {
+      return `\\begin{aligned} ${subEqs.join(" \\\\[5pt] ")} \\end{aligned}`;
+    }
+  }
+
+  return cleaned;
 }
 
 /**
@@ -127,12 +166,13 @@ interface MathFormulaProps {
 }
 
 /**
- * Renders mathematical typography using KaTeX with responsive overflow wrapping.
+ * Renders mathematical typography using KaTeX with responsive overflow wrapping (zero scrollbars).
  */
 export function MathFormula({ math, displayMode = false, className }: MathFormulaProps) {
   const renderedHtml = useMemo(() => {
     if (!math || !math.trim()) return "";
-    const latex = toLatex(math);
+    const latexRaw = toLatex(math);
+    const latex = displayMode ? fitLatexForDisplay(latexRaw) : latexRaw;
     try {
       return katex.renderToString(latex, {
         throwOnError: false,
@@ -154,8 +194,8 @@ export function MathFormula({ math, displayMode = false, className }: MathFormul
     <span
       className={cn(
         displayMode
-          ? "block my-1.5 w-full max-w-full overflow-x-auto overflow-y-hidden text-center py-1 math-scroll"
-          : "inline-block max-w-full overflow-x-auto overflow-y-hidden align-middle px-0.5 math-inline-scroll",
+          ? "block my-1 w-full max-w-full overflow-hidden text-center py-1 math-scroll"
+          : "inline-block max-w-full overflow-hidden align-middle px-0.5 math-inline-scroll",
         className,
       )}
       dangerouslySetInnerHTML={{ __html: renderedHtml }}
@@ -471,10 +511,12 @@ interface FormulaCardProps {
   className?: string;
   isBookmarked?: boolean;
   onBookmark?: () => void;
+  index?: number;
 }
 
 /**
- * A responsive, clean Formula Card matching university formula sheets.
+ * A Virtual Book Formula Card with academic styling, crisp typesetting,
+ * and 100% viewport containment (zero scrollbars).
  */
 export function FormulaCard({
   title,
@@ -484,6 +526,7 @@ export function FormulaCard({
   className,
   isBookmarked = false,
   onBookmark,
+  index,
 }: FormulaCardProps) {
   const [copied, setCopied] = React.useState(false);
 
@@ -497,29 +540,44 @@ export function FormulaCard({
     }
   };
 
+  const formattedIndex = typeof index === "number" ? String(index).padStart(2, "0") : undefined;
+
   return (
     <div
       className={cn(
-        "group relative w-full max-w-full min-w-0 overflow-hidden rounded-xl border border-border bg-card p-3 sm:p-4 shadow-xs transition-all hover:border-primary/40 hover:shadow-sm",
+        "group relative w-full max-w-full min-w-0 rounded-2xl border border-stone-200/90 dark:border-stone-800 bg-[#fdfbf7] dark:bg-[#16171b] p-4 sm:p-5 shadow-xs transition-all hover:border-primary/40 hover:shadow-sm border-l-[5px] border-l-primary/90 dark:border-l-primary",
         className,
       )}
     >
-      <div className="flex items-center justify-between border-b border-border/60 pb-2 mb-2.5 min-w-0 gap-2">
+      {/* Top Header: Eq Number, Academic title, and Book action buttons */}
+      <div className="flex items-center justify-between border-b border-stone-200/70 dark:border-stone-800/70 pb-2.5 mb-3 gap-2 min-w-0">
         <div className="flex items-center gap-2 min-w-0 flex-1">
-          <span className="grid size-6 shrink-0 place-items-center rounded-md bg-primary/10 text-primary">
-            <Sigma className="size-3.5" />
-          </span>
-          <h4 className="text-[13.5px] sm:text-[14px] font-bold tracking-tight text-foreground leading-snug break-words">
+          {formattedIndex ? (
+            <span className="shrink-0 px-2 py-0.5 rounded-md bg-primary/10 text-primary font-mono text-[11px] font-bold tracking-wider uppercase">
+              Eq. {formattedIndex}
+            </span>
+          ) : (
+            <span className="grid size-6 shrink-0 place-items-center rounded-md bg-primary/10 text-primary">
+              <Sigma className="size-3.5" />
+            </span>
+          )}
+          <h4 className="text-[14px] sm:text-[15px] font-bold tracking-tight text-foreground leading-snug break-words">
             {title}
           </h4>
         </div>
-        <div className="flex items-center gap-1 shrink-0">
+
+        <div className="flex items-center gap-1.5 shrink-0">
           {onBookmark && (
             <button
               type="button"
               onClick={onBookmark}
               aria-label={isBookmarked ? "Remove bookmark" : "Add bookmark"}
-              className="press flex items-center justify-center rounded-md p-1.5 text-muted-foreground hover:bg-muted hover:text-primary transition-colors"
+              className={cn(
+                "press flex items-center justify-center rounded-lg p-1.5 transition-colors",
+                isBookmarked
+                  ? "bg-primary/15 text-primary"
+                  : "text-muted-foreground hover:bg-stone-200/60 dark:hover:bg-stone-800 hover:text-foreground",
+              )}
             >
               {isBookmarked ? (
                 <BookmarkCheck className="size-4 text-primary" />
@@ -532,12 +590,12 @@ export function FormulaCard({
             type="button"
             onClick={handleCopy}
             aria-label="Copy formula"
-            className="press flex items-center gap-1 rounded-md px-2 py-1 text-[11px] font-medium text-muted-foreground hover:bg-muted"
+            className="press flex items-center gap-1 rounded-lg bg-stone-200/50 dark:bg-stone-800/60 px-2.5 py-1 text-[11.5px] font-semibold text-muted-foreground hover:bg-stone-200 dark:hover:bg-stone-800 hover:text-foreground transition-colors"
           >
             {copied ? (
               <>
                 <Check className="size-3 text-emerald-500" />
-                <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Copied</span>
+                <span className="text-emerald-600 dark:text-emerald-400 font-bold">Copied</span>
               </>
             ) : (
               <>
@@ -549,25 +607,33 @@ export function FormulaCard({
         </div>
       </div>
 
-      {/* Main mathematical formula display box - strictly responsive with horizontal scroll */}
-      <div className="my-2.5 w-full max-w-full rounded-lg border border-primary/20 bg-muted/40 px-3 py-3 text-foreground transition-colors overflow-x-auto text-center">
+      {/* Virtual Book Equation Pedestal (White/Dark Page) - 100% Screen Responsive, NO Scrollbar */}
+      <div className="my-3 w-full max-w-full rounded-xl border border-stone-200/80 dark:border-stone-800/80 bg-white dark:bg-[#0f1013] py-4 px-3 sm:px-5 text-foreground shadow-xs text-center flex flex-col items-center justify-center overflow-hidden">
         <MathFormula math={formula} displayMode={true} />
       </div>
 
-      {explanation && (
-        <div className="mt-2 text-[12.5px] sm:text-[13px] leading-relaxed text-foreground/85 font-medium break-words">
-          <RichMathText text={explanation} />
+      {/* Variables / Nomenclature Breakdown */}
+      {variables && variables.length > 0 && (
+        <div className="mt-3 pt-2.5 border-t border-stone-200/60 dark:border-stone-800/60 text-[12px]">
+          <div className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-muted-foreground text-[10.5px] mb-2">
+            <BookOpen className="size-3 text-primary" />
+            <span>Where:</span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
+            {variables.map((v, i) => (
+              <div key={i} className="flex items-baseline gap-2 text-muted-foreground min-w-0">
+                <span className="font-serif italic font-bold text-primary shrink-0 text-[13px]">{v.symbol}:</span>
+                <span className="truncate text-foreground/85 font-medium">{v.meaning}</span>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
-      {variables && variables.length > 0 && (
-        <div className="mt-2.5 grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-2 border-t border-border/40 text-[11.5px]">
-          {variables.map((v, i) => (
-            <div key={i} className="flex items-center gap-1.5 text-muted-foreground min-w-0">
-              <span className="font-mono font-bold text-primary shrink-0">{v.symbol}:</span>
-              <span className="truncate">{v.meaning}</span>
-            </div>
-          ))}
+      {/* Academic Concept / Explanation Note */}
+      {explanation && (
+        <div className="mt-2.5 rounded-xl bg-stone-100/70 dark:bg-stone-900/40 p-3 text-[12.5px] sm:text-[13px] leading-relaxed text-foreground/85 font-medium border border-stone-200/50 dark:border-stone-800/40 break-words">
+          <RichMathText text={explanation} />
         </div>
       )}
     </div>
@@ -577,11 +643,13 @@ export function FormulaCard({
 /**
  * Extract formula part and explanation part from a revision point or technical string.
  * Strictly guarantees that 'formula' is an authentic mathematical equation and not an entire English paragraph.
+ * Automatically parses where/variables clauses into structured fields.
  */
 export function parseFormulaText(text: string): {
   title: string;
   formula: string;
   explanation: string;
+  variables?: { symbol: string; meaning: string }[];
 } | null {
   if (!text) return null;
 
@@ -617,13 +685,36 @@ export function parseFormulaText(text: string): {
   // Clean trailing punctuation from formula
   formula = formula.replace(/[.,;:]+$/, "").trim();
 
-  // A genuine formula should be compact (<= 140 chars) and contain math symbols, not a 200-word paragraph
+  // Extract variables from explanation if available (e.g. "where m is mass, v is velocity" or "where: m = mass, v = velocity")
+  let variables: { symbol: string; meaning: string }[] | undefined = undefined;
+  if (explanation) {
+    const whereMatch = explanation.match(/where\s*:?\s*(.+)$/i);
+    if (whereMatch) {
+      const whereClause = whereMatch[1];
+      const varParts = whereClause.split(/\s*,\s*|\s+and\s+/i);
+      const parsedVars: { symbol: string; meaning: string }[] = [];
+      for (const vp of varParts) {
+        const eqMatch = vp.match(/^([a-zA-Z0-9_\\^\{\}\']+)\s*(=|is)\s*(.+)$/i);
+        if (eqMatch) {
+          parsedVars.push({
+            symbol: eqMatch[1].trim(),
+            meaning: eqMatch[3].trim().replace(/[.;]+$/, ""),
+          });
+        }
+      }
+      if (parsedVars.length > 0) {
+        variables = parsedVars;
+      }
+    }
+  }
+
+  // A genuine formula should be compact (<= 160 chars) and contain math symbols, not a 200-word paragraph
   if (
     formula.length >= 2 &&
-    formula.length <= 140 &&
+    formula.length <= 160 &&
     (formula.includes("=") || formula.includes("\\") || formula.includes("^") || formula.includes("/"))
   ) {
-    return { title, formula, explanation };
+    return { title, formula, explanation, variables };
   }
 
   return null;

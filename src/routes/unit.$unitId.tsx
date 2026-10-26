@@ -203,33 +203,50 @@ function UnitScreen() {
                 </button>
               </div>
             ) : (
-              <div className="space-y-3.5">
-                <div className="rounded-xl border border-primary/20 bg-primary/5 p-3.5 flex items-center justify-between shadow-xs">
-                  <div className="flex items-center gap-2.5">
-                    <span className="grid size-8 place-items-center rounded-lg bg-primary text-primary-foreground shadow-xs">
-                      <Sigma className="size-4" />
+              <div className="space-y-5 sm:space-y-6">
+                {/* Virtual Book Chapter Reference Header */}
+                <div className="rounded-2xl border border-stone-200/90 dark:border-stone-800 bg-[#fdfbf7] dark:bg-[#16171b] p-4 sm:p-5 shadow-xs border-l-[5px] border-l-primary flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary text-primary-foreground shadow-xs">
+                      <Sigma className="size-5" />
                     </span>
                     <div>
-                      <h3 className="text-[14px] font-bold text-foreground">Formula Reference Sheet</h3>
-                      <p className="text-[11.5px] text-muted-foreground">{unit.title} • {formulaPoints.length} core equations</p>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10.5px] font-bold uppercase tracking-wider text-primary font-mono bg-primary/10 px-2 py-0.5 rounded-md">
+                          Virtual Book
+                        </span>
+                        <span className="text-[11.5px] font-semibold text-muted-foreground">
+                          {formulaPoints.length} Core Equations
+                        </span>
+                      </div>
+                      <h3 className="text-[15px] font-extrabold text-foreground mt-0.5">
+                        {unit.title} • Formula Reference
+                      </h3>
                     </div>
                   </div>
+                  <p className="text-[12px] text-muted-foreground leading-snug sm:text-right max-w-xs">
+                    Clean mathematical formulations with parameters, derivations &amp; exam notes.
+                  </p>
                 </div>
 
-                <div className="grid gap-3">
-                  {formulaPoints.map((p) => {
+                {/* Individual Virtual Book Formula Cards - Ample spacing, never congested */}
+                <div className="space-y-5 sm:space-y-6">
+                  {formulaPoints.map((p, idx) => {
                     const parsed = parseFormulaText(p.content);
                     const title = parsed ? parsed.title : "Governing Mathematical Formulation";
                     const formula = parsed ? parsed.formula : p.content;
                     const explanation = parsed ? parsed.explanation : undefined;
+                    const variables = parsed ? parsed.variables : undefined;
                     const bookmarked = isBookmarked(unit.id, p.content);
 
                     return (
                       <FormulaCard
                         key={p.id}
+                        index={idx + 1}
                         title={title}
                         formula={formula}
                         explanation={explanation}
+                        variables={variables}
                         isBookmarked={bookmarked}
                         onBookmark={() => toggleBookmark(unit.id, p.content)}
                       />

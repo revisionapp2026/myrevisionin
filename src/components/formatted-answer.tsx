@@ -25,7 +25,7 @@ export function FormattedAnswer({ lines }: FormattedAnswerProps) {
           return (
             <div
               key={idx}
-              className="my-3 w-full max-w-full rounded-xl border border-primary/30 bg-muted/30 p-3 shadow-xs overflow-x-auto text-center"
+              className="my-3 w-full max-w-full rounded-xl border border-primary/30 bg-muted/30 p-3 shadow-xs overflow-hidden text-center"
             >
               <div className="flex items-center justify-center gap-1.5 text-primary text-[11px] font-bold uppercase tracking-wider mb-1">
                 <Sigma className="size-3.5 shrink-0 text-accent" />
@@ -157,7 +157,7 @@ export function FormattedAnswer({ lines }: FormattedAnswerProps) {
           return (
             <div
               key={idx}
-              className="my-3 w-full max-w-full rounded-xl border border-primary/30 bg-card p-3 shadow-xs overflow-x-auto text-center"
+              className="my-3 w-full max-w-full rounded-xl border border-primary/30 bg-card p-3 shadow-xs overflow-hidden text-center"
             >
               <div className="flex items-center justify-center gap-1.5 text-primary text-[11px] font-bold uppercase tracking-wider mb-1">
                 <Sigma className="size-3.5 shrink-0 text-accent" />
