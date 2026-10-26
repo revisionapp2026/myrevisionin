@@ -98,8 +98,20 @@ export function Screen({
   className?: string;
 }) {
   return (
-    <div className={cn("min-h-dvh bg-background w-full max-w-full overflow-x-hidden", nav ? "pb-[5.75rem]" : "pb-10")}>
-      <div className={cn("screen-enter mx-auto max-w-xl px-3.5 sm:px-4 py-4 w-full min-w-0", className)}>{children}</div>
+    <div
+      className={cn(
+        "min-h-dvh bg-background w-full max-w-full overflow-x-clip overflow-y-visible",
+        nav ? "pb-[6.75rem]" : "pb-12",
+      )}
+    >
+      <div
+        className={cn(
+          "screen-enter mx-auto max-w-xl px-3.5 sm:px-4 py-4 w-full min-w-0",
+          className,
+        )}
+      >
+        {children}
+      </div>
     </div>
   );
 }

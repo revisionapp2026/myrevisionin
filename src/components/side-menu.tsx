@@ -38,14 +38,14 @@ export function SideMenu() {
       >
         <Menu className="size-5" />
       </SheetTrigger>
-      <SheetContent side="left" className="w-[78vw] max-w-xs p-0">
-        <SheetHeader className="brand-header px-5 py-5">
+      <SheetContent side="left" className="flex flex-col w-[78vw] max-w-xs p-0 overflow-hidden">
+        <SheetHeader className="brand-header px-5 py-5 shrink-0">
           <SheetTitle className="flex items-center gap-2 text-white">
             <img src={logo} alt="" className="h-10 w-auto object-contain" />
             <span className="sr-only">REVISION menu</span>
           </SheetTitle>
         </SheetHeader>
-        <nav className="grid gap-0.5 p-2">
+        <nav className="flex-1 grid gap-0.5 p-2 overflow-y-auto overscroll-contain">
           {items.map(({ to, label, icon: Icon }) => (
             <Link
               key={to}
