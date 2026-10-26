@@ -225,25 +225,14 @@ function UnitScreen() {
                     const bookmarked = isBookmarked(unit.id, p.content);
 
                     return (
-                      <div key={p.id} className="relative">
-                        <FormulaCard
-                          title={title}
-                          formula={formula}
-                          explanation={explanation}
-                        />
-                        <button
-                          type="button"
-                          onClick={() => toggleBookmark(unit.id, p.content)}
-                          aria-label={bookmarked ? "Remove bookmark" : "Add bookmark"}
-                          className="absolute top-3.5 right-12 press text-muted-foreground hover:text-primary p-1"
-                        >
-                          {bookmarked ? (
-                            <BookmarkCheck className="size-[17px] text-primary" />
-                          ) : (
-                            <Bookmark className="size-[17px]" />
-                          )}
-                        </button>
-                      </div>
+                      <FormulaCard
+                        key={p.id}
+                        title={title}
+                        formula={formula}
+                        explanation={explanation}
+                        isBookmarked={bookmarked}
+                        onBookmark={() => toggleBookmark(unit.id, p.content)}
+                      />
                     );
                   })}
                 </div>
@@ -349,10 +338,10 @@ function UnitScreen() {
           ) : (
             <ul className="surface-card divide-y divide-border min-w-0 w-full max-w-full overflow-hidden">
               {active.map((p) => (
-                <li key={p.id} className="flex items-start gap-3 px-3.5 py-3 min-w-0 w-full max-w-full overflow-hidden">
+                <li key={p.id} className="flex items-start gap-2.5 sm:gap-3 px-3 sm:px-3.5 py-3 min-w-0 w-full max-w-full overflow-hidden">
                   <span
                     aria-hidden="true"
-                    className="mt-[0.45em] size-2 shrink-0 rounded-full bg-accent"
+                    className="mt-[0.55em] size-2 shrink-0 rounded-full bg-accent"
                   />
                   <div
                     onDoubleClick={() => cycleHighlight(unit.id, p.content)}
@@ -360,31 +349,33 @@ function UnitScreen() {
                   >
                     <RenderPointContent content={p.content} hlColor={hlClass(highlightColor(unit.id, p.content))} />
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => cycleHighlight(unit.id, p.content)}
-                    aria-label="Highlight this point"
-                    className={cn(
-                      "press mt-0.5 shrink-0",
-                      highlightColor(unit.id, p.content) ? "text-accent" : "text-muted-foreground",
-                    )}
-                  >
-                    <Highlighter className="size-[18px]" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => toggleBookmark(unit.id, p.content)}
-                    aria-label={
-                      isBookmarked(unit.id, p.content) ? "Remove bookmark" : "Add bookmark"
-                    }
-                    className="press mt-0.5 shrink-0 text-muted-foreground"
-                  >
-                    {isBookmarked(unit.id, p.content) ? (
-                      <BookmarkCheck className="size-[18px] text-primary" />
-                    ) : (
-                      <Bookmark className="size-[18px]" />
-                    )}
-                  </button>
+                  <div className="flex items-center gap-1 shrink-0 mt-0.5">
+                    <button
+                      type="button"
+                      onClick={() => cycleHighlight(unit.id, p.content)}
+                      aria-label="Highlight this point"
+                      className={cn(
+                        "press p-1 rounded-md text-muted-foreground transition-colors",
+                        highlightColor(unit.id, p.content) ? "text-accent bg-accent/10" : "hover:text-accent hover:bg-muted",
+                      )}
+                    >
+                      <Highlighter className="size-[17px]" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => toggleBookmark(unit.id, p.content)}
+                      aria-label={
+                        isBookmarked(unit.id, p.content) ? "Remove bookmark" : "Add bookmark"
+                      }
+                      className="press p-1 rounded-md text-muted-foreground hover:bg-muted transition-colors"
+                    >
+                      {isBookmarked(unit.id, p.content) ? (
+                        <BookmarkCheck className="size-[17px] text-primary" />
+                      ) : (
+                        <Bookmark className="size-[17px]" />
+                      )}
+                    </button>
+                  </div>
                 </li>
               ))}
             </ul>

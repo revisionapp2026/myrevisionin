@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import katex from "katex";
-import { Sigma, Copy, Check } from "lucide-react";
+import { Sigma, Copy, Check, Bookmark, BookmarkCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -154,8 +154,8 @@ export function MathFormula({ math, displayMode = false, className }: MathFormul
     <span
       className={cn(
         displayMode
-          ? "block my-2 w-full max-w-full overflow-x-auto overflow-y-hidden text-center py-1.5 math-scroll"
-          : "inline-block max-w-full overflow-x-auto overflow-y-hidden align-middle px-0.5 math-scroll",
+          ? "block my-1.5 w-full max-w-full overflow-x-auto overflow-y-hidden text-center py-1 math-scroll"
+          : "inline-block max-w-full overflow-x-auto overflow-y-hidden align-middle px-0.5 math-inline-scroll",
         className,
       )}
       dangerouslySetInnerHTML={{ __html: renderedHtml }}
@@ -400,7 +400,16 @@ export function tokenizeMathText(rawInput: string): MathToken[] {
         if (mathStart > lastTextIndex) {
           tokens.push({ type: "text", content: text.slice(lastTextIndex, mathStart) });
         }
-        const isBlockEnv = /^\\begin\{(aligned|matrix|bmatrix|pmatrix|vmatrix|cases|gather\*?|align\*?)\}/.test(candidate);
+        const isBlockEnv =
+          /^\\begin\{(aligned|matrix|bmatrix|pmatrix|vmatrix|cases|gather\*?|align\*?)\}/.test(candidate) ||
+          (candidate.includes("=") && candidate.length > 22) ||
+          (candidate.includes("\\frac") && candidate.length > 25) ||
+          candidate.includes("\\iint") ||
+          candidate.includes("\\iiint") ||
+          candidate.includes("\\oiint") ||
+          candidate.includes("\\oint") ||
+          candidate.includes("\\sum_") ||
+          candidate.includes("\\int_");
         tokens.push({ type: isBlockEnv ? "display" : "inline", content: candidate });
         i = curr;
         lastTextIndex = i;
@@ -433,13 +442,13 @@ export function RichMathText({
   const tokens = tokenizeMathText(text);
 
   return (
-    <span className={cn("inline leading-relaxed break-words text-left min-w-0", className)}>
+    <span className={cn("inline leading-relaxed break-words text-left min-w-0 w-full max-w-full", className)}>
       {tokens.map((token, idx) => {
         if (token.type === "display") {
           return (
             <span
               key={idx}
-              className="my-2.5 block w-full max-w-full rounded-xl border border-primary/20 bg-muted/40 px-3 py-2 text-center overflow-x-auto shadow-xs"
+              className="my-2 block w-full max-w-full rounded-xl border border-primary/20 bg-muted/40 px-2.5 sm:px-3 py-2 text-center overflow-x-auto shadow-xs math-scroll"
             >
               <MathFormula math={token.content} displayMode={true} />
             </span>
@@ -460,6 +469,8 @@ interface FormulaCardProps {
   explanation?: string;
   variables?: { symbol: string; meaning: string }[];
   className?: string;
+  isBookmarked?: boolean;
+  onBookmark?: () => void;
 }
 
 /**
@@ -471,6 +482,8 @@ export function FormulaCard({
   explanation,
   variables,
   className,
+  isBookmarked = false,
+  onBookmark,
 }: FormulaCardProps) {
   const [copied, setCopied] = React.useState(false);
 
@@ -487,37 +500,53 @@ export function FormulaCard({
   return (
     <div
       className={cn(
-        "group relative w-full max-w-full min-w-0 overflow-hidden rounded-xl border border-border bg-card p-3.5 sm:p-4 shadow-xs transition-all hover:border-primary/40 hover:shadow-sm",
+        "group relative w-full max-w-full min-w-0 overflow-hidden rounded-xl border border-border bg-card p-3 sm:p-4 shadow-xs transition-all hover:border-primary/40 hover:shadow-sm",
         className,
       )}
     >
-      <div className="flex items-center justify-between border-b border-border/60 pb-2 mb-2.5 min-w-0">
-        <div className="flex items-center gap-2 min-w-0 pr-2">
+      <div className="flex items-center justify-between border-b border-border/60 pb-2 mb-2.5 min-w-0 gap-2">
+        <div className="flex items-center gap-2 min-w-0 flex-1">
           <span className="grid size-6 shrink-0 place-items-center rounded-md bg-primary/10 text-primary">
             <Sigma className="size-3.5" />
           </span>
-          <h4 className="text-[13.5px] sm:text-[14px] font-bold tracking-tight text-foreground truncate">
+          <h4 className="text-[13.5px] sm:text-[14px] font-bold tracking-tight text-foreground leading-snug break-words">
             {title}
           </h4>
         </div>
-        <button
-          type="button"
-          onClick={handleCopy}
-          aria-label="Copy formula"
-          className="press shrink-0 flex items-center gap-1 rounded-md px-2 py-1 text-[11px] font-medium text-muted-foreground hover:bg-muted"
-        >
-          {copied ? (
-            <>
-              <Check className="size-3 text-emerald-500" />
-              <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Copied</span>
-            </>
-          ) : (
-            <>
-              <Copy className="size-3" />
-              <span>Copy</span>
-            </>
+        <div className="flex items-center gap-1 shrink-0">
+          {onBookmark && (
+            <button
+              type="button"
+              onClick={onBookmark}
+              aria-label={isBookmarked ? "Remove bookmark" : "Add bookmark"}
+              className="press flex items-center justify-center rounded-md p-1.5 text-muted-foreground hover:bg-muted hover:text-primary transition-colors"
+            >
+              {isBookmarked ? (
+                <BookmarkCheck className="size-4 text-primary" />
+              ) : (
+                <Bookmark className="size-4" />
+              )}
+            </button>
           )}
-        </button>
+          <button
+            type="button"
+            onClick={handleCopy}
+            aria-label="Copy formula"
+            className="press flex items-center gap-1 rounded-md px-2 py-1 text-[11px] font-medium text-muted-foreground hover:bg-muted"
+          >
+            {copied ? (
+              <>
+                <Check className="size-3 text-emerald-500" />
+                <span className="text-emerald-600 dark:text-emerald-400 font-semibold">Copied</span>
+              </>
+            ) : (
+              <>
+                <Copy className="size-3" />
+                <span>Copy</span>
+              </>
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Main mathematical formula display box - strictly responsive with horizontal scroll */}

@@ -63,7 +63,7 @@ export function FormattedAnswer({ lines }: FormattedAnswerProps) {
               >
                 {num}
               </span>
-              <h4 className="text-[14.5px] font-bold tracking-tight truncate">{title}</h4>
+              <h4 className="text-[14.5px] font-bold tracking-tight leading-snug break-words">{title}</h4>
             </div>
           );
         }
