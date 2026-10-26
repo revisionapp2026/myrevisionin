@@ -12,11 +12,18 @@ import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
-  validateSearch: (search: Record<string, unknown>): { mode?: string } => {
-    const mode = search["mode"];
-    return typeof mode === "string" && (mode === "signin" || mode === "signup" || mode === "admin")
-      ? { mode }
-      : {};
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      mode:
+        typeof search["mode"] === "string" &&
+        (search["mode"] === "signin" || search["mode"] === "signup" || search["mode"] === "admin")
+          ? (search["mode"] as "signin" | "signup" | "admin")
+          : undefined,
+      code: typeof search["code"] === "string" ? search["code"] : undefined,
+      error: typeof search["error"] === "string" ? search["error"] : undefined,
+      error_description:
+        typeof search["error_description"] === "string" ? search["error_description"] : undefined,
+    };
   },
   head: () => ({
     meta: [
@@ -46,7 +53,8 @@ const perks = [
 
 function AuthScreen() {
   const { signIn, signUp, sendReset, user, profile, loading } = useAuth();
-  const searchMode = Route.useSearch().mode as Mode | undefined;
+  const search = Route.useSearch();
+  const searchMode = search.mode as Mode | undefined;
   const { program, semester, clearSelection } = useAppState();
   const navigate = useNavigate();
   const [mode, setMode] = useState<Mode>(searchMode === "admin" ? "admin" : "signin");
@@ -55,8 +63,60 @@ function AuthScreen() {
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [google, setGoogle] = useState(false);
+  const [oauthResolving, setOauthResolving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+
+  // Handle incoming OAuth callback (PKCE code or OAuth error params)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = search.code || urlParams.get("code");
+    const errParam = search.error_description || search.error || urlParams.get("error_description") || urlParams.get("error");
+
+    if (errParam) {
+      setError(decodeURIComponent(errParam));
+      return;
+    }
+
+    if (code) {
+      setOauthResolving(true);
+      void (async () => {
+        try {
+          const { data, error: exchangeErr } = await supabase.auth.exchangeCodeForSession(code);
+          if (exchangeErr) {
+            console.warn("[Auth] exchangeCodeForSession notice:", exchangeErr);
+          }
+          const sessionUser =
+            data?.session?.user ?? (await supabase.auth.getSession()).data.session?.user;
+          if (sessionUser) {
+            const { data: dbProfile } = await supabase
+              .from("profiles")
+              .select("program_id, semester")
+              .eq("id", sessionUser.id)
+              .maybeSingle();
+
+            const targetProg = dbProfile?.program_id || program;
+            const targetSem = dbProfile?.semester || semester;
+
+            const target =
+              targetProg && targetSem
+                ? "/dashboard"
+                : targetProg
+                  ? "/semester-selection"
+                  : "/program-selection";
+
+            window.location.href = target;
+            return;
+          }
+        } catch (e) {
+          console.error("[Auth] OAuth exchange failure:", e);
+        } finally {
+          setOauthResolving(false);
+        }
+      })();
+    }
+  }, [search.code, search.error, search.error_description, program, semester]);
 
   async function handleResetPassword() {
     if (!email.trim()) {
@@ -82,25 +142,26 @@ function AuthScreen() {
     let active = true;
     void (async () => {
       try {
-        const { data } = await supabase
-          .from("user_roles")
-          .select("role")
-          .eq("user_id", user.id)
-          .eq("role", "admin");
+        const [{ data: userRoles }, { data: dbProfile }] = await Promise.all([
+          supabase
+            .from("user_roles")
+            .select("role")
+            .eq("user_id", user.id)
+            .eq("role", "admin"),
+          supabase
+            .from("profiles")
+            .select("program_id, semester")
+            .eq("id", user.id)
+            .maybeSingle(),
+        ]);
+
         if (!active) return;
         const isAdminUser =
-          (data?.length ?? 0) > 0 || user.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+          (userRoles?.length ?? 0) > 0 || user.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
         if (isAdminUser && typeof window !== "undefined") {
           window.sessionStorage.setItem("revision_admin_unlocked", "true");
           window.localStorage.setItem("revision_admin_unlocked", "true");
-        }
-
-        if (isAdminUser) {
-          if (typeof window !== "undefined") {
-            window.location.href = "/admin";
-            return;
-          }
-          navigate({ to: "/admin", replace: true });
+          window.location.href = "/admin";
           return;
         }
 
@@ -120,9 +181,9 @@ function AuthScreen() {
           return;
         }
 
-        // For existing student sign in: check saved selections in profile or app state
-        const activeProgram = profile?.program_id || program;
-        const activeSemester = profile?.semester || semester;
+        // For existing student sign in: check saved selections in database profile first
+        const activeProgram = dbProfile?.program_id || profile?.program_id || program;
+        const activeSemester = dbProfile?.semester || profile?.semester || semester;
 
         const target = !activeProgram
           ? "/program-selection"
@@ -282,6 +343,20 @@ function AuthScreen() {
       }
       setGoogle(false);
     }
+  }
+
+  if (oauthResolving) {
+    return (
+      <div className="flex min-h-dvh flex-col items-center justify-center bg-background px-4 text-center">
+        <div className="grid size-16 place-items-center rounded-2xl bg-primary-soft text-primary shadow-sm">
+          <Loader2 className="size-8 animate-spin" />
+        </div>
+        <h2 className="mt-5 text-[20px] font-bold text-foreground">Completing sign in...</h2>
+        <p className="mt-2 text-[13.5px] text-muted-foreground max-w-xs">
+          Authenticating with Google and syncing your revision dashboard.
+        </p>
+      </div>
+    );
   }
 
   return (

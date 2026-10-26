@@ -33,6 +33,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as ApiStudyAudioRouteImport } from './routes/api/study-audio'
 import { Route as ApiStudyHelpRouteImport } from './routes/api/study-help'
+import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
 import { Route as ModelPaperPaperIdRouteImport } from './routes/model-paper.$paperId'
 import { Route as ModelPapersSubjectIdRouteImport } from './routes/model-papers.$subjectId'
 import { Route as SubjectSubjectIdRouteImport } from './routes/subject.$subjectId'
@@ -166,6 +167,11 @@ const ApiStudyHelpRoute = ApiStudyHelpRouteImport.update({
   path: '/api/study-help',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthCallbackRoute = AuthCallbackRouteImport.update({
+  id: '/callback',
+  path: '/callback',
+  getParentRoute: () => AuthRoute,
+} as any)
 const ModelPaperPaperIdRoute = ModelPaperPaperIdRouteImport.update({
   id: '/model-paper/$paperId',
   path: '/model-paper/$paperId',
@@ -238,7 +244,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/adminlogin': typeof AdminloginRoute
   '/ai-help': typeof AiHelpRoute
-  '/auth': typeof AuthRoute
+  '/auth': typeof AuthRouteWithChildren
   '/bookmarks': typeof BookmarksRoute
   '/dashboard': typeof DashboardRoute
   '/electives': typeof ElectivesRoute
@@ -258,6 +264,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AuthenticatedAdminRoute
   '/api/study-audio': typeof ApiStudyAudioRoute
   '/api/study-help': typeof ApiStudyHelpRoute
+  '/auth/callback': typeof AuthCallbackRoute
   '/model-paper/$paperId': typeof ModelPaperPaperIdRoute
   '/model-papers/$subjectId': typeof ModelPapersSubjectIdRoute
   '/subject/$subjectId': typeof SubjectSubjectIdRoute
@@ -276,7 +283,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/adminlogin': typeof AdminloginRoute
   '/ai-help': typeof AiHelpRoute
-  '/auth': typeof AuthRoute
+  '/auth': typeof AuthRouteWithChildren
   '/bookmarks': typeof BookmarksRoute
   '/dashboard': typeof DashboardRoute
   '/electives': typeof ElectivesRoute
@@ -296,6 +303,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminRoute
   '/api/study-audio': typeof ApiStudyAudioRoute
   '/api/study-help': typeof ApiStudyHelpRoute
+  '/auth/callback': typeof AuthCallbackRoute
   '/model-paper/$paperId': typeof ModelPaperPaperIdRoute
   '/model-papers/$subjectId': typeof ModelPapersSubjectIdRoute
   '/subject/$subjectId': typeof SubjectSubjectIdRoute
@@ -316,7 +324,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/adminlogin': typeof AdminloginRoute
   '/ai-help': typeof AiHelpRoute
-  '/auth': typeof AuthRoute
+  '/auth': typeof AuthRouteWithChildren
   '/bookmarks': typeof BookmarksRoute
   '/dashboard': typeof DashboardRoute
   '/electives': typeof ElectivesRoute
@@ -336,6 +344,7 @@ export interface FileRoutesById {
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/api/study-audio': typeof ApiStudyAudioRoute
   '/api/study-help': typeof ApiStudyHelpRoute
+  '/auth/callback': typeof AuthCallbackRoute
   '/model-paper/$paperId': typeof ModelPaperPaperIdRoute
   '/model-papers/$subjectId': typeof ModelPapersSubjectIdRoute
   '/subject/$subjectId': typeof SubjectSubjectIdRoute
@@ -376,6 +385,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/api/study-audio'
     | '/api/study-help'
+    | '/auth/callback'
     | '/model-paper/$paperId'
     | '/model-papers/$subjectId'
     | '/subject/$subjectId'
@@ -414,6 +424,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/api/study-audio'
     | '/api/study-help'
+    | '/auth/callback'
     | '/model-paper/$paperId'
     | '/model-papers/$subjectId'
     | '/subject/$subjectId'
@@ -453,6 +464,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin'
     | '/api/study-audio'
     | '/api/study-help'
+    | '/auth/callback'
     | '/model-paper/$paperId'
     | '/model-papers/$subjectId'
     | '/subject/$subjectId'
@@ -473,7 +485,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AdminloginRoute: typeof AdminloginRoute
   AiHelpRoute: typeof AiHelpRoute
-  AuthRoute: typeof AuthRoute
+  AuthRoute: typeof AuthRouteWithChildren
   BookmarksRoute: typeof BookmarksRoute
   DashboardRoute: typeof DashboardRoute
   ElectivesRoute: typeof ElectivesRoute
@@ -677,6 +689,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiStudyHelpRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth/callback': {
+      id: '/auth/callback'
+      path: '/callback'
+      fullPath: '/auth/callback'
+      preLoaderRoute: typeof AuthCallbackRouteImport
+      parentRoute: typeof AuthRoute
+    }
     '/model-paper/$paperId': {
       id: '/model-paper/$paperId'
       path: '/model-paper/$paperId'
@@ -782,12 +801,22 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface AuthRouteChildren {
+  AuthCallbackRoute: typeof AuthCallbackRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthCallbackRoute: AuthCallbackRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AdminloginRoute: AdminloginRoute,
   AiHelpRoute: AiHelpRoute,
-  AuthRoute: AuthRoute,
+  AuthRoute: AuthRouteWithChildren,
   BookmarksRoute: BookmarksRoute,
   DashboardRoute: DashboardRoute,
   ElectivesRoute: ElectivesRoute,

@@ -109,7 +109,34 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         supabase.from("user_roles").select("role").eq("user_id", userId).eq("role", "admin"),
       ]);
 
-      const loadedProfile = (p as Profile) ?? null;
+      let loadedProfile = (p as Profile) ?? null;
+      if (!loadedProfile && userId && session?.user) {
+        try {
+          const initialProfile = {
+            id: userId,
+            email: session.user.email ?? null,
+            full_name:
+              (session.user.user_metadata?.["full_name"] as string | undefined) ??
+              (session.user.user_metadata?.["name"] as string | undefined) ??
+              null,
+            program_id: app.program ?? null,
+            semester: app.semester ?? null,
+          };
+          const { data: created } = await supabase
+            .from("profiles")
+            .upsert(initialProfile)
+            .select(
+              "id, full_name, email, program_id, semester, avatar_url, is_premium, plan, premium_since, created_at",
+            )
+            .maybeSingle();
+          if (created) {
+            loadedProfile = created as Profile;
+          }
+        } catch (e) {
+          console.warn("[Auth] Could not create initial OAuth profile:", e);
+        }
+      }
+
       if (loadedProfile) {
         setProfile(loadedProfile);
         profileLoadedRef.current = true;
@@ -137,7 +164,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (err) {
       console.warn("Failed to refresh profile:", err);
     }
-  }, [userId, session?.user.email, app]);
+  }, [userId, session?.user, app]);
 
   useEffect(() => {
     profileLoadedRef.current = false;
@@ -287,12 +314,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const saveProfile = useCallback(
     async (patch: Partial<Omit<Profile, "id">>) => {
-      if (!profile) return;
-      const { error } = await supabase.from("profiles").update(patch).eq("id", profile.id);
+      const activeId = userId || profile?.id;
+      if (!activeId) return;
+      const { error } = await supabase.from("profiles").upsert({
+        id: activeId,
+        ...patch,
+      });
       if (error) throw error;
-      setProfile({ ...profile, ...patch });
+      setProfile((prev) => (prev ? { ...prev, ...patch } : ({ id: activeId, ...patch } as Profile)));
     },
-    [profile],
+    [userId, profile?.id],
   );
 
   const value = useMemo<AuthValue>(

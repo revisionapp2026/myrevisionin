@@ -670,6 +670,31 @@ export const btechSyllabus: SyllabusSubject[] = [
     icon: "project",
     units: ["Unit 1–5: Problem Definition, Literature, Design, Implementation, Testing"],
   },
+  /* ---------- Branch 2 (ece): Semester 8 ---------- */
+  {
+    program: "btech",
+    branch: "ece",
+    semester: 8,
+    name: "Wireless Communication & 5G Networks",
+    icon: "science",
+    units: ["Cellular Concept & Architecture", "5G NR & Massive MIMO", "Millimeter Wave Communication", "Channel Modeling & Fading", "IoT Wireless Connectivity"],
+  },
+  {
+    program: "btech",
+    branch: "ece",
+    semester: 8,
+    name: "Satellite & Optical Fiber Communication",
+    icon: "science",
+    units: ["Orbital Mechanics & Launchers", "Satellite Transponders & Links", "Optical Fiber Transmission", "WDM & Optical Networks", "GPS & Navigation Systems"],
+  },
+  {
+    program: "btech",
+    branch: "ece",
+    semester: 8,
+    name: "Major Project (Phase II)",
+    icon: "project",
+    units: ["System Integration & Hardware Prototype", "Performance Optimization & Testing", "Data Analysis & Verification", "Technical Paper Preparation", "Final Viva Voce & Demonstration"],
+  },
   /* ---------- Branch 3 (eee): Semester 1 (Common Foundation) ---------- */
   {
     program: "btech",
@@ -980,6 +1005,31 @@ export const btechSyllabus: SyllabusSubject[] = [
     name: "Major Project",
     icon: "project",
     units: ["Unit 1–5: Problem, Literature, Design, Implementation, Testing"],
+  },
+  /* ---------- Branch 3 (eee): Semester 8 ---------- */
+  {
+    program: "btech",
+    branch: "eee",
+    semester: 8,
+    name: "Smart Grid & High Voltage Engineering",
+    icon: "science",
+    units: ["Smart Grid Architecture", "Advanced Metering Infrastructure", "High Voltage Generation & Testing", "Substation Automation", "Cybersecurity in Power Systems"],
+  },
+  {
+    program: "btech",
+    branch: "eee",
+    semester: 8,
+    name: "Electric Vehicles & Energy Storage",
+    icon: "science",
+    units: ["EV Powertrains & Motor Drives", "Battery Management Systems", "Charging Infrastructure & Standards", "Regenerative Braking", "V2G Grid Integration"],
+  },
+  {
+    program: "btech",
+    branch: "eee",
+    semester: 8,
+    name: "Major Project (Phase II)",
+    icon: "project",
+    units: ["System Design & Simulation", "Hardware Implementation", "Testing & Performance Evaluation", "Documentation & Project Thesis", "Final Viva Voce"],
   },
   /* ---------- Branch 4 (me): Semester 1 (Common Foundation) ---------- */
   {
@@ -1292,6 +1342,31 @@ export const btechSyllabus: SyllabusSubject[] = [
     icon: "project",
     units: ["Unit 1–5: Problem, Literature, Design, Implementation, Testing"],
   },
+  /* ---------- Branch 4 (me): Semester 8 ---------- */
+  {
+    program: "btech",
+    branch: "me",
+    semester: 8,
+    name: "Additive Manufacturing & Rapid Prototyping",
+    icon: "science",
+    units: ["3D Printing Technologies", "Material Selection for AM", "CAD Design for Additive Manufacturing", "Post-Processing Techniques", "Industrial Applications & Testing"],
+  },
+  {
+    program: "btech",
+    branch: "me",
+    semester: 8,
+    name: "Total Quality Management & Reliability",
+    icon: "management",
+    units: ["TQM Principles & Leadership", "Statistical Quality Control (SQC)", "Six Sigma & Lean Manufacturing", "Reliability Engineering", "ISO Standards & Quality Audits"],
+  },
+  {
+    program: "btech",
+    branch: "me",
+    semester: 8,
+    name: "Major Project (Phase II)",
+    icon: "project",
+    units: ["Fabrication & Prototyping", "Experimental Validation", "Structural & Thermal Analysis", "Comprehensive Project Report", "Final Defense & Demonstration"],
+  },
   /* ---------- Branch 5 (civil): Semester 1 (Common Foundation) ---------- */
   {
     program: "btech",
@@ -1602,6 +1677,31 @@ export const btechSyllabus: SyllabusSubject[] = [
     name: "Major Project",
     icon: "project",
     units: ["Unit 1–5: Problem, Literature, Design, Implementation, Testing"],
+  },
+  /* ---------- Branch 5 (civil): Semester 8 ---------- */
+  {
+    program: "btech",
+    branch: "civil",
+    semester: 8,
+    name: "Disaster Management & Earthquake Engineering",
+    icon: "science",
+    units: ["Seismic Hazard & Ground Motion", "Earthquake Resistant Design (IS 1893)", "Ductile Detailing (IS 13920)", "Structural Retrofitting Techniques", "Disaster Mitigation Strategies"],
+  },
+  {
+    program: "btech",
+    branch: "civil",
+    semester: 8,
+    name: "Bridge Engineering & Highway Infrastructure",
+    icon: "science",
+    units: ["Bridge Types & Site Selection", "Design of Slab & Girder Bridges", "Substructure & Foundation Design", "Highway Pavement Materials", "Bridge Inspection & Maintenance"],
+  },
+  {
+    program: "btech",
+    branch: "civil",
+    semester: 8,
+    name: "Major Project (Phase II)",
+    icon: "project",
+    units: ["Site Survey & Field Data Collection", "Structural Analysis & Software Modeling", "Cost Estimation & Detailed BOQ", "Design Drawings & Project Report", "Final Viva Voce & Presentation"],
   },
   /* ---------- Branch 6 (chemical): Semester 1 (Common Foundation) ---------- */
   {
@@ -1921,6 +2021,31 @@ export const btechSyllabus: SyllabusSubject[] = [
     name: "Major Project",
     icon: "project",
     units: ["Unit 1–5: Problem, Literature, Design, Implementation, Testing"],
+  },
+  /* ---------- Branch 6 (chemical): Semester 8 ---------- */
+  {
+    program: "btech",
+    branch: "chemical",
+    semester: 8,
+    name: "Petroleum Refining & Petrochemicals",
+    icon: "science",
+    units: ["Crude Oil Characterization", "Distillation & Cracking Processes", "Catalytic Reforming & Hydrotreating", "Petrochemical Feedstocks", "Clean Fuel Standards & Blending"],
+  },
+  {
+    program: "btech",
+    branch: "chemical",
+    semester: 8,
+    name: "Industrial Safety & Hazardous Waste Management",
+    icon: "management",
+    units: ["Chemical Plant Hazards & Risk Assessment", "HAZOP & Failure Mode Analysis", "Hazardous Waste Classification & Treatment", "Effluent Treatment Plant (ETP) Design", "Environmental Regulations & Audits"],
+  },
+  {
+    program: "btech",
+    branch: "chemical",
+    semester: 8,
+    name: "Major Project (Phase II)",
+    icon: "project",
+    units: ["Process Flowsheet Development", "Equipment Design & Sizing", "Economic Feasibility & Cost Estimation", "Process Safety Verification", "Project Report & Final Defense"],
   },
   /* ---------- Branch 7 (aiml): Semester 1 (Common Foundation) ---------- */
   {
