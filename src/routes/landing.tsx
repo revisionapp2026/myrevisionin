@@ -14,6 +14,7 @@ import {
   Bell,
 } from "lucide-react";
 import { plans, premiumBenefits } from "@/lib/mock-data";
+import { usePricing } from "@/lib/pricing";
 import logo from "@/assets/revision-logo.png";
 
 export const Route = createFileRoute("/landing")({
@@ -94,12 +95,13 @@ const stats = [
 ];
 
 const steps = [
-  { n: "01", title: "Pick your program", text: "BBA or B.Com — your syllabus, structured." },
-  { n: "02", title: "Choose your semester", text: "All six semesters, subject by subject." },
+  { n: "01", title: "Pick your program", text: "BBA, B.Com, B.Sc, or Engineering (B.Tech/BE) — your syllabus, structured." },
+  { n: "02", title: "Choose your semester", text: "Semester by semester, subject by subject." },
   { n: "03", title: "Revise the highlights", text: "Crisp points, solved papers, bookmarks." },
 ];
 
 function LandingPage() {
+  const { priceFormatted, originalPriceFormatted, isOfferActive, countdown } = usePricing();
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-30 border-b border-border/60 bg-background/85 backdrop-blur">
@@ -143,7 +145,7 @@ function LandingPage() {
           <div>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3.5 py-1.5 text-xs font-semibold">
               <Zap className="h-3.5 w-3.5 text-accent" />
-              Built for BBA &amp; B.Com students
+              Built for BBA, B.Com, B.Sc &amp; Engineering students
             </span>
             <h1 className="mt-5 font-display text-4xl font-extrabold leading-[1.06] tracking-tight md:text-5xl xl:text-6xl">
               Revise your entire semester in <span className="text-primary">days,</span> not weeks
@@ -265,39 +267,34 @@ function LandingPage() {
               Core highlights are free forever. Premium unlocks every solved paper.
             </p>
           </div>
-          <div className="mx-auto mt-12 grid max-w-3xl gap-6 md:grid-cols-2">
-            {plans.map((plan) => (
-              <div
-                key={plan.id}
-                className={`surface-card relative p-7 ${plan.highlight ? "ring-2 ring-accent" : ""}`}
-              >
-                {plan.highlight && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-accent px-3.5 py-1 text-xs font-bold text-accent-foreground">
-                    Best value
-                  </span>
-                )}
-                <h3 className="font-display text-lg font-bold capitalize">{plan.id} Premium</h3>
-                <p className="mt-2">
-                  <span className="font-display text-4xl font-extrabold">{plan.price}</span>
-                  <span className="ml-1.5 text-sm text-muted-foreground">{plan.period}</span>
-                </p>
-                <p className="mt-1 text-xs font-medium text-accent">{plan.note}</p>
-                <ul className="mt-5 space-y-2.5 text-sm">
-                  {premiumBenefits.map((f) => (
-                    <li key={f} className="flex items-start gap-2.5">
-                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  to="/payment"
-                  className="mt-6 block rounded-xl bg-primary py-3 text-center text-sm font-semibold text-primary-foreground transition hover:shadow-lift"
-                >
-                  Get {plan.id === "yearly" ? "Yearly" : "Lifetime"}
-                </Link>
+          <div className="mx-auto mt-12 grid max-w-md gap-6">
+            <div className="surface-card relative p-7 ring-2 ring-accent">
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-accent px-3.5 py-1 text-xs font-bold text-accent-foreground">
+                Lifetime Access
+              </span>
+              <h3 className="font-display text-lg font-bold capitalize">Lifetime Access</h3>
+              <div className="mt-2 flex items-baseline gap-2">
+                <span className="font-display text-4xl font-extrabold">{priceFormatted}</span>
+                <span className="text-sm font-semibold text-muted-foreground">/ one-time payment</span>
               </div>
-            ))}
+              <p className="mt-2 text-xs font-semibold text-accent">
+                ⚡ One-time payment · Full access forever, no recurring fees
+              </p>
+              <ul className="mt-5 space-y-2.5 text-sm">
+                {premiumBenefits.map((f) => (
+                  <li key={f} className="flex items-start gap-2.5">
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                to="/payment"
+                className="mt-6 block rounded-xl bg-primary py-3 text-center text-sm font-semibold text-primary-foreground transition hover:shadow-lift"
+              >
+                Get Lifetime Access ({priceFormatted})
+              </Link>
+            </div>
           </div>
         </div>
       </section>

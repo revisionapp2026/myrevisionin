@@ -1,8 +1,9 @@
 {
+  "id": "/",
   "name": "REVISION — Last Minute Revision That Actually Works",
   "short_name": "REVISION",
   "description": "Revision highlights, bookmarks and solved model papers for B.Com and BBA students.",
-  "start_url": "/",
+  "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
   "background_color": "#101B45",

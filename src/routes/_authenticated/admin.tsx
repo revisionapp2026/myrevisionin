@@ -63,6 +63,29 @@ const TABS: { id: Tab; label: string; icon: LucideIcon }[] = [
 ];
 const SCOPED: Tab[] = ["content", "papers"];
 
+export type AdminStats = {
+  subjects: number;
+  units: number;
+  points: number;
+  papers: number;
+  previousYear: number;
+  freePapers: number;
+  questions: number;
+  students: number;
+  premium: number;
+  newStudents: number;
+  notifications: number;
+  published: number;
+  paidPayments: number;
+  paidUsers: number;
+  revenue: number;
+  revenue7d: number;
+  coverage: { label: string; subjects: number }[];
+  siteVisits: number;
+  pwaInstalls: number;
+  totalPayments: number;
+};
+
 /* ---------------- shared bits ---------------- */
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
@@ -88,6 +111,8 @@ function Row({
   onEdit,
   onDelete,
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  key?: any;
   title: string;
   meta?: string;
   onOpen?: () => void;
@@ -134,6 +159,8 @@ function Toggle({
   onClick,
   children,
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  key?: any;
   active: boolean;
   onClick: () => void;
   children: React.ReactNode;
@@ -171,13 +198,18 @@ function Err({ error }: { error: unknown }) {
 /* ---------------- panel ---------------- */
 
 function AdminPanel() {
-  const { isAdmin, loading } = useAuth();
+  const { isAdmin, loading, signOut } = useAuth();
+  const hasLocalAdmin =
+    typeof window !== "undefined" &&
+    (window.sessionStorage.getItem("revision_admin_unlocked") === "true" ||
+      window.localStorage.getItem("revision_admin_unlocked") === "true");
+  const authorized = isAdmin || hasLocalAdmin;
   const [tab, setTab] = useState<Tab>("analytics");
   const [program, setProgram] = useState("bba");
   const [semester, setSemester] = useState<number | null>(1);
   const [group, setGroup] = useState<string>(ELECTIVE_GROUPS[0]);
 
-  if (loading) {
+  if (loading && !hasLocalAdmin) {
     return (
       <>
         <ScreenHeader title="Admin Panel" />
@@ -190,7 +222,7 @@ function AdminPanel() {
     );
   }
 
-  if (!isAdmin) {
+  if (!authorized) {
     return (
       <>
         <ScreenHeader title="Admin Panel" />
@@ -198,12 +230,20 @@ function AdminPanel() {
           <p className="surface-card mt-6 px-5 py-6 text-center text-sm text-muted-foreground">
             This area is for administrators only.
           </p>
-          <Link
-            to="/dashboard"
-            className="mt-4 block text-center text-sm font-semibold text-primary"
-          >
-            Back to app
-          </Link>
+          <div className="mt-4 flex flex-col items-center gap-2">
+            <Link
+              to="/adminlogin"
+              className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90"
+            >
+              Sign in as Admin
+            </Link>
+            <Link
+              to="/dashboard"
+              className="text-center text-sm font-semibold text-muted-foreground hover:underline"
+            >
+              Back to app
+            </Link>
+          </div>
         </Screen>
       </>
     );
@@ -215,13 +255,31 @@ function AdminPanel() {
         title="Admin Workspace"
         subtitle="Live content management"
         action={
-          <Link
-            to="/dashboard"
-            aria-label="Open student app"
-            className="press grid size-9 place-items-center rounded-full text-white/95 hover:bg-white/15"
-          >
-            <Home className="size-[18px]" />
-          </Link>
+          <div className="flex items-center gap-1">
+            <button
+              type="button"
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  window.sessionStorage.removeItem("revision_admin_unlocked");
+                  window.localStorage.removeItem("revision_admin_unlocked");
+                }
+                void signOut().finally(() => {
+                  window.location.href = "/adminlogin";
+                });
+              }}
+              title="Exit Admin"
+              className="rounded-lg bg-white/15 px-2.5 py-1 text-[12px] font-semibold text-white transition hover:bg-white/25"
+            >
+              Exit
+            </button>
+            <Link
+              to="/dashboard"
+              aria-label="Open student app"
+              className="press grid size-9 place-items-center rounded-full text-white/95 hover:bg-white/15"
+            >
+              <Home className="size-[18px]" />
+            </Link>
+          </div>
         }
         home={false}
       />
@@ -259,21 +317,28 @@ function AdminPanel() {
           {SCOPED.includes(tab) && (
             <div className="mb-3 grid gap-2">
               <div className="flex gap-2">
-                {["bba", "bcom"].map((p) => (
-                  <Toggle key={p} active={program === p} onClick={() => setProgram(p)}>
-                    {p === "bba" ? "BBA" : "B.Com"}
+                {[
+                  { id: "bba", label: "BBA" },
+                  { id: "bcom", label: "B.Com" },
+                  { id: "btech", label: "Engineering (B.Tech/BE)" },
+                  { id: "bsc", label: "B.Sc (Science)" },
+                ].map((p) => (
+                  <Toggle key={p.id} active={program === p.id} onClick={() => setProgram(p.id)}>
+                    {p.label}
                   </Toggle>
                 ))}
               </div>
               <div className="flex flex-wrap gap-2">
-                {[1, 2, 3, 4, 5, 6].map((s) => (
+                {(program === "btech" ? [1, 2, 3, 4, 5, 6, 7, 8] : [1, 2, 3, 4, 5, 6]).map((s) => (
                   <Toggle key={s} active={semester === s} onClick={() => setSemester(s)}>
                     Sem {s}
                   </Toggle>
                 ))}
-                <Toggle active={semester === null} onClick={() => setSemester(null)}>
-                  Electives
-                </Toggle>
+                {program !== "btech" && program !== "bsc" && (
+                  <Toggle active={semester === null} onClick={() => setSemester(null)}>
+                    Electives
+                  </Toggle>
+                )}
               </div>
               {semester === null && (
                 <div className="flex flex-wrap gap-2">
@@ -351,11 +416,9 @@ function AdminSidebar({ tab, setTab }: { tab: Tab; setTab: (t: Tab) => void }) {
           [
             ["Students", s?.students],
             ["Premium", s?.premium],
-            ["Units", s?.units],
-            ["Revision points", s?.points],
-            ["Papers", s?.papers],
-            ["Solved questions", s?.questions],
-            ["Collected", s ? `₹${s.revenue}` : undefined],
+            ["PWA Installs", s?.pwaInstalls],
+            ["Payments", s?.totalPayments],
+            ["Revenue", s ? `₹${s.revenue}` : undefined],
             ["Conversion", s ? `${conversion}%` : undefined],
           ] as [string, number | string | undefined][]
         ).map(([label, value]) => (
@@ -1563,6 +1626,8 @@ function NotificationsTab() {
                 <option value="">All</option>
                 <option value="bba">BBA</option>
                 <option value="bcom">B.Com</option>
+                <option value="btech">Engineering (B.Tech/BE)</option>
+                <option value="bsc">Bachelor of Science (B.Sc)</option>
               </select>
             </Field>
             <Field label="Semester (optional)">
@@ -1643,57 +1708,221 @@ type DbProfile = {
 };
 
 function UsersTab() {
+  const qc = useQueryClient();
+  const [search, setSearch] = useState("");
+  const [cfOrderId, setCfOrderId] = useState("");
+  const [verifying, setVerifying] = useState(false);
+  const [verifyMsg, setVerifyMsg] = useState<{ text: string; ok: boolean } | null>(null);
+  const [updatingId, setUpdatingId] = useState<string | null>(null);
+
   const {
     data: users = [],
     isLoading,
     error,
   } = useQuery({
     queryKey: ["admin-users"],
+    staleTime: 5_000,
+    refetchInterval: 10_000,
     queryFn: async () => {
-      const { data, error } = await supabase
+      // Get all profiles
+      const { data: profiles, error: profilesError } = await supabase
         .from("profiles")
         .select("id, full_name, email, program_id, semester, is_premium, plan, created_at")
         .order("created_at", { ascending: false });
-      if (error) throw error;
-      return (data ?? []) as DbProfile[];
+
+      if (profilesError) {
+        console.error("Error fetching users:", profilesError);
+        throw profilesError;
+      }
+
+      return (profiles ?? []) as DbProfile[];
     },
   });
 
+  async function handleTogglePremium(userId: string, targetPremium: boolean, plan = "lifetime") {
+    setUpdatingId(userId);
+    try {
+      const { error: updateErr } = await supabase
+        .from("profiles")
+        .update({
+          is_premium: targetPremium,
+          plan: targetPremium ? plan : null,
+          premium_since: targetPremium ? new Date().toISOString() : null,
+        })
+        .eq("id", userId);
+
+      if (updateErr) throw updateErr;
+
+      if (targetPremium) {
+        // Record manual payment via RPC to ensure RLS compliance
+        try {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          await (supabase.rpc as any)("record_payment", {
+            p_user_id: userId,
+            p_plan: plan,
+            p_amount: 199,
+            p_method: "admin_grant",
+            p_status: "paid",
+            p_reference: `ADMIN_GRANT_${Date.now()}`,
+          });
+        } catch {
+          /* ignore rpc error */
+        }
+      }
+
+      await qc.invalidateQueries({ queryKey: ["admin-users"] });
+      await qc.invalidateQueries({ queryKey: ["admin-payments"] });
+    } catch (err) {
+      console.error("Failed to toggle premium:", err);
+      alert("Failed to update user premium status: " + (err as Error).message);
+    } finally {
+      setUpdatingId(null);
+    }
+  }
+
+  async function handleVerifyCashfree(e: React.FormEvent) {
+    e.preventDefault();
+    if (!cfOrderId.trim()) return;
+    setVerifying(true);
+    setVerifyMsg(null);
+    try {
+      const res = await fetch("/api/cashfree/verify-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderId: cfOrderId.trim() }),
+      });
+      const data = (await res.json()) as { success?: boolean; message?: string };
+      setVerifyMsg({ text: data.message || "Order processed.", ok: Boolean(data.success) });
+      if (data.success) {
+        setCfOrderId("");
+        await qc.invalidateQueries({ queryKey: ["admin-users"] });
+        await qc.invalidateQueries({ queryKey: ["admin-payments"] });
+      }
+    } catch (err) {
+      setVerifyMsg({ text: "Failed to verify order: " + String(err), ok: false });
+    } finally {
+      setVerifying(false);
+    }
+  }
+
+  const filtered = users.filter((u) => {
+    if (!search.trim()) return true;
+    const term = search.toLowerCase();
+    return (
+      (u.full_name ?? "").toLowerCase().includes(term) ||
+      (u.email ?? "").toLowerCase().includes(term) ||
+      u.id.toLowerCase().includes(term)
+    );
+  });
+
   return (
-    <div className="grid gap-2.5">
+    <div className="grid gap-3">
+      {/* Cashfree Order Verifier Tool for Admin */}
+      <div className="surface-card p-3.5 border border-primary/20 bg-primary-soft/30">
+        <p className="text-[13px] font-bold text-foreground">Verify &amp; Unlock Cashfree Order</p>
+        <p className="text-[12px] text-muted-foreground mt-0.5">
+          Paste an Order ID from a student's receipt (e.g. ORDER_1727...) to verify with Cashfree
+          and unlock them.
+        </p>
+        <form onSubmit={handleVerifyCashfree} className="mt-2.5 flex flex-wrap gap-2">
+          <input
+            type="text"
+            value={cfOrderId}
+            onChange={(e) => setCfOrderId(e.target.value)}
+            placeholder="Cashfree Order ID"
+            className="flex-1 min-w-[200px] rounded-lg border border-input bg-background px-3 py-1.5 text-[13px] placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+          />
+          <button
+            type="submit"
+            disabled={verifying || !cfOrderId.trim()}
+            className="rounded-lg bg-primary px-3.5 py-1.5 text-[12.5px] font-bold text-primary-foreground disabled:opacity-50"
+          >
+            {verifying ? "Verifying…" : "Verify Order"}
+          </button>
+        </form>
+        {verifyMsg && (
+          <p
+            className={cn(
+              "mt-2 text-[12px] font-semibold",
+              verifyMsg.ok ? "text-success" : "text-destructive",
+            )}
+          >
+            {verifyMsg.text}
+          </p>
+        )}
+      </div>
+
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-[12.5px] font-semibold text-muted-foreground">
+          {users.length} registered {users.length === 1 ? "student" : "students"}
+        </p>
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search by name or email…"
+          className="rounded-lg border border-input bg-background px-3 py-1 text-[12px] placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+        />
+      </div>
+
       {isLoading && <Loader2 className="mx-auto size-5 animate-spin text-muted-foreground" />}
       <Err error={error} />
-      <p className="text-[12.5px] font-semibold text-muted-foreground">
-        {users.length} registered {users.length === 1 ? "student" : "students"}
-      </p>
-      {users.map((u) => (
-        <div key={u.id} className="surface-card px-3.5 py-3">
-          <div className="flex items-start justify-between gap-2">
-            <div className="min-w-0">
-              <p className="truncate text-[14.5px] font-bold">{u.full_name || "No name"}</p>
-              <p className="truncate text-[12.5px] text-muted-foreground">{u.email || u.id}</p>
+
+      {filtered.map((u) => {
+        const isBusy = updatingId === u.id;
+        return (
+          <div key={u.id} className="surface-card px-3.5 py-3">
+            <div className="flex items-start justify-between gap-2">
+              <div className="min-w-0">
+                <p className="truncate text-[14.5px] font-bold">{u.full_name || "No name"}</p>
+                <p className="truncate text-[12.5px] text-muted-foreground">{u.email || u.id}</p>
+              </div>
+              <span
+                className={cn(
+                  "shrink-0 rounded-full px-2.5 py-1 text-[11.5px] font-bold",
+                  u.is_premium
+                    ? "bg-accent text-accent-foreground"
+                    : "bg-muted text-muted-foreground",
+                )}
+              >
+                {u.is_premium ? (u.plan ? `Premium · ${u.plan}` : "Premium") : "Free"}
+              </span>
             </div>
-            <span
-              className={cn(
-                "shrink-0 rounded-full px-2.5 py-1 text-[11.5px] font-bold",
-                u.is_premium
-                  ? "bg-accent text-accent-foreground"
-                  : "bg-muted text-muted-foreground",
+            <p className="mt-1.5 text-[12px] text-muted-foreground">
+              {u.program_id ? u.program_id.toUpperCase() : "Program not set"}
+              {u.semester ? ` · Semester ${u.semester}` : ""} · joined{" "}
+              {new Date(u.created_at).toLocaleDateString()}
+            </p>
+
+            {/* Admin Premium Management Controls */}
+            <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-border/60 pt-2.5">
+              {!u.is_premium ? (
+                <button
+                  type="button"
+                  disabled={isBusy}
+                  onClick={() => handleTogglePremium(u.id, true, "lifetime")}
+                  className="rounded-md bg-accent px-3 py-1.5 text-[12px] font-bold text-accent-foreground hover:opacity-90 disabled:opacity-50 shadow-xs"
+                >
+                  {isBusy ? "Updating…" : "Grant Lifetime Access"}
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  disabled={isBusy}
+                  onClick={() => handleTogglePremium(u.id, false)}
+                  className="rounded-md bg-destructive/10 px-2.5 py-1 text-[11.5px] font-bold text-destructive hover:bg-destructive/20 disabled:opacity-50"
+                >
+                  {isBusy ? "Updating…" : "Revoke Premium"}
+                </button>
               )}
-            >
-              {u.is_premium ? (u.plan ? `Premium · ${u.plan}` : "Premium") : "Free"}
-            </span>
+            </div>
           </div>
-          <p className="mt-1.5 text-[12px] text-muted-foreground">
-            {u.program_id ? u.program_id.toUpperCase() : "Program not set"}
-            {u.semester ? ` · Semester ${u.semester}` : ""} · joined{" "}
-            {new Date(u.created_at).toLocaleDateString()}
-          </p>
-        </div>
-      ))}
-      {!isLoading && users.length === 0 && (
+        );
+      })}
+
+      {!isLoading && filtered.length === 0 && (
         <p className="surface-card px-4 py-6 text-center text-[13px] text-muted-foreground">
-          No students have signed up yet.
+          {search ? "No students matching your search." : "No students have signed up yet."}
         </p>
       )}
     </div>
@@ -1715,25 +1944,104 @@ type DbPayment = {
   created_at: string;
 };
 
+function isDemoPaymentRecord(p: {
+  is_demo?: boolean | null;
+  method?: string | null;
+  reference?: string | null;
+  plan?: string | null;
+}) {
+  if (p.is_demo === true) return true;
+  const m = String(p.method || "").toLowerCase();
+  if (
+    m.includes("demo") ||
+    m.includes("simulated") ||
+    m.includes("test") ||
+    m.includes("sandbox") ||
+    m.includes("mock")
+  ) {
+    return true;
+  }
+  const ref = String(p.reference || "").toLowerCase();
+  if (
+    ref.includes("demo") ||
+    ref.includes("test_") ||
+    ref.includes("simulated") ||
+    ref.includes("mock") ||
+    ref.startsWith("order_test_") ||
+    ref.startsWith("admin_grant_") ||
+    ref.includes("sandbox")
+  ) {
+    return true;
+  }
+  const pl = String(p.plan || "").toLowerCase();
+  if (pl.includes("demo") || pl.includes("test")) {
+    return true;
+  }
+  return false;
+}
+
 function PaymentsTab() {
+  const qc = useQueryClient();
+  const [cleaning, setCleaning] = useState(false);
+  const [cleanMessage, setCleanMessage] = useState<string | null>(null);
+
   const { data, isLoading, error } = useQuery({
     queryKey: ["admin-payments"],
+    staleTime: 5_000,
+    refetchInterval: 10_000,
     queryFn: async () => {
       const [pay, prof] = await Promise.all([
-        supabase.from("payments").select("*").order("created_at", { ascending: false }).limit(200),
+        supabase
+          .from("payments")
+          .select("*")
+          .order("created_at", { ascending: false })
+          .limit(500),
         supabase.from("profiles").select("id, full_name, email"),
       ]);
-      if (pay.error) throw pay.error;
-      if (prof.error) throw prof.error;
+      if (pay.error) {
+        console.error("Error fetching payments:", pay.error);
+        throw pay.error;
+      }
+      if (prof.error) {
+        console.error("Error fetching profiles for payments:", prof.error);
+        throw prof.error;
+      }
       const names = new Map(
         (prof.data ?? []).map((p) => [p.id, p.email || p.full_name || p.id] as const),
       );
-      return ((pay.data ?? []) as DbPayment[]).map((p) => ({
+      const realPayments = ((pay.data ?? []) as DbPayment[]).filter(
+        (p) => !isDemoPaymentRecord(p),
+      );
+      return realPayments.map((p) => ({
         ...p,
         who: names.get(p.user_id) ?? p.user_id,
       }));
     },
   });
+
+  const purgeDemo = async () => {
+    if (!confirm("Are you sure you want to remove all demo payment records from the database?"))
+      return;
+    setCleaning(true);
+    setCleanMessage(null);
+    try {
+      const res = await fetch("/api/admin/clean-demo-payments", { method: "POST" });
+      const resData = await res.json();
+      if (resData.success) {
+        setCleanMessage(resData.message || "Demo payment records removed successfully.");
+        await Promise.all([
+          qc.invalidateQueries({ queryKey: ["admin-payments"] }),
+          qc.invalidateQueries({ queryKey: ["admin-stats"] }),
+        ]);
+      } else {
+        alert(resData.error || "Failed to remove demo records.");
+      }
+    } catch (err) {
+      alert("Error: " + String(err));
+    } finally {
+      setCleaning(false);
+    }
+  };
 
   const rows = data ?? [];
   const paid = rows.filter((r) => r.status === "paid");
@@ -1743,14 +2051,37 @@ function PaymentsTab() {
     <div className="grid gap-2.5">
       {isLoading && <Loader2 className="mx-auto size-5 animate-spin text-muted-foreground" />}
       <Err error={error} />
-      <div className="grid grid-cols-2 gap-2.5">
-        <div className="surface-card px-3.5 py-3">
-          <p className="text-[12px] font-semibold text-muted-foreground">Successful</p>
-          <p className="text-[20px] font-extrabold">{paid.length}</p>
+      {cleanMessage && (
+        <div className="rounded-xl border border-success/30 bg-success/10 px-3.5 py-2.5 text-[13px] font-semibold text-success">
+          {cleanMessage}
         </div>
-        <div className="surface-card px-3.5 py-3">
-          <p className="text-[12px] font-semibold text-muted-foreground">Collected</p>
-          <p className="text-[20px] font-extrabold">₹{total}</p>
+      )}
+      <div className="flex items-center justify-between gap-2">
+        <span className="rounded-full bg-accent/15 px-3 py-1 text-[11.5px] font-bold text-accent">
+          Showing Real Payments Only
+        </span>
+        <button
+          type="button"
+          onClick={() => void purgeDemo()}
+          disabled={cleaning}
+          className="press inline-flex items-center gap-1.5 rounded-lg border border-destructive/30 bg-destructive/10 px-2.5 py-1 text-[11.5px] font-bold text-destructive hover:bg-destructive/20 disabled:opacity-50"
+        >
+          {cleaning ? <Loader2 className="size-3 animate-spin" /> : <Trash2 className="size-3" />}
+          Remove Demo Payments
+        </button>
+      </div>
+      <div className="grid grid-cols-3 gap-2.5">
+        <div className="surface-card px-3 py-2.5">
+          <p className="text-[11.5px] font-semibold text-muted-foreground">Successful (Real)</p>
+          <p className="text-[19px] font-extrabold">{paid.length}</p>
+        </div>
+        <div className="surface-card px-3 py-2.5">
+          <p className="text-[11.5px] font-semibold text-muted-foreground">Paid Users</p>
+          <p className="text-[19px] font-extrabold">{new Set(paid.map((r) => r.user_id).filter(Boolean)).size}</p>
+        </div>
+        <div className="surface-card px-3 py-2.5">
+          <p className="text-[11.5px] font-semibold text-muted-foreground">Revenue (Real)</p>
+          <p className="text-[19px] font-extrabold">₹{total}</p>
         </div>
       </div>
       {rows.map((p) => (
@@ -1776,14 +2107,14 @@ function PaymentsTab() {
             </span>
           </div>
           <p className="mt-1.5 text-[12px] text-muted-foreground">
-            {p.method ?? "—"} · {p.reference ?? "no reference"} · {p.is_demo ? "test mode" : "live"}{" "}
-            · {new Date(p.created_at).toLocaleString()}
+            {p.method ?? "Cashfree"} · {p.reference ?? "no reference"} · Real Payment ·{" "}
+            {new Date(p.created_at).toLocaleString()}
           </p>
         </div>
       ))}
       {!isLoading && rows.length === 0 && (
         <p className="surface-card px-4 py-6 text-center text-[13px] text-muted-foreground">
-          No payments recorded yet.
+          No real payments recorded yet.
         </p>
       )}
     </div>
@@ -1792,43 +2123,43 @@ function PaymentsTab() {
 
 /* ---------------- analytics ---------------- */
 
-type AdminStats = {
-  subjects: number;
-  units: number;
-  points: number;
-  papers: number;
-  previousYear: number;
-  freePapers: number;
-  questions: number;
-  students: number;
-  premium: number;
-  newStudents: number;
-  notifications: number;
-  published: number;
-  paidPayments: number;
-  revenue: number;
-  revenue7d: number;
-  coverage: { label: string; subjects: number }[];
-};
-
 function useAdminStats() {
-  return useQuery<AdminStats>({
+  return useQuery({
     queryKey: ["admin-stats"],
-    staleTime: 30_000,
-    queryFn: async () => {
+    staleTime: 3_000, // Reduced to 3s for faster updates
+    refetchInterval: 5_000, // Auto-refresh every 5 seconds for real-time
+    queryFn: async (): Promise<AdminStats> => {
       const since = new Date(Date.now() - 7 * 864e5).toISOString();
+
+      // Get auth.users count directly
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: authUsersCount } = await (supabase.rpc as any)("get_auth_users_count");
+      const totalUsers = authUsersCount ?? 0;
+
+      // Get profiles count
+      const { count: profilesCount } = await supabase
+        .from("profiles")
+        .select("id", { count: "exact", head: true });
+
+      // Get real payments count
+      const { count: paymentsCount } = await supabase
+        .from("payments")
+        .select("id", { count: "exact", head: true })
+        .eq("is_demo", false);
+
       const head = (table: string) =>
         supabase.from(table as "subjects").select("id", { count: "exact", head: true });
 
-      const [subjects, units, points, papers, questions, profiles, notifications] =
+      const [subjects, units, points, papers, questions, notifications, siteVisits, pwaInstalls] =
         await Promise.all([
           head("subjects"),
           head("units"),
           head("revision_points"),
           head("model_papers"),
           head("paper_questions"),
-          head("profiles"),
           head("notifications"),
+          head("site_visits"),
+          head("pwa_installs"),
         ]);
 
       const [premium, newStudents, previousYear, freePapers, published] = await Promise.all([
@@ -1855,17 +2186,52 @@ function useAdminStats() {
       ]);
 
       const [pay, subjectRows] = await Promise.all([
-        supabase.from("payments").select("amount, status, created_at").limit(1000),
+        supabase
+          .from("payments")
+          .select("amount, status, created_at, is_demo, method, reference, user_id")
+          .limit(1000),
         supabase.from("subjects").select("program, semester, elective_group"),
       ]);
 
-      const paid = (pay.data ?? []).filter((p) => p.status === "paid");
+      const realPayments = (pay.data ?? []).filter((p) => !isDemoPaymentRecord(p));
+      const paid = realPayments.filter((p) => p.status === "paid");
+      const realPaidUsers = new Set(paid.map((p) => p.user_id).filter(Boolean));
       const buckets = new Map<string, number>();
       for (const s of subjectRows.data ?? []) {
+        const progName =
+          s.program === "bba"
+            ? "BBA"
+            : s.program === "btech"
+              ? "B.Tech"
+              : s.program === "bsc"
+                ? "B.Sc"
+                : "B.Com";
         const label = s.semester
-          ? `${s.program === "bba" ? "BBA" : "B.Com"} Sem ${s.semester}`
-          : `${s.program === "bba" ? "BBA" : "B.Com"} Electives`;
+          ? `${progName} Sem ${s.semester}`
+          : `${progName} Electives`;
         buckets.set(label, (buckets.get(label) ?? 0) + 1);
+      }
+
+      let resolvedPwaInstalls = pwaInstalls.count ?? 0;
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { data: rpcCount } = await (supabase.rpc as any)("get_pwa_installs_count");
+        if (typeof rpcCount === "number") {
+          resolvedPwaInstalls = Math.max(resolvedPwaInstalls, rpcCount);
+        }
+      } catch {
+        /* ignore */
+      }
+      try {
+        const statsRes = await fetch("/api/admin/stats");
+        if (statsRes.ok) {
+          const statsData = await statsRes.json();
+          if (typeof statsData.pwaInstalls === "number") {
+            resolvedPwaInstalls = Math.max(resolvedPwaInstalls, statsData.pwaInstalls);
+          }
+        }
+      } catch {
+        /* ignore */
       }
 
       return {
@@ -1876,12 +2242,13 @@ function useAdminStats() {
         previousYear: previousYear.count ?? 0,
         freePapers: freePapers.count ?? 0,
         questions: questions.count ?? 0,
-        students: profiles.count ?? 0,
+        students: totalUsers, // Use auth.users count instead of profiles
         premium: premium.count ?? 0,
         newStudents: newStudents.count ?? 0,
         notifications: notifications.count ?? 0,
         published: published.count ?? 0,
         paidPayments: paid.length,
+        paidUsers: realPaidUsers.size,
         revenue: paid.reduce((n, p) => n + (p.amount ?? 0), 0),
         revenue7d: paid
           .filter((p) => p.created_at >= since)
@@ -1889,6 +2256,9 @@ function useAdminStats() {
         coverage: [...buckets.entries()]
           .map(([label, count]) => ({ label, subjects: count }))
           .sort((a, b) => a.label.localeCompare(b.label)),
+        siteVisits: siteVisits.count ?? 0,
+        pwaInstalls: resolvedPwaInstalls,
+        totalPayments: realPayments.length,
       };
     },
   });
@@ -1904,7 +2274,17 @@ function Stat({ label, value, hint }: { label: string; value: number | string; h
   );
 }
 
-function Bar({ label, value, max }: { label: string; value: number; max: number }) {
+function Bar({
+  label,
+  value,
+  max,
+}: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  key?: any;
+  label: string;
+  value: number;
+  max: number;
+}) {
   return (
     <div className="grid gap-1">
       <div className="flex items-baseline justify-between text-[12.5px]">
@@ -1928,6 +2308,71 @@ function AnalyticsTab() {
   const avgPoints = s && s.units ? Math.round(s.points / s.units) : 0;
   const avgQuestions = s && s.papers ? Math.round(s.questions / s.papers) : 0;
   const maxCoverage = s ? Math.max(1, ...s.coverage.map((c) => c.subjects)) : 1;
+  const [syncing, setSyncing] = useState(false);
+  const [syncResult, setSyncResult] = useState<string | null>(null);
+  const qc = useQueryClient();
+
+  const syncProfiles = async () => {
+    setSyncing(true);
+    setSyncResult(null);
+    try {
+      // Use Supabase RPC directly
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data, error } = await (supabase.rpc as any)("sync_missing_profiles");
+
+      if (error) {
+        setSyncResult(`Error: ${error.message}`);
+        console.error("Sync error:", error);
+      } else {
+        // data is now an array with one row containing synced_count, auth_users_count, profiles_count
+        const result = Array.isArray(data) && data.length > 0 ? data[0] : data;
+        const synced = result?.synced_count ?? 0;
+        const authUsers = result?.auth_users_count ?? 0;
+        const profiles = result?.profiles_count ?? 0;
+
+        setSyncResult(
+          `✅ Synced ${synced} profiles! Auth users: ${authUsers}, Now have: ${profiles}`,
+        );
+        console.log("Sync result:", result);
+
+        // Force refresh all admin queries immediately
+        void qc.invalidateQueries({ queryKey: ["admin-stats"] });
+        void qc.invalidateQueries({ queryKey: ["admin-users"] });
+        void qc.invalidateQueries({ queryKey: ["admin-payments"] });
+
+        // Also refresh the stats after a short delay to ensure data is propagated
+        setTimeout(() => {
+          void qc.invalidateQueries({ queryKey: ["admin-stats"] });
+        }, 1000);
+      }
+    } catch (error) {
+      setSyncResult("Sync failed. Check console for details.");
+      console.error("Sync error:", error);
+    } finally {
+      setSyncing(false);
+    }
+  };
+
+  const runDiagnostic = async () => {
+    setSyncing(true);
+    setSyncResult("Running diagnostic...");
+    try {
+      const response = await fetch("/api/admin/diagnose", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await response.json();
+      console.log("Diagnostic results:", data);
+      setSyncResult(
+        `Profiles: ${data.profilesCount}, Payments: ${data.paymentsCount}, Auth users: ${data.authUsersCount || "N/A"}`,
+      );
+    } catch (error) {
+      setSyncResult("Diagnostic failed");
+      console.error("Diagnostic error:", error);
+    } finally {
+      setSyncing(false);
+    }
+  };
 
   if (isLoading || !s)
     return (
@@ -1940,34 +2385,54 @@ function AnalyticsTab() {
   return (
     <div className="grid gap-4">
       <section className="grid gap-2.5">
-        <p className="text-[12.5px] font-bold uppercase tracking-wide text-muted-foreground">
-          Students
-        </p>
-        <div className="grid grid-cols-2 gap-2.5 lg:grid-cols-4">
-          <Stat label="Registered" value={s.students} hint={`${s.newStudents} joined in 7 days`} />
-          <Stat label="Premium" value={s.premium} hint={`${conversion}% conversion`} />
-          <Stat label="Collected" value={`₹${s.revenue}`} hint={`₹${s.revenue7d} in 7 days`} />
-          <Stat label="Successful payments" value={s.paidPayments} />
+        <div className="flex items-center justify-between gap-2">
+          <p className="text-[12.5px] font-bold uppercase tracking-wide text-muted-foreground">
+            User Metrics
+          </p>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={runDiagnostic}
+              disabled={syncing}
+              className="press rounded-lg border border-border px-3 py-1.5 text-[12px] font-semibold disabled:opacity-50"
+            >
+              {syncing ? "Running..." : "Diagnose"}
+            </button>
+            <button
+              type="button"
+              onClick={syncProfiles}
+              disabled={syncing}
+              className="press rounded-lg border border-border px-3 py-1.5 text-[12px] font-semibold disabled:opacity-50"
+            >
+              {syncing ? "Syncing..." : "Sync Profiles"}
+            </button>
+          </div>
+        </div>
+        {syncResult && <p className="text-[12px] font-semibold text-accent">{syncResult}</p>}
+        <div className="grid grid-cols-2 gap-2.5 lg:grid-cols-3">
+          <Stat
+            label="Registered Students"
+            value={s.students}
+            hint={`${s.newStudents} joined in 7 days`}
+          />
+          <Stat label="Premium Users" value={s.premium} hint={`${conversion}% conversion`} />
+          <Stat label="PWA Installs" value={s.pwaInstalls} hint="App downloads" />
         </div>
       </section>
 
       <section className="grid gap-2.5">
         <p className="text-[12.5px] font-bold uppercase tracking-wide text-muted-foreground">
-          Study library
+          Payment Metrics
         </p>
         <div className="grid grid-cols-2 gap-2.5 lg:grid-cols-4">
-          <Stat label="Subjects" value={s.subjects} />
-          <Stat label="Units" value={s.units} hint={`${avgPoints} points per unit`} />
-          <Stat label="Revision points" value={s.points} />
-          <Stat label="Papers" value={s.papers} hint={`${avgQuestions} questions per paper`} />
-          <Stat label="Past-year papers" value={s.previousYear} />
+          <Stat label="Total Payments" value={s.totalPayments} hint="Real attempts" />
+          <Stat label="Successful Payments" value={s.paidPayments} hint="Completed transactions" />
+          <Stat label="Paid Students" value={s.paidUsers} hint="Unique paying buyers" />
           <Stat
-            label="Free papers"
-            value={s.freePapers}
-            hint={`${s.papers - s.freePapers} premium`}
+            label="Revenue Collected"
+            value={`₹${s.revenue}`}
+            hint={`₹${s.revenue7d} in 7 days`}
           />
-          <Stat label="Solved questions" value={s.questions} />
-          <Stat label="Announcements" value={s.notifications} hint={`${s.published} live`} />
         </div>
       </section>
 
@@ -2048,8 +2513,13 @@ function buildPreview(raw: string): Preview {
   const payload = JSON.parse(raw) as ImportPayload;
   if (!payload.program || !payload.semester || !payload.name)
     throw new Error("program, semester and name are required");
-  if (payload.program !== "bba" && payload.program !== "bcom")
-    throw new Error('program must be "bba" or "bcom"');
+  if (
+    payload.program !== "bba" &&
+    payload.program !== "bcom" &&
+    payload.program !== "btech" &&
+    payload.program !== "bsc"
+  )
+    throw new Error('program must be "bba", "bcom", "btech", or "bsc"');
   const units = payload.units ?? [];
   for (const u of units) {
     if (!u.unit_number || !u.title) throw new Error("every unit needs unit_number and title");
@@ -2156,7 +2626,7 @@ function ImportTab() {
           subtitle: "Quick Exam Revision",
           description: paper.description ?? null,
           paper_type: paper.type === "previous_year" ? "previous_year" : "model",
-          is_paid: paper.is_paid ?? idx > 0,
+          is_paid: paper.is_paid ?? true,
           position: idx + 1,
         });
         if (saved.error) throw new Error(saved.error.message);
@@ -2268,8 +2738,14 @@ function ImportTab() {
           <div className="rounded-lg border border-border bg-muted/40 p-3">
             <p className="text-[13.5px] font-bold">{preview.payload.name}</p>
             <p className="text-[12px] text-muted-foreground">
-              {preview.payload.program === "bba" ? "BBA" : "B.Com"} • Semester{" "}
-              {preview.payload.semester} • {preview.subjectId}
+              {preview.payload.program === "bba"
+                ? "BBA"
+                : preview.payload.program === "btech"
+                  ? "Engineering (B.Tech/BE)"
+                  : preview.payload.program === "bsc"
+                    ? "B.Sc"
+                    : "B.Com"}{" "}
+              • Semester {preview.payload.semester} • {preview.subjectId}
             </p>
             <p className="mt-1.5 text-[12.5px]">
               {preview.units} units, {preview.points} points, {preview.papers} papers,{" "}

@@ -16,6 +16,7 @@ export type Highlight = {
 
 type Persisted = {
   program: string | null;
+  branch: string | null;
   semester: number | null;
   selectedSubject: string | null;
   selectedUnit: string | null;
@@ -31,8 +32,9 @@ type Persisted = {
 
 type AppState = Persisted & {
   ready: boolean;
-  setProgram: (id: string) => void;
-  setSemester: (n: number) => void;
+  setProgram: (id: string | null) => void;
+  setBranch: (branch: string | null) => void;
+  setSemester: (n: number | null) => void;
   setSelectedSubject: (id: string | null) => void;
   setSelectedUnit: (id: string | null) => void;
   toggleTheme: () => void;
@@ -50,7 +52,12 @@ type AppState = Persisted & {
   markNotificationsRead: (ids: string[]) => void;
   markUnitStudied: (unitId: string) => void;
   clearProgress: () => void;
+  clearSelection: () => void;
   reset: () => void;
+  setUserScope: (userId: string | null) => void;
+  toggleUnitBookmark: (unitId: string, unitTitle: string) => void;
+  isUnitBookmarked: (unitId: string) => boolean;
+  removeUnitBookmarks: (unitId: string) => void;
 };
 
 const STORAGE_KEY = "revision.state.v2";
@@ -59,6 +66,7 @@ const MAX_BOOKMARKS_PER_UNIT = 20;
 
 const initial: Persisted = {
   program: null,
+  branch: null,
   semester: null,
   selectedSubject: null,
   selectedUnit: null,
@@ -74,24 +82,80 @@ const initial: Persisted = {
 
 const key = (unitId: string, text: string) => `${unitId}::${text}`;
 
+function loadScopedData(userId: string | null): { bookmarks: Bookmark[]; highlights: Highlight[] } {
+  if (typeof window === "undefined") return { bookmarks: [], highlights: [] };
+  const scopeKey = userId ? `revision.bookmarks.${userId}` : "revision.bookmarks.guest";
+  const hlKey = userId ? `revision.highlights.${userId}` : "revision.highlights.guest";
+
+  let bookmarks: Bookmark[] = [];
+  let highlights: Highlight[] = [];
+
+  try {
+    const rawBks = localStorage.getItem(scopeKey);
+    if (rawBks) {
+      bookmarks = JSON.parse(rawBks);
+    } else {
+      // Legacy migration from global STORAGE_KEY
+      const legacyRaw = localStorage.getItem(STORAGE_KEY);
+      if (legacyRaw) {
+        const legacy = JSON.parse(legacyRaw) as Partial<Persisted>;
+        if (Array.isArray(legacy.bookmarks) && legacy.bookmarks.length > 0) {
+          bookmarks = legacy.bookmarks;
+          localStorage.setItem(scopeKey, JSON.stringify(bookmarks));
+        }
+      }
+    }
+  } catch {
+    /* ignore parse errors */
+  }
+
+  try {
+    const rawHls = localStorage.getItem(hlKey);
+    if (rawHls) {
+      highlights = JSON.parse(rawHls);
+    } else {
+      const legacyRaw = localStorage.getItem(STORAGE_KEY);
+      if (legacyRaw) {
+        const legacy = JSON.parse(legacyRaw) as Partial<Persisted>;
+        if (Array.isArray(legacy.highlights) && legacy.highlights.length > 0) {
+          highlights = legacy.highlights;
+          localStorage.setItem(hlKey, JSON.stringify(highlights));
+        }
+      }
+    }
+  } catch {
+    /* ignore parse errors */
+  }
+
+  // Deduplicate entries by ID
+  const uniqueBookmarks = Array.from(new Map(bookmarks.map((b) => [b.id, b])).values());
+  const uniqueHighlights = Array.from(new Map(highlights.map((h) => [h.id, h])).values());
+
+  return { bookmarks: uniqueBookmarks, highlights: uniqueHighlights };
+}
+
 export function AppStateProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<Persisted>(initial);
   const [ready, setReady] = useState(false);
+  const [currentScope, setCurrentScope] = useState<string | null>(null);
 
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
+      const scoped = loadScopedData(null);
       if (raw) {
         const saved = JSON.parse(raw) as Partial<Persisted>;
         const arr = <T,>(v: unknown, fallback: T[]) => (Array.isArray(v) ? (v as T[]) : fallback);
         setState({
           ...initial,
           ...saved,
-          bookmarks: arr(saved.bookmarks, initial.bookmarks),
+          bookmarks: scoped.bookmarks.length > 0 ? scoped.bookmarks : arr(saved.bookmarks, initial.bookmarks),
           readNotifications: arr(saved.readNotifications, initial.readNotifications),
           studiedUnits: arr(saved.studiedUnits, initial.studiedUnits),
-          highlights: arr(saved.highlights, initial.highlights),
+          highlights: scoped.highlights.length > 0 ? scoped.highlights : arr(saved.highlights, initial.highlights),
         });
+      } else {
+        setState((s) => ({ ...s, bookmarks: scoped.bookmarks, highlights: scoped.highlights }));
       }
     } catch {
       /* ignore malformed storage */
@@ -99,22 +163,63 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     setReady(true);
   }, []);
 
+  // Persist state changes
   useEffect(() => {
     if (!ready) return;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  }, [state, ready]);
+
+    // Save to user-scoped stores
+    const scopeKey = currentScope ? `revision.bookmarks.${currentScope}` : "revision.bookmarks.guest";
+    const hlKey = currentScope ? `revision.highlights.${currentScope}` : "revision.highlights.guest";
+    try {
+      localStorage.setItem(scopeKey, JSON.stringify(state.bookmarks));
+      localStorage.setItem(hlKey, JSON.stringify(state.highlights));
+    } catch {
+      /* ignore storage full */
+    }
+  }, [state, ready, currentScope]);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", state.theme === "dark");
   }, [state.theme]);
 
+  const setUserScope = useCallback((userId: string | null) => {
+    setCurrentScope(userId);
+    const loaded = loadScopedData(userId);
+    setState((s) => ({
+      ...s,
+      bookmarks: loaded.bookmarks,
+      highlights: loaded.highlights,
+    }));
+  }, []);
+
   const setProgram = useCallback(
-    (program: string) =>
-      setState((s) => ({ ...s, program, selectedSubject: null, selectedUnit: null })),
+    (program: string | null) =>
+      setState((s) => ({
+        ...s,
+        program,
+        branch:
+          program === "btech"
+            ? (s.branch ?? "civil")
+            : program === "bsc"
+              ? (s.branch ?? "cs")
+              : null,
+        semester:
+          s.semester && program && program !== "btech" && s.semester > 6
+            ? 6
+            : s.semester,
+        selectedSubject: null,
+        selectedUnit: null,
+      })),
+    [],
+  );
+  const setBranch = useCallback(
+    (branch: string | null) =>
+      setState((s) => ({ ...s, branch, selectedSubject: null, selectedUnit: null })),
     [],
   );
   const setSemester = useCallback(
-    (semester: number) =>
+    (semester: number | null) =>
       setState((s) => ({ ...s, semester, selectedSubject: null, selectedUnit: null })),
     [],
   );
@@ -210,6 +315,50 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
 
   const clearProgress = useCallback(() => setState((s) => ({ ...s, studiedUnits: [] })), []);
 
+  const clearSelection = useCallback(
+    () =>
+      setState((s) => ({
+        ...s,
+        program: null,
+        branch: null,
+        semester: null,
+        selectedSubject: null,
+        selectedUnit: null,
+      })),
+    [],
+  );
+
+  const toggleUnitBookmark = useCallback((unitId: string, unitTitle: string) => {
+    setState((s) => {
+      const id = key(unitId, "__unit__");
+      const exists = s.bookmarks.some((b) => b.id === id || (b.unitId === unitId && b.text === unitTitle));
+      if (exists) {
+        return {
+          ...s,
+          bookmarks: s.bookmarks.filter((b) => b.id !== id && !(b.unitId === unitId && b.text === unitTitle)),
+        };
+      }
+      return {
+        ...s,
+        bookmarks: [...s.bookmarks, { id, unitId, text: unitTitle, createdAt: Date.now() }],
+      };
+    });
+  }, []);
+
+  const isUnitBookmarked = useCallback(
+    (unitId: string) =>
+      state.bookmarks.some((b) => b.id === key(unitId, "__unit__") || (b.unitId === unitId && b.text.startsWith("Unit "))),
+    [state.bookmarks],
+  );
+
+  const removeUnitBookmarks = useCallback((unitId: string) => {
+    setState((s) => ({
+      ...s,
+      bookmarks: s.bookmarks.filter((b) => b.unitId !== unitId),
+      highlights: s.highlights.filter((h) => h.unitId !== unitId),
+    }));
+  }, []);
+
   const reset = useCallback(() => setState(initial), []);
 
   const value = useMemo<AppState>(
@@ -217,6 +366,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       ...state,
       ready,
       setProgram,
+      setBranch,
       setSemester,
       setSelectedSubject,
       setSelectedUnit,
@@ -237,12 +387,18 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       markNotificationsRead,
       markUnitStudied,
       clearProgress,
+      clearSelection,
       reset,
+      setUserScope,
+      toggleUnitBookmark,
+      isUnitBookmarked,
+      removeUnitBookmarks,
     }),
     [
       state,
       ready,
       setProgram,
+      setBranch,
       setSemester,
       setSelectedSubject,
       setSelectedUnit,
@@ -257,7 +413,12 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       markNotificationsRead,
       markUnitStudied,
       clearProgress,
+      clearSelection,
       reset,
+      setUserScope,
+      toggleUnitBookmark,
+      isUnitBookmarked,
+      removeUnitBookmarks,
     ],
   );
 

@@ -37,7 +37,14 @@ import { Route as ModelPaperPaperIdRouteImport } from './routes/model-paper.$pap
 import { Route as ModelPapersSubjectIdRouteImport } from './routes/model-papers.$subjectId'
 import { Route as SubjectSubjectIdRouteImport } from './routes/subject.$subjectId'
 import { Route as UnitUnitIdRouteImport } from './routes/unit.$unitId'
+import { Route as ApiAdminCleanDemoPaymentsRouteImport } from './routes/api/admin/clean-demo-payments'
+import { Route as ApiAdminDiagnoseRouteImport } from './routes/api/admin/diagnose'
+import { Route as ApiAdminStatsRouteImport } from './routes/api/admin/stats'
+import { Route as ApiAdminSyncProfilesRouteImport } from './routes/api/admin/sync-profiles'
+import { Route as ApiAnalyticsTrackInstallRouteImport } from './routes/api/analytics/track-install'
+import { Route as ApiAnalyticsTrackVisitRouteImport } from './routes/api/analytics/track-visit'
 import { Route as ApiCashfreeCreateOrderRouteImport } from './routes/api/cashfree/create-order'
+import { Route as ApiCashfreeVerifyOrderRouteImport } from './routes/api/cashfree/verify-order'
 import { Route as ApiCashfreeWebhookRouteImport } from './routes/api/cashfree/webhook'
 
 const IndexRoute = IndexRouteImport.update({
@@ -179,9 +186,46 @@ const UnitUnitIdRoute = UnitUnitIdRouteImport.update({
   path: '/unit/$unitId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAdminCleanDemoPaymentsRoute =
+  ApiAdminCleanDemoPaymentsRouteImport.update({
+    id: '/api/admin/clean-demo-payments',
+    path: '/api/admin/clean-demo-payments',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiAdminDiagnoseRoute = ApiAdminDiagnoseRouteImport.update({
+  id: '/api/admin/diagnose',
+  path: '/api/admin/diagnose',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminStatsRoute = ApiAdminStatsRouteImport.update({
+  id: '/api/admin/stats',
+  path: '/api/admin/stats',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminSyncProfilesRoute = ApiAdminSyncProfilesRouteImport.update({
+  id: '/api/admin/sync-profiles',
+  path: '/api/admin/sync-profiles',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAnalyticsTrackInstallRoute =
+  ApiAnalyticsTrackInstallRouteImport.update({
+    id: '/api/analytics/track-install',
+    path: '/api/analytics/track-install',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiAnalyticsTrackVisitRoute = ApiAnalyticsTrackVisitRouteImport.update({
+  id: '/api/analytics/track-visit',
+  path: '/api/analytics/track-visit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiCashfreeCreateOrderRoute = ApiCashfreeCreateOrderRouteImport.update({
   id: '/api/cashfree/create-order',
   path: '/api/cashfree/create-order',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCashfreeVerifyOrderRoute = ApiCashfreeVerifyOrderRouteImport.update({
+  id: '/api/cashfree/verify-order',
+  path: '/api/cashfree/verify-order',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiCashfreeWebhookRoute = ApiCashfreeWebhookRouteImport.update({
@@ -218,7 +262,14 @@ export interface FileRoutesByFullPath {
   '/model-papers/$subjectId': typeof ModelPapersSubjectIdRoute
   '/subject/$subjectId': typeof SubjectSubjectIdRoute
   '/unit/$unitId': typeof UnitUnitIdRoute
+  '/api/admin/clean-demo-payments': typeof ApiAdminCleanDemoPaymentsRoute
+  '/api/admin/diagnose': typeof ApiAdminDiagnoseRoute
+  '/api/admin/stats': typeof ApiAdminStatsRoute
+  '/api/admin/sync-profiles': typeof ApiAdminSyncProfilesRoute
+  '/api/analytics/track-install': typeof ApiAnalyticsTrackInstallRoute
+  '/api/analytics/track-visit': typeof ApiAnalyticsTrackVisitRoute
   '/api/cashfree/create-order': typeof ApiCashfreeCreateOrderRoute
+  '/api/cashfree/verify-order': typeof ApiCashfreeVerifyOrderRoute
   '/api/cashfree/webhook': typeof ApiCashfreeWebhookRoute
 }
 export interface FileRoutesByTo {
@@ -249,7 +300,14 @@ export interface FileRoutesByTo {
   '/model-papers/$subjectId': typeof ModelPapersSubjectIdRoute
   '/subject/$subjectId': typeof SubjectSubjectIdRoute
   '/unit/$unitId': typeof UnitUnitIdRoute
+  '/api/admin/clean-demo-payments': typeof ApiAdminCleanDemoPaymentsRoute
+  '/api/admin/diagnose': typeof ApiAdminDiagnoseRoute
+  '/api/admin/stats': typeof ApiAdminStatsRoute
+  '/api/admin/sync-profiles': typeof ApiAdminSyncProfilesRoute
+  '/api/analytics/track-install': typeof ApiAnalyticsTrackInstallRoute
+  '/api/analytics/track-visit': typeof ApiAnalyticsTrackVisitRoute
   '/api/cashfree/create-order': typeof ApiCashfreeCreateOrderRoute
+  '/api/cashfree/verify-order': typeof ApiCashfreeVerifyOrderRoute
   '/api/cashfree/webhook': typeof ApiCashfreeWebhookRoute
 }
 export interface FileRoutesById {
@@ -282,7 +340,14 @@ export interface FileRoutesById {
   '/model-papers/$subjectId': typeof ModelPapersSubjectIdRoute
   '/subject/$subjectId': typeof SubjectSubjectIdRoute
   '/unit/$unitId': typeof UnitUnitIdRoute
+  '/api/admin/clean-demo-payments': typeof ApiAdminCleanDemoPaymentsRoute
+  '/api/admin/diagnose': typeof ApiAdminDiagnoseRoute
+  '/api/admin/stats': typeof ApiAdminStatsRoute
+  '/api/admin/sync-profiles': typeof ApiAdminSyncProfilesRoute
+  '/api/analytics/track-install': typeof ApiAnalyticsTrackInstallRoute
+  '/api/analytics/track-visit': typeof ApiAnalyticsTrackVisitRoute
   '/api/cashfree/create-order': typeof ApiCashfreeCreateOrderRoute
+  '/api/cashfree/verify-order': typeof ApiCashfreeVerifyOrderRoute
   '/api/cashfree/webhook': typeof ApiCashfreeWebhookRoute
 }
 export interface FileRouteTypes {
@@ -315,7 +380,14 @@ export interface FileRouteTypes {
     | '/model-papers/$subjectId'
     | '/subject/$subjectId'
     | '/unit/$unitId'
+    | '/api/admin/clean-demo-payments'
+    | '/api/admin/diagnose'
+    | '/api/admin/stats'
+    | '/api/admin/sync-profiles'
+    | '/api/analytics/track-install'
+    | '/api/analytics/track-visit'
     | '/api/cashfree/create-order'
+    | '/api/cashfree/verify-order'
     | '/api/cashfree/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -346,7 +418,14 @@ export interface FileRouteTypes {
     | '/model-papers/$subjectId'
     | '/subject/$subjectId'
     | '/unit/$unitId'
+    | '/api/admin/clean-demo-payments'
+    | '/api/admin/diagnose'
+    | '/api/admin/stats'
+    | '/api/admin/sync-profiles'
+    | '/api/analytics/track-install'
+    | '/api/analytics/track-visit'
     | '/api/cashfree/create-order'
+    | '/api/cashfree/verify-order'
     | '/api/cashfree/webhook'
   id:
     | '__root__'
@@ -378,7 +457,14 @@ export interface FileRouteTypes {
     | '/model-papers/$subjectId'
     | '/subject/$subjectId'
     | '/unit/$unitId'
+    | '/api/admin/clean-demo-payments'
+    | '/api/admin/diagnose'
+    | '/api/admin/stats'
+    | '/api/admin/sync-profiles'
+    | '/api/analytics/track-install'
+    | '/api/analytics/track-visit'
     | '/api/cashfree/create-order'
+    | '/api/cashfree/verify-order'
     | '/api/cashfree/webhook'
   fileRoutesById: FileRoutesById
 }
@@ -410,7 +496,14 @@ export interface RootRouteChildren {
   ModelPapersSubjectIdRoute: typeof ModelPapersSubjectIdRoute
   SubjectSubjectIdRoute: typeof SubjectSubjectIdRoute
   UnitUnitIdRoute: typeof UnitUnitIdRoute
+  ApiAdminCleanDemoPaymentsRoute: typeof ApiAdminCleanDemoPaymentsRoute
+  ApiAdminDiagnoseRoute: typeof ApiAdminDiagnoseRoute
+  ApiAdminStatsRoute: typeof ApiAdminStatsRoute
+  ApiAdminSyncProfilesRoute: typeof ApiAdminSyncProfilesRoute
+  ApiAnalyticsTrackInstallRoute: typeof ApiAnalyticsTrackInstallRoute
+  ApiAnalyticsTrackVisitRoute: typeof ApiAnalyticsTrackVisitRoute
   ApiCashfreeCreateOrderRoute: typeof ApiCashfreeCreateOrderRoute
+  ApiCashfreeVerifyOrderRoute: typeof ApiCashfreeVerifyOrderRoute
   ApiCashfreeWebhookRoute: typeof ApiCashfreeWebhookRoute
 }
 
@@ -612,11 +705,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UnitUnitIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/admin/clean-demo-payments': {
+      id: '/api/admin/clean-demo-payments'
+      path: '/api/admin/clean-demo-payments'
+      fullPath: '/api/admin/clean-demo-payments'
+      preLoaderRoute: typeof ApiAdminCleanDemoPaymentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/diagnose': {
+      id: '/api/admin/diagnose'
+      path: '/api/admin/diagnose'
+      fullPath: '/api/admin/diagnose'
+      preLoaderRoute: typeof ApiAdminDiagnoseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/stats': {
+      id: '/api/admin/stats'
+      path: '/api/admin/stats'
+      fullPath: '/api/admin/stats'
+      preLoaderRoute: typeof ApiAdminStatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/sync-profiles': {
+      id: '/api/admin/sync-profiles'
+      path: '/api/admin/sync-profiles'
+      fullPath: '/api/admin/sync-profiles'
+      preLoaderRoute: typeof ApiAdminSyncProfilesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/analytics/track-install': {
+      id: '/api/analytics/track-install'
+      path: '/api/analytics/track-install'
+      fullPath: '/api/analytics/track-install'
+      preLoaderRoute: typeof ApiAnalyticsTrackInstallRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/analytics/track-visit': {
+      id: '/api/analytics/track-visit'
+      path: '/api/analytics/track-visit'
+      fullPath: '/api/analytics/track-visit'
+      preLoaderRoute: typeof ApiAnalyticsTrackVisitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/cashfree/create-order': {
       id: '/api/cashfree/create-order'
       path: '/api/cashfree/create-order'
       fullPath: '/api/cashfree/create-order'
       preLoaderRoute: typeof ApiCashfreeCreateOrderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/cashfree/verify-order': {
+      id: '/api/cashfree/verify-order'
+      path: '/api/cashfree/verify-order'
+      fullPath: '/api/cashfree/verify-order'
+      preLoaderRoute: typeof ApiCashfreeVerifyOrderRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/cashfree/webhook': {
@@ -668,7 +810,14 @@ const rootRouteChildren: RootRouteChildren = {
   ModelPapersSubjectIdRoute: ModelPapersSubjectIdRoute,
   SubjectSubjectIdRoute: SubjectSubjectIdRoute,
   UnitUnitIdRoute: UnitUnitIdRoute,
+  ApiAdminCleanDemoPaymentsRoute: ApiAdminCleanDemoPaymentsRoute,
+  ApiAdminDiagnoseRoute: ApiAdminDiagnoseRoute,
+  ApiAdminStatsRoute: ApiAdminStatsRoute,
+  ApiAdminSyncProfilesRoute: ApiAdminSyncProfilesRoute,
+  ApiAnalyticsTrackInstallRoute: ApiAnalyticsTrackInstallRoute,
+  ApiAnalyticsTrackVisitRoute: ApiAnalyticsTrackVisitRoute,
   ApiCashfreeCreateOrderRoute: ApiCashfreeCreateOrderRoute,
+  ApiCashfreeVerifyOrderRoute: ApiCashfreeVerifyOrderRoute,
   ApiCashfreeWebhookRoute: ApiCashfreeWebhookRoute,
 }
 export const routeTree = rootRouteImport

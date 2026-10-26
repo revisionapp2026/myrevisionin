@@ -15,7 +15,7 @@ import {
 const STORAGE_KEY = "revision-study-cache";
 /** A month of offline reading. */
 const MAX_AGE = 1000 * 60 * 60 * 24 * 30;
-const SAVE_EVERY_MS = 2000;
+const SAVE_EVERY_MS = 60_000;
 
 export function OfflineCacheProvider({
   client,

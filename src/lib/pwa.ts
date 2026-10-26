@@ -33,17 +33,49 @@ export function registerServiceWorker() {
 
   const inIframe = window.self !== window.top;
   const swOff = new URL(window.location.href).searchParams.get("sw") === "off";
+  const isLocalhost =
+    window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
   const refused =
-    !import.meta.env.PROD || inIframe || swOff || isPreviewHost(window.location.hostname);
+    (!import.meta.env.PROD && !isLocalhost) || inIframe || swOff || isPreviewHost(window.location.hostname);
 
   if (refused) {
     void unregisterAppWorkers();
     return;
   }
 
-  window.addEventListener("load", () => {
-    void navigator.serviceWorker.register(SW_URL, { scope: "/" }).catch(() => {
-      /* registration is best-effort */
+  const register = () => {
+    let refreshing = false;
+    const hadController = Boolean(navigator.serviceWorker.controller);
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (hadController && !refreshing) {
+        refreshing = true;
+        window.location.reload();
+      }
     });
-  });
+
+    navigator.serviceWorker
+      .register(SW_URL, { scope: "/" })
+      .then((registration) => {
+        void registration.update().catch(() => {});
+        registration.addEventListener("updatefound", () => {
+          const newWorker = registration.installing;
+          if (newWorker) {
+            newWorker.addEventListener("statechange", () => {
+              if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+                newWorker.postMessage({ type: "SKIP_WAITING" });
+              }
+            });
+          }
+        });
+      })
+      .catch(() => {
+        /* registration is best-effort */
+      });
+  };
+
+  if (document.readyState === "complete") {
+    register();
+  } else {
+    window.addEventListener("load", register);
+  }
 }

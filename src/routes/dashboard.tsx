@@ -10,12 +10,19 @@ import {
   Sparkles,
   SlidersHorizontal,
 } from "lucide-react";
-import { electivesFor, programLabel, subjectsFor } from "@/lib/mock-data";
+import {
+  bscStreams,
+  electivesFor,
+  engineeringBranches,
+  programLabel,
+  semestersForProgram,
+  subjectsFor,
+} from "@/lib/mock-data";
 import { useAppState } from "@/lib/app-state";
 import { useEntitlements } from "@/lib/entitlements";
 import { useAuth } from "@/lib/auth";
 import logo from "@/assets/revision-logo.png";
-import { PromoBanner, PromoPopup } from "@/components/promo";
+import { PromoBanner } from "@/components/promo";
 import { SideMenu } from "@/components/side-menu";
 import { BottomNav, Screen, SubjectGlyph } from "@/components/app-chrome";
 import { SectionTitle } from "@/components/ui-bits";
@@ -37,14 +44,26 @@ export const Route = createFileRoute("/dashboard")({
 
 function Dashboard() {
   const navigate = useNavigate();
-  const { program, semester, ready, readNotifications, setProgram, setSemester } = useAppState();
+  const {
+    program,
+    branch,
+    semester,
+    ready,
+    readNotifications,
+    setProgram,
+    setBranch,
+    setSemester,
+  } = useAppState();
   const { isPremium, planName } = useEntitlements();
   const { user, profile } = useAuth();
   const [query, setQuery] = useState("");
   const { data: notifications = [] } = useQuery(notificationsQuery(program, semester));
   const unreadCount = notifications.filter((n) => !readNotifications.includes(n.id)).length;
 
-  const list = useMemo(() => subjectsFor(program, semester), [program, semester]);
+  const list = useMemo(
+    () => subjectsFor(program, semester, branch),
+    [program, semester, branch],
+  );
   const electives = useMemo(() => electivesFor(program), [program]);
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -54,7 +73,12 @@ function Dashboard() {
   const name = profile?.full_name?.split(" ")[0] || user?.email?.split("@")[0] || "Student";
 
   useEffect(() => {
-    if (ready && (!program || !semester)) navigate({ to: "/program-selection", replace: true });
+    if (!ready) return;
+    if (!program) {
+      navigate({ to: "/program-selection", replace: true });
+    } else if (!semester) {
+      navigate({ to: "/semester-selection", replace: true });
+    }
   }, [ready, program, semester, navigate]);
 
   return (
@@ -84,7 +108,14 @@ function Dashboard() {
           </div>
           <h1 className="mt-4 text-[21px] font-extrabold text-white">Hi {name} 👋</h1>
           <p className="mt-0.5 text-[13px] text-white/80">
-            {programLabel(program)} • Semester {semester ?? 1}
+            {programLabel(program)}
+            {program === "btech" && (
+              <> • {engineeringBranches.find((b) => b.id === (branch ?? "civil"))?.shortName ?? "Civil"}</>
+            )}
+            {program === "bsc" && (
+              <> • {bscStreams.find((s) => s.id === (branch ?? "cs"))?.shortName ?? "Computer Science"}</>
+            )}{" "}
+            • Semester {semester ?? 1}
           </p>
         </div>
       </header>
@@ -108,7 +139,13 @@ function Dashboard() {
             <SlidersHorizontal className="size-4 text-primary" />
             Change my selection
           </div>
-          <div className="grid grid-cols-[1fr_1.15fr] gap-2">
+          <div
+            className={
+              program === "btech" || program === "bsc"
+                ? "grid grid-cols-1 sm:grid-cols-3 gap-2"
+                : "grid grid-cols-[1fr_1.15fr] gap-2"
+            }
+          >
             <label>
               <span className="sr-only">Program</span>
               <select
@@ -119,8 +156,44 @@ function Dashboard() {
               >
                 <option value="bcom">B.Com</option>
                 <option value="bba">BBA</option>
+                <option value="btech">Engineering (B.Tech/BE)</option>
+                <option value="bsc">Bachelor of Science (B.Sc)</option>
               </select>
             </label>
+            {program === "btech" && (
+              <label>
+                <span className="sr-only">Branch</span>
+                <select
+                  aria-label="Branch"
+                  value={branch ?? "civil"}
+                  onChange={(event) => setBranch(event.target.value)}
+                  className="h-10 w-full rounded-lg border border-border bg-background px-3 text-[13.5px] font-semibold outline-none focus:border-primary"
+                >
+                  {engineeringBranches.map((b) => (
+                    <option key={b.id} value={b.id}>
+                      {b.shortName}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
+            {program === "bsc" && (
+              <label>
+                <span className="sr-only">Stream</span>
+                <select
+                  aria-label="Stream"
+                  value={branch ?? "cs"}
+                  onChange={(event) => setBranch(event.target.value)}
+                  className="h-10 w-full rounded-lg border border-border bg-background px-3 text-[13.5px] font-semibold outline-none focus:border-primary"
+                >
+                  {bscStreams.map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {s.shortName}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
             <label>
               <span className="sr-only">Semester</span>
               <select
@@ -129,7 +202,7 @@ function Dashboard() {
                 onChange={(event) => setSemester(Number(event.target.value))}
                 className="h-10 w-full rounded-lg border border-border bg-background px-3 text-[13.5px] font-semibold outline-none focus:border-primary"
               >
-                {[1, 2, 3, 4, 5, 6].map((number) => (
+                {semestersForProgram(program).map((number) => (
                   <option key={number} value={number}>
                     Semester {number}
                   </option>
@@ -235,7 +308,6 @@ function Dashboard() {
           </span>
         </Link>
       </Screen>
-      <PromoPopup />
       <BottomNav />
     </>
   );

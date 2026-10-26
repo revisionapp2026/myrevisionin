@@ -1,11 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createHmac } from "node:crypto";
-import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/api/cashfree/webhook")({
   server: {
     handlers: {
-      POST: async ({ request }) => {
+      POST: async ({ request }: { request: Request }) => {
         const secretKey =
           process.env["CASHFREE_SECRET_KEY"] || process.env["VITE_CASHFREE_SECRET_KEY"];
 
@@ -41,61 +40,97 @@ export const Route = createFileRoute("/api/cashfree/webhook")({
             return new Response("Invalid signature", { status: 401 });
           }
 
-          const body = JSON.parse(rawBody) as {
-            data: {
-              order: {
-                order_id: string;
-                order_amount: number;
-                order_currency: string;
-                order_status: string;
-                order_note?: string;
-                customer_details: {
-                  customer_id: string;
-                  customer_email: string;
-                  customer_name: string;
-                };
-              };
-            };
-          };
+          // Dynamic import of supabaseAdmin with ensured admin auth
+          const { ensureAdminAuth } = await import("@/integrations/supabase/client.server");
+          const sb = await ensureAdminAuth();
 
-          const { order } = body.data;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const body = JSON.parse(rawBody) as any;
+          const order = body?.data?.order;
+          const payment = body?.data?.payment;
 
-          // Process payment if successful
-          if (order.order_status === "PAID") {
-            const rawNote = (order as { order_note?: string }).order_note ?? "";
-            const planId = rawNote.includes(" - ") ? rawNote.split(" - ")[1]! : "yearly";
+          const isPaid =
+            order?.order_status === "PAID" ||
+            payment?.payment_status === "SUCCESS" ||
+            body?.type === "PAYMENT_SUCCESS_WEBHOOK" ||
+            body?.type === "ORDER_PAID_SUCCESS";
 
-            // Find user by email
-            const { data: profileData } = await supabase
-              .from("profiles")
-              .select("id")
-              .eq("email", order.customer_details.customer_email)
-              .maybeSingle();
+          if (isPaid && (order || payment)) {
+            const planId = "lifetime";
+            const orderAmount = Number(order?.order_amount || payment?.payment_amount) || 199;
+            const orderId = String(order?.order_id || payment?.order_id || `ORDER_${Date.now()}`);
+            const userIdFromTags = order?.order_tags?.user_id;
+            const customerEmail = String(
+              order?.customer_details?.customer_email || payment?.customer_email || "",
+            ).trim();
 
-            if (profileData) {
-              // Update user to premium
-              await supabase
+            let targetProfile: { id: string; is_premium?: boolean; email?: string | null } | null =
+              null;
+
+            // 1. Try finding by user_id from order_tags
+            if (userIdFromTags) {
+              const { data: pById } = await sb
+                .from("profiles")
+                .select("id, is_premium, email")
+                .eq("id", userIdFromTags)
+                .maybeSingle();
+              if (pById) targetProfile = pById;
+            }
+
+            // 2. Fall back to finding by email (case-insensitive)
+            if (!targetProfile && customerEmail) {
+              const { data: pByEmail } = await sb
+                .from("profiles")
+                .select("id, is_premium, email")
+                .ilike("email", customerEmail)
+                .maybeSingle();
+              if (pByEmail) targetProfile = pByEmail;
+            }
+
+            if (targetProfile) {
+              // 1. Update profile to lifetime premium
+              await sb
                 .from("profiles")
                 .update({
                   is_premium: true,
-                  plan: planId,
+                  plan: "lifetime",
                   premium_since: new Date().toISOString(),
                 })
-                .eq("id", profileData.id);
+                .eq("id", targetProfile.id);
 
-              // Record payment
-              await supabase.from("payments").insert({
-                user_id: profileData.id,
-                plan: planId,
-                amount: order.order_amount,
-                method: "cashfree",
-                status: "paid",
-                reference: order.order_id,
-                is_demo: false,
-              });
+              // 2. Record payment via SECURITY DEFINER RPC
+              try {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                await (sb.rpc as any)("record_payment", {
+                  p_user_id: targetProfile.id,
+                  p_plan: "lifetime",
+                  p_amount: orderAmount,
+                  p_method: "cashfree",
+                  p_status: "paid",
+                  p_reference: orderId,
+                });
+              } catch (rpcErr) {
+                console.warn("RPC record_payment failed in webhook, using direct insert:", rpcErr);
+                await sb.from("payments").upsert(
+                  {
+                    user_id: targetProfile.id,
+                    plan: "lifetime",
+                    amount: orderAmount,
+                    method: "cashfree",
+                    status: "paid",
+                    reference: orderId,
+                    is_demo: false,
+                  },
+                  { onConflict: "reference" },
+                );
+              }
 
               console.log(
-                `Payment successful for user ${profileData.id}, order ${order.order_id}, plan ${planId}`,
+                `Successfully upgraded user ${targetProfile.id} (${customerEmail}) to Lifetime Premium via webhook`,
+              );
+            } else {
+              console.warn(
+                `Cashfree payment received for order ${orderId} but could not match user by tags (${userIdFromTags}) or email (${customerEmail})`,
               );
             }
           }

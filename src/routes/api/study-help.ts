@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { buildGrounding } from "@/lib/study-rag.server";
+import { generateSyllabusContent } from "@/lib/study-fallback";
 
 type Mode = "explain" | "flashcards" | "quiz" | "audio-script";
 
@@ -199,10 +200,25 @@ export const Route = createFileRoute("/api/study-help")({
         )
           ? (modeRaw as Mode)
           : "explain";
-        const programId = body["program"] === "bba" ? "bba" : "bcom";
-        const programLabel = programId === "bba" ? "BBA" : "B.Com";
+        const programId =
+          body["program"] === "bba"
+            ? "bba"
+            : body["program"] === "btech"
+              ? "btech"
+              : body["program"] === "bsc"
+                ? "bsc"
+                : "bcom";
+        const programLabel =
+          programId === "bba"
+            ? "BBA"
+            : programId === "btech"
+              ? "Engineering (B.Tech/BE)"
+              : programId === "bsc"
+                ? "Bachelor of Science (B.Sc)"
+                : "B.Com";
+        const maxSem = programId === "btech" ? 8 : 6;
         const semester =
-          Number(body["semester"]) >= 1 && Number(body["semester"]) <= 6
+          Number(body["semester"]) >= 1 && Number(body["semester"]) <= maxSem
             ? Number(body["semester"])
             : 1;
         const subjectId = typeof body["subjectId"] === "string" ? body["subjectId"] : undefined;
@@ -247,21 +263,24 @@ export const Route = createFileRoute("/api/study-help")({
                 body: JSON.stringify({
                   contents: [{ parts: [{ text: fullPrompt }] }],
                 }),
+                signal: AbortSignal.timeout(8000),
               },
             );
 
             if (response.ok) {
               const data = await response.json();
               const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-              return new Response(text, {
-                headers: {
-                  "Content-Type": "text/plain; charset=utf-8",
-                  "Cache-Control": "no-store",
-                  "X-Grounded-Sources": String(grounding.sources.length),
-                },
-              });
+              if (text.trim()) {
+                return new Response(text, {
+                  headers: {
+                    "Content-Type": "text/plain; charset=utf-8",
+                    "Cache-Control": "no-store",
+                    "X-Grounded-Sources": String(grounding.sources.length),
+                  },
+                });
+              }
             }
-            console.log("[study] Gemini failed:", response.status);
+            console.log("[study] Gemini failed or returned empty text:", response.status);
           } catch (error) {
             console.log("[study] Gemini error:", error);
           }
@@ -283,20 +302,23 @@ export const Route = createFileRoute("/api/study-help")({
                 messages: [{ role: "user", content: fullPrompt }],
                 model: "DeepSeek-V3.2",
               }),
+              signal: AbortSignal.timeout(8000),
             });
 
             if (response.ok) {
               const data = await response.json();
               const text = data.choices?.[0]?.message?.content || "";
-              return new Response(text, {
-                headers: {
-                  "Content-Type": "text/plain; charset=utf-8",
-                  "Cache-Control": "no-store",
-                  "X-Grounded-Sources": String(grounding.sources.length),
-                },
-              });
+              if (text.trim()) {
+                return new Response(text, {
+                  headers: {
+                    "Content-Type": "text/plain; charset=utf-8",
+                    "Cache-Control": "no-store",
+                    "X-Grounded-Sources": String(grounding.sources.length),
+                  },
+                });
+              }
             }
-            console.log("[study] DeepSeek failed:", response.status);
+            console.log("[study] DeepSeek failed or returned empty text:", response.status);
           } catch (error) {
             console.log("[study] DeepSeek error:", error);
           }
@@ -317,28 +339,45 @@ export const Route = createFileRoute("/api/study-help")({
                 model: "gpt-4o-mini",
                 messages: [{ role: "user", content: fullPrompt }],
               }),
+              signal: AbortSignal.timeout(8000),
             });
 
             if (response.ok) {
               const data = await response.json();
               const text = data.choices?.[0]?.message?.content || "";
-              return new Response(text, {
-                headers: {
-                  "Content-Type": "text/plain; charset=utf-8",
-                  "Cache-Control": "no-store",
-                  "X-Grounded-Sources": String(grounding.sources.length),
-                },
-              });
+              if (text.trim()) {
+                return new Response(text, {
+                  headers: {
+                    "Content-Type": "text/plain; charset=utf-8",
+                    "Cache-Control": "no-store",
+                    "X-Grounded-Sources": String(grounding.sources.length),
+                  },
+                });
+              }
             }
-            console.log("[study] Bazar failed:", response.status);
+            console.log("[study] Bazar failed or returned empty text:", response.status);
           } catch (error) {
             console.log("[study] Bazar error:", error);
           }
         }
 
-        console.error("[study] All AI providers failed");
-        return new Response("Study buddy temporarily unavailable. Please try again.", {
-          status: 500,
+        // If all external AI providers are unavailable or not configured, generate syllabus-grounded curriculum content
+        const fallbackText = generateSyllabusContent({
+          topic,
+          mode,
+          programLabel,
+          semester,
+          subjectName,
+          unitName,
+          groundingContext: grounding.context,
+        });
+
+        return new Response(fallbackText, {
+          headers: {
+            "Content-Type": "text/plain; charset=utf-8",
+            "Cache-Control": "no-store",
+            "X-Grounded-Sources": String(grounding.sources.length),
+          },
         });
       },
     },

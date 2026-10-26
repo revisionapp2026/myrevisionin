@@ -1,10 +1,12 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { BarChart3, GraduationCap } from "lucide-react";
+import { BarChart3, GraduationCap, Cpu, FlaskConical } from "lucide-react";
 import logo from "@/assets/revision-logo.png";
 import { programs } from "@/lib/mock-data";
 import { useAppState } from "@/lib/app-state";
 import { StepIndicator } from "@/components/ui-bits";
 import { cn } from "@/lib/utils";
+
+import { useAuth } from "@/lib/auth";
 
 export const Route = createFileRoute("/program-selection")({
   head: () => ({
@@ -12,23 +14,28 @@ export const Route = createFileRoute("/program-selection")({
       { title: "Select Your Program — REVISION" },
       {
         name: "description",
-        content: "Choose BBA or B.Com to start last minute revision with REVISION.",
+        content: "Choose BBA, B.Com, B.Sc, or Engineering (B.Tech/BE) to start last minute revision with REVISION.",
       },
       { property: "og:title", content: "Select Your Program — REVISION" },
-      { property: "og:description", content: "Choose BBA or B.Com to start revising." },
+      { property: "og:description", content: "Choose BBA, B.Com, B.Sc, or Engineering (B.Tech/BE) to start revising." },
     ],
   }),
   component: ProgramSelection,
 });
 
-const icons = { bba: GraduationCap, bcom: BarChart3 } as const;
+const icons = { bba: GraduationCap, bcom: BarChart3, btech: Cpu, bsc: FlaskConical } as const;
 
 function ProgramSelection() {
   const navigate = useNavigate();
-  const { program, setProgram } = useAppState();
+  const { program, setProgram, setSemester } = useAppState();
+  const { user, saveProfile } = useAuth();
 
   const choose = (id: string) => {
     setProgram(id);
+    setSemester(null);
+    if (user && saveProfile) {
+      void saveProfile({ program_id: id, semester: null as any }).catch(() => {});
+    }
     navigate({ to: "/semester-selection" });
   };
 

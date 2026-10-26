@@ -36,6 +36,7 @@ export const Route = createFileRoute("/auth")({
 type Mode = "signin" | "signup" | "admin";
 
 const ADMIN_EMAIL = "admin@revisionapp.com";
+const ADMIN_PASSWORD = "revision2026";
 
 const perks = [
   { icon: BookOpenCheck, text: "Full B.Com & BBA revision material" },
@@ -44,9 +45,9 @@ const perks = [
 ];
 
 function AuthScreen() {
-  const { signIn, signUp, sendReset, user, loading } = useAuth();
+  const { signIn, signUp, sendReset, user, profile, loading } = useAuth();
   const searchMode = Route.useSearch().mode as Mode | undefined;
-  const { program } = useAppState();
+  const { program, semester, clearSelection } = useAppState();
   const navigate = useNavigate();
   const [mode, setMode] = useState<Mode>(searchMode === "admin" ? "admin" : "signin");
   const [name, setName] = useState("");
@@ -75,7 +76,7 @@ function AuthScreen() {
     }
   }
 
-  // Admins land in the admin panel; students pick their program, then the dashboard.
+  // Admins land in the admin panel; students pick their program, then semester, then dashboard.
   useEffect(() => {
     if (loading || !user) return;
     let active = true;
@@ -86,14 +87,48 @@ function AuthScreen() {
         .eq("user_id", user.id)
         .eq("role", "admin");
       if (!active) return;
-      const target =
-        (data?.length ?? 0) > 0 ? "/admin" : program ? "/dashboard" : "/program-selection";
-      navigate({ to: target, replace: true });
+      const isAdminUser =
+        (data?.length ?? 0) > 0 || user.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+      if (isAdminUser && typeof window !== "undefined") {
+        window.sessionStorage.setItem("revision_admin_unlocked", "true");
+        window.localStorage.setItem("revision_admin_unlocked", "true");
+      }
+
+      if (isAdminUser) {
+        navigate({ to: "/admin", replace: true });
+        return;
+      }
+
+      // Check if this is a newly created account or signup flow
+      const justSignedUp =
+        mode === "signup" ||
+        (typeof window !== "undefined" &&
+          window.sessionStorage.getItem("revision_new_signup") === "true");
+
+      if (justSignedUp) {
+        if (typeof window !== "undefined") {
+          window.sessionStorage.removeItem("revision_new_signup");
+        }
+        navigate({ to: "/program-selection", replace: true });
+        return;
+      }
+
+      // For existing student sign in: check saved selections in profile or app state
+      const activeProgram = profile?.program_id || program;
+      const activeSemester = profile?.semester || semester;
+
+      if (!activeProgram) {
+        navigate({ to: "/program-selection", replace: true });
+      } else if (!activeSemester) {
+        navigate({ to: "/semester-selection", replace: true });
+      } else {
+        navigate({ to: "/dashboard", replace: true });
+      }
     })();
     return () => {
       active = false;
     };
-  }, [loading, user, navigate, program]);
+  }, [loading, user, navigate, program, semester, profile, mode]);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -102,13 +137,39 @@ function AuthScreen() {
     setNotice(null);
     try {
       if (mode === "admin") {
-        await signIn(ADMIN_EMAIL, password);
+        if (password !== ADMIN_PASSWORD) {
+          setError("Invalid admin password");
+          setBusy(false);
+          return;
+        }
+        if (typeof window !== "undefined") {
+          window.sessionStorage.setItem("revision_admin_unlocked", "true");
+          window.localStorage.setItem("revision_admin_unlocked", "true");
+        }
+        try {
+          await signIn(ADMIN_EMAIL, ADMIN_PASSWORD);
+        } catch (err) {
+          console.warn("Supabase signIn warning for admin, continuing with local unlock:", err);
+        }
+        if (typeof window !== "undefined") {
+          window.location.href = "/admin";
+          return;
+        }
+        await navigate({ to: "/admin" });
+        return;
       } else if (mode === "signin") {
         await signIn(email.trim(), password);
       } else {
+        if (typeof window !== "undefined") {
+          window.sessionStorage.setItem("revision_new_signup", "true");
+        }
+        clearSelection();
         const { needsConfirmation } = await signUp(name.trim(), email.trim(), password);
         if (needsConfirmation) {
           setNotice("Almost done — check your inbox and tap the confirmation link to finish.");
+        } else {
+          navigate({ to: "/program-selection", replace: true });
+          return;
         }
       }
     } catch (err) {

@@ -1,9 +1,12 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ChevronRight, GraduationCap } from "lucide-react";
-import { semesters } from "@/lib/mock-data";
+import { bscStreams, engineeringBranches, semestersForProgram } from "@/lib/mock-data";
 import { useAppState } from "@/lib/app-state";
 import { StepIndicator } from "@/components/ui-bits";
 import { cn } from "@/lib/utils";
+
+import { useEffect } from "react";
+import { useAuth } from "@/lib/auth";
 
 export const Route = createFileRoute("/semester-selection")({
   head: () => ({
@@ -11,10 +14,10 @@ export const Route = createFileRoute("/semester-selection")({
       { title: "Select Your Semester — REVISION" },
       {
         name: "description",
-        content: "Pick your current semester from 1 to 6 and start revising.",
+        content: "Pick your current semester and start revising.",
       },
       { property: "og:title", content: "Select Your Semester — REVISION" },
-      { property: "og:description", content: "Pick your current semester, 1 to 6." },
+      { property: "og:description", content: "Pick your current semester to begin." },
     ],
   }),
   component: SemesterSelection,
@@ -22,10 +25,27 @@ export const Route = createFileRoute("/semester-selection")({
 
 function SemesterSelection() {
   const navigate = useNavigate();
-  const { semester, setSemester } = useAppState();
+  const { program, branch, setBranch, semester, setSemester, ready } = useAppState();
+  const { user, saveProfile } = useAuth();
+
+  useEffect(() => {
+    if (ready && !program) {
+      navigate({ to: "/program-selection", replace: true });
+    }
+  }, [ready, program, navigate]);
+
+  const isEngineering = program === "btech";
+  const isBsc = program === "bsc";
+  const semesterList = semestersForProgram(program);
 
   const choose = (n: number) => {
     setSemester(n);
+    if (user && saveProfile) {
+      void saveProfile({
+        program_id: program ?? undefined,
+        semester: n,
+      }).catch(() => {});
+    }
     navigate({ to: "/dashboard" });
   };
 
@@ -49,8 +69,48 @@ function SemesterSelection() {
       </header>
 
       <main className="screen-enter mx-auto -mt-5 w-full max-w-xl flex-1 px-4">
+        {isEngineering && (
+          <div className="surface-card mb-3.5 p-3.5">
+            <label className="block text-xs font-bold text-muted-foreground mb-1.5">
+              Engineering Branch
+            </label>
+            <select
+              aria-label="Engineering Branch"
+              value={branch ?? "civil"}
+              onChange={(e) => setBranch(e.target.value)}
+              className="h-10 w-full rounded-lg border border-border bg-background px-3 text-[13.5px] font-semibold outline-none focus:border-primary"
+            >
+              {engineeringBranches.map((b) => (
+                <option key={b.id} value={b.id}>
+                  {b.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        {isBsc && (
+          <div className="surface-card mb-3.5 p-3.5">
+            <label className="block text-xs font-bold text-muted-foreground mb-1.5">
+              B.Sc Stream / Specialization
+            </label>
+            <select
+              aria-label="B.Sc Stream"
+              value={branch ?? "cs"}
+              onChange={(e) => setBranch(e.target.value)}
+              className="h-10 w-full rounded-lg border border-border bg-background px-3 text-[13.5px] font-semibold outline-none focus:border-primary"
+            >
+              {bscStreams.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
         <div className="grid gap-2.5">
-          {semesters.map((n) => {
+          {semesterList.map((n) => {
             const selected = semester === n;
             return (
               <button

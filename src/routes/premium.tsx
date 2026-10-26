@@ -43,9 +43,12 @@ function Stat({ icon, value, label }: { icon: React.ReactNode; value: string; la
 }
 
 function PremiumDashboard() {
-  const { program, semester, studiedUnits, clearProgress } = useAppState();
+  const { program, branch, semester, studiedUnits, clearProgress } = useAppState();
   const { isPremium, planName } = useEntitlements();
-  const subjects = useMemo(() => subjectsFor(program, semester), [program, semester]);
+  const subjects = useMemo(
+    () => subjectsFor(program, semester, branch),
+    [program, semester, branch],
+  );
   const subjectIds = useMemo(() => subjects.map((s) => s.id), [subjects]);
   const unitIds = useMemo(() => subjects.flatMap((s) => s.units.map((u) => u.id)), [subjects]);
 

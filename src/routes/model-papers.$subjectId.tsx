@@ -1,10 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { FileText, Loader2, Lock, Trophy } from "lucide-react";
+import { FileText, Loader2, Lock, RefreshCw, Trophy } from "lucide-react";
 import { getSubject } from "@/lib/mock-data";
 import { subjectPapersQuery } from "@/lib/content";
 import { useEntitlements } from "@/lib/entitlements";
 import { EmptyState, Screen, ScreenHeader } from "@/components/app-chrome";
+import { VerifyPaymentModal } from "@/components/verify-payment-modal";
 
 export const Route = createFileRoute("/model-papers/$subjectId")({
   head: () => ({
@@ -24,6 +26,7 @@ export const Route = createFileRoute("/model-papers/$subjectId")({
 function ModelPapersScreen() {
   const { subjectId } = Route.useParams();
   const subject = getSubject(subjectId);
+  const [verifyOpen, setVerifyOpen] = useState(false);
   const { isPremium } = useEntitlements();
   const { data: papers = [], isLoading } = useQuery({
     ...subjectPapersQuery(subjectId),
@@ -49,6 +52,43 @@ function ModelPapersScreen() {
     <>
       <ScreenHeader title={subject.name} subtitle="Quick Exam Revision" />
       <Screen>
+        {!isPremium && (
+          <div className="surface-card mb-3 border border-premium/30 bg-premium/10 p-3.5">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5">
+                <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-premium/20 text-premium">
+                  <Lock className="size-4" />
+                </span>
+                <div>
+                  <p className="text-[13.5px] font-bold text-foreground">All papers are locked</p>
+                  <p className="text-[12px] text-muted-foreground">
+                    Get Premium to unlock all solved model papers & questions
+                  </p>
+                </div>
+              </div>
+              <Link
+                to="/payment"
+                className="press shrink-0 rounded-lg bg-accent px-3 py-1.5 text-[12px] font-bold text-accent-foreground"
+              >
+                Unlock
+              </Link>
+            </div>
+            <div className="mt-2.5 border-t border-premium/20 pt-2 text-center">
+              <button
+                type="button"
+                onClick={() => setVerifyOpen(true)}
+                className="inline-flex items-center gap-1 text-[11.5px] font-semibold text-accent underline hover:text-accent/80"
+              >
+                <RefreshCw className="size-3" /> Already paid? Restore / Verify Payment
+              </button>
+            </div>
+          </div>
+        )}
+        <VerifyPaymentModal
+          open={verifyOpen}
+          onClose={() => setVerifyOpen(false)}
+          onSuccess={() => window.location.reload()}
+        />
         {isLoading ? (
           <div className="mt-10 flex justify-center text-muted-foreground">
             <Loader2 className="size-6 animate-spin" />
@@ -62,7 +102,7 @@ function ModelPapersScreen() {
         ) : (
           <div className="grid gap-2.5">
             {papers.map((p) => {
-              const locked = p.is_paid && !isPremium;
+              const locked = !isPremium;
               if (locked) {
                 return (
                   <Link

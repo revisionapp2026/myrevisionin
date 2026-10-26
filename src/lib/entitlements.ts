@@ -58,21 +58,41 @@ export function recordAiUsage(): number {
 
 export type Subscription = "FREE" | "YEARLY" | "LIFETIME";
 
-/** Account (database) is the source of truth; the device flag only covers signed-out demo use. */
+/** Account (database) is the absolute source of truth. Unpaid accounts are always Free. */
 export function useEntitlements() {
-  const { isPremium: localPremium } = useAppState();
+  const { isPremium: localPremium, setPremium } = useAppState();
   const { user, profile } = useAuth();
+
   let subscription: Subscription = "FREE";
-  if (profile?.is_premium) {
-    const p = (profile.plan ?? "").toLowerCase();
-    if (p.startsWith("lifetime")) subscription = "LIFETIME";
-    else {
-      const since = profile.premium_since ? new Date(profile.premium_since).getTime() : Date.now();
-      subscription = Date.now() - since < 365 * 864e5 ? "YEARLY" : "FREE";
+
+  if (user) {
+    if (profile?.is_premium === true) {
+      subscription = profile.plan === "yearly" ? "YEARLY" : "LIFETIME";
+    } else {
+      subscription = "FREE";
+      // Purge any stale demo/test unlock flags from browser storage
+      if (typeof window !== "undefined") {
+        try {
+          if (window.localStorage.getItem("revision_lifetime_unlocked")) {
+            window.localStorage.removeItem("revision_lifetime_unlocked");
+          }
+          if (window.sessionStorage.getItem("revision_lifetime_unlocked")) {
+            window.sessionStorage.removeItem("revision_lifetime_unlocked");
+          }
+        } catch {
+          /* ignore */
+        }
+      }
+      if (localPremium) {
+        setPremium(false);
+      }
     }
-  } else if (!user && localPremium) subscription = "YEARLY";
+  } else {
+    subscription = "FREE";
+  }
+
   const isPremium = subscription !== "FREE";
-  const plan: PlanKey = isPremium ? "premium" : "free";
+  const plan: PlanKey = isPremium ? "premium" : "FREE";
   return {
     isPremium,
     subscription,

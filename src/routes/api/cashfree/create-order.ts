@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/api/cashfree/create-order")({
   server: {
     handlers: {
-      POST: async ({ request }) => {
+      POST: async ({ request }: { request: Request }) => {
         const appId = process.env["CASHFREE_APP_ID"] || process.env["VITE_CASHFREE_APP_ID"];
         const secretKey =
           process.env["CASHFREE_SECRET_KEY"] || process.env["VITE_CASHFREE_SECRET_KEY"];
@@ -19,22 +19,45 @@ export const Route = createFileRoute("/api/cashfree/create-order")({
             customerEmail: string;
             customerName: string;
             customerPhone: string;
+            userId?: string;
+            origin?: string;
           };
 
-          const { planId, amount, customerEmail, customerName, customerPhone } = body;
+          const customerEmail = String(body.customerEmail ?? "").trim();
+          const customerName = String(body.customerName ?? "REVISION User").trim();
+          const customerPhone = String(body.customerPhone ?? "");
+          const userId = body.userId ? String(body.userId).trim() : undefined;
+          const origin = body.origin;
 
-          if (!customerEmail || !amount || Number(amount) <= 0) {
-            return new Response("Invalid payment request", { status: 400 });
+          // Lifetime plan is flat ₹199 permanently with no price hike after 7 days
+          const planId = "lifetime";
+          const amount = 199;
+
+          if (!customerEmail) {
+            return new Response("Customer email is required", { status: 400 });
           }
 
           const orderId = `ORDER_${Date.now()}_${Math.random().toString(36).substring(2, 9).toUpperCase()}`;
-          const sanitizedPhone = String(customerPhone ?? "")
-            .replace(/\D/g, "")
-            .slice(0, 10);
+          const sanitizedPhone = customerPhone.replace(/\D/g, "").slice(0, 10);
           const customerId =
-            (customerEmail || "user").replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 45) ||
-            `user_${Date.now()}`;
-          const baseUrl = process.env["VITE_APP_URL"] || "https://myrevision.in";
+            customerEmail.replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 45) || `user_${Date.now()}`;
+
+          let headerOrigin = "";
+          try {
+            const reqOrigin = request.headers.get("origin");
+            const reqReferer = request.headers.get("referer");
+            if (reqOrigin) {
+              headerOrigin = reqOrigin;
+            } else if (reqReferer) {
+              headerOrigin = new URL(reqReferer).origin;
+            }
+          } catch {
+            /* ignore url parse error */
+          }
+
+          const baseUrl =
+            origin || headerOrigin || process.env["VITE_APP_URL"] || "https://myrevision.in";
+
           const isSandbox =
             (process.env["CASHFREE_MODE"] || process.env["VITE_CASHFREE_MODE"]) === "sandbox";
           const pgEndpoint = isSandbox
@@ -48,14 +71,18 @@ export const Route = createFileRoute("/api/cashfree/create-order")({
             customer_details: {
               customer_id: customerId,
               customer_email: customerEmail,
-              customer_name: customerName || "REVISION User",
+              customer_name: customerName,
               customer_phone: sanitizedPhone.length === 10 ? sanitizedPhone : "9999999999",
             },
+            order_tags: {
+              user_id: userId || "",
+              plan_id: "lifetime",
+            },
             order_meta: {
-              return_url: `${baseUrl}/payment?cf_success=true&order_id={order_id}&plan=${planId}`,
+              return_url: `${baseUrl}/payment?cf_success=true&order_id={order_id}&plan=lifetime`,
               notify_url: `${baseUrl}/api/cashfree/webhook`,
             },
-            order_note: `REVISION Premium - ${planId}`,
+            order_note: `REVISION Lifetime Access - ₹${amount}`,
           };
 
           // Create order via Cashfree API
@@ -106,11 +133,30 @@ export const Route = createFileRoute("/api/cashfree/create-order")({
             );
           }
 
+          // Track pending order in Supabase so auto-recovery works effortlessly
+          if (userId) {
+            try {
+              const { ensureAdminAuth } = await import("@/integrations/supabase/client.server");
+              const sb = await ensureAdminAuth();
+              await sb.from("payments").insert({
+                user_id: userId,
+                plan: "lifetime",
+                amount,
+                method: "cashfree",
+                status: "pending",
+                reference: orderId,
+                is_demo: false,
+              });
+            } catch (trackErr) {
+              console.warn("Could not insert pending payment record:", trackErr);
+            }
+          }
+
           return new Response(
             JSON.stringify({
               order_id: orderId,
-              payment_session_id: orderData.payment_session_id,
-              order_token: orderData.order_token,
+              payment_session_id: orderData["payment_session_id"],
+              order_token: orderData["order_token"],
               order_amount: amount,
             }),
             {

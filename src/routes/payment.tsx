@@ -1,14 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
-import { Check, Crown, Lock, Loader2 } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Check, Crown, Lock, Loader2, RefreshCw } from "lucide-react";
 import { load } from "@cashfreepayments/cashfree-js";
 import { plans, premiumBenefits } from "@/lib/mock-data";
+import { usePricing } from "@/lib/pricing";
 import { useAppState } from "@/lib/app-state";
 import { Screen, ScreenHeader } from "@/components/app-chrome";
 import { Button } from "@/components/ui-bits";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/lib/auth";
 import { useEntitlements } from "@/lib/entitlements";
+import { VerifyPaymentModal } from "@/components/verify-payment-modal";
 
 export const Route = createFileRoute("/payment")({
   head: () => ({
@@ -20,7 +22,10 @@ export const Route = createFileRoute("/payment")({
           "Get model papers, previous year question papers, important questions and solved answers.",
       },
       { property: "og:title", content: "Unlock Premium — REVISION" },
-      { property: "og:description", content: "₹199 / year or ₹399 lifetime. Secure UPI payments." },
+      {
+        property: "og:description",
+        content: "₹199 lifetime access. Secure UPI payments.",
+      },
     ],
   }),
   validateSearch: (
@@ -41,35 +46,99 @@ export const Route = createFileRoute("/payment")({
 });
 
 function PaymentScreen() {
-  const { promo, cf_success, plan: planFromUrl } = Route.useSearch();
-  const { user, profile, saveProfile } = useAuth();
+  const { cf_success, order_id } = Route.useSearch();
+  const { user, profile, saveProfile, loading } = useAuth();
   const { isLifetime } = useEntitlements();
-  const [selected, setSelected] = useState(
-    planFromUrl ? planFromUrl : promo ? "lifetime" : plans[0]!.id,
-  );
+  const { price, originalPrice, priceFormatted, originalPriceFormatted, isOfferActive, countdown } =
+    usePricing();
   const [pending, setPending] = useState(false);
   const [sheet, setSheet] = useState<null | "processing" | "done">(null);
-  const { isPremium, setPremium } = useAppState();
-  const basePlan = plans.find((p) => p.id === selected) ?? plans[0]!;
-  // Promotional lifetime price (₹399) applies only when arriving from the promo banner/popup.
-  const plan =
-    promo && basePlan.id === "lifetime"
-      ? { ...basePlan, price: "₹399", note: "Limited offer" }
-      : basePlan;
+  const [verifyOpen, setVerifyOpen] = useState(false);
+  const { setPremium } = useAppState();
 
-  // Handle Cashfree success callback
+  const plan = {
+    id: "lifetime",
+    price: priceFormatted,
+    period: "Lifetime",
+    note: "Lifetime Access at just ₹199 · Full access forever",
+  };
+
+  // Track whether we have already processed verification for this session
+  const unlockAttempted = useRef(false);
+
+  // Handle Cashfree redirect callback and pending order verification
   useEffect(() => {
-    if (cf_success === "true" && profile) {
-      setPremium(true);
-      setSheet("done");
-      const activePlan = planFromUrl || selected;
-      void saveProfile({
-        is_premium: true,
-        plan: activePlan,
-        premium_since: new Date().toISOString(),
-      }).catch((e) => console.error("Could not save premium to account", e));
+    let pendingOrderId: string | undefined = undefined;
+
+    if (typeof window !== "undefined") {
+      try {
+        const raw = window.localStorage.getItem("revision_pending_order");
+        if (raw) {
+          const parsed = JSON.parse(raw) as { orderId?: string };
+          pendingOrderId = parsed.orderId;
+        }
+      } catch {
+        /* ignore */
+      }
     }
-  }, [cf_success, profile, saveProfile, selected, planFromUrl, setPremium]);
+
+    // Only verify when redirected back from Cashfree with explicit success/order_id
+    const orderIdToVerify = order_id || (cf_success === "true" ? pendingOrderId : undefined);
+    const isRedirectSuccess = cf_success === "true";
+
+    if (!isRedirectSuccess && !order_id) return;
+    if (unlockAttempted.current) return;
+    if (loading) return;
+
+    unlockAttempted.current = true;
+    setPending(true);
+    setSheet("processing");
+
+    // Verify with backend before granting any premium status
+    fetch("/api/cashfree/verify-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        orderId: orderIdToVerify,
+        userId: user?.id,
+        email: profile?.email || user?.email,
+        planId: "lifetime",
+      }),
+    })
+      .then(async (res) => {
+        const data = (await res.json().catch(() => ({}))) as {
+          verified?: boolean;
+          success?: boolean;
+        };
+        if (data.verified || data.success) {
+          setPremium(true);
+          setSheet("done");
+          if (typeof window !== "undefined") {
+            window.localStorage.removeItem("revision_pending_order");
+            window.localStorage.setItem("revision_lifetime_unlocked", "true");
+          }
+          if (user && saveProfile) {
+            void saveProfile({
+              is_premium: true,
+              plan: "lifetime",
+              premium_since: new Date().toISOString(),
+            });
+          }
+        } else {
+          setSheet(null);
+          if (typeof window !== "undefined") {
+            window.localStorage.removeItem("revision_pending_order");
+          }
+        }
+      })
+      .catch((err) => {
+        console.warn("Cashfree verification error:", err);
+        setSheet(null);
+      })
+      .finally(() => {
+        setPending(false);
+      });
+  }, [cf_success, order_id, loading, user, profile, saveProfile, setPremium]);
 
   const pay = async () => {
     if (!user || !profile) {
@@ -95,6 +164,8 @@ function PaymentScreen() {
           customerEmail: profile.email || user.email || "",
           customerName: profile.full_name || user.email?.split("@")[0] || "User",
           customerPhone: safePhone,
+          userId: user.id,
+          origin: typeof window !== "undefined" ? window.location.origin : undefined,
         }),
       });
 
@@ -110,7 +181,27 @@ function PaymentScreen() {
         throw new Error("Cashfree session id missing from payment response");
       }
 
-      const mode = (import.meta.env.VITE_CASHFREE_MODE as "sandbox" | "production") || "production";
+      // Store pending order in localStorage for auto-recovery if user switches apps
+      if (orderData?.order_id && typeof window !== "undefined") {
+        try {
+          window.localStorage.setItem(
+            "revision_pending_order",
+            JSON.stringify({
+              orderId: orderData.order_id,
+              planId: plan.id,
+              userId: user.id,
+              timestamp: Date.now(),
+            }),
+          );
+        } catch {
+          /* ignore */
+        }
+      }
+
+      const mode =
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ((import.meta as any).env?.["VITE_CASHFREE_MODE"] as "sandbox" | "production") ||
+        "production";
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let cashfree: any = null;
 
@@ -174,73 +265,71 @@ function PaymentScreen() {
           </ul>
         </div>
 
-        <div className="mt-4 grid gap-2.5">
-          {plans.map((p) => {
-            const active = selected === p.id;
-            return (
-              <button
-                key={p.id}
-                type="button"
-                onClick={() => setSelected(p.id)}
-                aria-pressed={active}
-                className={cn(
-                  "surface-card press flex items-center gap-3 px-4 py-3.5 text-left",
-                  active && "border-primary bg-primary-soft",
-                )}
-              >
-                <span
-                  className={cn(
-                    "grid size-5 shrink-0 place-items-center rounded-full border-2",
-                    active ? "border-primary bg-primary text-white" : "border-border",
-                  )}
-                >
-                  {active && <Check className="size-3" />}
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block text-[15px] font-bold">
-                    {promo && p.id === "lifetime" ? (
-                      <>₹399 {p.period}</>
-                    ) : (
-                      <>
-                        {p.price} {p.period}
-                      </>
-                    )}
-                  </span>
-                  <span className="block text-[12.5px] text-muted-foreground">{p.note}</span>
-                </span>
-                {p.highlight && (
-                  <span className="rounded-full bg-premium/15 px-2 py-1 text-[11px] font-bold text-premium">
-                    Best value
-                  </span>
-                )}
-              </button>
-            );
-          })}
+        <div className="mt-4 surface-card relative overflow-hidden rounded-2xl border-2 border-primary bg-primary-soft/50 p-4.5 shadow-sm">
+          <div className="flex items-center justify-between">
+            <span className="rounded-full bg-primary px-3 py-1 text-[11.5px] font-extrabold uppercase tracking-wide text-primary-foreground shadow-sm">
+              Lifetime Access
+            </span>
+            <span className="flex items-center gap-1 text-[12px] font-bold text-success">
+              <Check className="size-3.5" /> Full Access Forever
+            </span>
+          </div>
+          <div className="mt-3 flex items-baseline gap-2">
+            <span className="text-[34px] font-extrabold tracking-tight text-foreground">
+              {priceFormatted}
+            </span>
+            <span className="text-[13px] font-medium text-muted-foreground">one-time payment</span>
+          </div>
+
+          <p className="mt-2 text-[12.5px] text-muted-foreground">
+            No recurring fees, no renewal hassle. Unlimited lifetime access to all solved model
+            papers.
+          </p>
         </div>
 
         <Button
           size="lg"
           variant="accent"
-          className="mt-4 w-full"
-          disabled={pending || isLifetime || (isPremium && selected === "yearly")}
+          className="mt-4.5 h-12 w-full text-[15px] font-bold shadow-lg shadow-accent/20"
+          disabled={pending || isLifetime}
           onClick={() => void pay()}
         >
           {pending ? (
             <>
-              <Loader2 className="size-4 animate-spin" /> Processing…
+              <Loader2 className="size-4 animate-spin mr-2" /> Processing…
             </>
-          ) : isLifetime || (isPremium && selected === "yearly") ? (
-            "Premium active"
+          ) : isLifetime ? (
+            "Lifetime Access Active"
           ) : (
-            `Pay ${plan.price}`
+            `Pay ${priceFormatted} · Unlock Lifetime Access`
           )}
         </Button>
 
-        <p className="mt-4 flex items-center justify-center gap-1.5 text-[12px] font-medium text-muted-foreground">
+        <p className="mt-3.5 flex items-center justify-center gap-1.5 text-[12px] font-medium text-muted-foreground">
           <Lock className="size-3.5" />
-          Secure payments powered by Cashfree
+          Secure 256-bit UPI payments powered by Cashfree
         </p>
+
+        <div className="mt-5 border-t border-border/80 pt-4 text-center">
+          <button
+            type="button"
+            onClick={() => setVerifyOpen(true)}
+            className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-accent hover:underline"
+          >
+            <RefreshCw className="size-3.5" />
+            Already paid? Restore / Verify Payment
+          </button>
+        </div>
       </Screen>
+
+      <VerifyPaymentModal
+        open={verifyOpen}
+        onClose={() => setVerifyOpen(false)}
+        onSuccess={() => {
+          setVerifyOpen(false);
+          setPremium(true);
+        }}
+      />
 
       {sheet && (
         <div className="fixed inset-0 z-50 flex items-end bg-black/50 px-0 pb-0">
@@ -267,10 +356,13 @@ function PaymentScreen() {
                 <Button
                   size="lg"
                   variant="accent"
-                  className="mt-5 w-full"
-                  onClick={() => setSheet(null)}
+                  className="mt-5 w-full h-11 text-[15px] font-bold"
+                  onClick={() => {
+                    setSheet(null);
+                    window.location.href = "/dashboard";
+                  }}
                 >
-                  Start revising
+                  Start Studying
                 </Button>
               </div>
             )}

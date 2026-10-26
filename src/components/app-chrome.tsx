@@ -17,6 +17,14 @@ import {
   User,
   Users,
   Wallet,
+  Atom,
+  BookOpen,
+  Cog,
+  Cpu,
+  Dna,
+  HeartPulse,
+  Layers,
+  Terminal,
   type LucideIcon,
 } from "lucide-react";
 import type { SubjectIcon } from "@/lib/mock-data";
@@ -132,10 +140,18 @@ const subjectIcons: Record<SubjectIcon, LucideIcon> = {
   stats: Sigma,
   management: Briefcase,
   finance: Wallet,
+  code: Terminal,
+  circuit: Cpu,
+  science: Atom,
+  mechanics: Cog,
+  biology: Dna,
+  medical: HeartPulse,
+  project: Layers,
+  math: Sigma,
 };
 
 export function SubjectGlyph({ icon }: { icon: SubjectIcon }) {
-  const Icon = subjectIcons[icon];
+  const Icon = subjectIcons[icon] || BookOpen;
   return (
     <IconTile tone="primary">
       <Icon className="size-[19px]" />

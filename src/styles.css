@@ -1,6 +1,7 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+@import "katex/dist/katex.min.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -152,11 +153,31 @@
   box-shadow: var(--shadow-card);
 }
 
-@utility brand-header {
+.brand-header,
+.brand-gradient {
+  background-color: #062b8f;
   background-image: linear-gradient(
     180deg,
-    var(--color-primary) 0%,
-    var(--color-primary-deep) 100%
+    var(--color-primary, #062b8f) 0%,
+    var(--color-primary-deep, #031f73) 100%
+  );
+}
+
+@utility brand-header {
+  background-color: #062b8f;
+  background-image: linear-gradient(
+    180deg,
+    var(--color-primary, #062b8f) 0%,
+    var(--color-primary-deep, #031f73) 100%
+  );
+}
+
+@utility brand-gradient {
+  background-color: #062b8f;
+  background-image: linear-gradient(
+    180deg,
+    var(--color-primary, #062b8f) 0%,
+    var(--color-primary-deep, #031f73) 100%
   );
 }
 
@@ -190,34 +211,56 @@
 }
 
 @utility hl-yellow {
-  background-color: color-mix(in oklab, #ffd84d 62%, transparent);
+  background-color: rgba(254, 240, 138, 0.68);
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
-  padding: 0.05em 0.2em;
+  padding: 0.08em 0.25em;
   border-radius: 4px;
-  color: #101b45;
+  color: #1a1600;
 }
 
 @utility hl-green {
-  background-color: color-mix(in oklab, #7ee0a5 62%, transparent);
+  background-color: rgba(187, 247, 208, 0.68);
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
-  padding: 0.05em 0.2em;
+  padding: 0.08em 0.25em;
   border-radius: 4px;
-  color: #101b45;
+  color: #052e16;
 }
 
 @utility hl-pink {
-  background-color: color-mix(in oklab, #ff9fc4 62%, transparent);
+  background-color: rgba(251, 207, 232, 0.68);
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
-  padding: 0.05em 0.2em;
+  padding: 0.08em 0.25em;
   border-radius: 4px;
-  color: #101b45;
+  color: #500724;
+}
+
+.dark .hl-yellow {
+  background-color: rgba(234, 179, 8, 0.32);
+  color: #fef08a;
+}
+
+.dark .hl-green {
+  background-color: rgba(34, 197, 94, 0.32);
+  color: #bbf7d0;
+}
+
+.dark .hl-pink {
+  background-color: rgba(236, 72, 153, 0.32);
+  color: #fbcfe8;
+}
+
+.hl-yellow .katex,
+.hl-green .katex,
+.hl-pink .katex {
+  color: inherit !important;
 }
 
 /* Dark mode headers stay neutral dark instead of blue. */
-.dark .brand-header {
+.dark .brand-header,
+.dark .brand-gradient {
   background-image: linear-gradient(180deg, #16171c 0%, #0c0d10 100%);
 }
 
@@ -266,3 +309,43 @@
     transform: none;
   }
 }
+
+/* ==========================================================================
+   KaTeX Mobile Responsiveness & Container Overflow Prevention
+   ========================================================================== */
+.katex-display {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  max-width: 100% !important;
+  padding: 0.35rem 0.25rem !important;
+  margin: 0.5rem 0 !important;
+  text-align: center;
+  -webkit-overflow-scrolling: touch;
+}
+
+.katex-display > .katex {
+  white-space: nowrap !important;
+  text-align: center;
+}
+
+.katex {
+  font-size: 1.05em;
+  max-width: 100%;
+  text-rendering: auto;
+}
+
+.katex-html {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Universal scrollable math wrapper */
+.math-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+

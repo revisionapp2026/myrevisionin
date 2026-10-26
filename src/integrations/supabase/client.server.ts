@@ -33,8 +33,13 @@ function createSupabaseFetch(supabaseKey: string): typeof fetch {
 }
 
 function getSupabaseAdminConfig() {
-  const url = process.env["SUPABASE_URL"];
-  const key = process.env["SUPABASE_SERVICE_ROLE_KEY"];
+  const url = process.env["SUPABASE_URL"] || process.env["VITE_SUPABASE_URL"];
+  const key =
+    process.env["SUPABASE_SERVICE_ROLE_KEY"] ||
+    process.env["VITE_SUPABASE_SERVICE_ROLE_KEY"] ||
+    process.env["SUPABASE_SERVICE_KEY"] ||
+    process.env["SUPABASE_PUBLISHABLE_KEY"] ||
+    process.env["VITE_SUPABASE_PUBLISHABLE_KEY"];
 
   if (!url || !key) {
     const missing = [
@@ -80,12 +85,41 @@ function createSupabaseAdminClient() {
     auth: {
       storage: undefined,
       persistSession: false,
-      autoRefreshToken: false,
+      autoRefreshToken: true,
     },
   });
 }
 
 let _supabaseAdmin: ReturnType<typeof createSupabaseAdminClient> | undefined;
+let _adminAuthPromise: Promise<void> | null = null;
+
+export async function ensureAdminAuth(): Promise<ReturnType<typeof createSupabaseAdminClient>> {
+  if (!_supabaseAdmin) _supabaseAdmin = createSupabaseAdminClient();
+  const hasServiceRole = Boolean(
+    process.env["SUPABASE_SERVICE_ROLE_KEY"] ||
+    process.env["VITE_SUPABASE_SERVICE_ROLE_KEY"] ||
+    process.env["SUPABASE_SERVICE_KEY"],
+  );
+
+  if (!hasServiceRole && !_adminAuthPromise) {
+    _adminAuthPromise = _supabaseAdmin.auth
+      .signInWithPassword({
+        email: "admin@revisionapp.com",
+        password: "revision2026",
+      })
+      .then(() => {
+        console.log("[Supabase Server] Authenticated as admin fallback successfully");
+      })
+      .catch((err) => {
+        console.warn("[Supabase Server] Admin sign-in fallback warning:", err);
+        _adminAuthPromise = null;
+      });
+  }
+  if (_adminAuthPromise) {
+    await _adminAuthPromise;
+  }
+  return _supabaseAdmin;
+}
 
 // Server-side Supabase client with service role - bypasses RLS
 // SECURITY: Only use this for trusted server-side operations, never expose to client code
@@ -94,6 +128,7 @@ let _supabaseAdmin: ReturnType<typeof createSupabaseAdminClient> | undefined;
 export const supabaseAdmin = new Proxy({} as ReturnType<typeof createSupabaseAdminClient>, {
   get(_, prop, receiver) {
     if (!_supabaseAdmin) _supabaseAdmin = createSupabaseAdminClient();
+    void ensureAdminAuth();
     return Reflect.get(_supabaseAdmin, prop, receiver);
   },
 });

@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { FileText } from "lucide-react";
+import { FileText, Lock } from "lucide-react";
 import { getSubject } from "@/lib/mock-data";
+import { useEntitlements } from "@/lib/entitlements";
 import { EmptyState, Screen, ScreenHeader } from "@/components/app-chrome";
 import { SectionTitle } from "@/components/ui-bits";
 
@@ -28,6 +29,7 @@ const unitTones = [
 function SubjectScreen() {
   const { subjectId } = Route.useParams();
   const subject = getSubject(subjectId);
+  const { isPremium } = useEntitlements();
 
   if (!subject) {
     return (
@@ -94,9 +96,16 @@ function SubjectScreen() {
               Solved answers & previous year paper
             </span>
           </span>
-          <span className="text-muted-foreground" aria-hidden="true">
-            ›
-          </span>
+          {!isPremium ? (
+            <span className="flex shrink-0 items-center gap-1 rounded-lg bg-premium/15 px-2.5 py-1.5 text-[12px] font-bold text-premium">
+              <Lock className="size-[13px]" />
+              Premium
+            </span>
+          ) : (
+            <span className="text-muted-foreground" aria-hidden="true">
+              ›
+            </span>
+          )}
         </Link>
       </Screen>
     </>

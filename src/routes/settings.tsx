@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ChevronRight,
+  Download,
   FileText,
   Globe,
   Info,
@@ -80,6 +81,33 @@ function SettingsScreen() {
               />
             </button>
           </div>
+
+          <button
+            type="button"
+            onClick={() => {
+              fetch("/api/analytics/track-install", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  platform: navigator.platform,
+                  userAgent: navigator.userAgent,
+                }),
+              }).catch(() => {});
+              window.dispatchEvent(new CustomEvent("trigger-pwa-install"));
+            }}
+            className="press flex w-full items-center gap-3 px-3.5 py-3.5 text-left hover:bg-muted/40"
+          >
+            <IconTile tone="accent">
+              <Download className="size-[19px]" />
+            </IconTile>
+            <div className="flex-1">
+              <span className="block text-[15px] font-semibold">Download App</span>
+              <span className="block text-[12px] text-muted-foreground">
+                Install for offline study and fast access
+              </span>
+            </div>
+            <ChevronRight className="size-4 text-muted-foreground" />
+          </button>
 
           {rows.map(({ icon: Icon, label, value }) => (
             <button

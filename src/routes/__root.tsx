@@ -17,6 +17,8 @@ import { AuthProvider } from "@/lib/auth";
 import { InstallPrompt } from "@/components/install-prompt";
 import { registerServiceWorker } from "@/lib/pwa";
 import { OfflineIndicator } from "@/components/offline-indicator";
+import { AnalyticsTracker } from "@/components/analytics-tracker";
+import { PromoPopup } from "@/components/promo";
 
 function NotFoundComponent() {
   return (
@@ -83,18 +85,45 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
+      { httpEquiv: "Cache-Control", content: "no-cache, no-store, must-revalidate" },
+      { httpEquiv: "Pragma", content: "no-cache" },
+      { httpEquiv: "Expires", content: "0" },
       { name: "google-site-verification", content: "Qhv9zV3dgLFbpiYOyadw9L4G6ty4UefQFmyrhlebDgU" },
-      { title: "REVISION — Last Minute Revision That Actually Works" },
+      { title: "REVISION — Best B.Com, BBA, B.Tech & B.Sc Exam Notes, Syllabus & Solved Papers | myrevision.in" },
       {
         name: "description",
         content:
-          "REVISION is a study app for B.Com and BBA students: unit highlights, bookmarks and solved model papers.",
+          "India's leading last-minute exam revision platform for B.Com, BBA, Engineering (B.Tech), and B.Sc students. Get high-yield unit summaries, previous year solved papers, model papers, and AI exam tutor at myrevision.in.",
       },
+      {
+        name: "keywords",
+        content:
+          "myrevision, myrevision.in, revision app, bcom revision, bba revision, btech revision, bsc revision, science exam notes, engineering exam notes, bcom question papers, bba solved papers, bsc model papers, calicut university, bangalore university, delhi university, bcom exam notes, last minute revision",
+      },
+      { name: "robots", content: "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" },
       { name: "theme-color", content: "#062B8F" },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "myrevision.in" },
+      { property: "og:url", content: "https://myrevision.in" },
+      { property: "og:title", content: "REVISION — Best B.Com, BBA, B.Tech & B.Sc Exam Notes & Solved Papers" },
+      {
+        property: "og:description",
+        content:
+          "Ace your B.Com, BBA, B.Tech, and B.Sc exams with solved model papers, important questions, and quick revision notes at myrevision.in.",
+      },
+      { property: "og:image", content: "https://myrevision.in/icon-512.png" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:site", content: "@myrevision_in" },
+      { name: "twitter:title", content: "REVISION — Last-Minute Revision for B.Com, BBA, B.Tech & B.Sc" },
+      {
+        name: "twitter:description",
+        content:
+          "Ace your B.Com, BBA, B.Tech, and B.Sc exams with solved model papers, important questions, and quick revision notes at myrevision.in.",
+      },
+      { property: "og:image", content: "https://myrevision.in/icon-512.png" },
     ],
     links: [
+      { rel: "canonical", href: "https://myrevision.in" },
       {
         rel: "stylesheet",
         href: appCss,
@@ -118,10 +147,46 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: ReactNode }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://myrevision.in/#website",
+        url: "https://myrevision.in",
+        name: "REVISION",
+        description: "Last-Minute Revision for B.Com and BBA Students",
+        publisher: {
+          "@type": "Organization",
+          name: "REVISION",
+          url: "https://myrevision.in",
+          logo: "https://myrevision.in/icon-512.png",
+        },
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://myrevision.in/#app",
+        name: "REVISION Study App",
+        url: "https://myrevision.in",
+        applicationCategory: "EducationalApplication",
+        operatingSystem: "All",
+        offers: {
+          "@type": "Offer",
+          price: "199",
+          priceCurrency: "INR",
+        },
+      },
+    ],
+  };
+
   return (
     <html lang="en">
       <head>
         <HeadContent />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body>
         {children}
@@ -136,6 +201,16 @@ function RootComponent() {
 
   useEffect(() => {
     registerServiceWorker();
+
+    // Auto-invalidate old promo & pricing cached values so returning accounts reflect flat 199 immediately
+    if (typeof window !== "undefined") {
+      try {
+        window.localStorage.removeItem("revision_account_created_at");
+        window.localStorage.removeItem("revision_promo_window_start");
+      } catch {
+        /* ignore */
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -159,10 +234,12 @@ function RootComponent() {
     <OfflineCacheProvider client={queryClient}>
       <AppStateProvider>
         <AuthProvider>
+          <AnalyticsTracker />
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
           <OfflineIndicator />
           <InstallPrompt />
+          <PromoPopup />
         </AuthProvider>
       </AppStateProvider>
     </OfflineCacheProvider>

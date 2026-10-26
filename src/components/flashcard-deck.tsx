@@ -5,6 +5,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Check, RotateCw, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { RichMathText } from "@/components/math-formula";
 
 export type Flashcard = { question: string; answer: string };
 
@@ -148,7 +149,9 @@ export function FlashcardDeck({ cards }: { cards: Flashcard[] }) {
               <span className="text-[11px] font-bold uppercase tracking-wide text-primary">
                 Question
               </span>
-              <p className="text-[17px] font-bold leading-snug">{card.question}</p>
+              <div className="text-[16px] sm:text-[17px] font-bold leading-snug break-words overflow-y-auto max-h-[190px]">
+                <RichMathText text={card.question} />
+              </div>
               <span className="text-[12px] text-muted-foreground">Tap to reveal the answer</span>
             </div>
             <div
@@ -158,7 +161,9 @@ export function FlashcardDeck({ cards }: { cards: Flashcard[] }) {
               <span className="text-[11px] font-bold uppercase tracking-wide opacity-80">
                 Answer
               </span>
-              <p className="text-[15px] font-semibold leading-relaxed">{card.answer}</p>
+              <div className="text-[14.5px] sm:text-[15px] font-semibold leading-relaxed break-words overflow-y-auto max-h-[190px]">
+                <RichMathText text={card.answer} />
+              </div>
               <span className="text-[12px] opacity-75">Swipe to the next card</span>
             </div>
           </div>

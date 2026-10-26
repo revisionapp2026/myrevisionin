@@ -5,6 +5,7 @@ import { searchAll, type SearchHit } from "@/lib/mock-data";
 import { useAppState } from "@/lib/app-state";
 import { BottomNav, EmptyState, Screen, ScreenHeader } from "@/components/app-chrome";
 import { Chip } from "@/components/ui-bits";
+import { RichMathText } from "@/components/math-formula";
 
 export const Route = createFileRoute("/search")({
   head: () => ({
@@ -32,16 +33,16 @@ const icons = {
 };
 
 function SearchScreen() {
-  const { program, semester } = useAppState();
+  const { program, branch, semester } = useAppState();
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<(typeof filters)[number]>("All");
 
   const results = useMemo(() => {
-    const hits = searchAll(query, program, semester);
+    const hits = searchAll(query, program, semester, branch);
     if (filter === "All") return hits;
     const kind = kindOf[filter];
     return hits.filter((h: SearchHit) => h.kind === kind);
-  }, [query, filter, program, semester]);
+  }, [query, filter, program, semester, branch]);
 
   return (
     <>
@@ -104,9 +105,11 @@ function SearchScreen() {
                       <Icon className="size-[19px]" />
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[14.5px] font-semibold">{r.title}</span>
+                      <span className="block truncate text-[14.5px] font-semibold">
+                        <RichMathText text={r.title} />
+                      </span>
                       <span className="block truncate text-[12.5px] text-muted-foreground">
-                        {r.context}
+                        <RichMathText text={r.context} />
                       </span>
                     </span>
                     <span className="text-muted-foreground" aria-hidden="true">

@@ -153,7 +153,7 @@ export const refundSections: LegalSection[] = [
   {
     heading: "1. Plans covered",
     paragraphs: [
-      "This policy applies to premium purchases made inside REVISION, including the ₹199 and ₹399 plans. Where an app store or the law provides a different mandatory refund right, that right prevails.",
+      "This policy applies to premium purchases made inside REVISION, including the ₹199 lifetime plan. Where an app store or the law provides a different mandatory refund right, that right prevails.",
     ],
   },
   {

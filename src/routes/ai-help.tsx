@@ -26,9 +26,11 @@ import { FlashcardDeck, type Flashcard } from "@/components/flashcard-deck";
 import logo from "@/assets/revision-logo.png";
 import { useAppState } from "@/lib/app-state";
 import { readAiUsage, recordAiUsage, useEntitlements } from "@/lib/entitlements";
-import { programLabel, subjectsFor, getSubject } from "@/lib/mock-data";
+import { programLabel, subjectsFor, getSubject, getUnit } from "@/lib/mock-data";
 import { deleteDeck, readDecks, saveDeck, type SavedDeck } from "@/lib/saved-decks";
+import { generateSyllabusContent } from "@/lib/study-fallback";
 import { cn } from "@/lib/utils";
+import { RichMathText } from "@/components/math-formula";
 
 export const Route = createFileRoute("/ai-help")({
   validateSearch: (
@@ -98,38 +100,97 @@ const ABILITIES: { icon: typeof BookOpen; title: string; body: string; mode: Mod
 type QuizItem = { question: string; options: string[]; correct: string; reason: string };
 
 function parseCards(text: string): Flashcard[] {
-  return text
+  const lines = text
     .split("\n")
     .map((l) => l.trim())
-    .filter((l) => l.includes("::"))
-    .map((l) => {
+    .filter(Boolean);
+  const cards: Flashcard[] = [];
+
+  for (const l of lines) {
+    if (l.includes("::")) {
       const [q, ...rest] = l.split("::");
-      return {
-        question: (q ?? "").replace(/^[-\d.\s]+/, "").trim(),
-        answer: rest.join("::").trim(),
-      };
-    })
-    .filter((c) => c.question && c.answer);
+      const cleanQ = (q ?? "")
+        .replace(/^(\d+[.)]|[-*•])\s*/, "")
+        .replace(/^\*\*|\*\*$/g, "")
+        .trim();
+      const cleanA = rest
+        .join("::")
+        .replace(/^\*\*|\*\*$/g, "")
+        .trim();
+      if (cleanQ && cleanA) {
+        cards.push({ question: cleanQ, answer: cleanA });
+        continue;
+      }
+    }
+    // Support "Q: ... A: ..."
+    const qaMatch = l.match(/^(?:Q|Question)\s*:\s*(.+?)\s*(?:A|Answer)\s*:\s*(.+)$/i);
+    if (qaMatch && qaMatch[1] && qaMatch[2]) {
+      cards.push({ question: qaMatch[1].trim(), answer: qaMatch[2].trim() });
+      continue;
+    }
+    // Support "Term - Definition"
+    if (l.includes(" - ") || l.includes(" — ")) {
+      const [term, ...def] = l.split(/\s*[-—]\s*/);
+      const cleanTerm = (term ?? "")
+        .replace(/^(\d+[.)]|[-*•])\s*/, "")
+        .replace(/^\*\*|\*\*$/g, "")
+        .trim();
+      const cleanDef = def.join(" - ").trim();
+      if (cleanTerm && cleanDef && cleanTerm.length < 60) {
+        cards.push({ question: cleanTerm, answer: cleanDef });
+      }
+    }
+  }
+
+  // Fallback: if no delimiter matched but text exists, generate flashcards from sentences
+  if (cards.length === 0 && text.trim()) {
+    const segments = text
+      .split(/(?<=[.?!])\s+/)
+      .map((s) => s.replace(/^[-*•\d.\s]+/, "").trim())
+      .filter((s) => s.length > 25 && s.length < 220);
+    for (let i = 0; i < Math.min(6, segments.length); i++) {
+      const s = segments[i];
+      if (s) {
+        cards.push({
+          question: `Key Exam Point ${i + 1}`,
+          answer: s,
+        });
+      }
+    }
+  }
+
+  return cards;
 }
 
 function parseQuiz(text: string): QuizItem[] {
-  return text
+  const lines = text
     .split("\n")
     .map((l) => l.trim())
-    .filter((l) => l.split("::").length >= 3)
-    .map((l) => {
+    .filter(Boolean);
+  const items: QuizItem[] = [];
+
+  for (const l of lines) {
+    if (l.split("::").length >= 3) {
       const parts = l.split("::").map((p) => p.trim());
-      return {
-        question: (parts[0] ?? "").replace(/^[-\d.\s]+/, ""),
-        options: (parts[1] ?? "")
-          .split("|")
-          .map((o) => o.trim())
-          .filter(Boolean),
-        correct: parts[2] ?? "",
-        reason: parts[3] ?? "",
-      };
-    })
-    .filter((q) => q.question && q.options.length >= 2);
+      const cleanQ = (parts[0] ?? "")
+        .replace(/^(\d+[.)]|[-*•])\s*/, "")
+        .replace(/^\*\*|\*\*$/g, "")
+        .trim();
+      const opts = (parts[1] ?? "")
+        .split("|")
+        .map((o) => o.replace(/^[A-D][.)]\s*/i, "").trim())
+        .filter(Boolean);
+      if (cleanQ && opts.length >= 2) {
+        items.push({
+          question: cleanQ,
+          options: opts,
+          correct: (parts[2] ?? "A").trim().slice(0, 1).toUpperCase(),
+          reason: parts[3] ? parts[3].trim() : "Key syllabus revision point.",
+        });
+      }
+    }
+  }
+  return items;
 }
 
 function AiHelp() {
@@ -243,24 +304,59 @@ function AiHelp() {
         signal: ac.signal,
       });
 
-      if (!res.ok || !res.body) {
-        setError((await res.text()) || "Study help is unavailable right now.");
-        return;
+      let text = "";
+      if (res.ok) {
+        if (res.body && typeof res.body.getReader === "function") {
+          try {
+            const reader = res.body.getReader();
+            const decoder = new TextDecoder();
+            while (true) {
+              const { done, value } = await reader.read();
+              if (done) break;
+              text += decoder.decode(value, { stream: true });
+              setAnswer(text);
+            }
+          } catch {
+            /* stream reading failed, fall back to text() */
+          }
+        }
+        if (!text.trim()) {
+          try {
+            text = await res.text();
+            if (text.trim()) setAnswer(text);
+          } catch {
+            /* ignore */
+          }
+        }
       }
 
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let text = "";
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        text += decoder.decode(value, { stream: true });
-        setAnswer(text);
+      if (!text.trim()) {
+        const fallback = generateSyllabusContent({
+          topic: question,
+          mode: asMode,
+          programLabel: programLabel(program),
+          semester: semester ?? 1,
+          subjectName: subject?.name,
+          unitName: unitFromLink
+            ? `Unit ${unitFromLink.unit.unit_number}: ${unitFromLink.unit.title}`
+            : undefined,
+        });
+        setAnswer(fallback);
       }
-      if (!text.trim()) setError("Nothing came back. Please try again.");
     } catch (err) {
       if ((err as Error)?.name !== "AbortError") {
-        setError("Could not reach your study buddy. Check your connection and try again.");
+        console.warn("Study API fallback triggered:", err);
+        const fallback = generateSyllabusContent({
+          topic: question,
+          mode: asMode,
+          programLabel: programLabel(program),
+          semester: semester ?? 1,
+          subjectName: subject?.name,
+          unitName: unitFromLink
+            ? `Unit ${unitFromLink.unit.unit_number}: ${unitFromLink.unit.title}`
+            : undefined,
+        });
+        setAnswer(fallback);
       }
     } finally {
       setLoading(false);
@@ -552,8 +648,10 @@ function AiHelp() {
               const chosen = picked[i];
               const letters = ["A", "B", "C", "D"];
               return (
-                <div key={i} className="surface-card card-rise px-3.5 py-3">
-                  <p className="text-[14px] font-bold">{q.question}</p>
+                <div key={i} className="surface-card card-rise px-3.5 py-3 min-w-0 w-full max-w-full overflow-hidden">
+                  <div className="text-[14px] font-bold break-words">
+                    <RichMathText text={q.question} />
+                  </div>
                   <div className="mt-2 grid gap-1.5">
                     {q.options.map((opt, oi) => {
                       const letter = letters[oi] ?? "";
@@ -565,7 +663,7 @@ function AiHelp() {
                           type="button"
                           onClick={() => setPicked((p) => ({ ...p, [i]: letter }))}
                           className={cn(
-                            "press rounded-lg border px-3 py-2 text-left text-[13.5px]",
+                            "press rounded-lg border px-3 py-2 text-left text-[13.5px] break-words flex items-start gap-1.5",
                             !chosen
                               ? "border-border"
                               : isCorrect
@@ -575,15 +673,18 @@ function AiHelp() {
                                   : "border-border text-muted-foreground",
                           )}
                         >
-                          {letter}. {opt}
+                          <span className="font-bold shrink-0">{letter}.</span>
+                          <span className="min-w-0 flex-1 break-words">
+                            <RichMathText text={opt} />
+                          </span>
                         </button>
                       );
                     })}
                   </div>
                   {chosen && q.reason && (
-                    <p className="mt-2 text-[12.5px] leading-relaxed text-muted-foreground">
-                      {q.reason}
-                    </p>
+                    <div className="mt-2 text-[12.5px] leading-relaxed text-muted-foreground break-words">
+                      <RichMathText text={q.reason} />
+                    </div>
                   )}
                 </div>
               );
@@ -592,13 +693,19 @@ function AiHelp() {
         )}
 
         {/* Plain answer */}
-        {answer && answerMode !== "flashcards" && quiz.length === 0 && (
-          <article className="surface-card card-rise mt-4 whitespace-pre-wrap px-3.5 py-3.5 text-[14px] leading-relaxed">
-            {answer}
-          </article>
-        )}
+        {answer &&
+          ((answerMode !== "flashcards" && quiz.length === 0) ||
+            (answerMode === "flashcards" && cards.length === 0)) && (
+            <article className="surface-card card-rise mt-4 px-3.5 py-3.5 text-[14px] leading-relaxed min-w-0 w-full max-w-full overflow-hidden space-y-2.5">
+              {answer.split(/\n\n+/).map((para, pIdx) => (
+                <div key={pIdx} className="leading-relaxed break-words">
+                  <RichMathText text={para} />
+                </div>
+              ))}
+            </article>
+          )}
 
-        {answer && !loading && answerMode !== "flashcards" && (
+        {answer && !loading && (
           <div className="mt-3 flex flex-wrap gap-2">
             <button
               type="button"
@@ -621,16 +728,18 @@ function AiHelp() {
             >
               <RotateCcw className="size-4" /> Try again
             </button>
-            <button
-              type="button"
-              onClick={() => {
-                setMode("flashcards");
-                void ask(topic, "flashcards");
-              }}
-              className="press flex items-center gap-2 rounded-full border border-border px-4 py-2.5 text-[13.5px] font-semibold"
-            >
-              <Layers className="size-4" /> Flashcards
-            </button>
+            {answerMode !== "flashcards" && (
+              <button
+                type="button"
+                onClick={() => {
+                  setMode("flashcards");
+                  void ask(topic, "flashcards");
+                }}
+                className="press flex items-center gap-2 rounded-full border border-border px-4 py-2.5 text-[13.5px] font-semibold"
+              >
+                <Layers className="size-4" /> Flashcards
+              </button>
+            )}
           </div>
         )}
 

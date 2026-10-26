@@ -4,6 +4,7 @@ import {
   Bell,
   Bookmark,
   Crown,
+  Download,
   Home,
   Layers,
   Menu,
@@ -58,6 +59,17 @@ export function SideMenu() {
               {label}
             </Link>
           ))}
+          <button
+            type="button"
+            onClick={() => {
+              setOpen(false);
+              window.dispatchEvent(new CustomEvent("trigger-pwa-install"));
+            }}
+            className="press flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left text-[14.5px] font-semibold text-foreground hover:bg-muted"
+          >
+            <Download className="size-[18px] text-accent" />
+            Download App
+          </button>
         </nav>
       </SheetContent>
     </Sheet>

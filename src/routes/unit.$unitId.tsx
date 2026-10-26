@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   Bookmark,
@@ -13,27 +13,35 @@ import {
   Highlighter,
   Sparkles,
   Type,
+  Sigma,
 } from "lucide-react";
 import { getUnit } from "@/lib/mock-data";
 import { unitPointsQuery } from "@/lib/content";
 import { useAppState, type HighlightColor } from "@/lib/app-state";
 import { EmptyState, Screen, ScreenHeader } from "@/components/app-chrome";
 import { cn } from "@/lib/utils";
+import {
+  MathFormula,
+  FormulaCard,
+  parseFormulaText,
+  hasMathematicalFormula,
+  RichMathText,
+} from "@/components/math-formula";
 
 export const Route = createFileRoute("/unit/$unitId")({
   head: () => ({
     meta: [
-      { title: "Chapter Highlights — REVISION" },
-      { name: "description", content: "Bullet-point revision highlights and your bookmarks." },
-      { property: "og:title", content: "Chapter Highlights — REVISION" },
-      { property: "og:description", content: "Bullet-point revision highlights and bookmarks." },
+      { title: "Chapter Highlights & Formulas — REVISION" },
+      { name: "description", content: "Bullet-point revision highlights, formulas, and bookmarks." },
+      { property: "og:title", content: "Chapter Highlights & Formulas — REVISION" },
+      { property: "og:description", content: "Bullet-point revision highlights, formulas, and bookmarks." },
     ],
   }),
   component: UnitScreen,
 });
 
-type Tab = "highlights" | "key points" | "saved";
-const tabs: Tab[] = ["highlights", "key points", "saved"];
+type Tab = "highlights" | "key points" | "formulas" | "saved";
+const tabs: Tab[] = ["highlights", "key points", "formulas", "saved"];
 
 function UnitScreen() {
   const { unitId } = Route.useParams();
@@ -55,6 +63,9 @@ function UnitScreen() {
     highlightColor,
     highlightsForUnit,
     markUnitStudied,
+    toggleUnitBookmark,
+    isUnitBookmarked,
+    removeUnitBookmarks,
   } = useAppState();
 
   useEffect(() => {
@@ -84,14 +95,31 @@ function UnitScreen() {
   const { unit, subject } = found;
   const highlights = points.filter((p) => p.kind === "highlight");
   const keyPoints = points.filter((p) => p.kind === "bookmark");
+  const formulaPoints = useMemo(() => {
+    return points.filter((p) => {
+      const parsed = parseFormulaText(p.content);
+      return Boolean(parsed && parsed.formula.length <= 140);
+    });
+  }, [points]);
+
+  const isUnitSaved = isUnitBookmarked(unit.id);
   const saved = bookmarksForUnit(unit.id);
   const marks = highlightsForUnit(unit.id);
   const active = tab === "highlights" ? highlights : keyPoints;
-  const allSaved = active.length > 0 && active.every((p) => isBookmarked(unit.id, p.content));
+  const allSaved = (active.length > 0 && active.every((p) => isBookmarked(unit.id, p.content))) || isUnitSaved;
 
-  const saveAll = () => {
-    for (const p of active.slice(0, 20))
-      if (!isBookmarked(unit.id, p.content)) toggleBookmark(unit.id, p.content);
+  const toggleAllOrUnit = () => {
+    if (allSaved) {
+      for (const p of active) {
+        if (isBookmarked(unit.id, p.content)) toggleBookmark(unit.id, p.content);
+      }
+      if (isUnitSaved) toggleUnitBookmark(unit.id, `Unit ${unit.unit_number}: ${unit.title}`);
+    } else {
+      for (const p of active.slice(0, 20)) {
+        if (!isBookmarked(unit.id, p.content)) toggleBookmark(unit.id, p.content);
+      }
+      toggleUnitBookmark(unit.id, `Unit ${unit.unit_number}: ${unit.title}`);
+    }
   };
 
   const share = async () => {
@@ -118,12 +146,13 @@ function UnitScreen() {
         action={
           <button
             type="button"
-            onClick={saveAll}
-            aria-label="Bookmark all points"
+            onClick={toggleAllOrUnit}
+            aria-label={allSaved ? "Remove unit bookmarks" : "Bookmark this unit and points"}
+            title={allSaved ? "Remove bookmarks for this unit" : "Bookmark unit"}
             className="press grid size-9 place-items-center rounded-full text-white hover:bg-white/15"
           >
             {allSaved ? (
-              <BookmarkCheck className="size-[19px]" />
+              <BookmarkCheck className="size-[19px] text-accent" />
             ) : (
               <Bookmark className="size-[19px]" />
             )}
@@ -140,13 +169,14 @@ function UnitScreen() {
               onClick={() => setTab(t)}
               aria-pressed={tab === t}
               className={cn(
-                "flex-1 py-3 text-[13.5px] font-semibold capitalize transition-colors",
+                "flex-1 py-3 text-[12.5px] font-semibold capitalize transition-colors",
                 tab === t
                   ? "border-b-2 border-accent text-accent"
                   : "border-b-2 border-transparent text-muted-foreground",
               )}
             >
               {t}
+              {t === "formulas" && formulaPoints.length > 0 && ` (${formulaPoints.length})`}
               {t === "saved" && saved.length > 0 && ` (${saved.length})`}
             </button>
           ))}
@@ -155,7 +185,71 @@ function UnitScreen() {
 
       <Screen nav className="pb-24">
         <div style={{ fontSize: `${textScale}rem` }}>
-          {tab === "saved" ? (
+          {tab === "formulas" ? (
+            formulaPoints.length === 0 ? (
+              <div className="grid gap-3">
+                <EmptyState
+                  icon={Sigma}
+                  title="Formulas are integrated in Key Points"
+                  description={`All mathematical relationships for "${unit.title}" are highlighted in the Key Points and Highlights tabs.`}
+                />
+                <button
+                  type="button"
+                  onClick={() => setTab("key points")}
+                  className="press mx-auto flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-[14px] font-bold text-accent-foreground"
+                >
+                  <Sparkles className="size-[18px]" />
+                  View Key Points
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-3.5">
+                <div className="rounded-xl border border-primary/20 bg-primary/5 p-3.5 flex items-center justify-between shadow-xs">
+                  <div className="flex items-center gap-2.5">
+                    <span className="grid size-8 place-items-center rounded-lg bg-primary text-primary-foreground shadow-xs">
+                      <Sigma className="size-4" />
+                    </span>
+                    <div>
+                      <h3 className="text-[14px] font-bold text-foreground">Formula Reference Sheet</h3>
+                      <p className="text-[11.5px] text-muted-foreground">{unit.title} • {formulaPoints.length} core equations</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid gap-3">
+                  {formulaPoints.map((p) => {
+                    const parsed = parseFormulaText(p.content);
+                    const title = parsed ? parsed.title : "Governing Mathematical Formulation";
+                    const formula = parsed ? parsed.formula : p.content;
+                    const explanation = parsed ? parsed.explanation : undefined;
+                    const bookmarked = isBookmarked(unit.id, p.content);
+
+                    return (
+                      <div key={p.id} className="relative">
+                        <FormulaCard
+                          title={title}
+                          formula={formula}
+                          explanation={explanation}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => toggleBookmark(unit.id, p.content)}
+                          aria-label={bookmarked ? "Remove bookmark" : "Add bookmark"}
+                          className="absolute top-3.5 right-12 press text-muted-foreground hover:text-primary p-1"
+                        >
+                          {bookmarked ? (
+                            <BookmarkCheck className="size-[17px] text-primary" />
+                          ) : (
+                            <Bookmark className="size-[17px]" />
+                          )}
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )
+          ) : tab === "saved" ? (
             saved.length === 0 && marks.length === 0 ? (
               <EmptyState
                 icon={Bookmark}
@@ -171,16 +265,18 @@ function UnitScreen() {
                     </h2>
                     <ul className="surface-card divide-y divide-border">
                       {marks.map((h) => (
-                        <li key={h.id} className="flex items-start gap-3 px-3.5 py-3">
+                        <li key={h.id} className="flex items-start gap-3 px-3.5 py-3 min-w-0 w-full max-w-full overflow-hidden">
                           <Highlighter className="mt-0.5 size-[18px] shrink-0 text-accent" />
-                          <p className="min-w-0 flex-1 text-justify text-[1.02em] leading-relaxed">
-                            <span className={hlClass(h.color)}>{h.text}</span>
-                          </p>
+                          <div className="min-w-0 flex-1 text-justify text-[1.02em] leading-relaxed break-words">
+                            <span className={hlClass(h.color)}>
+                              <RichMathText text={h.text} />
+                            </span>
+                          </div>
                           <button
                             type="button"
                             onClick={() => removeHighlight(h.id)}
                             aria-label="Remove highlight"
-                            className="press shrink-0 text-muted-foreground"
+                            className="press shrink-0 text-muted-foreground hover:text-destructive"
                           >
                             <MoreVertical className="size-[18px]" />
                           </button>
@@ -189,12 +285,14 @@ function UnitScreen() {
                     </ul>
                   </section>
                 )}
-                <ul className="surface-card divide-y divide-border">
+                <ul className="surface-card divide-y divide-border min-w-0 w-full max-w-full overflow-hidden">
                   {saved.map((b) => (
-                    <li key={b.id} className="flex items-start gap-3 px-3.5 py-3">
+                    <li key={b.id} className="flex items-start gap-3 px-3.5 py-3 min-w-0 w-full max-w-full overflow-hidden">
                       <Bookmark className="mt-0.5 size-[18px] shrink-0 text-primary" />
-                      <span className="min-w-0 flex-1">
-                        <p className="text-justify text-[1.02em] leading-relaxed">{b.text}</p>
+                      <span className="min-w-0 flex-1 break-words">
+                        <div className="text-justify text-[1.02em] leading-relaxed break-words font-medium">
+                          <RichMathText text={b.text} />
+                        </div>
                         <p className="mt-1 text-[0.78em] text-muted-foreground">
                           {new Date(b.createdAt).toLocaleDateString()}
                         </p>
@@ -249,19 +347,19 @@ function UnitScreen() {
               </Link>
             </div>
           ) : (
-            <ul className="surface-card divide-y divide-border">
+            <ul className="surface-card divide-y divide-border min-w-0 w-full max-w-full overflow-hidden">
               {active.map((p) => (
-                <li key={p.id} className="flex items-start gap-3 px-3.5 py-3">
+                <li key={p.id} className="flex items-start gap-3 px-3.5 py-3 min-w-0 w-full max-w-full overflow-hidden">
                   <span
                     aria-hidden="true"
                     className="mt-[0.45em] size-2 shrink-0 rounded-full bg-accent"
                   />
-                  <p
+                  <div
                     onDoubleClick={() => cycleHighlight(unit.id, p.content)}
-                    className="flex-1 text-justify text-[1.02em] leading-relaxed"
+                    className="min-w-0 flex-1 break-words text-left text-[1.02em] leading-relaxed overflow-hidden"
                   >
-                    <span className={hlClass(highlightColor(unit.id, p.content))}>{p.content}</span>
-                  </p>
+                    <RenderPointContent content={p.content} hlColor={hlClass(highlightColor(unit.id, p.content))} />
+                  </div>
                   <button
                     type="button"
                     onClick={() => cycleHighlight(unit.id, p.content)}
@@ -311,7 +409,7 @@ function UnitScreen() {
           <ToolButton
             icon={allSaved ? BookmarkCheck : Bookmark}
             label="Save"
-            onClick={saveAll}
+            onClick={toggleAllOrUnit}
             active={allSaved}
           />
         </div>
@@ -325,6 +423,26 @@ function hlClass(color: HighlightColor | null) {
   if (color === "green") return "hl-green";
   if (color === "pink") return "hl-pink";
   return "";
+}
+
+function RenderPointContent({ content, hlColor }: { content: string; hlColor: string }) {
+  const colonIdx = content.indexOf(":");
+  if (colonIdx > 2 && colonIdx < 70) {
+    const title = content.slice(0, colonIdx).trim();
+    const rest = content.slice(colonIdx + 1).trim();
+    return (
+      <div className={cn("min-w-0 break-words leading-relaxed text-left", hlColor)}>
+        <span className="font-bold text-foreground inline mr-1.5">{title}:</span>
+        <RichMathText text={rest} />
+      </div>
+    );
+  }
+
+  return (
+    <div className={cn("min-w-0 break-words leading-relaxed text-left", hlColor)}>
+      <RichMathText text={content} />
+    </div>
+  );
 }
 
 function ToolButton({

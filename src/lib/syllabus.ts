@@ -4,13 +4,32 @@
  * BBA / B.Com subject documents. No university branding.
  */
 
+import { btechSyllabus } from "./syllabus-btech";
+import { bscSyllabus } from "./syllabus-bsc";
+
 export type SubjectIcon =
-  "accounting" | "economics" | "law" | "marketing" | "hr" | "stats" | "management" | "finance";
+  | "accounting"
+  | "economics"
+  | "law"
+  | "marketing"
+  | "hr"
+  | "stats"
+  | "management"
+  | "finance"
+  | "code"
+  | "circuit"
+  | "science"
+  | "mechanics"
+  | "biology"
+  | "medical"
+  | "project"
+  | "math";
 
 export type ElectiveGroup = "Finance" | "Marketing" | "HR" | "E-Commerce";
 
 export type SyllabusSubject = {
-  program: "bba" | "bcom";
+  program: "bba" | "bcom" | "btech" | "bsc";
+  branch?: string;
   /** null for electives, which are not tied to one semester */
   semester: number | null;
   electiveGroup?: ElectiveGroup;
@@ -19,7 +38,7 @@ export type SyllabusSubject = {
   units: string[];
 };
 
-export const syllabus: SyllabusSubject[] = [
+const bbaBcomSyllabus: SyllabusSubject[] = [
   /* ------------------------------ BBA — Semester I ------------------------------ */
   {
     program: "bba",
@@ -829,6 +848,8 @@ export const syllabus: SyllabusSubject[] = [
     units: ["Introduction to Cyber Security"],
   },
 ];
+
+export const syllabus: SyllabusSubject[] = [...bbaBcomSyllabus, ...btechSyllabus, ...bscSyllabus];
 
 export const electiveGroups: ElectiveGroup[] = ["Finance", "Marketing", "HR", "E-Commerce"];
 

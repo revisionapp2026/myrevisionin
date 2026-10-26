@@ -1,4 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
 import {
   Bookmark,
   CreditCard,
@@ -7,15 +8,18 @@ import {
   LifeBuoy,
   LogOut,
   Receipt,
+  RefreshCw,
   Settings as SettingsIcon,
   Shield,
 } from "lucide-react";
 import { useAppState } from "@/lib/app-state";
 import { useEntitlements } from "@/lib/entitlements";
+import { usePricing } from "@/lib/pricing";
 import { useAuth } from "@/lib/auth";
 import { subjectsFor } from "@/lib/mock-data";
 import { BottomNav, IconTile, ListRow, Screen, ScreenHeader } from "@/components/app-chrome";
 import { Badge } from "@/components/ui-bits";
+import { VerifyPaymentModal } from "@/components/verify-payment-modal";
 
 export const Route = createFileRoute("/profile")({
   head: () => ({
@@ -33,12 +37,14 @@ export const Route = createFileRoute("/profile")({
 });
 
 function ProfileScreen() {
-  const { bookmarks, program, semester, reset } = useAppState();
+  const { bookmarks, program, branch, semester, reset } = useAppState();
   const { isPremium, planName } = useEntitlements();
+  const { priceFormatted, isOfferActive, countdown } = usePricing();
   const { user, profile, isAdmin, signOut } = useAuth();
+  const [verifyOpen, setVerifyOpen] = useState(false);
   const navigate = useNavigate();
 
-  const highlightCount = subjectsFor(program, semester).reduce(
+  const highlightCount = subjectsFor(program, semester, branch).reduce(
     (sum, s) => sum + s.units.reduce((n, u) => n + u.highlights.length, 0),
     0,
   );
@@ -56,11 +62,20 @@ function ProfileScreen() {
           <div className="min-w-0 flex-1">
             <p className="truncate text-[16px] font-bold">{name}</p>
             <p className="truncate text-[13px] text-muted-foreground">{email}</p>
-            <span className="mt-1.5 inline-block">
+            <div className="mt-1.5 flex flex-wrap items-center gap-2">
               <Badge tone={isPremium ? "premium" : "accent"}>
-                {isPremium ? "★ Premium Member" : "Free Member"}
+                {isPremium ? `★ ${planName} Member` : "Free Member"}
               </Badge>
-            </span>
+              {!isPremium && (
+                <button
+                  type="button"
+                  onClick={() => setVerifyOpen(true)}
+                  className="inline-flex items-center gap-1 text-[11.5px] font-semibold text-accent underline hover:text-accent/80"
+                >
+                  <RefreshCw className="size-3" /> Restore Payment
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
@@ -75,6 +90,28 @@ function ProfileScreen() {
               </span>
             </span>
             <span className="text-[13px] font-semibold text-primary">Go</span>
+          </Link>
+        )}
+
+        {!isPremium && (
+          <Link
+            to="/payment"
+            className="surface-card press mt-3 flex items-center justify-between border border-accent/30 bg-accent/10 px-4 py-3.5"
+          >
+            <div className="min-w-0 flex-1 pr-2">
+              <div className="flex items-center gap-2">
+                <span className="text-[14px] font-extrabold text-foreground">
+                  Upgrade to Lifetime
+                </span>
+                <span className="rounded-full bg-accent px-2 py-0.5 text-[11px] font-bold text-accent-foreground">
+                  {priceFormatted}
+                </span>
+              </div>
+              <p className="mt-0.5 text-[12px] text-muted-foreground">
+                One-time payment · Full access forever
+              </p>
+            </div>
+            <span className="shrink-0 text-[13px] font-bold text-accent">Unlock ›</span>
           </Link>
         )}
 
@@ -93,7 +130,7 @@ function ProfileScreen() {
               <ListRow
                 to="/payment"
                 title="Payment History"
-                meta="1 payment"
+                meta="Lifetime Plan"
                 leading={
                   <IconTile>
                     <Receipt className="size-[19px]" />
@@ -123,12 +160,26 @@ function ProfileScreen() {
             }
           />
           <ListRow
-            title="Download History"
+            title="Download App"
             trailing={false}
-            meta="No downloads yet"
+            meta="Install REVISION for offline study"
+            onClick={() => {
+              window.dispatchEvent(new CustomEvent("trigger-pwa-install"));
+            }}
             leading={
-              <IconTile tone="muted">
+              <IconTile tone="accent">
                 <Download className="size-[19px]" />
+              </IconTile>
+            }
+          />
+          <ListRow
+            title="Restore / Verify Payment"
+            trailing={false}
+            meta="Unlock completed purchase"
+            onClick={() => setVerifyOpen(true)}
+            leading={
+              <IconTile tone="accent">
+                <RefreshCw className="size-[19px]" />
               </IconTile>
             }
           />
@@ -151,13 +202,24 @@ function ProfileScreen() {
               </IconTile>
             }
           />
-          {isAdmin && (
+          {isAdmin ? (
             <ListRow
               to="/admin"
               title="Admin Panel"
               meta="Manage content"
               leading={
                 <IconTile tone="accent">
+                  <Shield className="size-[19px]" />
+                </IconTile>
+              }
+            />
+          ) : (
+            <ListRow
+              to="/adminlogin"
+              title="Admin Login"
+              meta="Platform management"
+              leading={
+                <IconTile tone="muted">
                   <Shield className="size-[19px]" />
                 </IconTile>
               }
@@ -186,6 +248,11 @@ function ProfileScreen() {
         </div>
       </Screen>
       <BottomNav />
+      <VerifyPaymentModal
+        open={verifyOpen}
+        onClose={() => setVerifyOpen(false)}
+        onSuccess={() => window.location.reload()}
+      />
     </>
   );
 }
