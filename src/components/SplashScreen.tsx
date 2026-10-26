@@ -134,7 +134,7 @@ export function SplashScreen() {
     >
       <img
         src={splashAsset}
-        alt="REVISION — Learn. Revise. Succeed. Your B.Com, BBA Syllabus. Anytime. Anywhere."
+        alt="REVISION — Learn. Revise. Succeed. Engineering, Science & Commerce Syllabus. Anytime. Anywhere."
         className="absolute inset-0 h-full w-full object-contain"
         draggable={false}
       />
