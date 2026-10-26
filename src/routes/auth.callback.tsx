@@ -116,10 +116,9 @@ function AuthCallbackScreen() {
       if (data?.session?.user) {
         void completeRedirect(data.session.user.id);
       } else {
-        // Fallback: route to /dashboard or show retry
-        navigate({ to: "/dashboard", replace: true });
+        setErrorMsg("Sign-in session could not be established. Please tap below to try again.");
       }
-    }, 4000);
+    }, 4500);
 
     return () => {
       clearTimeout(timer);

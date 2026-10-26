@@ -2,6 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SplashScreen } from "@/components/SplashScreen";
 
 export const Route = createFileRoute("/")({
+  ssr: false,
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      code: typeof search["code"] === "string" ? search["code"] : undefined,
+      error: typeof search["error"] === "string" ? search["error"] : undefined,
+      error_description:
+        typeof search["error_description"] === "string" ? search["error_description"] : undefined,
+    };
+  },
   head: () => ({
     meta: [
       { title: "REVISION — Learn. Revise. Succeed." },
@@ -20,3 +29,4 @@ export const Route = createFileRoute("/")({
   }),
   component: SplashScreen,
 });
+

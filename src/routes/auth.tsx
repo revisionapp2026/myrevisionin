@@ -247,6 +247,20 @@ function AuthScreen() {
             : "/dashboard";
 
         if (typeof window !== "undefined") {
+          if (window.opener && window.opener !== window) {
+            try {
+              window.opener.postMessage({ type: "REVISION_AUTH_SUCCESS", target }, "*");
+              window.opener.location.href = target;
+            } catch {
+              /* ignore cross-origin */
+            }
+            try {
+              window.close();
+              return;
+            } catch {
+              /* ignore */
+            }
+          }
           window.location.href = target;
           return;
         }
@@ -369,7 +383,7 @@ function AuthScreen() {
 
     const framed = typeof window !== "undefined" && window.top !== window.self;
     const origin = typeof window !== "undefined" ? window.location.origin : "https://myrevision.in";
-    const callbackUrl = `${origin}/auth/callback`;
+    const callbackUrl = `${origin}/auth`;
 
     // Listen for postMessage from popup if one is opened
     const handleAuthMessage = (e: MessageEvent) => {
