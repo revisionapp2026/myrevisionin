@@ -81,48 +81,65 @@ function AuthScreen() {
     if (loading || !user) return;
     let active = true;
     void (async () => {
-      const { data } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", user.id)
-        .eq("role", "admin");
-      if (!active) return;
-      const isAdminUser =
-        (data?.length ?? 0) > 0 || user.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
-      if (isAdminUser && typeof window !== "undefined") {
-        window.sessionStorage.setItem("revision_admin_unlocked", "true");
-        window.localStorage.setItem("revision_admin_unlocked", "true");
-      }
-
-      if (isAdminUser) {
-        navigate({ to: "/admin", replace: true });
-        return;
-      }
-
-      // Check if this is a newly created account or signup flow
-      const justSignedUp =
-        mode === "signup" ||
-        (typeof window !== "undefined" &&
-          window.sessionStorage.getItem("revision_new_signup") === "true");
-
-      if (justSignedUp) {
-        if (typeof window !== "undefined") {
-          window.sessionStorage.removeItem("revision_new_signup");
+      try {
+        const { data } = await supabase
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", user.id)
+          .eq("role", "admin");
+        if (!active) return;
+        const isAdminUser =
+          (data?.length ?? 0) > 0 || user.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+        if (isAdminUser && typeof window !== "undefined") {
+          window.sessionStorage.setItem("revision_admin_unlocked", "true");
+          window.localStorage.setItem("revision_admin_unlocked", "true");
         }
-        navigate({ to: "/program-selection", replace: true });
-        return;
-      }
 
-      // For existing student sign in: check saved selections in profile or app state
-      const activeProgram = profile?.program_id || program;
-      const activeSemester = profile?.semester || semester;
+        if (isAdminUser) {
+          if (typeof window !== "undefined") {
+            window.location.href = "/admin";
+            return;
+          }
+          navigate({ to: "/admin", replace: true });
+          return;
+        }
 
-      if (!activeProgram) {
-        navigate({ to: "/program-selection", replace: true });
-      } else if (!activeSemester) {
-        navigate({ to: "/semester-selection", replace: true });
-      } else {
-        navigate({ to: "/dashboard", replace: true });
+        // Check if this is a newly created account or signup flow
+        const justSignedUp =
+          mode === "signup" ||
+          (typeof window !== "undefined" &&
+            window.sessionStorage.getItem("revision_new_signup") === "true");
+
+        if (justSignedUp) {
+          if (typeof window !== "undefined") {
+            window.sessionStorage.removeItem("revision_new_signup");
+            window.location.href = "/program-selection";
+            return;
+          }
+          navigate({ to: "/program-selection", replace: true });
+          return;
+        }
+
+        // For existing student sign in: check saved selections in profile or app state
+        const activeProgram = profile?.program_id || program;
+        const activeSemester = profile?.semester || semester;
+
+        const target = !activeProgram
+          ? "/program-selection"
+          : !activeSemester
+            ? "/semester-selection"
+            : "/dashboard";
+
+        if (typeof window !== "undefined") {
+          window.location.href = target;
+          return;
+        }
+        navigate({ to: target as any, replace: true });
+      } catch (err) {
+        console.warn("[Auth] Redirect check error:", err);
+        if (typeof window !== "undefined") {
+          window.location.href = "/dashboard";
+        }
       }
     })();
     return () => {
@@ -159,6 +176,52 @@ function AuthScreen() {
         return;
       } else if (mode === "signin") {
         await signIn(email.trim(), password);
+        // Instant authoritative redirect upon successful sign in!
+        if (typeof window !== "undefined") {
+          try {
+            const { data: sessionData } = await supabase.auth.getSession();
+            const currentUserId = sessionData.session?.user?.id;
+            if (currentUserId) {
+              const [{ data: userRole }, { data: userProfile }] = await Promise.all([
+                supabase
+                  .from("user_roles")
+                  .select("role")
+                  .eq("user_id", currentUserId)
+                  .eq("role", "admin")
+                  .maybeSingle(),
+                supabase
+                  .from("profiles")
+                  .select("program_id, semester")
+                  .eq("id", currentUserId)
+                  .maybeSingle(),
+              ]);
+
+              const isAdminUser =
+                Boolean(userRole) || email.trim().toLowerCase() === ADMIN_EMAIL.toLowerCase();
+              if (isAdminUser) {
+                window.sessionStorage.setItem("revision_admin_unlocked", "true");
+                window.localStorage.setItem("revision_admin_unlocked", "true");
+                window.location.href = "/admin";
+                return;
+              }
+
+              const targetProgram = userProfile?.program_id || program;
+              const targetSemester = userProfile?.semester || semester;
+
+              if (targetProgram && targetSemester) {
+                window.location.href = "/dashboard";
+              } else if (targetProgram) {
+                window.location.href = "/semester-selection";
+              } else {
+                window.location.href = "/program-selection";
+              }
+              return;
+            }
+          } catch {
+            window.location.href = "/dashboard";
+            return;
+          }
+        }
       } else {
         if (typeof window !== "undefined") {
           window.sessionStorage.setItem("revision_new_signup", "true");
@@ -168,6 +231,10 @@ function AuthScreen() {
         if (needsConfirmation) {
           setNotice("Almost done — check your inbox and tap the confirmation link to finish.");
         } else {
+          if (typeof window !== "undefined") {
+            window.location.href = "/program-selection";
+            return;
+          }
           navigate({ to: "/program-selection", replace: true });
           return;
         }
