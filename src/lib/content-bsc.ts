@@ -204,31 +204,31 @@ export const bscKnowledge: Record<string, TopicKnowledge> = {
     ],
   },
 
-  // LIFE SCIENCES & BIOTECHNOLOGY
+  // LIFE SCIENCES & BIOLOGY
   "life sciences": {
     highlights: [
-      "Cell Architecture & Organelles: Eukaryotic cells possess membrane-bound organelles (nucleus, mitochondria, chloroplasts, endoplasmic reticulum, Golgi body); prokaryotes lack membrane-bound nucleus.",
-      "Mendelian Genetics & Inheritance: Law of Segregation and Law of Independent Assortment; monohybrid phenotypic ratio 3:1, dihybrid phenotypic ratio 9:3:3:1.",
-      "DNA Structure & Replication: Double helix model (Watson & Crick); antiparallel strands with complementary base pairing (A=T with 2 H-bonds, G\\equiv C with 3 H-bonds); semi-conservative replication.",
-      "Central Dogma of Molecular Biology: Genetic flow proceeds DNA \\to RNA \\to Protein; Transcription by RNA polymerase and Translation on ribosomes via codon-anticodon recognition.",
-      "Plant Physiology & Photosynthesis: Light-dependent reactions generate ATP and NADPH via Z-scheme photophosphorylation; Calvin-Benson cycle fixes CO2 into carbohydrates via RuBisCO.",
-      "Plant Water Relations & Transpiration: Water moves along water potential gradient \\Psi_w = \\Psi_s + \\Psi_p; cohesion-tension theory explains ascent of xylem sap driven by stomatal transpiration.",
-      "Animal Physiology & Homeostasis: Nervous coordination via action potentials; endocrine regulation via hormones; circulatory system distributes oxygen, nutrients, and immune cells.",
-      "Microbiology & Microbial Growth: Bacterial growth curve shows Lag, Log/Exponential, Stationary, and Death phases; exponential generation time g = \\frac{t}{n}.",
-      "Immunology Fundamentals: Innate immunity (physical barriers, phagocytes) and adaptive immunity (B-cell antibodies and T-cell cytotoxicity); memory cells confer long-term immunity.",
-      "Ecology & Ecosystem Dynamics: Trophic levels and 10% energy transfer rule; biogeochemical cycles (carbon, nitrogen, phosphorus); biodiversity hotspots and conservation strategies.",
+      "Cellular Architecture: Eukaryotic cells possess compartmentalized membrane-bound organelles (nucleus, mitochondria, endoplasmic reticulum, Golgi apparatus, lysosomes), whereas prokaryotes lack a membrane-bound nucleus.",
+      "Mendelian Inheritance: Gregor Mendel formulated the Law of Segregation and the Law of Independent Assortment through controlled garden pea (Pisum sativum) hybridization experiments.",
+      "DNA Double Helix: Watson and Crick elucidated the antiparallel double-helical structure of DNA with purine-pyrimidine base pairing (adenine with thymine, guanine with cytosine).",
+      "Central Dogma: Genetic information flows unidirectionally from DNA (replication) to messenger RNA (transcription) to functional polypeptide chains (translation on ribosomes).",
+      "Plant Photosynthetic Machinery: Chloroplasts perform light harvesting via thylakoid photosystems (PSI and PSII) and enzymatic carbon fixation in the stroma through the Calvin cycle.",
+      "Vascular Transport in Plants: Xylem vessels transport water and dissolved inorganic minerals upward via transpiration pull, while phloem sieve tubes translocate photoassimilates via pressure flow.",
+      "Organismal Taxonomy: Biological classification organizes biodiversity hierarchically into Domain, Kingdom, Phylum, Class, Order, Family, Genus, and Species following binomial nomenclature.",
+      "Microbial Organization: Microorganisms exhibit distinct cellular architectures spanning bacteria (peptidoglycan cell wall), archaea (ether-linked lipids), viruses (protein capsid around nucleic acid), and microscopic fungi.",
+      "Host Immune Defenses: Immune systems combine non-specific innate barriers (epithelia, phagocytes, complement) with pathogen-specific adaptive immunity mediated by B-cell antibodies and T-cell lymphocytes.",
+      "Ecological Hierarchy & Biosphere: Organisms interact in structured ecological hierarchies from populations and communities to ecosystems, biomes, and the global biosphere.",
     ],
     keyPoints: [
-      "Chargaff's Rules: In double-stranded DNA, %A = %T and %G = %C; (A + G) / (T + C) = 1.",
-      "Water Potential Equation: \\Psi_w = \\Psi_s + \\Psi_p; pure water has maximum potential \\Psi_w = 0.",
-      "Bacterial Generation Equation: N_t = N_0 \\cdot 2^n; generation count n = \\frac{\\log N_t - \\log N_0}{\\log 2}.",
-      "Genetic Code Key Rules: Universal, degenerate (multiple codons per amino acid), non-overlapping; Start codon AUG (Met); Stop codons UAA, UAG, UGA.",
-      "10% Ecological Energy Rule: Only approximately 10% of energy is transferred from one trophic level to the next.",
-      "Enzyme Kinetics (Michaelis-Menten): v = \\frac{V_{max} [S]}{K_m + [S]}; K_m is substrate concentration at half-maximal velocity.",
-      "Photosynthesis Equation: 6CO_2 + 6H_2O \\xrightarrow{light} C_6H_{12}O_6 + 6O_2.",
-      "Aerobic Respiration Yield: Theoretical maximum yield is 30-32 ATP per oxidized glucose molecule.",
-      "Antibody Structure: Y-shaped immunoglobulin composed of two identical Heavy (H) chains and two Light (L) chains linked by disulfide bonds.",
-      "Exam Tip: Always illustrate biological cycles (e.g. Calvin cycle, Krebs cycle, Nitrogen cycle) with closed-loop labeled flowcharts.",
+      "Cell Theory Postulates: All living organisms are composed of one or more cells, the cell is the fundamental unit of structure and function, and all cells arise from pre-existing cells.",
+      "Mitosis vs Meiosis: Mitosis produces two genetically identical diploid daughter cells for somatic growth and tissue repair; meiosis yields four genetically distinct haploid gametes via crossing over.",
+      "Complementary Base Pairing: Adenine pairs specifically with thymine via two hydrogen bonds, and guanine pairs with cytosine via three hydrogen bonds in double-stranded DNA.",
+      "Universal Genetic Code: Codons comprise triplet nucleotide bases; AUG serves as the universal initiation codon, while UAA, UAG, and UGA act as translation termination signals.",
+      "Aerobic Cellular Respiration: Cellular glucose catabolism proceeds sequentially through Cytoplasmic Glycolysis, the Mitochondrial Krebs (Citric Acid) Cycle, and the Electron Transport Chain.",
+      "Plant Tissue Classification: Meristematic tissues provide continuous mitotic cell division, while permanent tissues (parenchyma, collenchyma, sclerenchyma, xylem, phloem) perform specialized support and transport.",
+      "Animal Body Symmetry: Invertebrates and vertebrates exhibit asymmetrical, radial, or bilateral body plans correlated with cephalization, locomotion, and organ-system development.",
+      "Gram Stain Diagnostic Distinction: Gram-positive bacteria retain crystal violet within thick peptidoglycan layers; Gram-negative bacteria possess thin peptidoglycan and an outer lipopolysaccharide membrane.",
+      "Trophic Energy Dynamics: Energy flows unidirectionally through food webs with approximately ten percent ecological efficiency transfer between consecutive trophic feeding levels.",
+      "Exam Diagram Requirement: In biological examinations, always provide clearly labeled structural diagrams (e.g. cell ultrastructure, floral diagram, anatomical transverse sections) alongside morphological descriptions.",
     ],
   },
 };
@@ -237,6 +237,9 @@ export const bscKnowledge: Record<string, TopicKnowledge> = {
  * Universal B.Sc generator that synthesizes detailed, accurate revision notes
  * for ANY subject & unit in the B.Sc syllabus.
  * Produces 10 Highlights + 10 Key Points (Bookmarks) per unit.
+ *
+ * NOTE: Biology, Life Sciences, and Qualitative subjects intentionally contain
+ * ZERO formulas or derivations, so the Formulas tab will not appear for them.
  */
 export function generateBScTopic(subjectName: string, unitTitle: string, unitNumber: number): TopicKnowledge {
   const s = subjectName.toLowerCase();
@@ -264,28 +267,130 @@ export function generateBScTopic(subjectName: string, unitTitle: string, unitNum
   if (s.includes("chemistry") || s.includes("inorganic") || s.includes("organic") || s.includes("physical chem") || s.includes("spectroscopy")) {
     return bscKnowledge["chemistry"];
   }
-  if (s.includes("botany") || s.includes("zoology") || s.includes("plant") || s.includes("animal") || s.includes("bio") || s.includes("life") || s.includes("microbio") || s.includes("genetics")) {
-    return bscKnowledge["life sciences"];
+
+  // Check if this is a Life Science / Biology / Botany / Zoology / Microbiology topic
+  const isBiologyOrLifeScience =
+    s.includes("botany") ||
+    s.includes("zoology") ||
+    s.includes("plant") ||
+    s.includes("animal") ||
+    s.includes("bio") ||
+    s.includes("life") ||
+    s.includes("microbio") ||
+    s.includes("genetics") ||
+    s.includes("cell") ||
+    s.includes("invertebrat") ||
+    s.includes("chordat") ||
+    s.includes("ecolog") ||
+    s.includes("embryol") ||
+    s.includes("immunol") ||
+    s.includes("physiol") ||
+    s.includes("anatom") ||
+    u.includes("cell") ||
+    u.includes("algae") ||
+    u.includes("fungi") ||
+    u.includes("bacteria") ||
+    u.includes("virus") ||
+    u.includes("protozoa") ||
+    u.includes("porifera") ||
+    u.includes("bryophyte") ||
+    u.includes("pteridophyte") ||
+    u.includes("gymnosperm") ||
+    u.includes("angiosperm") ||
+    u.includes("annelida") ||
+    u.includes("arthropoda") ||
+    u.includes("mollusca") ||
+    u.includes("echinodermata") ||
+    u.includes("metabolism") ||
+    u.includes("enzyme") ||
+    u.includes("tissue");
+
+  if (isBiologyOrLifeScience) {
+    return {
+      highlights: [
+        `Morphological Characteristics of ${unitTitle}: Serves as a primary anatomical and taxonomic module in ${subjectName}, detailing structural features and cellular adaptations.`,
+        `Diagnostic Cell Structure: Characterized by specialized organelle organization, membrane boundaries, cytoplasmic inclusions, and distinct histological layers.`,
+        `Systematic Taxonomic Classification: Hierarchically grouped based on evolutionary lineage, comparative embryology, reproductive morphology, and genetic markers.`,
+        `Physiological & Metabolic Regulation: Regulates biochemical cycles, nutrient absorption, gas exchange, and environmental homeostatic equilibrium.`,
+        `Life Cycle & Reproductive Strategies: Details gametogenesis, fertilization mechanisms, alternation of generations (gametophyte vs sporophyte), and dispersal adaptations.`,
+        `Biochemical & Molecular Mechanisms: Mediated through enzymatic catalysis, hormonal signaling cascades, nucleic acid replication, and structural protein synthesis.`,
+        `Ecological Adaptations & Niche Function: Demonstrates specialized evolutionary adaptations to environmental pressures, symbiotic associations, and trophic food web interactions.`,
+        `Standard Laboratory Identification: Evaluated using brightfield microscopy, selective histochemical stains, maceration techniques, and culture identification keys.`,
+        `Economic, Agricultural & Clinical Value: Serves as model organisms in research, commercial pharmaceuticals, agricultural productivity, and epidemiological pathogen control.`,
+        `University Examination Strategy: Score full marks by drawing neat, labeled morphological diagrams (transverse sections, life cycles), listing diagnostic points, and writing binomial names correctly.`,
+      ],
+      keyPoints: [
+        `Defining Biological Characters: State the diagnostic morphological and cellular features that uniquely identify ${unitTitle} in ${subjectName}.`,
+        `Subcellular & Tissue Ultrastructure: Detail the microscopic organization of cell walls, internal membranes, specialized organelle complexes, and extracellular matrix.`,
+        `Scientific Binomial Nomenclature: Always underline or italicize generic and specific epithets when citing representative study organisms in exam papers.`,
+        `Metabolic Intermediates & Energetics: Trace the biochemical pathways of energy transformation, substrate catabolism, and secondary metabolite synthesis.`,
+        `Ploidy & Nuclear Division Stages: Differentiate haploid (n) and diploid (2n) stages and understand where reductional meiosis occurs in the lifecycle.`,
+        `Homeostatic Balance Mechanisms: Explain how feedback loops, stomatal aperture controls, and membrane transport proteins maintain steady internal conditions.`,
+        `Pathological & Symbiotic Relationships: Understand mutualistic, commensal, or parasitic relationships and the pathological significance of relevant pathogens.`,
+        `Diagnostic Staining Protocols: Know the standard differential stains (e.g. Gram stain, safranin, fast green, hematoxylin) used to prepare permanent laboratory mounts.`,
+        `Evolutionary Adaptation Trends: Trace structural transitions from primitive ancestral states to specialized advanced adaptations in related taxa.`,
+        `Exam Diagram Checklist: Draw large, proportionate diagrams with sharp pencil lines, label all anatomical parts on the right-hand margin, and write a concise structural legend.`,
+      ],
+    };
   }
 
-  // Domain synthesis based on unit and subject keywords
+  // Check if this is a Qualitative / Humanities / Communication / Management topic
+  const isQualitativeOrHumanities =
+    s.includes("english") ||
+    s.includes("communication") ||
+    s.includes("management") ||
+    s.includes("ethics") ||
+    s.includes("humanities") ||
+    s.includes("law") ||
+    s.includes("business") ||
+    s.includes("environment");
+
+  if (isQualitativeOrHumanities) {
+    return {
+      highlights: [
+        `Core Conceptual Foundations of ${unitTitle}: Serves as a fundamental theoretical framework in ${subjectName}, establishing core principles and professional standards.`,
+        `Structural Hierarchy & Process Workflow: Analyzes sequential operations, organizational models, and procedural guidelines for effective implementation.`,
+        `Best Practices & Industry Guidelines: Details recognized national and global protocols, professional codes of conduct, and qualitative quality benchmarks.`,
+        `Communication & Analytical Reasoning: Emphasizes precise professional articulation, structured written discourse, critical thinking, and audience adaptation.`,
+        `Case Studies & Practical Scenarios: Examines real-world case histories, situational challenges, problem-solving frameworks, and strategic decision pathways.`,
+        `Regulatory Compliance & Ethical Standards: Details legal boundaries, stakeholder accountability, transparency measures, and governance frameworks.`,
+        `Strategic Optimization & Resource Allocation: Evaluates process efficiency, risk mitigation methods, team collaboration, and sustainable operational models.`,
+        `Performance Assessment & Quality Audit: Measures qualitative effectiveness through standardized evaluation rubrics, KPI benchmarks, and feedback mechanisms.`,
+        `Contemporary Trends & Technological Evolution: Analyzes digital transformation, modern collaborative platforms, and evolving professional standards.`,
+        `University Examination Blueprint: Structure answers using clear headings, numbered analytical points, comparative distinction tables, and practical case examples.`,
+      ],
+      keyPoints: [
+        `Core Definition & Scope: Clearly state the formal definition of ${unitTitle} and its primary application within ${subjectName}.`,
+        `Essential Theoretical Principles: Master the foundational guidelines, models, and operational frameworks governing this study module.`,
+        `Step-by-Step Procedural Stages: Memorize the chronological order of phases, planning checkpoints, and evaluation milestones.`,
+        `Key Terminologies & Lexicon: Use authoritative academic and industry terminology precisely throughout your written responses.`,
+        `Comparative Distinction Matrix: Prepare contrast tables comparing primary concepts against alternative approaches across defined evaluation criteria.`,
+        `Risk Identification & Control: Recognize common procedural failure modes and implement proactive risk mitigation protocols.`,
+        `Effective Communication Rules: Apply clarity, conciseness, coherence, and professional tone when answering scenario-based questions.`,
+        `Governance & Ethics Principles: State the ethical considerations, stakeholder protections, and social responsibilities inherent in this topic.`,
+        `Memory Mnemonic: Use structured acronyms and conceptual mnemonics to recall multi-stage frameworks during timed written tests.`,
+        `Exam Scoring Strategy: Open with a crisp definition, provide numbered functional points, draw an organizational flow diagram, and conclude with a practical example.`,
+      ],
+    };
+  }
+
+  // Physical & Mathematical Sciences Synthesis (where formulas are mathematically genuine)
   const highlights = [
-    `Foundational Scientific Principle of ${unitTitle}: Serves as a primary analytical framework in ${subjectName}, establishing theoretical foundations and empirical methods required for scientific inquiry.`,
-    `Governing Theoretical Model & Formulation: Formulated through standard scientific conservation laws: \\sum \\Phi = \\text{constant} or \\frac{d\\Psi}{dt} = f(\\Psi, t), describing equilibrium behavior across operational boundaries.`,
-    `Constitutive Relationships & Constants: Relates empirical variables through standard state equations: y = m x + c or \\Phi = K \\cdot \\Delta X, connecting physical stimuli to experimental observations.`,
+    `Foundational Scientific Principle of ${unitTitle}: Serves as a primary analytical framework in ${subjectName}, establishing theoretical foundations and empirical laws required for physical inquiry.`,
+    `Governing Theoretical Model & Formulation: Formulated through fundamental physical balance principles: \\sum \\vec{F} = m \\vec{a} or \\nabla \\cdot \\vec{D} = \\rho, describing equilibrium states across operational boundaries.`,
+    `Constitutive Relationships & Constants: Relates empirical variables through standard state equations: y = m x + c or P V = n R T, connecting physical stimuli to experimental observations.`,
     `Experimental Methodology & Instrumentation: Detailed protocols for experimental setup, precision measurement, sensor calibration, and minimization of systematic observation errors.`,
     `Analytical Derivation & Mathematical Proof: Derives closed-form analytical equations through step-by-step mathematical reasoning, verifying boundary constraints and physical dimensional homogeneity.`,
     `Quantitative Metrics & Statistical Validation: Evaluated using standard scientific indicators: mean \\bar{x} = \\frac{1}{N}\\sum x_i, standard deviation \\sigma = \\sqrt{\\frac{\\sum (x_i - \\bar{x})^2}{N-1}}, and correlation coefficient r.`,
     `Systematic Errors & Environmental Variations: Analyzes instrumental drift, ambient temperature variations, sample contamination, and experimental uncertainty limits.`,
     `Practical Laboratory & Real-World Applications: Applied directly in academic research, clinical diagnostics, industrial quality control, and scientific computational modeling.`,
-    `Computational Modeling & Simulation: Analyzed using statistical software (R, Python, MATLAB) and numerical approximations when closed-form solutions are analytically complex.`,
-    `University Examination Blueprint: To score full marks, provide standard definitions, draw neat labeled schematics or structural diagrams, write governing formulas with units, and state physical significance.`,
+    `Computational Modeling & Simulation: Analyzed using scientific computing environments (Python, MATLAB) and numerical approximations when closed-form solutions are analytically complex.`,
+    `University Examination Blueprint: To score full marks, provide standard definitions, draw neat labeled schematics or circuit diagrams, write governing formulas with units, and state physical significance.`,
   ];
 
   const keyPoints = [
     `Core Definition & Role: State the exact scientific definition of ${unitTitle} and its primary role in ${subjectName}.`,
-    `Primary Governing Equation: \\Psi(x, t) = \\Psi_0 e^{-\\alpha t} \\cos(\\omega t + \\phi) governs analytical behavior and quantitative relationships in ${unitTitle}.`,
-    `Secondary Empirical Relationship: \\frac{d^2 y}{dx^2} + k^2 y = 0 expresses fundamental harmonic balance and state transitions.`,
+    `Primary Governing Equation: \\frac{d^2 y}{dx^2} + k^2 y = 0 expresses fundamental harmonic balance and state transitions in ${unitTitle}.`,
     `Units & Dimensional Homogeneity: Verify dimensional consistency across all calculated terms: [Length] = L, [Time] = T, [Mass] = M.`,
     `Experimental Assumptions: Always document standard temperature and pressure (STP), ideal conditions, and baseline calibration controls.`,
     `Critical Statistical Threshold: p-value < 0.05 indicates statistical significance; 95% confidence interval \\bar{x} \\pm 1.96 \\frac{\\sigma}{\\sqrt{n}}.`,

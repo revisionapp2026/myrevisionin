@@ -284,7 +284,91 @@ export function generateTechnicalTopic(
     }
   }
 
-  // Domain synthesis based on unit and subject keywords
+  // Check if this is a Biology / Bioengineering / Life Sciences topic
+  const isBiologyOrLifeScience =
+    s.includes("biology") ||
+    s.includes("bio-") ||
+    s.includes("bio ") ||
+    s.includes("biochem") ||
+    s.includes("biotech") ||
+    s.includes("microbio") ||
+    s.includes("biomedical") ||
+    u.includes("cell") ||
+    u.includes("biomolecule") ||
+    u.includes("genetics") ||
+    u.includes("enzyme") ||
+    u.includes("metabolism") ||
+    u.includes("living organism");
+
+  if (isBiologyOrLifeScience) {
+    return {
+      highlights: [
+        `Foundational Biological Principle of ${unitTitle}: Serves as a primary biological and bioengineering module in ${subjectName}, bridging cellular biology with technological applications.`,
+        `Biomolecular Architecture & Cellular Mechanics: Details the structural properties and functional roles of proteins, nucleic acids, lipids, and carbohydrates within biological systems.`,
+        `Central Dogma & Genetic Information: Analyzes the molecular mechanisms of DNA replication, transcription into messenger RNA, and ribosomal translation into functional enzymes.`,
+        `Bioenergetics & Metabolic Pathways: Examines cellular energy production through glycolysis, the citric acid cycle, and ATP synthesis via oxidative phosphorylation.`,
+        `Enzymatic Catalysis & Biochemical Kinetics: Evaluates substrate specificity, active site binding mechanisms, coenzyme factors, and regulatory feedback inhibition.`,
+        `Recombinant DNA & Genetic Engineering: Details molecular cloning vectors, restriction endonucleases, polymerase chain reaction (PCR), and gene expression systems.`,
+        `Biosensors & Bio-Instrumentation: Pairs biological recognition elements (enzymes, antibodies, aptamers) with physical transducers for high-sensitivity diagnostics.`,
+        `Bioprocess Engineering & Bioreactors: Governs sterilization protocols, nutrient aeration, batch and continuous fermentation, and downstream product recovery.`,
+        `Biomimicry & Bio-Inspired Engineering: Employs biological design principles (e.g. self-cleaning lotus effect, structural lightness in bone, bat echolocation) in engineering hardware.`,
+        `University Examination Strategy: Score full marks by drawing clear labeled biological diagrams (cell ultrastructure, Central Dogma flowchart, biosensor schematic) and stating industrial applications.`,
+      ],
+      keyPoints: [
+        `Core Biological Definition: Clearly define the fundamental biological concepts and engineering relevance of ${unitTitle} in ${subjectName}.`,
+        `Cellular Ultrastructure & Organelles: Differentiate prokaryotic and eukaryotic compartments, membrane fluidity, and organelle-specific functions.`,
+        `Genetic Code Specifics: Understand triplet codon organization, universal translation rules, and molecular mutations altering protein synthesis.`,
+        `Enzyme Regulation Mechanisms: Differentiate competitive and non-competitive enzyme inhibition and understand allosteric feedback controls.`,
+        `Fermentation & Cell Culture: Master the operational phases (lag, exponential, stationary, decline) of microbial and cell culture bioprocesses.`,
+        `Biosensor Transduction Modes: Understand electrochemical, optical, thermal, and piezoelectric signal conversion in diagnostic biosensing devices.`,
+        `Biocompatibility & Biomaterials: Identify key material requirements (non-toxicity, mechanical stability, hemocompatibility) for medical implants and scaffolds.`,
+        `Industrial Biotechnology Applications: Cites real-world industrial examples, including therapeutic insulin production, enzyme detergents, and biofuels.`,
+        `Ethical & Environmental Biosafety: State regulatory biosafety levels (BSL-1 to BSL-4), bioethical considerations, and environmental waste management guidelines.`,
+        `Exam Diagram Checklist: Draw neat flowcharts of biochemical pathways and clearly labeled structural diagrams with pencil, writing concise explanatory notes.`,
+      ],
+    };
+  }
+
+  // Check if this is a Qualitative / Humanities / Management / Environmental topic
+  const isQualitativeOrHumanities =
+    s.includes("english") ||
+    s.includes("communication") ||
+    s.includes("humanities") ||
+    s.includes("management") ||
+    s.includes("ethics") ||
+    s.includes("constitution") ||
+    s.includes("environmental studies");
+
+  if (isQualitativeOrHumanities) {
+    return {
+      highlights: [
+        `Core Conceptual Foundations of ${unitTitle}: Serves as a fundamental theoretical framework in ${subjectName}, establishing core principles and professional standards.`,
+        `Structural Hierarchy & Process Workflow: Analyzes sequential operations, organizational models, and procedural guidelines for effective implementation.`,
+        `Best Practices & Industry Guidelines: Details recognized national and global protocols, professional codes of conduct, and qualitative quality benchmarks.`,
+        `Communication & Analytical Reasoning: Emphasizes precise professional articulation, structured written discourse, critical thinking, and audience adaptation.`,
+        `Case Studies & Practical Scenarios: Examines real-world case histories, situational challenges, problem-solving frameworks, and strategic decision pathways.`,
+        `Regulatory Compliance & Ethical Standards: Details legal boundaries, stakeholder accountability, transparency measures, and governance frameworks.`,
+        `Strategic Optimization & Resource Allocation: Evaluates process efficiency, risk mitigation methods, team collaboration, and sustainable operational models.`,
+        `Performance Assessment & Quality Audit: Measures qualitative effectiveness through standardized evaluation rubrics, KPI benchmarks, and feedback mechanisms.`,
+        `Contemporary Trends & Technological Evolution: Analyzes digital transformation, modern collaborative platforms, and evolving professional standards.`,
+        `University Examination Blueprint: Structure answers using clear headings, numbered analytical points, comparative distinction tables, and practical case examples.`,
+      ],
+      keyPoints: [
+        `Core Definition & Scope: Clearly state the formal definition of ${unitTitle} and its primary application within ${subjectName}.`,
+        `Essential Theoretical Principles: Master the foundational guidelines, models, and operational frameworks governing this study module.`,
+        `Step-by-Step Procedural Stages: Memorize the chronological order of phases, planning checkpoints, and evaluation milestones.`,
+        `Key Terminologies & Lexicon: Use authoritative academic and industry terminology precisely throughout your written responses.`,
+        `Comparative Distinction Matrix: Prepare contrast tables comparing primary concepts against alternative approaches across defined evaluation criteria.`,
+        `Risk Identification & Control: Recognize common procedural failure modes and implement proactive risk mitigation protocols.`,
+        `Effective Communication Rules: Apply clarity, conciseness, coherence, and professional tone when answering scenario-based questions.`,
+        `Governance & Ethics Principles: State the ethical considerations, stakeholder protections, and social responsibilities inherent in this topic.`,
+        `Memory Mnemonic: Use structured acronyms and conceptual mnemonics to recall multi-stage frameworks during timed written tests.`,
+        `Exam Scoring Strategy: Open with a crisp definition, provide numbered functional points, draw an organizational flow diagram, and conclude with a practical example.`,
+      ],
+    };
+  }
+
+  // Engineering Sciences Synthesis (where mathematical and physical formulas are genuine)
   const highlights = [
     `Foundational Scientific Principle of ${unitTitle}: Serves as a primary analytical framework in ${subjectName}, establishing mathematical models and state-variable formulations required for engineering systems.`,
     `Governing Law & Analytical Formulation: Modeled via fundamental balance principles: \\sum F = m a or \\nabla \\cdot \\vec{\\Phi} = q, describing dynamic response and steady-state equilibrium across operational boundaries.`,
@@ -300,8 +384,7 @@ export function generateTechnicalTopic(
 
   const keyPoints = [
     `Core Definition & Role: State the exact technical definition of ${unitTitle} and its primary functional role in ${subjectName}.`,
-    `Primary Governing Equation: \\Phi(x, t) = \\Phi_0 \\cdot e^{-\\alpha t} \\cos(\\omega t + \\phi) governs dynamic response and harmonic behavior in ${unitTitle}.`,
-    `Secondary Analytical Relationship: \\frac{d^2 y}{dx^2} + k^2 y = f(x) relates external driving sources to system response profile.`,
+    `Primary Governing Equation: \\frac{d^2 y}{dx^2} + k^2 y = f(x) relates external driving sources to system response profile in ${unitTitle}.`,
     `Units & Dimensional Consistency: Always verify dimensional homogeneity: [Force] = M L T^{-2}, [Energy] = M L^2 T^{-2}, [Power] = M L^2 T^{-3}.`,
     `Boundary Assumptions: Specify operational ranges, linear elasticity assumptions, and thermodynamic equilibrium constraints during calculations.`,
     `Safety Factor & Thresholds: Factor of Safety SF = \\frac{\\text{Yield Strength}}{\\text{Working Stress}} > 1.5 for static loads and > 2.5 for cyclic impact fatigue.`,

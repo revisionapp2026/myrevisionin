@@ -47,6 +47,37 @@ export function unescapeHtmlAndEntities(str: string): string {
 
 /**
  * Adjusts and breaks long LaTeX formulas into aligned multi-line equations
+function findTopLevelEquals(str: string): number[] {
+  const indices: number[] = [];
+  let braceDepth = 0;
+  let parenDepth = 0;
+  let bracketDepth = 0;
+
+  for (let i = 0; i < str.length; i++) {
+    const ch = str[i];
+    if (ch === "\\") {
+      i++;
+      continue;
+    }
+    if (ch === "{") braceDepth++;
+    else if (ch === "}") braceDepth = Math.max(0, braceDepth - 1);
+    else if (ch === "(") parenDepth++;
+    else if (ch === ")") parenDepth = Math.max(0, parenDepth - 1);
+    else if (ch === "[") bracketDepth++;
+    else if (ch === "]") bracketDepth = Math.max(0, bracketDepth - 1);
+    else if (ch === "=" && braceDepth === 0 && parenDepth === 0 && bracketDepth === 0) {
+      const prev = i > 0 ? str[i - 1] : "";
+      const next = i + 1 < str.length ? str[i + 1] : "";
+      if (prev !== "!" && prev !== "<" && prev !== ">" && prev !== "=" && next !== "=") {
+        indices.push(i);
+      }
+    }
+  }
+  return indices;
+}
+
+/**
+ * Adjusts and breaks long LaTeX formulas into aligned multi-line equations
  * so they fit smoothly on mobile screens without requiring horizontal scrollbars.
  */
 export function fitLatexForDisplay(raw: string): string {
@@ -63,21 +94,22 @@ export function fitLatexForDisplay(raw: string): string {
     return cleaned;
   }
 
-  // Multi-step equalities: e.g. A = B = C
-  const equalsCount = (cleaned.match(/=/g) || []).length;
-  if (equalsCount >= 2 && !cleaned.includes("&")) {
-    const parts = cleaned.split(/\s*=\s*/);
-    if (parts.length >= 3) {
-      const [lhs, ...rhs] = parts;
-      return `\\begin{aligned} ${lhs} &= ${rhs.join(" \\\\[5pt] &= ")} \\end{aligned}`;
-    }
-  }
+  // Multi-step equalities: e.g. A = B = C (only top-level unbracketed equals!)
+  if (!cleaned.includes("&")) {
+    const topEquals = findTopLevelEquals(cleaned);
+    if (topEquals.length >= 2) {
+      const parts: string[] = [];
+      let last = 0;
+      for (const idx of topEquals) {
+        parts.push(cleaned.slice(last, idx).trim());
+        last = idx + 1;
+      }
+      parts.push(cleaned.slice(last).trim());
 
-  // Comma-separated equations on one line: e.g. "x = 1, y = 2"
-  if (cleaned.includes(",") && equalsCount >= 2 && !cleaned.includes("&")) {
-    const subEqs = cleaned.split(/\s*,\s*/);
-    if (subEqs.length >= 2 && subEqs.every((p) => p.includes("="))) {
-      return `\\begin{aligned} ${subEqs.join(" \\\\[5pt] ")} \\end{aligned}`;
+      if (parts.length >= 3 && parts.every((p) => p.length > 0)) {
+        const [lhs, ...rhs] = parts;
+        return `\\begin{aligned} ${lhs} &= ${rhs.join(" \\\\[5pt] &= ")} \\end{aligned}`;
+      }
     }
   }
 
@@ -173,16 +205,27 @@ export function MathFormula({ math, displayMode = false, className }: MathFormul
     if (!math || !math.trim()) return "";
     const latexRaw = toLatex(math);
     const latex = displayMode ? fitLatexForDisplay(latexRaw) : latexRaw;
+    // 1. Try rendering the formatted LaTeX with throwOnError: true to detect syntax issues
     try {
       return katex.renderToString(latex, {
-        throwOnError: false,
+        throwOnError: true,
         displayMode,
-        errorColor: "#cc0000",
         output: "htmlAndMathml",
         strict: false,
       });
     } catch {
-      return null;
+      // 2. If fitted layout had an error, cleanly fallback to raw LaTeX without multi-line alignment
+      try {
+        return katex.renderToString(latexRaw, {
+          throwOnError: false,
+          displayMode,
+          errorColor: "#cc0000",
+          output: "htmlAndMathml",
+          strict: false,
+        });
+      } catch {
+        return null;
+      }
     }
   }, [math, displayMode]);
 
@@ -708,11 +751,23 @@ export function parseFormulaText(text: string): {
     }
   }
 
-  // A genuine formula should be compact (<= 160 chars) and contain math symbols, not a 200-word paragraph
+  // A genuine formula should be compact (<= 160 chars) and contain math symbols, not an English prose sentence
+  const hasMathSymbols =
+    formula.includes("\\") ||
+    formula.includes("^") ||
+    (formula.includes("=") && /[0-9\+\-\*\/]/.test(formula)) ||
+    /[a-zA-Z]\([a-zA-Z0-9,\s]+\)\s*=/.test(formula);
+
+  const isProse =
+    /\b(are|is|the|an|all|every|must|should|cannot|between|through|without|into|when|where|which|from|with|then|that)\b/i.test(
+      formula,
+    ) && !formula.includes("\\");
+
   if (
     formula.length >= 2 &&
     formula.length <= 160 &&
-    (formula.includes("=") || formula.includes("\\") || formula.includes("^") || formula.includes("/"))
+    hasMathSymbols &&
+    !isProse
   ) {
     return { title, formula, explanation, variables };
   }

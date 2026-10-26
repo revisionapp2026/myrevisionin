@@ -102,6 +102,22 @@ function UnitScreen() {
     });
   }, [points]);
 
+  const hasFormulas = formulaPoints.length > 0;
+  const activeTabs = useMemo<Tab[]>(() => {
+    const list: Tab[] = ["highlights", "key points"];
+    if (hasFormulas) {
+      list.push("formulas");
+    }
+    list.push("saved");
+    return list;
+  }, [hasFormulas]);
+
+  useEffect(() => {
+    if (tab === "formulas" && !hasFormulas) {
+      setTab("highlights");
+    }
+  }, [tab, hasFormulas]);
+
   const isUnitSaved = isUnitBookmarked(unit.id);
   const saved = bookmarksForUnit(unit.id);
   const marks = highlightsForUnit(unit.id);
@@ -162,7 +178,7 @@ function UnitScreen() {
 
       <div className="sticky top-0 z-10 border-b border-border bg-card">
         <div className="mx-auto flex max-w-xl">
-          {tabs.map((t) => (
+          {activeTabs.map((t) => (
             <button
               key={t}
               type="button"
@@ -176,7 +192,7 @@ function UnitScreen() {
               )}
             >
               {t}
-              {t === "formulas" && formulaPoints.length > 0 && ` (${formulaPoints.length})`}
+              {t === "formulas" && ` (${formulaPoints.length})`}
               {t === "saved" && saved.length > 0 && ` (${saved.length})`}
             </button>
           ))}
