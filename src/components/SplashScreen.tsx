@@ -70,8 +70,12 @@ export function SplashScreen() {
             ? "/semester-selection"
             : "/program-selection";
 
-      // If this screen was opened inside a popup from another window, notify opener and close popup
-      if (window.opener && window.opener !== window) {
+      // If this screen was opened explicitly as a popup from another window, notify opener and close popup
+      const isPopup =
+        window.name === "revision_google_auth" ||
+        window.location.search.includes("popup=1");
+
+      if (isPopup && window.opener && window.opener !== window) {
         try {
           window.opener.postMessage({ type: "REVISION_AUTH_SUCCESS", target }, "*");
           window.opener.location.href = target;
@@ -80,7 +84,6 @@ export function SplashScreen() {
         }
         try {
           window.close();
-          return;
         } catch {
           /* ignore */
         }

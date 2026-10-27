@@ -94,8 +94,12 @@ function AuthCallbackScreen() {
             ? "/semester-selection"
             : "/program-selection";
 
-      // If opened in a popup window, notify the opener and close this popup!
-      if (window.opener && window.opener !== window) {
+      // If opened explicitly as a popup window, notify the opener and close this popup!
+      const isPopup =
+        window.name === "revision_google_auth" ||
+        window.location.search.includes("popup=1");
+
+      if (isPopup && window.opener && window.opener !== window) {
         try {
           window.opener.postMessage({ type: "REVISION_AUTH_SUCCESS", target }, "*");
           window.opener.location.href = target;
@@ -104,13 +108,12 @@ function AuthCallbackScreen() {
         }
         try {
           window.close();
-          return;
         } catch {
           /* ignore */
         }
       }
 
-      window.location.href = target;
+      navigate({ to: target as any, replace: true });
     };
 
     // 1. If authorization code is present (PKCE), explicitly exchange it!

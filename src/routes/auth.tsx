@@ -138,8 +138,12 @@ function AuthScreen() {
               ? "/semester-selection"
               : "/program-selection";
 
-        // If this tab was opened as a popup from another window, close self and notify opener!
-        if (window.opener && window.opener !== window) {
+        // If this window was explicitly opened as a popup from another window, notify opener and close
+        const isPopup =
+          window.name === "revision_google_auth" ||
+          window.location.search.includes("popup=1");
+
+        if (isPopup && window.opener && window.opener !== window) {
           try {
             window.opener.postMessage({ type: "REVISION_AUTH_SUCCESS", target }, "*");
             window.opener.location.href = target;
@@ -148,33 +152,30 @@ function AuthScreen() {
           }
           try {
             window.close();
-            return;
           } catch {
             /* ignore */
           }
         }
 
-        window.location.href = target;
+        // Always navigate the current window directly
+        navigate({ to: target as any, replace: true });
       };
 
-      // 1. If authorization code is present (PKCE), explicitly exchange it!
-      if (code) {
-        supabase.auth
-          .exchangeCodeForSession(code)
-          .then(({ data, error }) => {
-            if (error) {
-              console.warn("[Auth] exchangeCodeForSession warning:", error.message);
-            }
-            if (data?.session?.user) {
-              void finishOAuth(data.session.user.id);
-            }
-          })
-          .catch((err) => {
-            console.warn("[Auth] exchangeCodeForSession failed:", err);
-          });
-      }
+      // 1. Listen to Supabase's automatic URL session extraction
+      const { data: authSub } = supabase.auth.onAuthStateChange((event, s) => {
+        if ((event === "SIGNED_IN" || event === "INITIAL_SESSION") && s?.user) {
+          void finishOAuth(s.user.id);
+        }
+      });
 
-      // 2. If access_token and refresh_token are present in hash (Implicit flow)
+      // 2. Check existing session immediately
+      void supabase.auth.getSession().then(({ data }) => {
+        if (data?.session?.user) {
+          void finishOAuth(data.session.user.id);
+        }
+      });
+
+      // 3. If access_token and refresh_token are present in hash (Implicit flow)
       if (accessToken && refreshToken) {
         supabase.auth
           .setSession({
@@ -194,19 +195,30 @@ function AuthScreen() {
           });
       }
 
-      // 3. Check existing session immediately
-      void supabase.auth.getSession().then(({ data }) => {
-        if (data?.session?.user) {
-          void finishOAuth(data.session.user.id);
-        }
-      });
+      // 4. If authorization code is present (PKCE) and session hasn't finished, exchange after brief delay
+      if (code) {
+        const pkceTimer = setTimeout(() => {
+          if (handled) return;
+          supabase.auth
+            .exchangeCodeForSession(code)
+            .then(({ data, error }) => {
+              if (error) {
+                console.warn("[Auth] exchangeCodeForSession fallback:", error.message);
+              }
+              if (data?.session?.user) {
+                void finishOAuth(data.session.user.id);
+              }
+            })
+            .catch((err) => {
+              console.warn("[Auth] exchangeCodeForSession failed:", err);
+            });
+        }, 400);
 
-      // 4. Listen to Supabase's automatic URL session extraction
-      const { data: authSub } = supabase.auth.onAuthStateChange((event, s) => {
-        if ((event === "SIGNED_IN" || event === "INITIAL_SESSION") && s?.user) {
-          void finishOAuth(s.user.id);
-        }
-      });
+        return () => {
+          clearTimeout(pkceTimer);
+          authSub.subscription.unsubscribe();
+        };
+      }
 
       // 5. Fallback safety timer: give enough time for network exchange
       const safetyTimer = setTimeout(async () => {
@@ -216,16 +228,87 @@ function AuthScreen() {
           void finishOAuth(data.session.user.id);
         } else {
           setOauthResolving(false);
-          setError("Sign-in is taking longer than expected. Please try again.");
+          setError("Sign-in session could not be completed automatically. Please tap 'Continue with Google' again.");
         }
-      }, 5000);
+      }, 6000);
 
       return () => {
         clearTimeout(safetyTimer);
         authSub.subscription.unsubscribe();
       };
     }
-  }, [search.code, search.error, search.error_description, program, semester]);
+  }, [search.code, search.error, search.error_description, program, semester, navigate]);
+
+  // Listen for window focus & visibility change when user returns to PWA from external browser
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    let checkTimer: ReturnType<typeof setTimeout> | null = null;
+
+    const checkSessionOnReturn = async () => {
+      try {
+        const { data } = await supabase.auth.getSession();
+        if (data?.session?.user) {
+          setGoogle(false);
+          setOauthResolving(false);
+          const userId = data.session.user.id;
+          let targetProg = program;
+          let targetSem = semester;
+          try {
+            const { data: dbProfile } = await supabase
+              .from("profiles")
+              .select("program_id, semester")
+              .eq("id", userId)
+              .maybeSingle();
+            if (dbProfile?.program_id) targetProg = dbProfile.program_id;
+            if (dbProfile?.semester) targetSem = dbProfile.semester;
+          } catch {
+            /* ignore */
+          }
+          try {
+            const raw = localStorage.getItem("revision.state.v2");
+            const state = raw ? JSON.parse(raw) : {};
+            if (targetProg) state.program = targetProg;
+            if (targetSem) state.semester = targetSem;
+            localStorage.setItem("revision.state.v2", JSON.stringify(state));
+          } catch {
+            /* ignore */
+          }
+          const target =
+            targetProg && targetSem
+              ? "/dashboard"
+              : targetProg
+                ? "/semester-selection"
+                : "/program-selection";
+          navigate({ to: target as any, replace: true });
+        } else if (google) {
+          checkTimer = setTimeout(async () => {
+            const { data: retryData } = await supabase.auth.getSession();
+            if (retryData?.session?.user) {
+              setGoogle(false);
+            }
+          }, 1500);
+        }
+      } catch {
+        /* ignore */
+      }
+    };
+
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        void checkSessionOnReturn();
+      }
+    };
+
+    window.addEventListener("focus", checkSessionOnReturn);
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
+    return () => {
+      if (checkTimer) clearTimeout(checkTimer);
+      window.removeEventListener("focus", checkSessionOnReturn);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
+  }, [google, program, semester, navigate]);
 
   async function handleResetPassword() {
     if (!email.trim()) {
@@ -270,7 +353,7 @@ function AuthScreen() {
         if (isAdminUser && typeof window !== "undefined") {
           window.sessionStorage.setItem("revision_admin_unlocked", "true");
           window.localStorage.setItem("revision_admin_unlocked", "true");
-          window.location.href = "/admin";
+          navigate({ to: "/admin", replace: true });
           return;
         }
 
@@ -283,8 +366,6 @@ function AuthScreen() {
         if (justSignedUp) {
           if (typeof window !== "undefined") {
             window.sessionStorage.removeItem("revision_new_signup");
-            window.location.href = "/program-selection";
-            return;
           }
           navigate({ to: "/program-selection", replace: true });
           return;
@@ -294,36 +375,46 @@ function AuthScreen() {
         const activeProgram = dbProfile?.program_id || profile?.program_id || program;
         const activeSemester = dbProfile?.semester || profile?.semester || semester;
 
+        // Persist selection directly into localStorage
+        if (typeof window !== "undefined") {
+          try {
+            const raw = localStorage.getItem("revision.state.v2");
+            const state = raw ? JSON.parse(raw) : {};
+            if (activeProgram) state.program = activeProgram;
+            if (activeSemester) state.semester = activeSemester;
+            localStorage.setItem("revision.state.v2", JSON.stringify(state));
+          } catch {
+            /* ignore */
+          }
+        }
+
         const target = !activeProgram
           ? "/program-selection"
           : !activeSemester
             ? "/semester-selection"
             : "/dashboard";
 
-        if (typeof window !== "undefined") {
-          if (window.opener && window.opener !== window) {
-            try {
-              window.opener.postMessage({ type: "REVISION_AUTH_SUCCESS", target }, "*");
-              window.opener.location.href = target;
-            } catch {
-              /* ignore cross-origin */
-            }
-            try {
-              window.close();
-              return;
-            } catch {
-              /* ignore */
-            }
+        const isPopup =
+          typeof window !== "undefined" &&
+          (window.name === "revision_google_auth" || window.location.search.includes("popup=1"));
+        if (isPopup && typeof window !== "undefined" && window.opener && window.opener !== window) {
+          try {
+            window.opener.postMessage({ type: "REVISION_AUTH_SUCCESS", target }, "*");
+            window.opener.location.href = target;
+          } catch {
+            /* ignore cross-origin */
           }
-          window.location.href = target;
-          return;
+          try {
+            window.close();
+          } catch {
+            /* ignore */
+          }
         }
+
         navigate({ to: target as any, replace: true });
       } catch (err) {
         console.warn("[Auth] Redirect check error:", err);
-        if (typeof window !== "undefined") {
-          window.location.href = "/dashboard";
-        }
+        navigate({ to: "/dashboard", replace: true });
       }
     })();
     return () => {
@@ -352,59 +443,67 @@ function AuthScreen() {
         } catch (err) {
           console.warn("Supabase signIn warning for admin, continuing with local unlock:", err);
         }
-        if (typeof window !== "undefined") {
-          window.location.href = "/admin";
-          return;
-        }
-        await navigate({ to: "/admin" });
+        navigate({ to: "/admin", replace: true });
         return;
       } else if (mode === "signin") {
         await signIn(email.trim(), password);
         // Instant authoritative redirect upon successful sign in!
-        if (typeof window !== "undefined") {
-          try {
-            const { data: sessionData } = await supabase.auth.getSession();
-            const currentUserId = sessionData.session?.user?.id;
-            if (currentUserId) {
-              const [{ data: userRole }, { data: userProfile }] = await Promise.all([
-                supabase
-                  .from("user_roles")
-                  .select("role")
-                  .eq("user_id", currentUserId)
-                  .eq("role", "admin")
-                  .maybeSingle(),
-                supabase
-                  .from("profiles")
-                  .select("program_id, semester")
-                  .eq("id", currentUserId)
-                  .maybeSingle(),
-              ]);
+        const { data: sessionData } = await supabase.auth.getSession();
+        const currentUserId = sessionData.session?.user?.id;
+        if (currentUserId) {
+          const [{ data: userRole }, { data: userProfile }] = await Promise.all([
+            supabase
+              .from("user_roles")
+              .select("role")
+              .eq("user_id", currentUserId)
+              .eq("role", "admin")
+              .maybeSingle(),
+            supabase
+              .from("profiles")
+              .select("program_id, semester")
+              .eq("id", currentUserId)
+              .maybeSingle(),
+          ]);
 
-              const isAdminUser =
-                Boolean(userRole) || email.trim().toLowerCase() === ADMIN_EMAIL.toLowerCase();
-              if (isAdminUser) {
-                window.sessionStorage.setItem("revision_admin_unlocked", "true");
-                window.localStorage.setItem("revision_admin_unlocked", "true");
-                window.location.href = "/admin";
-                return;
-              }
-
-              const targetProgram = userProfile?.program_id || program;
-              const targetSemester = userProfile?.semester || semester;
-
-              if (targetProgram && targetSemester) {
-                window.location.href = "/dashboard";
-              } else if (targetProgram) {
-                window.location.href = "/semester-selection";
-              } else {
-                window.location.href = "/program-selection";
-              }
-              return;
+          const isAdminUser =
+            Boolean(userRole) || email.trim().toLowerCase() === ADMIN_EMAIL.toLowerCase();
+          if (isAdminUser) {
+            if (typeof window !== "undefined") {
+              window.sessionStorage.setItem("revision_admin_unlocked", "true");
+              window.localStorage.setItem("revision_admin_unlocked", "true");
             }
-          } catch {
-            window.location.href = "/dashboard";
+            navigate({ to: "/admin", replace: true });
             return;
           }
+
+          const targetProgram = userProfile?.program_id || program;
+          const targetSemester = userProfile?.semester || semester;
+
+          // Directly persist program and semester to localStorage so dashboard never sees null!
+          if (typeof window !== "undefined") {
+            try {
+              const raw = localStorage.getItem("revision.state.v2");
+              const state = raw ? JSON.parse(raw) : {};
+              if (targetProgram) state.program = targetProgram;
+              if (targetSemester) state.semester = targetSemester;
+              localStorage.setItem("revision.state.v2", JSON.stringify(state));
+            } catch {
+              /* ignore */
+            }
+          }
+
+          const target =
+            targetProgram && targetSemester
+              ? "/dashboard"
+              : targetProgram
+                ? "/semester-selection"
+                : "/program-selection";
+
+          navigate({ to: target as any, replace: true });
+          return;
+        } else {
+          navigate({ to: "/dashboard", replace: true });
+          return;
         }
       } else {
         if (typeof window !== "undefined") {
@@ -415,16 +514,19 @@ function AuthScreen() {
         if (needsConfirmation) {
           setNotice("Almost done — check your inbox and tap the confirmation link to finish.");
         } else {
-          if (typeof window !== "undefined") {
-            window.location.href = "/program-selection";
-            return;
-          }
           navigate({ to: "/program-selection", replace: true });
           return;
         }
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+      const msg = err instanceof Error ? err.message : "Something went wrong. Please try again.";
+      if (/invalid login credentials/i.test(msg)) {
+        setError(
+          "Invalid email or password. If you registered using Google, tap 'Continue with Google' below. Or switch to 'Create' to make a new account."
+        );
+      } else {
+        setError(msg);
+      }
     } finally {
       setBusy(false);
     }
@@ -434,6 +536,11 @@ function AuthScreen() {
     setGoogle(true);
     setError(null);
     setNotice(null);
+
+    // Auto-reset loading spinner after 15 seconds if canceled or delayed
+    const timeout = setTimeout(() => {
+      setGoogle(false);
+    }, 15000);
 
     const framed = typeof window !== "undefined" && window.top !== window.self;
     const isLocal =
@@ -446,8 +553,10 @@ function AuthScreen() {
     // Listen for postMessage from popup if one is opened
     const handleAuthMessage = (e: MessageEvent) => {
       if (e.data?.type === "REVISION_AUTH_SUCCESS") {
+        clearTimeout(timeout);
         window.removeEventListener("message", handleAuthMessage);
-        window.location.href = e.data.target || "/dashboard";
+        const target = e.data.target || "/dashboard";
+        navigate({ to: target as any, replace: true });
       }
     };
     if (typeof window !== "undefined") {
@@ -464,6 +573,7 @@ function AuthScreen() {
     });
 
     if (err) {
+      clearTimeout(timeout);
       setError(
         /provider is not enabled|unsupported/i.test(err.message)
           ? "Google sign-in is not switched on for this app yet. Use your email and password for now."
@@ -484,23 +594,19 @@ function AuthScreen() {
         "width=520,height=680,left=100,top=100,scrollbars=yes,resizable=yes",
       );
       if (!opened) {
-        setError("Please allow pop-ups, or open the app directly in your browser tab to use Google.");
-        setGoogle(false);
-        if (typeof window !== "undefined") {
-          window.removeEventListener("message", handleAuthMessage);
-        }
+        window.top!.location.href = data.url;
       } else {
         setNotice("Select your Google account in the popup. This window will sync automatically.");
-        // Poll popup closure as a safety fallback
         const pollTimer = setInterval(async () => {
           if (opened.closed) {
             clearInterval(pollTimer);
+            clearTimeout(timeout);
             if (typeof window !== "undefined") {
               window.removeEventListener("message", handleAuthMessage);
             }
             const { data: s } = await supabase.auth.getSession();
             if (s?.session?.user) {
-              window.location.href = "/dashboard";
+              navigate({ to: "/dashboard", replace: true });
             } else {
               setGoogle(false);
             }
@@ -649,6 +755,23 @@ function AuthScreen() {
                   : "Sign in"}
             </Button>
           </form>
+
+          {mode === "signin" && (
+            <div className="mt-3 rounded-xl border border-primary/20 bg-primary-soft/50 p-2.5 text-center text-[12px] text-muted-foreground">
+              <span className="font-semibold text-primary">Demo student account:</span>{" "}
+              <button
+                type="button"
+                onClick={() => {
+                  setEmail("student@myrevision.in");
+                  setPassword("revision2026");
+                }}
+                className="font-mono font-medium text-foreground underline decoration-primary/40 underline-offset-2 hover:text-primary"
+              >
+                student@myrevision.in
+              </button>{" "}
+              / <span className="font-mono font-medium text-foreground">revision2026</span>
+            </div>
+          )}
 
           {mode !== "admin" && (
             <>

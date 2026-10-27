@@ -62,7 +62,7 @@ export function registerServiceWorker() {
 
     // Auto-purge outdated client cache versions on boot
     try {
-      const CURRENT_VER = "v6-20261027";
+      const CURRENT_VER = "v7-20261027-authfix";
       if (localStorage.getItem("revision_pwa_cache_ver") !== CURRENT_VER) {
         localStorage.setItem("revision_pwa_cache_ver", CURRENT_VER);
         if (navigator.serviceWorker.controller) {

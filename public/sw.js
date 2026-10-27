@@ -1,5 +1,5 @@
-// REVISION PWA Service Worker - Auto-Invalidating v6
-const CACHE_NAME = "revision-cache-v6-20261027";
+// REVISION PWA Service Worker - Auto-Invalidating v7
+const CACHE_NAME = "revision-cache-v7-20261027-authfix";
 const PRECACHE_URLS = [
   "/",
   "/favicon.png",
