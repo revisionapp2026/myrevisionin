@@ -104,61 +104,84 @@ function AuthScreen() {
           /* ignore */
         }
 
+        // Fast path: check local state & localStorage first for instantaneous redirection
         let targetProg = program;
         let targetSem = semester;
-
-        try {
-          const { data: dbProfile } = await supabase
-            .from("profiles")
-            .select("program_id, semester")
-            .eq("id", userId)
-            .maybeSingle();
-
-          if (dbProfile?.program_id) targetProg = dbProfile.program_id;
-          if (dbProfile?.semester) targetSem = dbProfile.semester;
-        } catch {
-          /* fallback */
-        }
-
-        // Direct local storage persistence of program and semester before navigation
         try {
           const raw = localStorage.getItem("revision.state.v2");
-          const state = raw ? JSON.parse(raw) : {};
-          if (targetProg) state.program = targetProg;
-          if (targetSem) state.semester = targetSem;
-          localStorage.setItem("revision.state.v2", JSON.stringify(state));
+          if (raw) {
+            const state = JSON.parse(raw);
+            if (state.program) targetProg = state.program;
+            if (state.semester) targetSem = state.semester;
+          }
         } catch {
           /* ignore */
         }
 
-        const target =
+        const deliverTarget = (finalTarget: string) => {
+          const isPopup =
+            typeof window !== "undefined" &&
+            (window.name === "revision_google_auth" || window.location.search.includes("popup=1"));
+
+          if (isPopup && window.opener && window.opener !== window) {
+            try {
+              window.opener.postMessage({ type: "REVISION_AUTH_SUCCESS", target: finalTarget }, "*");
+              window.opener.location.href = finalTarget;
+            } catch {
+              /* ignore cross-origin */
+            }
+            try {
+              window.close();
+            } catch {
+              /* ignore */
+            }
+          }
+          navigate({ to: finalTarget as any, replace: true });
+        };
+
+        // If student already selected program & semester, navigate to dashboard with 0ms delay!
+        if (targetProg && targetSem) {
+          deliverTarget("/dashboard");
+          return;
+        }
+
+        // Fast profile lookup with 450ms race timeout
+        try {
+          const { data: dbProfile } = await Promise.race([
+            supabase
+              .from("profiles")
+              .select("program_id, semester")
+              .eq("id", userId)
+              .maybeSingle(),
+            new Promise<{ data: null }>((resolve) => setTimeout(() => resolve({ data: null }), 450)),
+          ]);
+
+          if (dbProfile?.program_id) targetProg = dbProfile.program_id;
+          if (dbProfile?.semester) targetSem = dbProfile.semester;
+
+          if (targetProg || targetSem) {
+            try {
+              const raw = localStorage.getItem("revision.state.v2");
+              const state = raw ? JSON.parse(raw) : {};
+              if (targetProg) state.program = targetProg;
+              if (targetSem) state.semester = targetSem;
+              localStorage.setItem("revision.state.v2", JSON.stringify(state));
+            } catch {
+              /* ignore */
+            }
+          }
+        } catch {
+          /* fallback */
+        }
+
+        const finalTarget =
           targetProg && targetSem
             ? "/dashboard"
             : targetProg
               ? "/semester-selection"
               : "/program-selection";
 
-        // If this window was explicitly opened as a popup from another window, notify opener and close
-        const isPopup =
-          window.name === "revision_google_auth" ||
-          window.location.search.includes("popup=1");
-
-        if (isPopup && window.opener && window.opener !== window) {
-          try {
-            window.opener.postMessage({ type: "REVISION_AUTH_SUCCESS", target }, "*");
-            window.opener.location.href = target;
-          } catch {
-            /* ignore cross-origin */
-          }
-          try {
-            window.close();
-          } catch {
-            /* ignore */
-          }
-        }
-
-        // Always navigate the current window directly
-        navigate({ to: target as any, replace: true });
+        deliverTarget(finalTarget);
       };
 
       // 1. Listen to Supabase's automatic URL session extraction
@@ -195,29 +218,21 @@ function AuthScreen() {
           });
       }
 
-      // 4. If authorization code is present (PKCE) and session hasn't finished, exchange after brief delay
+      // 4. If authorization code is present (PKCE) and session hasn't finished, exchange immediately
       if (code) {
-        const pkceTimer = setTimeout(() => {
-          if (handled) return;
-          supabase.auth
-            .exchangeCodeForSession(code)
-            .then(({ data, error }) => {
-              if (error) {
-                console.warn("[Auth] exchangeCodeForSession fallback:", error.message);
-              }
-              if (data?.session?.user) {
-                void finishOAuth(data.session.user.id);
-              }
-            })
-            .catch((err) => {
-              console.warn("[Auth] exchangeCodeForSession failed:", err);
-            });
-        }, 400);
-
-        return () => {
-          clearTimeout(pkceTimer);
-          authSub.subscription.unsubscribe();
-        };
+        supabase.auth
+          .exchangeCodeForSession(code)
+          .then(({ data, error }) => {
+            if (error) {
+              console.warn("[Auth] exchangeCodeForSession fallback:", error.message);
+            }
+            if (data?.session?.user) {
+              void finishOAuth(data.session.user.id);
+            }
+          })
+          .catch((err) => {
+            console.warn("[Auth] exchangeCodeForSession failed:", err);
+          });
       }
 
       // 5. Fallback safety timer: give enough time for network exchange
@@ -332,6 +347,53 @@ function AuthScreen() {
   useEffect(() => {
     if (loading || !user) return;
     let active = true;
+
+    // Fast check: Admin user by email
+    const isDirectAdmin = user.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+    if (isDirectAdmin && typeof window !== "undefined") {
+      window.sessionStorage.setItem("revision_admin_unlocked", "true");
+      window.localStorage.setItem("revision_admin_unlocked", "true");
+      navigate({ to: "/admin", replace: true });
+      return;
+    }
+
+    // Check if this is a newly created account or signup flow
+    const justSignedUp =
+      mode === "signup" ||
+      (typeof window !== "undefined" &&
+        window.sessionStorage.getItem("revision_new_signup") === "true");
+
+    if (justSignedUp) {
+      if (typeof window !== "undefined") {
+        window.sessionStorage.removeItem("revision_new_signup");
+      }
+      navigate({ to: "/program-selection", replace: true });
+      return;
+    }
+
+    // Fast path: Check saved selections from local state & localStorage first
+    let activeProgram = program || profile?.program_id;
+    let activeSemester = semester || profile?.semester;
+
+    if (!activeProgram || !activeSemester) {
+      try {
+        const raw = localStorage.getItem("revision.state.v2");
+        if (raw) {
+          const state = JSON.parse(raw);
+          if (state.program) activeProgram = state.program;
+          if (state.semester) activeSemester = state.semester;
+        }
+      } catch {
+        /* ignore */
+      }
+    }
+
+    // If both program & semester are already known, navigate immediately with ZERO wait!
+    if (activeProgram && activeSemester) {
+      navigate({ to: "/dashboard", replace: true });
+      return;
+    }
+
     void (async () => {
       try {
         const [{ data: userRoles }, { data: dbProfile }] = await Promise.all([
@@ -357,59 +419,26 @@ function AuthScreen() {
           return;
         }
 
-        // Check if this is a newly created account or signup flow
-        const justSignedUp =
-          mode === "signup" ||
-          (typeof window !== "undefined" &&
-            window.sessionStorage.getItem("revision_new_signup") === "true");
+        const finalProg = dbProfile?.program_id || activeProgram;
+        const finalSem = dbProfile?.semester || activeSemester;
 
-        if (justSignedUp) {
-          if (typeof window !== "undefined") {
-            window.sessionStorage.removeItem("revision_new_signup");
-          }
-          navigate({ to: "/program-selection", replace: true });
-          return;
-        }
-
-        // For existing student sign in: check saved selections in database profile first
-        const activeProgram = dbProfile?.program_id || profile?.program_id || program;
-        const activeSemester = dbProfile?.semester || profile?.semester || semester;
-
-        // Persist selection directly into localStorage
-        if (typeof window !== "undefined") {
+        if (typeof window !== "undefined" && (finalProg || finalSem)) {
           try {
             const raw = localStorage.getItem("revision.state.v2");
             const state = raw ? JSON.parse(raw) : {};
-            if (activeProgram) state.program = activeProgram;
-            if (activeSemester) state.semester = activeSemester;
+            if (finalProg) state.program = finalProg;
+            if (finalSem) state.semester = finalSem;
             localStorage.setItem("revision.state.v2", JSON.stringify(state));
           } catch {
             /* ignore */
           }
         }
 
-        const target = !activeProgram
+        const target = !finalProg
           ? "/program-selection"
-          : !activeSemester
+          : !finalSem
             ? "/semester-selection"
             : "/dashboard";
-
-        const isPopup =
-          typeof window !== "undefined" &&
-          (window.name === "revision_google_auth" || window.location.search.includes("popup=1"));
-        if (isPopup && typeof window !== "undefined" && window.opener && window.opener !== window) {
-          try {
-            window.opener.postMessage({ type: "REVISION_AUTH_SUCCESS", target }, "*");
-            window.opener.location.href = target;
-          } catch {
-            /* ignore cross-origin */
-          }
-          try {
-            window.close();
-          } catch {
-            /* ignore */
-          }
-        }
 
         navigate({ to: target as any, replace: true });
       } catch (err) {
@@ -446,65 +475,82 @@ function AuthScreen() {
         navigate({ to: "/admin", replace: true });
         return;
       } else if (mode === "signin") {
-        await signIn(email.trim(), password);
-        // Instant authoritative redirect upon successful sign in!
-        const { data: sessionData } = await supabase.auth.getSession();
-        const currentUserId = sessionData.session?.user?.id;
-        if (currentUserId) {
-          const [{ data: userRole }, { data: userProfile }] = await Promise.all([
-            supabase
-              .from("user_roles")
-              .select("role")
-              .eq("user_id", currentUserId)
-              .eq("role", "admin")
-              .maybeSingle(),
-            supabase
-              .from("profiles")
-              .select("program_id, semester")
-              .eq("id", currentUserId)
-              .maybeSingle(),
-          ]);
+        const authData = await signIn(email.trim(), password);
+        const currentUserId = authData?.user?.id;
+        const isDirectAdmin = email.trim().toLowerCase() === ADMIN_EMAIL.toLowerCase();
 
-          const isAdminUser =
-            Boolean(userRole) || email.trim().toLowerCase() === ADMIN_EMAIL.toLowerCase();
-          if (isAdminUser) {
-            if (typeof window !== "undefined") {
-              window.sessionStorage.setItem("revision_admin_unlocked", "true");
-              window.localStorage.setItem("revision_admin_unlocked", "true");
-            }
-            navigate({ to: "/admin", replace: true });
-            return;
-          }
-
-          const targetProgram = userProfile?.program_id || program;
-          const targetSemester = userProfile?.semester || semester;
-
-          // Directly persist program and semester to localStorage so dashboard never sees null!
+        if (isDirectAdmin) {
           if (typeof window !== "undefined") {
-            try {
-              const raw = localStorage.getItem("revision.state.v2");
-              const state = raw ? JSON.parse(raw) : {};
-              if (targetProgram) state.program = targetProgram;
-              if (targetSemester) state.semester = targetSemester;
-              localStorage.setItem("revision.state.v2", JSON.stringify(state));
-            } catch {
-              /* ignore */
-            }
+            window.sessionStorage.setItem("revision_admin_unlocked", "true");
+            window.localStorage.setItem("revision_admin_unlocked", "true");
           }
-
-          const target =
-            targetProgram && targetSemester
-              ? "/dashboard"
-              : targetProgram
-                ? "/semester-selection"
-                : "/program-selection";
-
-          navigate({ to: target as any, replace: true });
+          navigate({ to: "/admin", replace: true });
           return;
-        } else {
+        }
+
+        // Fast optimistic redirect: use local state & localStorage first for 0ms delay!
+        let targetProgram = program;
+        let targetSemester = semester;
+
+        if (!targetProgram || !targetSemester) {
+          try {
+            const raw = localStorage.getItem("revision.state.v2");
+            if (raw) {
+              const state = JSON.parse(raw);
+              if (state.program) targetProgram = state.program;
+              if (state.semester) targetSemester = state.semester;
+            }
+          } catch {
+            /* ignore */
+          }
+        }
+
+        // If student already has program & semester selected, navigate to dashboard immediately!
+        if (targetProgram && targetSemester) {
           navigate({ to: "/dashboard", replace: true });
           return;
         }
+
+        // If either is missing, quick profile query with 450ms race timeout
+        if (currentUserId) {
+          try {
+            const { data: userProfile } = await Promise.race([
+              supabase
+                .from("profiles")
+                .select("program_id, semester")
+                .eq("id", currentUserId)
+                .maybeSingle(),
+              new Promise<{ data: null }>((resolve) => setTimeout(() => resolve({ data: null }), 450)),
+            ]);
+
+            if (userProfile?.program_id) targetProgram = userProfile.program_id;
+            if (userProfile?.semester) targetSemester = userProfile.semester;
+
+            if (targetProgram || targetSemester) {
+              try {
+                const raw = localStorage.getItem("revision.state.v2");
+                const state = raw ? JSON.parse(raw) : {};
+                if (targetProgram) state.program = targetProgram;
+                if (targetSemester) state.semester = targetSemester;
+                localStorage.setItem("revision.state.v2", JSON.stringify(state));
+              } catch {
+                /* ignore */
+              }
+            }
+          } catch {
+            /* ignore */
+          }
+        }
+
+        const target =
+          targetProgram && targetSemester
+            ? "/dashboard"
+            : targetProgram
+              ? "/semester-selection"
+              : "/program-selection";
+
+        navigate({ to: target as any, replace: true });
+        return;
       } else {
         if (typeof window !== "undefined") {
           window.sessionStorage.setItem("revision_new_signup", "true");

@@ -55,7 +55,7 @@ function Dashboard() {
     setSemester,
   } = useAppState();
   const { isPremium, planName } = useEntitlements();
-  const { user, profile } = useAuth();
+  const { user, profile, loading: authLoading } = useAuth();
   const [query, setQuery] = useState("");
   const { data: notifications = [] } = useQuery(notificationsQuery(program, semester));
   const unreadCount = notifications.filter((n) => !readNotifications.includes(n.id)).length;
@@ -73,6 +73,7 @@ function Dashboard() {
   const name = profile?.full_name?.split(" ")[0] || user?.email?.split("@")[0] || "Student";
 
   useEffect(() => {
+    if (authLoading) return;
     if (!user) {
       navigate({ to: "/auth", replace: true });
       return;
@@ -83,7 +84,15 @@ function Dashboard() {
     } else if (!semester) {
       navigate({ to: "/semester-selection", replace: true });
     }
-  }, [ready, program, semester, user, navigate]);
+  }, [authLoading, ready, program, semester, user, navigate]);
+
+  if (authLoading || !ready) {
+    return (
+      <div className="flex min-h-dvh flex-col items-center justify-center bg-background">
+        <img src={logo} alt="REVISION" className="h-10 w-auto object-contain animate-pulse" />
+      </div>
+    );
+  }
 
   return (
     <>

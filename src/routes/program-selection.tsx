@@ -46,6 +46,14 @@ function ProgramSelection() {
     navigate({ to: "/semester-selection" });
   };
 
+  if (authLoading) {
+    return (
+      <div className="flex min-h-dvh flex-col items-center justify-center bg-background">
+        <img src={logo} alt="REVISION" className="h-10 w-auto object-contain animate-pulse" />
+      </div>
+    );
+  }
+
   return (
     <div className="flex min-h-dvh flex-col bg-background">
       <header className="brand-header px-4 pb-8 pt-[max(1.5rem,env(safe-area-inset-top))] text-center">

@@ -60,60 +60,84 @@ function AuthCallbackScreen() {
         /* ignore */
       }
 
+      // Fast path: check local state & localStorage first
       let targetProg = program;
       let targetSem = semester;
-
-      try {
-        const { data: dbProfile } = await supabase
-          .from("profiles")
-          .select("program_id, semester")
-          .eq("id", userId)
-          .maybeSingle();
-
-        if (dbProfile?.program_id) targetProg = dbProfile.program_id;
-        if (dbProfile?.semester) targetSem = dbProfile.semester;
-      } catch {
-        /* proceed with fallback target */
-      }
-
-      // Direct local storage persistence of program and semester before navigation
       try {
         const raw = localStorage.getItem("revision.state.v2");
-        const state = raw ? JSON.parse(raw) : {};
-        if (targetProg) state.program = targetProg;
-        if (targetSem) state.semester = targetSem;
-        localStorage.setItem("revision.state.v2", JSON.stringify(state));
+        if (raw) {
+          const state = JSON.parse(raw);
+          if (state.program) targetProg = state.program;
+          if (state.semester) targetSem = state.semester;
+        }
       } catch {
         /* ignore */
       }
 
-      const target =
+      const deliver = (finalTarget: string) => {
+        const isPopup =
+          window.name === "revision_google_auth" ||
+          window.location.search.includes("popup=1");
+
+        if (isPopup && window.opener && window.opener !== window) {
+          try {
+            window.opener.postMessage({ type: "REVISION_AUTH_SUCCESS", target: finalTarget }, "*");
+            window.opener.location.href = finalTarget;
+          } catch {
+            /* ignore cross-origin */
+          }
+          try {
+            window.close();
+          } catch {
+            /* ignore */
+          }
+        }
+
+        navigate({ to: finalTarget as any, replace: true });
+      };
+
+      // If program & semester already chosen, navigate to dashboard with 0ms delay!
+      if (targetProg && targetSem) {
+        deliver("/dashboard");
+        return;
+      }
+
+      try {
+        const { data: dbProfile } = await Promise.race([
+          supabase
+            .from("profiles")
+            .select("program_id, semester")
+            .eq("id", userId)
+            .maybeSingle(),
+          new Promise<{ data: null }>((resolve) => setTimeout(() => resolve({ data: null }), 450)),
+        ]);
+
+        if (dbProfile?.program_id) targetProg = dbProfile.program_id;
+        if (dbProfile?.semester) targetSem = dbProfile.semester;
+
+        if (targetProg || targetSem) {
+          try {
+            const raw = localStorage.getItem("revision.state.v2");
+            const state = raw ? JSON.parse(raw) : {};
+            if (targetProg) state.program = targetProg;
+            if (targetSem) state.semester = targetSem;
+            localStorage.setItem("revision.state.v2", JSON.stringify(state));
+          } catch {
+            /* ignore */
+          }
+        }
+      } catch {
+        /* proceed with fallback target */
+      }
+
+      const finalTarget =
         targetProg && targetSem
           ? "/dashboard"
           : targetProg
             ? "/semester-selection"
             : "/program-selection";
 
-      // If opened explicitly as a popup window, notify the opener and close this popup!
-      const isPopup =
-        window.name === "revision_google_auth" ||
-        window.location.search.includes("popup=1");
-
-      if (isPopup && window.opener && window.opener !== window) {
-        try {
-          window.opener.postMessage({ type: "REVISION_AUTH_SUCCESS", target }, "*");
-          window.opener.location.href = target;
-        } catch {
-          /* ignore cross-origin */
-        }
-        try {
-          window.close();
-        } catch {
-          /* ignore */
-        }
-      }
-
-      navigate({ to: target as any, replace: true });
+      deliver(finalTarget);
     };
 
     // 1. If authorization code is present (PKCE), explicitly exchange it!

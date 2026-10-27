@@ -31,7 +31,10 @@ type AuthValue = {
   profile: Profile | null;
   isAdmin: boolean;
   refreshProfile: () => Promise<void>;
-  signIn: (email: string, password: string) => Promise<void>;
+  signIn: (
+    email: string,
+    password: string,
+  ) => Promise<{ user: User | null; session: Session | null }>;
   signUp: (
     name: string,
     email: string,
@@ -255,8 +258,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [profile?.id, app.program, app.semester, app.ready]);
 
   const signIn = useCallback(async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) throw error;
+    if (data?.session) {
+      setSession(data.session);
+    }
+    return data;
   }, []);
 
   const signUp = useCallback(

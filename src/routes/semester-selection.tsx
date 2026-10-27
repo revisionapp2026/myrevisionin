@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 
 import { useEffect } from "react";
 import { useAuth } from "@/lib/auth";
+import logo from "@/assets/revision-logo.png";
 
 export const Route = createFileRoute("/semester-selection")({
   head: () => ({
@@ -26,13 +27,26 @@ export const Route = createFileRoute("/semester-selection")({
 function SemesterSelection() {
   const navigate = useNavigate();
   const { program, branch, setBranch, semester, setSemester, ready } = useAppState();
-  const { user, saveProfile } = useAuth();
+  const { user, loading: authLoading, saveProfile } = useAuth();
 
   useEffect(() => {
+    if (authLoading) return;
+    if (!user) {
+      navigate({ to: "/auth", replace: true });
+      return;
+    }
     if (ready && !program) {
       navigate({ to: "/program-selection", replace: true });
     }
-  }, [ready, program, navigate]);
+  }, [authLoading, user, ready, program, navigate]);
+
+  if (authLoading || !ready) {
+    return (
+      <div className="flex min-h-dvh flex-col items-center justify-center bg-background">
+        <img src={logo} alt="REVISION" className="h-10 w-auto object-contain animate-pulse" />
+      </div>
+    );
+  }
 
   const isEngineering = program === "btech";
   const isBsc = program === "bsc";
