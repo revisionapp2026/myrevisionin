@@ -1,0 +1,280 @@
+
+Subject: Aerospace Materials
+  Unit 1: Metals & Alloys
+  Unit 2: Composites
+  Unit 3: Ceramics
+  Unit 4: Fatigue & Fracture
+  Unit 5: Material Selection
+
+Subject: Biochemistry
+  Unit 1: Biomolecules
+  Unit 2: Enzymes
+  Unit 3: Metabolism
+  Unit 4: Molecular Biology
+  Unit 5: Clinical Biochemistry
+
+Subject: Biomedical Instrumentation
+  Unit 1: Measurement Basics
+  Unit 2: Bioelectrodes
+  Unit 3: Biosensors
+  Unit 4: Medical Devices
+  Unit 5: Patient Safety
+
+Subject: Building Materials & Construction
+  Unit 1: Stones & Bricks
+  Unit 2: Cement & Concrete
+  Unit 3: Timber & Steel
+  Unit 4: Masonry
+  Unit 5: Foundations
+
+Subject: Chemical Engineering Thermodynamics — I
+  Unit 1: Laws of Thermodynamics
+  Unit 2: PVT Behavior
+  Unit 3: Heat Effects
+  Unit 4: Entropy
+  Unit 5: Gibbs Free Energy
+
+Subject: Circuit Analysis & Synthesis
+  Unit 1: Network Theorems
+  Unit 2: Transient Analysis
+  Unit 3: AC Analysis
+  Unit 4: Two-Port Networks
+  Unit 5: Network Synthesis
+
+Subject: Computer Organization & Architecture
+  Unit 1: Basic Computer Organization
+  Unit 2: Instruction Sets & Addressing
+  Unit 3: Arithmetic & Logic Unit
+  Unit 4: Memory Hierarchy
+  Unit 5: I/O Organization & Pipelining
+
+Subject: Data Structures & Algorithms
+  Unit 1: Arrays, Linked Lists
+  Unit 2: Stacks & Queues
+  Unit 3: Trees & Graphs
+  Unit 4: Sorting & Searching
+  Unit 5: Hashing & Algorithm Analysis
+
+Subject: Database Management Systems
+  Unit 1: ER Model
+  Unit 2: Relational Model & SQL
+  Unit 3: Normalization
+  Unit 4: Transactions
+  Unit 5: Indexing & Storage
+
+Subject: Digital Electronics
+  Unit 1: Logic Gates
+  Unit 2: Combinational Circuits
+  Unit 3: Sequential Circuits
+  Unit 4: Counters & Registers
+  Unit 5: Memory & PLDs
+
+Subject: Digital Logic Design
+  Unit 1: Number Systems & Codes
+  Unit 2: Boolean Algebra & Logic Gates
+  Unit 3: Combinational Circuits
+  Unit 4: Sequential Circuits (Flip-Flops, Counters)
+  Unit 5: Memory & Programmable Logic
+
+Subject: Discrete Mathematics
+  Unit 1: Set Theory & Logic
+  Unit 2: Relations & Functions
+  Unit 3: Graph Theory
+  Unit 4: Combinatorics
+  Unit 5: Algebraic Structures
+
+Subject: Electrical Machines
+  Unit 1: Transformers
+  Unit 2: DC Machines
+  Unit 3: Induction Machines
+  Unit 4: Synchronous Machines
+  Unit 5: Applications
+
+Subject: Electrical Machines — I
+  Unit 1: Transformers
+  Unit 2: DC Generators
+  Unit 3: DC Motors
+  Unit 4: Testing of DC Machines
+  Unit 5: Special Machines
+
+Subject: Electromagnetic Fields
+  Unit 1: Vector Analysis
+  Unit 2: Electrostatics
+  Unit 3: Magnetostatics
+  Unit 4: Maxwell's Equations
+  Unit 5: EM Wave Propagation
+
+Subject: Electronic Devices & Circuits
+  Unit 1: Semiconductor Physics
+  Unit 2: Diodes & Applications
+  Unit 3: BJT & FET
+  Unit 4: Amplifier Design
+  Unit 5: Feedback & Oscillators
+
+Subject: Engineering Geology
+  Unit 1: Mineralogy
+  Unit 2: Petrology
+  Unit 3: Structural Geology
+  Unit 4: Engineering Properties
+  Unit 5: Geological Hazards
+
+Subject: Engineering Mathematics III
+  Unit 1: Numerical Methods
+  Unit 2: Partial Differential Equations
+  Unit 3: Complex Analysis
+  Unit 4: Probability
+  Unit 5: Statistics
+
+Subject: Fluid Mechanics
+  Unit 1: Fluid Properties
+  Unit 2: Fluid Statics
+  Unit 3: Fluid Kinematics
+  Unit 4: Fluid Dynamics
+  Unit 5: Flow Measurement
+
+Subject: Fluid Mechanics (Momentum Transfer)
+  Unit 1: Fluid Properties
+  Unit 2: Fluid Statics
+  Unit 3: Fluid Dynamics
+  Unit 4: Flow Through Pipes
+  Unit 5: Pumps & Compressors
+
+Subject: Human Anatomy & Physiology
+  Unit 1: Cell & Tissue
+  Unit 2: Skeletal System
+  Unit 3: Cardiovascular
+  Unit 4: Nervous System
+  Unit 5: Respiratory & Renal
+
+Subject: Linear Algebra & Probability
+  Unit 1: Vector Spaces
+  Unit 2: Matrices & Eigenvalues
+  Unit 3: Probability Distributions
+  Unit 4: Random Variables
+  Unit 5: Statistical Inference
+
+Subject: Machine Drawing
+  Unit 1: Drawing Standards
+  Unit 2: Orthographic Projections
+  Unit 3: Sectional Views
+  Unit 4: Assembly Drawings
+  Unit 5: CAD Basics
+
+Subject: Manufacturing Technology — I
+  Unit 1: Casting Processes
+  Unit 2: Welding
+  Unit 3: Forming Processes
+  Unit 4: Machining Basics
+  Unit 5: Metrology
+
+Subject: Material Science
+  Unit 1: Crystal Structure
+  Unit 2: Metals & Alloys
+  Unit 3: Ceramics
+  Unit 4: Polymers
+  Unit 5: Composites
+
+Subject: Material Science & Engineering
+  Unit 1: Crystal Structure
+  Unit 2: Mechanical Properties
+  Unit 3: Phase Diagrams
+  Unit 4: Heat Treatment
+  Unit 5: Engineering Materials
+
+Subject: Mathematics for ECE
+  Unit 1: Linear Algebra
+  Unit 2: Complex Analysis
+  Unit 3: Probability
+  Unit 4: Random Processes
+  Unit 5: Numerical Methods
+
+Subject: Microbiology
+  Unit 1: Microbial Basics
+  Unit 2: Bacteria
+  Unit 3: Viruses
+  Unit 4: Fungi
+  Unit 5: Industrial Microbiology
+
+Subject: Network Theory
+  Unit 1: Circuit Elements & Laws
+  Unit 2: Network Theorems
+  Unit 3: Transient Analysis
+  Unit 4: AC Circuit Analysis
+  Unit 5: Two-Port Networks
+
+Subject: Numerical Methods
+  Unit 1: Error Analysis
+  Unit 2: Roots of Equations
+  Unit 3: Linear Systems
+  Unit 4: Interpolation & Integration
+  Unit 5: ODE Solutions
+
+Subject: Object Oriented Programming (Advanced)
+  Unit 1: Design Patterns
+  Unit 2: GUI Programming
+  Unit 3: Database Connectivity
+  Unit 4: Network Programming
+  Unit 5: Software Testing Basics
+
+Subject: Organic Chemistry
+  Unit 1: Reaction Mechanisms
+  Unit 2: Functional Groups
+  Unit 3: Stereochemistry
+  Unit 4: Polymer Formation
+  Unit 5: Industrial Organic Chemicals
+
+Subject: Python for Data Science
+  Unit 1: Python Basics
+  Unit 2: NumPy & Pandas
+  Unit 3: Data Visualization
+  Unit 4: Data Cleaning
+  Unit 5: EDA
+
+Subject: Sensors & Transducers
+  Unit 1: Sensor Fundamentals
+  Unit 2: Displacement Sensors
+  Unit 3: Temperature Sensors
+  Unit 4: Optical Sensors
+  Unit 5: Smart Sensors
+
+Subject: Signals & Systems
+  Unit 1: Signal Classification
+  Unit 2: LTI Systems
+  Unit 3: Fourier Series & Transform
+  Unit 4: Laplace Transform
+  Unit 5: Z-Transform
+
+Subject: Solar Energy
+  Unit 1: Solar Radiation
+  Unit 2: Solar Thermal
+  Unit 3: Solar PV
+  Unit 4: Solar Systems
+  Unit 5: Applications
+
+Subject: Statistics & Probability
+  Unit 1: Descriptive Statistics
+  Unit 2: Probability Distributions
+  Unit 3: Sampling
+  Unit 4: Hypothesis Testing
+  Unit 5: Regression
+
+Subject: Strength of Materials
+  Unit 1: Stress & Strain
+  Unit 2: Shear Force & Bending Moment
+  Unit 3: Torsion
+  Unit 4: Columns & Struts
+  Unit 5: Combined Stresses
+
+Subject: Surveying & Geomatics
+  Unit 1: Surveying Basics
+  Unit 2: Leveling
+  Unit 3: Theodolite & Traversing
+  Unit 4: Contouring
+  Unit 5: Modern Surveying (GPS, GIS)
+
+Subject: Thermodynamics
+  Unit 1: Basic Concepts & Laws
+  Unit 2: Entropy
+  Unit 3: Availability
+  Unit 4: Properties of Steam
+  Unit 5: Power Cycles

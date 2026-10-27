@@ -1,0 +1,1702 @@
+[
+  {
+    "subject": "Data Structures & Algorithms",
+    "unitNumber": 1,
+    "unitTitle": "Arrays, Linked Lists",
+    "ids": [
+      "btech-cse-s3-data-structures-and-algorithms-u1",
+      "btech-aiml-s3-data-structures-and-algorithms-u1",
+      "btech-data-science-s3-data-structures-and-algorithms-u1"
+    ]
+  },
+  {
+    "subject": "Data Structures & Algorithms",
+    "unitNumber": 2,
+    "unitTitle": "Stacks & Queues",
+    "ids": [
+      "btech-cse-s3-data-structures-and-algorithms-u2",
+      "btech-aiml-s3-data-structures-and-algorithms-u2",
+      "btech-data-science-s3-data-structures-and-algorithms-u2"
+    ]
+  },
+  {
+    "subject": "Data Structures & Algorithms",
+    "unitNumber": 3,
+    "unitTitle": "Trees & Graphs",
+    "ids": [
+      "btech-cse-s3-data-structures-and-algorithms-u3",
+      "btech-aiml-s3-data-structures-and-algorithms-u3",
+      "btech-data-science-s3-data-structures-and-algorithms-u3"
+    ]
+  },
+  {
+    "subject": "Data Structures & Algorithms",
+    "unitNumber": 4,
+    "unitTitle": "Sorting & Searching",
+    "ids": [
+      "btech-cse-s3-data-structures-and-algorithms-u4",
+      "btech-aiml-s3-data-structures-and-algorithms-u4",
+      "btech-data-science-s3-data-structures-and-algorithms-u4"
+    ]
+  },
+  {
+    "subject": "Data Structures & Algorithms",
+    "unitNumber": 5,
+    "unitTitle": "Hashing & Algorithm Analysis",
+    "ids": [
+      "btech-cse-s3-data-structures-and-algorithms-u5",
+      "btech-aiml-s3-data-structures-and-algorithms-u5",
+      "btech-data-science-s3-data-structures-and-algorithms-u5"
+    ]
+  },
+  {
+    "subject": "Digital Logic Design",
+    "unitNumber": 1,
+    "unitTitle": "Number Systems & Codes",
+    "ids": [
+      "btech-cse-s3-digital-logic-design-u1",
+      "btech-ece-s3-digital-logic-design-u1",
+      "btech-aiml-s3-digital-logic-design-u1"
+    ]
+  },
+  {
+    "subject": "Digital Logic Design",
+    "unitNumber": 2,
+    "unitTitle": "Boolean Algebra & Logic Gates",
+    "ids": [
+      "btech-cse-s3-digital-logic-design-u2",
+      "btech-ece-s3-digital-logic-design-u2",
+      "btech-aiml-s3-digital-logic-design-u2"
+    ]
+  },
+  {
+    "subject": "Digital Logic Design",
+    "unitNumber": 3,
+    "unitTitle": "Combinational Circuits",
+    "ids": [
+      "btech-cse-s3-digital-logic-design-u3",
+      "btech-ece-s3-digital-logic-design-u3",
+      "btech-aiml-s3-digital-logic-design-u3"
+    ]
+  },
+  {
+    "subject": "Digital Logic Design",
+    "unitNumber": 4,
+    "unitTitle": "Sequential Circuits (Flip-Flops, Counters)",
+    "ids": [
+      "btech-cse-s3-digital-logic-design-u4",
+      "btech-ece-s3-digital-logic-design-u4",
+      "btech-aiml-s3-digital-logic-design-u4"
+    ]
+  },
+  {
+    "subject": "Digital Logic Design",
+    "unitNumber": 5,
+    "unitTitle": "Memory & Programmable Logic",
+    "ids": [
+      "btech-cse-s3-digital-logic-design-u5",
+      "btech-ece-s3-digital-logic-design-u5",
+      "btech-aiml-s3-digital-logic-design-u5"
+    ]
+  },
+  {
+    "subject": "Discrete Mathematics",
+    "unitNumber": 1,
+    "unitTitle": "Set Theory & Logic",
+    "ids": [
+      "btech-cse-s3-discrete-mathematics-u1",
+      "btech-aiml-s3-discrete-mathematics-u1",
+      "btech-data-science-s3-discrete-mathematics-u1"
+    ]
+  },
+  {
+    "subject": "Discrete Mathematics",
+    "unitNumber": 2,
+    "unitTitle": "Relations & Functions",
+    "ids": [
+      "btech-cse-s3-discrete-mathematics-u2",
+      "btech-aiml-s3-discrete-mathematics-u2",
+      "btech-data-science-s3-discrete-mathematics-u2"
+    ]
+  },
+  {
+    "subject": "Discrete Mathematics",
+    "unitNumber": 3,
+    "unitTitle": "Graph Theory",
+    "ids": [
+      "btech-cse-s3-discrete-mathematics-u3",
+      "btech-aiml-s3-discrete-mathematics-u3",
+      "btech-data-science-s3-discrete-mathematics-u3"
+    ]
+  },
+  {
+    "subject": "Discrete Mathematics",
+    "unitNumber": 4,
+    "unitTitle": "Combinatorics",
+    "ids": [
+      "btech-cse-s3-discrete-mathematics-u4",
+      "btech-aiml-s3-discrete-mathematics-u4",
+      "btech-data-science-s3-discrete-mathematics-u4"
+    ]
+  },
+  {
+    "subject": "Discrete Mathematics",
+    "unitNumber": 5,
+    "unitTitle": "Algebraic Structures",
+    "ids": [
+      "btech-cse-s3-discrete-mathematics-u5",
+      "btech-aiml-s3-discrete-mathematics-u5",
+      "btech-data-science-s3-discrete-mathematics-u5"
+    ]
+  },
+  {
+    "subject": "Computer Organization & Architecture",
+    "unitNumber": 1,
+    "unitTitle": "Basic Computer Organization",
+    "ids": [
+      "btech-cse-s3-computer-organization-and-architecture-u1",
+      "btech-aiml-s3-computer-organization-and-architecture-u1"
+    ]
+  },
+  {
+    "subject": "Computer Organization & Architecture",
+    "unitNumber": 2,
+    "unitTitle": "Instruction Sets & Addressing",
+    "ids": [
+      "btech-cse-s3-computer-organization-and-architecture-u2",
+      "btech-aiml-s3-computer-organization-and-architecture-u2"
+    ]
+  },
+  {
+    "subject": "Computer Organization & Architecture",
+    "unitNumber": 3,
+    "unitTitle": "Arithmetic & Logic Unit",
+    "ids": [
+      "btech-cse-s3-computer-organization-and-architecture-u3",
+      "btech-aiml-s3-computer-organization-and-architecture-u3"
+    ]
+  },
+  {
+    "subject": "Computer Organization & Architecture",
+    "unitNumber": 4,
+    "unitTitle": "Memory Hierarchy",
+    "ids": [
+      "btech-cse-s3-computer-organization-and-architecture-u4",
+      "btech-aiml-s3-computer-organization-and-architecture-u4"
+    ]
+  },
+  {
+    "subject": "Computer Organization & Architecture",
+    "unitNumber": 5,
+    "unitTitle": "I/O Organization & Pipelining",
+    "ids": [
+      "btech-cse-s3-computer-organization-and-architecture-u5",
+      "btech-aiml-s3-computer-organization-and-architecture-u5"
+    ]
+  },
+  {
+    "subject": "Object Oriented Programming (Advanced)",
+    "unitNumber": 1,
+    "unitTitle": "Design Patterns",
+    "ids": [
+      "btech-cse-s3-object-oriented-programming-advanced-u1"
+    ]
+  },
+  {
+    "subject": "Object Oriented Programming (Advanced)",
+    "unitNumber": 2,
+    "unitTitle": "GUI Programming",
+    "ids": [
+      "btech-cse-s3-object-oriented-programming-advanced-u2"
+    ]
+  },
+  {
+    "subject": "Object Oriented Programming (Advanced)",
+    "unitNumber": 3,
+    "unitTitle": "Database Connectivity",
+    "ids": [
+      "btech-cse-s3-object-oriented-programming-advanced-u3"
+    ]
+  },
+  {
+    "subject": "Object Oriented Programming (Advanced)",
+    "unitNumber": 4,
+    "unitTitle": "Network Programming",
+    "ids": [
+      "btech-cse-s3-object-oriented-programming-advanced-u4"
+    ]
+  },
+  {
+    "subject": "Object Oriented Programming (Advanced)",
+    "unitNumber": 5,
+    "unitTitle": "Software Testing Basics",
+    "ids": [
+      "btech-cse-s3-object-oriented-programming-advanced-u5"
+    ]
+  },
+  {
+    "subject": "Electronic Devices & Circuits",
+    "unitNumber": 1,
+    "unitTitle": "Semiconductor Physics",
+    "ids": [
+      "btech-ece-s3-electronic-devices-and-circuits-u1"
+    ]
+  },
+  {
+    "subject": "Electronic Devices & Circuits",
+    "unitNumber": 2,
+    "unitTitle": "Diodes & Applications",
+    "ids": [
+      "btech-ece-s3-electronic-devices-and-circuits-u2"
+    ]
+  },
+  {
+    "subject": "Electronic Devices & Circuits",
+    "unitNumber": 3,
+    "unitTitle": "BJT & FET",
+    "ids": [
+      "btech-ece-s3-electronic-devices-and-circuits-u3"
+    ]
+  },
+  {
+    "subject": "Electronic Devices & Circuits",
+    "unitNumber": 4,
+    "unitTitle": "Amplifier Design",
+    "ids": [
+      "btech-ece-s3-electronic-devices-and-circuits-u4"
+    ]
+  },
+  {
+    "subject": "Electronic Devices & Circuits",
+    "unitNumber": 5,
+    "unitTitle": "Feedback & Oscillators",
+    "ids": [
+      "btech-ece-s3-electronic-devices-and-circuits-u5"
+    ]
+  },
+  {
+    "subject": "Network Theory",
+    "unitNumber": 1,
+    "unitTitle": "Circuit Elements & Laws",
+    "ids": [
+      "btech-ece-s3-network-theory-u1"
+    ]
+  },
+  {
+    "subject": "Network Theory",
+    "unitNumber": 2,
+    "unitTitle": "Network Theorems",
+    "ids": [
+      "btech-ece-s3-network-theory-u2"
+    ]
+  },
+  {
+    "subject": "Network Theory",
+    "unitNumber": 3,
+    "unitTitle": "Transient Analysis",
+    "ids": [
+      "btech-ece-s3-network-theory-u3"
+    ]
+  },
+  {
+    "subject": "Network Theory",
+    "unitNumber": 4,
+    "unitTitle": "AC Circuit Analysis",
+    "ids": [
+      "btech-ece-s3-network-theory-u4"
+    ]
+  },
+  {
+    "subject": "Network Theory",
+    "unitNumber": 5,
+    "unitTitle": "Two-Port Networks",
+    "ids": [
+      "btech-ece-s3-network-theory-u5"
+    ]
+  },
+  {
+    "subject": "Signals & Systems",
+    "unitNumber": 1,
+    "unitTitle": "Signal Classification",
+    "ids": [
+      "btech-ece-s3-signals-and-systems-u1",
+      "btech-eee-s3-signals-and-systems-u1"
+    ]
+  },
+  {
+    "subject": "Signals & Systems",
+    "unitNumber": 2,
+    "unitTitle": "LTI Systems",
+    "ids": [
+      "btech-ece-s3-signals-and-systems-u2",
+      "btech-eee-s3-signals-and-systems-u2"
+    ]
+  },
+  {
+    "subject": "Signals & Systems",
+    "unitNumber": 3,
+    "unitTitle": "Fourier Series & Transform",
+    "ids": [
+      "btech-ece-s3-signals-and-systems-u3",
+      "btech-eee-s3-signals-and-systems-u3"
+    ]
+  },
+  {
+    "subject": "Signals & Systems",
+    "unitNumber": 4,
+    "unitTitle": "Laplace Transform",
+    "ids": [
+      "btech-ece-s3-signals-and-systems-u4",
+      "btech-eee-s3-signals-and-systems-u4"
+    ]
+  },
+  {
+    "subject": "Signals & Systems",
+    "unitNumber": 5,
+    "unitTitle": "Z-Transform",
+    "ids": [
+      "btech-ece-s3-signals-and-systems-u5",
+      "btech-eee-s3-signals-and-systems-u5"
+    ]
+  },
+  {
+    "subject": "Mathematics for ECE",
+    "unitNumber": 1,
+    "unitTitle": "Linear Algebra",
+    "ids": [
+      "btech-ece-s3-mathematics-for-ece-u1"
+    ]
+  },
+  {
+    "subject": "Mathematics for ECE",
+    "unitNumber": 2,
+    "unitTitle": "Complex Analysis",
+    "ids": [
+      "btech-ece-s3-mathematics-for-ece-u2"
+    ]
+  },
+  {
+    "subject": "Mathematics for ECE",
+    "unitNumber": 3,
+    "unitTitle": "Probability",
+    "ids": [
+      "btech-ece-s3-mathematics-for-ece-u3"
+    ]
+  },
+  {
+    "subject": "Mathematics for ECE",
+    "unitNumber": 4,
+    "unitTitle": "Random Processes",
+    "ids": [
+      "btech-ece-s3-mathematics-for-ece-u4"
+    ]
+  },
+  {
+    "subject": "Mathematics for ECE",
+    "unitNumber": 5,
+    "unitTitle": "Numerical Methods",
+    "ids": [
+      "btech-ece-s3-mathematics-for-ece-u5"
+    ]
+  },
+  {
+    "subject": "Circuit Analysis & Synthesis",
+    "unitNumber": 1,
+    "unitTitle": "Network Theorems",
+    "ids": [
+      "btech-eee-s3-circuit-analysis-and-synthesis-u1"
+    ]
+  },
+  {
+    "subject": "Circuit Analysis & Synthesis",
+    "unitNumber": 2,
+    "unitTitle": "Transient Analysis",
+    "ids": [
+      "btech-eee-s3-circuit-analysis-and-synthesis-u2"
+    ]
+  },
+  {
+    "subject": "Circuit Analysis & Synthesis",
+    "unitNumber": 3,
+    "unitTitle": "AC Analysis",
+    "ids": [
+      "btech-eee-s3-circuit-analysis-and-synthesis-u3"
+    ]
+  },
+  {
+    "subject": "Circuit Analysis & Synthesis",
+    "unitNumber": 4,
+    "unitTitle": "Two-Port Networks",
+    "ids": [
+      "btech-eee-s3-circuit-analysis-and-synthesis-u4"
+    ]
+  },
+  {
+    "subject": "Circuit Analysis & Synthesis",
+    "unitNumber": 5,
+    "unitTitle": "Network Synthesis",
+    "ids": [
+      "btech-eee-s3-circuit-analysis-and-synthesis-u5"
+    ]
+  },
+  {
+    "subject": "Electrical Machines \u2014 I",
+    "unitNumber": 1,
+    "unitTitle": "Transformers",
+    "ids": [
+      "btech-eee-s3-electrical-machines-i-u1"
+    ]
+  },
+  {
+    "subject": "Electrical Machines \u2014 I",
+    "unitNumber": 2,
+    "unitTitle": "DC Generators",
+    "ids": [
+      "btech-eee-s3-electrical-machines-i-u2"
+    ]
+  },
+  {
+    "subject": "Electrical Machines \u2014 I",
+    "unitNumber": 3,
+    "unitTitle": "DC Motors",
+    "ids": [
+      "btech-eee-s3-electrical-machines-i-u3"
+    ]
+  },
+  {
+    "subject": "Electrical Machines \u2014 I",
+    "unitNumber": 4,
+    "unitTitle": "Testing of DC Machines",
+    "ids": [
+      "btech-eee-s3-electrical-machines-i-u4"
+    ]
+  },
+  {
+    "subject": "Electrical Machines \u2014 I",
+    "unitNumber": 5,
+    "unitTitle": "Special Machines",
+    "ids": [
+      "btech-eee-s3-electrical-machines-i-u5"
+    ]
+  },
+  {
+    "subject": "Digital Electronics",
+    "unitNumber": 1,
+    "unitTitle": "Logic Gates",
+    "ids": [
+      "btech-eee-s3-digital-electronics-u1",
+      "btech-mechatronics-s3-digital-electronics-u1"
+    ]
+  },
+  {
+    "subject": "Digital Electronics",
+    "unitNumber": 2,
+    "unitTitle": "Combinational Circuits",
+    "ids": [
+      "btech-eee-s3-digital-electronics-u2",
+      "btech-mechatronics-s3-digital-electronics-u2"
+    ]
+  },
+  {
+    "subject": "Digital Electronics",
+    "unitNumber": 3,
+    "unitTitle": "Sequential Circuits",
+    "ids": [
+      "btech-eee-s3-digital-electronics-u3",
+      "btech-mechatronics-s3-digital-electronics-u3"
+    ]
+  },
+  {
+    "subject": "Digital Electronics",
+    "unitNumber": 4,
+    "unitTitle": "Counters & Registers",
+    "ids": [
+      "btech-eee-s3-digital-electronics-u4",
+      "btech-mechatronics-s3-digital-electronics-u4"
+    ]
+  },
+  {
+    "subject": "Digital Electronics",
+    "unitNumber": 5,
+    "unitTitle": "Memory & PLDs",
+    "ids": [
+      "btech-eee-s3-digital-electronics-u5",
+      "btech-mechatronics-s3-digital-electronics-u5"
+    ]
+  },
+  {
+    "subject": "Electromagnetic Fields",
+    "unitNumber": 1,
+    "unitTitle": "Vector Analysis",
+    "ids": [
+      "btech-eee-s3-electromagnetic-fields-u1"
+    ]
+  },
+  {
+    "subject": "Electromagnetic Fields",
+    "unitNumber": 2,
+    "unitTitle": "Electrostatics",
+    "ids": [
+      "btech-eee-s3-electromagnetic-fields-u2"
+    ]
+  },
+  {
+    "subject": "Electromagnetic Fields",
+    "unitNumber": 3,
+    "unitTitle": "Magnetostatics",
+    "ids": [
+      "btech-eee-s3-electromagnetic-fields-u3"
+    ]
+  },
+  {
+    "subject": "Electromagnetic Fields",
+    "unitNumber": 4,
+    "unitTitle": "Maxwell's Equations",
+    "ids": [
+      "btech-eee-s3-electromagnetic-fields-u4"
+    ]
+  },
+  {
+    "subject": "Electromagnetic Fields",
+    "unitNumber": 5,
+    "unitTitle": "EM Wave Propagation",
+    "ids": [
+      "btech-eee-s3-electromagnetic-fields-u5"
+    ]
+  },
+  {
+    "subject": "Strength of Materials",
+    "unitNumber": 1,
+    "unitTitle": "Stress & Strain",
+    "ids": [
+      "btech-me-s3-strength-of-materials-u1",
+      "btech-civil-s3-strength-of-materials-u1",
+      "btech-aerospace-s3-strength-of-materials-u1",
+      "btech-mechatronics-s3-strength-of-materials-u1"
+    ]
+  },
+  {
+    "subject": "Strength of Materials",
+    "unitNumber": 2,
+    "unitTitle": "Shear Force & Bending Moment",
+    "ids": [
+      "btech-me-s3-strength-of-materials-u2",
+      "btech-civil-s3-strength-of-materials-u2",
+      "btech-aerospace-s3-strength-of-materials-u2",
+      "btech-mechatronics-s3-strength-of-materials-u2"
+    ]
+  },
+  {
+    "subject": "Strength of Materials",
+    "unitNumber": 3,
+    "unitTitle": "Torsion",
+    "ids": [
+      "btech-me-s3-strength-of-materials-u3",
+      "btech-civil-s3-strength-of-materials-u3",
+      "btech-aerospace-s3-strength-of-materials-u3",
+      "btech-mechatronics-s3-strength-of-materials-u3"
+    ]
+  },
+  {
+    "subject": "Strength of Materials",
+    "unitNumber": 4,
+    "unitTitle": "Columns & Struts",
+    "ids": [
+      "btech-me-s3-strength-of-materials-u4",
+      "btech-civil-s3-strength-of-materials-u4",
+      "btech-aerospace-s3-strength-of-materials-u4",
+      "btech-mechatronics-s3-strength-of-materials-u4"
+    ]
+  },
+  {
+    "subject": "Strength of Materials",
+    "unitNumber": 5,
+    "unitTitle": "Combined Stresses",
+    "ids": [
+      "btech-me-s3-strength-of-materials-u5",
+      "btech-civil-s3-strength-of-materials-u5",
+      "btech-aerospace-s3-strength-of-materials-u5",
+      "btech-mechatronics-s3-strength-of-materials-u5"
+    ]
+  },
+  {
+    "subject": "Thermodynamics",
+    "unitNumber": 1,
+    "unitTitle": "Basic Concepts & Laws",
+    "ids": [
+      "btech-me-s3-thermodynamics-u1",
+      "btech-aerospace-s3-thermodynamics-u1",
+      "btech-renewable-s3-thermodynamics-u1"
+    ]
+  },
+  {
+    "subject": "Thermodynamics",
+    "unitNumber": 2,
+    "unitTitle": "Entropy",
+    "ids": [
+      "btech-me-s3-thermodynamics-u2",
+      "btech-aerospace-s3-thermodynamics-u2",
+      "btech-renewable-s3-thermodynamics-u2"
+    ]
+  },
+  {
+    "subject": "Thermodynamics",
+    "unitNumber": 3,
+    "unitTitle": "Availability",
+    "ids": [
+      "btech-me-s3-thermodynamics-u3",
+      "btech-aerospace-s3-thermodynamics-u3",
+      "btech-renewable-s3-thermodynamics-u3"
+    ]
+  },
+  {
+    "subject": "Thermodynamics",
+    "unitNumber": 4,
+    "unitTitle": "Properties of Steam",
+    "ids": [
+      "btech-me-s3-thermodynamics-u4",
+      "btech-aerospace-s3-thermodynamics-u4",
+      "btech-renewable-s3-thermodynamics-u4"
+    ]
+  },
+  {
+    "subject": "Thermodynamics",
+    "unitNumber": 5,
+    "unitTitle": "Power Cycles",
+    "ids": [
+      "btech-me-s3-thermodynamics-u5",
+      "btech-aerospace-s3-thermodynamics-u5",
+      "btech-renewable-s3-thermodynamics-u5"
+    ]
+  },
+  {
+    "subject": "Material Science & Engineering",
+    "unitNumber": 1,
+    "unitTitle": "Crystal Structure",
+    "ids": [
+      "btech-me-s3-material-science-and-engineering-u1"
+    ]
+  },
+  {
+    "subject": "Material Science & Engineering",
+    "unitNumber": 2,
+    "unitTitle": "Mechanical Properties",
+    "ids": [
+      "btech-me-s3-material-science-and-engineering-u2"
+    ]
+  },
+  {
+    "subject": "Material Science & Engineering",
+    "unitNumber": 3,
+    "unitTitle": "Phase Diagrams",
+    "ids": [
+      "btech-me-s3-material-science-and-engineering-u3"
+    ]
+  },
+  {
+    "subject": "Material Science & Engineering",
+    "unitNumber": 4,
+    "unitTitle": "Heat Treatment",
+    "ids": [
+      "btech-me-s3-material-science-and-engineering-u4"
+    ]
+  },
+  {
+    "subject": "Material Science & Engineering",
+    "unitNumber": 5,
+    "unitTitle": "Engineering Materials",
+    "ids": [
+      "btech-me-s3-material-science-and-engineering-u5"
+    ]
+  },
+  {
+    "subject": "Manufacturing Technology \u2014 I",
+    "unitNumber": 1,
+    "unitTitle": "Casting Processes",
+    "ids": [
+      "btech-me-s3-manufacturing-technology-i-u1"
+    ]
+  },
+  {
+    "subject": "Manufacturing Technology \u2014 I",
+    "unitNumber": 2,
+    "unitTitle": "Welding",
+    "ids": [
+      "btech-me-s3-manufacturing-technology-i-u2"
+    ]
+  },
+  {
+    "subject": "Manufacturing Technology \u2014 I",
+    "unitNumber": 3,
+    "unitTitle": "Forming Processes",
+    "ids": [
+      "btech-me-s3-manufacturing-technology-i-u3"
+    ]
+  },
+  {
+    "subject": "Manufacturing Technology \u2014 I",
+    "unitNumber": 4,
+    "unitTitle": "Machining Basics",
+    "ids": [
+      "btech-me-s3-manufacturing-technology-i-u4"
+    ]
+  },
+  {
+    "subject": "Manufacturing Technology \u2014 I",
+    "unitNumber": 5,
+    "unitTitle": "Metrology",
+    "ids": [
+      "btech-me-s3-manufacturing-technology-i-u5"
+    ]
+  },
+  {
+    "subject": "Machine Drawing",
+    "unitNumber": 1,
+    "unitTitle": "Drawing Standards",
+    "ids": [
+      "btech-me-s3-machine-drawing-u1"
+    ]
+  },
+  {
+    "subject": "Machine Drawing",
+    "unitNumber": 2,
+    "unitTitle": "Orthographic Projections",
+    "ids": [
+      "btech-me-s3-machine-drawing-u2"
+    ]
+  },
+  {
+    "subject": "Machine Drawing",
+    "unitNumber": 3,
+    "unitTitle": "Sectional Views",
+    "ids": [
+      "btech-me-s3-machine-drawing-u3"
+    ]
+  },
+  {
+    "subject": "Machine Drawing",
+    "unitNumber": 4,
+    "unitTitle": "Assembly Drawings",
+    "ids": [
+      "btech-me-s3-machine-drawing-u4"
+    ]
+  },
+  {
+    "subject": "Machine Drawing",
+    "unitNumber": 5,
+    "unitTitle": "CAD Basics",
+    "ids": [
+      "btech-me-s3-machine-drawing-u5"
+    ]
+  },
+  {
+    "subject": "Surveying & Geomatics",
+    "unitNumber": 1,
+    "unitTitle": "Surveying Basics",
+    "ids": [
+      "btech-civil-s3-surveying-and-geomatics-u1"
+    ]
+  },
+  {
+    "subject": "Surveying & Geomatics",
+    "unitNumber": 2,
+    "unitTitle": "Leveling",
+    "ids": [
+      "btech-civil-s3-surveying-and-geomatics-u2"
+    ]
+  },
+  {
+    "subject": "Surveying & Geomatics",
+    "unitNumber": 3,
+    "unitTitle": "Theodolite & Traversing",
+    "ids": [
+      "btech-civil-s3-surveying-and-geomatics-u3"
+    ]
+  },
+  {
+    "subject": "Surveying & Geomatics",
+    "unitNumber": 4,
+    "unitTitle": "Contouring",
+    "ids": [
+      "btech-civil-s3-surveying-and-geomatics-u4"
+    ]
+  },
+  {
+    "subject": "Surveying & Geomatics",
+    "unitNumber": 5,
+    "unitTitle": "Modern Surveying (GPS, GIS)",
+    "ids": [
+      "btech-civil-s3-surveying-and-geomatics-u5"
+    ]
+  },
+  {
+    "subject": "Building Materials & Construction",
+    "unitNumber": 1,
+    "unitTitle": "Stones & Bricks",
+    "ids": [
+      "btech-civil-s3-building-materials-and-construction-u1"
+    ]
+  },
+  {
+    "subject": "Building Materials & Construction",
+    "unitNumber": 2,
+    "unitTitle": "Cement & Concrete",
+    "ids": [
+      "btech-civil-s3-building-materials-and-construction-u2"
+    ]
+  },
+  {
+    "subject": "Building Materials & Construction",
+    "unitNumber": 3,
+    "unitTitle": "Timber & Steel",
+    "ids": [
+      "btech-civil-s3-building-materials-and-construction-u3"
+    ]
+  },
+  {
+    "subject": "Building Materials & Construction",
+    "unitNumber": 4,
+    "unitTitle": "Masonry",
+    "ids": [
+      "btech-civil-s3-building-materials-and-construction-u4"
+    ]
+  },
+  {
+    "subject": "Building Materials & Construction",
+    "unitNumber": 5,
+    "unitTitle": "Foundations",
+    "ids": [
+      "btech-civil-s3-building-materials-and-construction-u5"
+    ]
+  },
+  {
+    "subject": "Fluid Mechanics",
+    "unitNumber": 1,
+    "unitTitle": "Fluid Properties",
+    "ids": [
+      "btech-civil-s3-fluid-mechanics-u1",
+      "btech-aerospace-s3-fluid-mechanics-u1",
+      "btech-renewable-s3-fluid-mechanics-u1"
+    ]
+  },
+  {
+    "subject": "Fluid Mechanics",
+    "unitNumber": 2,
+    "unitTitle": "Fluid Statics",
+    "ids": [
+      "btech-civil-s3-fluid-mechanics-u2",
+      "btech-aerospace-s3-fluid-mechanics-u2",
+      "btech-renewable-s3-fluid-mechanics-u2"
+    ]
+  },
+  {
+    "subject": "Fluid Mechanics",
+    "unitNumber": 3,
+    "unitTitle": "Fluid Kinematics",
+    "ids": [
+      "btech-civil-s3-fluid-mechanics-u3",
+      "btech-aerospace-s3-fluid-mechanics-u3",
+      "btech-renewable-s3-fluid-mechanics-u3"
+    ]
+  },
+  {
+    "subject": "Fluid Mechanics",
+    "unitNumber": 4,
+    "unitTitle": "Fluid Dynamics",
+    "ids": [
+      "btech-civil-s3-fluid-mechanics-u4",
+      "btech-aerospace-s3-fluid-mechanics-u4",
+      "btech-renewable-s3-fluid-mechanics-u4"
+    ]
+  },
+  {
+    "subject": "Fluid Mechanics",
+    "unitNumber": 5,
+    "unitTitle": "Flow Measurement",
+    "ids": [
+      "btech-civil-s3-fluid-mechanics-u5",
+      "btech-aerospace-s3-fluid-mechanics-u5",
+      "btech-renewable-s3-fluid-mechanics-u5"
+    ]
+  },
+  {
+    "subject": "Engineering Geology",
+    "unitNumber": 1,
+    "unitTitle": "Mineralogy",
+    "ids": [
+      "btech-civil-s3-engineering-geology-u1"
+    ]
+  },
+  {
+    "subject": "Engineering Geology",
+    "unitNumber": 2,
+    "unitTitle": "Petrology",
+    "ids": [
+      "btech-civil-s3-engineering-geology-u2"
+    ]
+  },
+  {
+    "subject": "Engineering Geology",
+    "unitNumber": 3,
+    "unitTitle": "Structural Geology",
+    "ids": [
+      "btech-civil-s3-engineering-geology-u3"
+    ]
+  },
+  {
+    "subject": "Engineering Geology",
+    "unitNumber": 4,
+    "unitTitle": "Engineering Properties",
+    "ids": [
+      "btech-civil-s3-engineering-geology-u4"
+    ]
+  },
+  {
+    "subject": "Engineering Geology",
+    "unitNumber": 5,
+    "unitTitle": "Geological Hazards",
+    "ids": [
+      "btech-civil-s3-engineering-geology-u5"
+    ]
+  },
+  {
+    "subject": "Fluid Mechanics (Momentum Transfer)",
+    "unitNumber": 1,
+    "unitTitle": "Fluid Properties",
+    "ids": [
+      "btech-chemical-s3-fluid-mechanics-momentum-transfer-u1"
+    ]
+  },
+  {
+    "subject": "Fluid Mechanics (Momentum Transfer)",
+    "unitNumber": 2,
+    "unitTitle": "Fluid Statics",
+    "ids": [
+      "btech-chemical-s3-fluid-mechanics-momentum-transfer-u2"
+    ]
+  },
+  {
+    "subject": "Fluid Mechanics (Momentum Transfer)",
+    "unitNumber": 3,
+    "unitTitle": "Fluid Dynamics",
+    "ids": [
+      "btech-chemical-s3-fluid-mechanics-momentum-transfer-u3"
+    ]
+  },
+  {
+    "subject": "Fluid Mechanics (Momentum Transfer)",
+    "unitNumber": 4,
+    "unitTitle": "Flow Through Pipes",
+    "ids": [
+      "btech-chemical-s3-fluid-mechanics-momentum-transfer-u4"
+    ]
+  },
+  {
+    "subject": "Fluid Mechanics (Momentum Transfer)",
+    "unitNumber": 5,
+    "unitTitle": "Pumps & Compressors",
+    "ids": [
+      "btech-chemical-s3-fluid-mechanics-momentum-transfer-u5"
+    ]
+  },
+  {
+    "subject": "Chemical Engineering Thermodynamics \u2014 I",
+    "unitNumber": 1,
+    "unitTitle": "Laws of Thermodynamics",
+    "ids": [
+      "btech-chemical-s3-chemical-engineering-thermodynamics-i-u1"
+    ]
+  },
+  {
+    "subject": "Chemical Engineering Thermodynamics \u2014 I",
+    "unitNumber": 2,
+    "unitTitle": "PVT Behavior",
+    "ids": [
+      "btech-chemical-s3-chemical-engineering-thermodynamics-i-u2"
+    ]
+  },
+  {
+    "subject": "Chemical Engineering Thermodynamics \u2014 I",
+    "unitNumber": 3,
+    "unitTitle": "Heat Effects",
+    "ids": [
+      "btech-chemical-s3-chemical-engineering-thermodynamics-i-u3"
+    ]
+  },
+  {
+    "subject": "Chemical Engineering Thermodynamics \u2014 I",
+    "unitNumber": 4,
+    "unitTitle": "Entropy",
+    "ids": [
+      "btech-chemical-s3-chemical-engineering-thermodynamics-i-u4"
+    ]
+  },
+  {
+    "subject": "Chemical Engineering Thermodynamics \u2014 I",
+    "unitNumber": 5,
+    "unitTitle": "Gibbs Free Energy",
+    "ids": [
+      "btech-chemical-s3-chemical-engineering-thermodynamics-i-u5"
+    ]
+  },
+  {
+    "subject": "Organic Chemistry",
+    "unitNumber": 1,
+    "unitTitle": "Reaction Mechanisms",
+    "ids": [
+      "btech-chemical-s3-organic-chemistry-u1"
+    ]
+  },
+  {
+    "subject": "Organic Chemistry",
+    "unitNumber": 2,
+    "unitTitle": "Functional Groups",
+    "ids": [
+      "btech-chemical-s3-organic-chemistry-u2"
+    ]
+  },
+  {
+    "subject": "Organic Chemistry",
+    "unitNumber": 3,
+    "unitTitle": "Stereochemistry",
+    "ids": [
+      "btech-chemical-s3-organic-chemistry-u3"
+    ]
+  },
+  {
+    "subject": "Organic Chemistry",
+    "unitNumber": 4,
+    "unitTitle": "Polymer Formation",
+    "ids": [
+      "btech-chemical-s3-organic-chemistry-u4"
+    ]
+  },
+  {
+    "subject": "Organic Chemistry",
+    "unitNumber": 5,
+    "unitTitle": "Industrial Organic Chemicals",
+    "ids": [
+      "btech-chemical-s3-organic-chemistry-u5"
+    ]
+  },
+  {
+    "subject": "Material Science",
+    "unitNumber": 1,
+    "unitTitle": "Crystal Structure",
+    "ids": [
+      "btech-chemical-s3-material-science-u1"
+    ]
+  },
+  {
+    "subject": "Material Science",
+    "unitNumber": 2,
+    "unitTitle": "Metals & Alloys",
+    "ids": [
+      "btech-chemical-s3-material-science-u2"
+    ]
+  },
+  {
+    "subject": "Material Science",
+    "unitNumber": 3,
+    "unitTitle": "Ceramics",
+    "ids": [
+      "btech-chemical-s3-material-science-u3"
+    ]
+  },
+  {
+    "subject": "Material Science",
+    "unitNumber": 4,
+    "unitTitle": "Polymers",
+    "ids": [
+      "btech-chemical-s3-material-science-u4"
+    ]
+  },
+  {
+    "subject": "Material Science",
+    "unitNumber": 5,
+    "unitTitle": "Composites",
+    "ids": [
+      "btech-chemical-s3-material-science-u5"
+    ]
+  },
+  {
+    "subject": "Numerical Methods",
+    "unitNumber": 1,
+    "unitTitle": "Error Analysis",
+    "ids": [
+      "btech-chemical-s3-numerical-methods-u1"
+    ]
+  },
+  {
+    "subject": "Numerical Methods",
+    "unitNumber": 2,
+    "unitTitle": "Roots of Equations",
+    "ids": [
+      "btech-chemical-s3-numerical-methods-u2"
+    ]
+  },
+  {
+    "subject": "Numerical Methods",
+    "unitNumber": 3,
+    "unitTitle": "Linear Systems",
+    "ids": [
+      "btech-chemical-s3-numerical-methods-u3"
+    ]
+  },
+  {
+    "subject": "Numerical Methods",
+    "unitNumber": 4,
+    "unitTitle": "Interpolation & Integration",
+    "ids": [
+      "btech-chemical-s3-numerical-methods-u4"
+    ]
+  },
+  {
+    "subject": "Numerical Methods",
+    "unitNumber": 5,
+    "unitTitle": "ODE Solutions",
+    "ids": [
+      "btech-chemical-s3-numerical-methods-u5"
+    ]
+  },
+  {
+    "subject": "Linear Algebra & Probability",
+    "unitNumber": 1,
+    "unitTitle": "Vector Spaces",
+    "ids": [
+      "btech-aiml-s3-linear-algebra-and-probability-u1"
+    ]
+  },
+  {
+    "subject": "Linear Algebra & Probability",
+    "unitNumber": 2,
+    "unitTitle": "Matrices & Eigenvalues",
+    "ids": [
+      "btech-aiml-s3-linear-algebra-and-probability-u2"
+    ]
+  },
+  {
+    "subject": "Linear Algebra & Probability",
+    "unitNumber": 3,
+    "unitTitle": "Probability Distributions",
+    "ids": [
+      "btech-aiml-s3-linear-algebra-and-probability-u3"
+    ]
+  },
+  {
+    "subject": "Linear Algebra & Probability",
+    "unitNumber": 4,
+    "unitTitle": "Random Variables",
+    "ids": [
+      "btech-aiml-s3-linear-algebra-and-probability-u4"
+    ]
+  },
+  {
+    "subject": "Linear Algebra & Probability",
+    "unitNumber": 5,
+    "unitTitle": "Statistical Inference",
+    "ids": [
+      "btech-aiml-s3-linear-algebra-and-probability-u5"
+    ]
+  },
+  {
+    "subject": "Database Management Systems",
+    "unitNumber": 1,
+    "unitTitle": "ER Model",
+    "ids": [
+      "btech-data-science-s3-database-management-systems-u1"
+    ]
+  },
+  {
+    "subject": "Database Management Systems",
+    "unitNumber": 2,
+    "unitTitle": "Relational Model & SQL",
+    "ids": [
+      "btech-data-science-s3-database-management-systems-u2"
+    ]
+  },
+  {
+    "subject": "Database Management Systems",
+    "unitNumber": 3,
+    "unitTitle": "Normalization",
+    "ids": [
+      "btech-data-science-s3-database-management-systems-u3"
+    ]
+  },
+  {
+    "subject": "Database Management Systems",
+    "unitNumber": 4,
+    "unitTitle": "Transactions",
+    "ids": [
+      "btech-data-science-s3-database-management-systems-u4"
+    ]
+  },
+  {
+    "subject": "Database Management Systems",
+    "unitNumber": 5,
+    "unitTitle": "Indexing & Storage",
+    "ids": [
+      "btech-data-science-s3-database-management-systems-u5"
+    ]
+  },
+  {
+    "subject": "Statistics & Probability",
+    "unitNumber": 1,
+    "unitTitle": "Descriptive Statistics",
+    "ids": [
+      "btech-data-science-s3-statistics-and-probability-u1"
+    ]
+  },
+  {
+    "subject": "Statistics & Probability",
+    "unitNumber": 2,
+    "unitTitle": "Probability Distributions",
+    "ids": [
+      "btech-data-science-s3-statistics-and-probability-u2"
+    ]
+  },
+  {
+    "subject": "Statistics & Probability",
+    "unitNumber": 3,
+    "unitTitle": "Sampling",
+    "ids": [
+      "btech-data-science-s3-statistics-and-probability-u3"
+    ]
+  },
+  {
+    "subject": "Statistics & Probability",
+    "unitNumber": 4,
+    "unitTitle": "Hypothesis Testing",
+    "ids": [
+      "btech-data-science-s3-statistics-and-probability-u4"
+    ]
+  },
+  {
+    "subject": "Statistics & Probability",
+    "unitNumber": 5,
+    "unitTitle": "Regression",
+    "ids": [
+      "btech-data-science-s3-statistics-and-probability-u5"
+    ]
+  },
+  {
+    "subject": "Python for Data Science",
+    "unitNumber": 1,
+    "unitTitle": "Python Basics",
+    "ids": [
+      "btech-data-science-s3-python-for-data-science-u1"
+    ]
+  },
+  {
+    "subject": "Python for Data Science",
+    "unitNumber": 2,
+    "unitTitle": "NumPy & Pandas",
+    "ids": [
+      "btech-data-science-s3-python-for-data-science-u2"
+    ]
+  },
+  {
+    "subject": "Python for Data Science",
+    "unitNumber": 3,
+    "unitTitle": "Data Visualization",
+    "ids": [
+      "btech-data-science-s3-python-for-data-science-u3"
+    ]
+  },
+  {
+    "subject": "Python for Data Science",
+    "unitNumber": 4,
+    "unitTitle": "Data Cleaning",
+    "ids": [
+      "btech-data-science-s3-python-for-data-science-u4"
+    ]
+  },
+  {
+    "subject": "Python for Data Science",
+    "unitNumber": 5,
+    "unitTitle": "EDA",
+    "ids": [
+      "btech-data-science-s3-python-for-data-science-u5"
+    ]
+  },
+  {
+    "subject": "Aerospace Materials",
+    "unitNumber": 1,
+    "unitTitle": "Metals & Alloys",
+    "ids": [
+      "btech-aerospace-s3-aerospace-materials-u1"
+    ]
+  },
+  {
+    "subject": "Aerospace Materials",
+    "unitNumber": 2,
+    "unitTitle": "Composites",
+    "ids": [
+      "btech-aerospace-s3-aerospace-materials-u2"
+    ]
+  },
+  {
+    "subject": "Aerospace Materials",
+    "unitNumber": 3,
+    "unitTitle": "Ceramics",
+    "ids": [
+      "btech-aerospace-s3-aerospace-materials-u3"
+    ]
+  },
+  {
+    "subject": "Aerospace Materials",
+    "unitNumber": 4,
+    "unitTitle": "Fatigue & Fracture",
+    "ids": [
+      "btech-aerospace-s3-aerospace-materials-u4"
+    ]
+  },
+  {
+    "subject": "Aerospace Materials",
+    "unitNumber": 5,
+    "unitTitle": "Material Selection",
+    "ids": [
+      "btech-aerospace-s3-aerospace-materials-u5"
+    ]
+  },
+  {
+    "subject": "Engineering Mathematics III",
+    "unitNumber": 1,
+    "unitTitle": "Numerical Methods",
+    "ids": [
+      "btech-aerospace-s3-engineering-mathematics-iii-u1",
+      "btech-mechatronics-s3-engineering-mathematics-iii-u1",
+      "btech-renewable-s3-engineering-mathematics-iii-u1",
+      "btech-biomedical-s3-engineering-mathematics-iii-u1"
+    ]
+  },
+  {
+    "subject": "Engineering Mathematics III",
+    "unitNumber": 2,
+    "unitTitle": "Partial Differential Equations",
+    "ids": [
+      "btech-aerospace-s3-engineering-mathematics-iii-u2",
+      "btech-mechatronics-s3-engineering-mathematics-iii-u2",
+      "btech-renewable-s3-engineering-mathematics-iii-u2",
+      "btech-biomedical-s3-engineering-mathematics-iii-u2"
+    ]
+  },
+  {
+    "subject": "Engineering Mathematics III",
+    "unitNumber": 3,
+    "unitTitle": "Complex Analysis",
+    "ids": [
+      "btech-aerospace-s3-engineering-mathematics-iii-u3",
+      "btech-mechatronics-s3-engineering-mathematics-iii-u3",
+      "btech-renewable-s3-engineering-mathematics-iii-u3",
+      "btech-biomedical-s3-engineering-mathematics-iii-u3"
+    ]
+  },
+  {
+    "subject": "Engineering Mathematics III",
+    "unitNumber": 4,
+    "unitTitle": "Probability",
+    "ids": [
+      "btech-aerospace-s3-engineering-mathematics-iii-u4",
+      "btech-mechatronics-s3-engineering-mathematics-iii-u4",
+      "btech-renewable-s3-engineering-mathematics-iii-u4",
+      "btech-biomedical-s3-engineering-mathematics-iii-u4"
+    ]
+  },
+  {
+    "subject": "Engineering Mathematics III",
+    "unitNumber": 5,
+    "unitTitle": "Statistics",
+    "ids": [
+      "btech-aerospace-s3-engineering-mathematics-iii-u5",
+      "btech-mechatronics-s3-engineering-mathematics-iii-u5",
+      "btech-renewable-s3-engineering-mathematics-iii-u5",
+      "btech-biomedical-s3-engineering-mathematics-iii-u5"
+    ]
+  },
+  {
+    "subject": "Electrical Machines",
+    "unitNumber": 1,
+    "unitTitle": "Transformers",
+    "ids": [
+      "btech-mechatronics-s3-electrical-machines-u1",
+      "btech-renewable-s3-electrical-machines-u1"
+    ]
+  },
+  {
+    "subject": "Electrical Machines",
+    "unitNumber": 2,
+    "unitTitle": "DC Machines",
+    "ids": [
+      "btech-mechatronics-s3-electrical-machines-u2",
+      "btech-renewable-s3-electrical-machines-u2"
+    ]
+  },
+  {
+    "subject": "Electrical Machines",
+    "unitNumber": 3,
+    "unitTitle": "Induction Machines",
+    "ids": [
+      "btech-mechatronics-s3-electrical-machines-u3",
+      "btech-renewable-s3-electrical-machines-u3"
+    ]
+  },
+  {
+    "subject": "Electrical Machines",
+    "unitNumber": 4,
+    "unitTitle": "Synchronous Machines",
+    "ids": [
+      "btech-mechatronics-s3-electrical-machines-u4",
+      "btech-renewable-s3-electrical-machines-u4"
+    ]
+  },
+  {
+    "subject": "Electrical Machines",
+    "unitNumber": 5,
+    "unitTitle": "Applications",
+    "ids": [
+      "btech-mechatronics-s3-electrical-machines-u5",
+      "btech-renewable-s3-electrical-machines-u5"
+    ]
+  },
+  {
+    "subject": "Sensors & Transducers",
+    "unitNumber": 1,
+    "unitTitle": "Sensor Fundamentals",
+    "ids": [
+      "btech-mechatronics-s3-sensors-and-transducers-u1"
+    ]
+  },
+  {
+    "subject": "Sensors & Transducers",
+    "unitNumber": 2,
+    "unitTitle": "Displacement Sensors",
+    "ids": [
+      "btech-mechatronics-s3-sensors-and-transducers-u2"
+    ]
+  },
+  {
+    "subject": "Sensors & Transducers",
+    "unitNumber": 3,
+    "unitTitle": "Temperature Sensors",
+    "ids": [
+      "btech-mechatronics-s3-sensors-and-transducers-u3"
+    ]
+  },
+  {
+    "subject": "Sensors & Transducers",
+    "unitNumber": 4,
+    "unitTitle": "Optical Sensors",
+    "ids": [
+      "btech-mechatronics-s3-sensors-and-transducers-u4"
+    ]
+  },
+  {
+    "subject": "Sensors & Transducers",
+    "unitNumber": 5,
+    "unitTitle": "Smart Sensors",
+    "ids": [
+      "btech-mechatronics-s3-sensors-and-transducers-u5"
+    ]
+  },
+  {
+    "subject": "Solar Energy",
+    "unitNumber": 1,
+    "unitTitle": "Solar Radiation",
+    "ids": [
+      "btech-renewable-s3-solar-energy-u1"
+    ]
+  },
+  {
+    "subject": "Solar Energy",
+    "unitNumber": 2,
+    "unitTitle": "Solar Thermal",
+    "ids": [
+      "btech-renewable-s3-solar-energy-u2"
+    ]
+  },
+  {
+    "subject": "Solar Energy",
+    "unitNumber": 3,
+    "unitTitle": "Solar PV",
+    "ids": [
+      "btech-renewable-s3-solar-energy-u3"
+    ]
+  },
+  {
+    "subject": "Solar Energy",
+    "unitNumber": 4,
+    "unitTitle": "Solar Systems",
+    "ids": [
+      "btech-renewable-s3-solar-energy-u4"
+    ]
+  },
+  {
+    "subject": "Solar Energy",
+    "unitNumber": 5,
+    "unitTitle": "Applications",
+    "ids": [
+      "btech-renewable-s3-solar-energy-u5"
+    ]
+  },
+  {
+    "subject": "Biochemistry",
+    "unitNumber": 1,
+    "unitTitle": "Biomolecules",
+    "ids": [
+      "btech-biomedical-s3-biochemistry-u1"
+    ]
+  },
+  {
+    "subject": "Biochemistry",
+    "unitNumber": 2,
+    "unitTitle": "Enzymes",
+    "ids": [
+      "btech-biomedical-s3-biochemistry-u2"
+    ]
+  },
+  {
+    "subject": "Biochemistry",
+    "unitNumber": 3,
+    "unitTitle": "Metabolism",
+    "ids": [
+      "btech-biomedical-s3-biochemistry-u3"
+    ]
+  },
+  {
+    "subject": "Biochemistry",
+    "unitNumber": 4,
+    "unitTitle": "Molecular Biology",
+    "ids": [
+      "btech-biomedical-s3-biochemistry-u4"
+    ]
+  },
+  {
+    "subject": "Biochemistry",
+    "unitNumber": 5,
+    "unitTitle": "Clinical Biochemistry",
+    "ids": [
+      "btech-biomedical-s3-biochemistry-u5"
+    ]
+  },
+  {
+    "subject": "Human Anatomy & Physiology",
+    "unitNumber": 1,
+    "unitTitle": "Cell & Tissue",
+    "ids": [
+      "btech-biomedical-s3-human-anatomy-and-physiology-u1"
+    ]
+  },
+  {
+    "subject": "Human Anatomy & Physiology",
+    "unitNumber": 2,
+    "unitTitle": "Skeletal System",
+    "ids": [
+      "btech-biomedical-s3-human-anatomy-and-physiology-u2"
+    ]
+  },
+  {
+    "subject": "Human Anatomy & Physiology",
+    "unitNumber": 3,
+    "unitTitle": "Cardiovascular",
+    "ids": [
+      "btech-biomedical-s3-human-anatomy-and-physiology-u3"
+    ]
+  },
+  {
+    "subject": "Human Anatomy & Physiology",
+    "unitNumber": 4,
+    "unitTitle": "Nervous System",
+    "ids": [
+      "btech-biomedical-s3-human-anatomy-and-physiology-u4"
+    ]
+  },
+  {
+    "subject": "Human Anatomy & Physiology",
+    "unitNumber": 5,
+    "unitTitle": "Respiratory & Renal",
+    "ids": [
+      "btech-biomedical-s3-human-anatomy-and-physiology-u5"
+    ]
+  },
+  {
+    "subject": "Microbiology",
+    "unitNumber": 1,
+    "unitTitle": "Microbial Basics",
+    "ids": [
+      "btech-biomedical-s3-microbiology-u1"
+    ]
+  },
+  {
+    "subject": "Microbiology",
+    "unitNumber": 2,
+    "unitTitle": "Bacteria",
+    "ids": [
+      "btech-biomedical-s3-microbiology-u2"
+    ]
+  },
+  {
+    "subject": "Microbiology",
+    "unitNumber": 3,
+    "unitTitle": "Viruses",
+    "ids": [
+      "btech-biomedical-s3-microbiology-u3"
+    ]
+  },
+  {
+    "subject": "Microbiology",
+    "unitNumber": 4,
+    "unitTitle": "Fungi",
+    "ids": [
+      "btech-biomedical-s3-microbiology-u4"
+    ]
+  },
+  {
+    "subject": "Microbiology",
+    "unitNumber": 5,
+    "unitTitle": "Industrial Microbiology",
+    "ids": [
+      "btech-biomedical-s3-microbiology-u5"
+    ]
+  },
+  {
+    "subject": "Biomedical Instrumentation",
+    "unitNumber": 1,
+    "unitTitle": "Measurement Basics",
+    "ids": [
+      "btech-biomedical-s3-biomedical-instrumentation-u1"
+    ]
+  },
+  {
+    "subject": "Biomedical Instrumentation",
+    "unitNumber": 2,
+    "unitTitle": "Bioelectrodes",
+    "ids": [
+      "btech-biomedical-s3-biomedical-instrumentation-u2"
+    ]
+  },
+  {
+    "subject": "Biomedical Instrumentation",
+    "unitNumber": 3,
+    "unitTitle": "Biosensors",
+    "ids": [
+      "btech-biomedical-s3-biomedical-instrumentation-u3"
+    ]
+  },
+  {
+    "subject": "Biomedical Instrumentation",
+    "unitNumber": 4,
+    "unitTitle": "Medical Devices",
+    "ids": [
+      "btech-biomedical-s3-biomedical-instrumentation-u4"
+    ]
+  },
+  {
+    "subject": "Biomedical Instrumentation",
+    "unitNumber": 5,
+    "unitTitle": "Patient Safety",
+    "ids": [
+      "btech-biomedical-s3-biomedical-instrumentation-u5"
+    ]
+  }
+]

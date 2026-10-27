@@ -1,0 +1,238 @@
+
+Subject: Analytical Chemistry
+  Unit 1: Titrimetry
+  Unit 2: Gravimetry
+  Unit 3: Chromatography
+  Unit 4: Spectroscopy
+  Unit 5: Quality Control
+
+Subject: Bio-fertilizers / Herbal Technology
+  Unit 1: Bio-fertilizer Types
+  Unit 2: Production
+  Unit 3: Application
+  Unit 4: Herbal Medicine
+  Unit 5: Cultivation
+
+Subject: Bioinformatics Basics
+  Unit 1: Biological Databases
+  Unit 2: Sequence Alignment
+  Unit 3: Phylogenetics
+  Unit 4: Structural Bioinformatics
+  Unit 5: Tools
+
+Subject: Botany III / Zoology III
+  Unit 1: Plant Systematics
+  Unit 2: Economic Botany
+  Unit 3: Animal Physiology
+  Unit 4: Endocrinology
+  Unit 5: Reproductive Biology
+
+Subject: Botany Lab III
+  Unit 1: Botany  III: Laboratory Safety Protocols & Instrumentation
+  Unit 2: Botany  III: Standard Preparations & Calibration Methods
+  Unit 3: Botany  III: Core Experimental Procedures & Synthesis
+  Unit 4: Botany  III: Quantitative Data Verification & Error Analysis
+  Unit 5: Botany  III: Comprehensive Practical Record & Viva Voce
+
+Subject: Chemistry III / Data Structures
+  Unit 1: Organic Reactions
+  Unit 2: Carbonyl Compounds
+  Unit 3: Amines
+  Unit 4: Stereochemistry
+  Unit 5: Spectroscopy
+
+Subject: Chemistry Lab III
+  Unit 1: Chemistry  III: Laboratory Safety Protocols & Instrumentation
+  Unit 2: Chemistry  III: Standard Preparations & Calibration Methods
+  Unit 3: Chemistry  III: Core Experimental Procedures & Synthesis
+  Unit 4: Chemistry  III: Quantitative Data Verification & Error Analysis
+  Unit 5: Chemistry  III: Comprehensive Practical Record & Viva Voce
+
+Subject: Chemistry Lab III (Organic Synthesis)
+  Unit 1: Chemistry  III (Organic Synthesis): Laboratory Safety Protocols & Instrumentation
+  Unit 2: Chemistry  III (Organic Synthesis): Standard Preparations & Calibration Methods
+  Unit 3: Chemistry  III (Organic Synthesis): Core Experimental Procedures & Synthesis
+  Unit 4: Chemistry  III (Organic Synthesis): Quantitative Data Verification & Error Analysis
+  Unit 5: Chemistry  III (Organic Synthesis): Comprehensive Practical Record & Viva Voce
+
+Subject: DBMS Lab
+  Unit 1: DBMS: Laboratory Safety Protocols & Instrumentation
+  Unit 2: DBMS: Standard Preparations & Calibration Methods
+  Unit 3: DBMS: Core Experimental Procedures & Synthesis
+  Unit 4: DBMS: Quantitative Data Verification & Error Analysis
+  Unit 5: DBMS: Comprehensive Practical Record & Viva Voce
+
+Subject: Data Visualization (Tableau/Power BI)
+  Unit 1: Visualization Principles
+  Unit 2: Charts
+  Unit 3: Dashboards
+  Unit 4: Tools
+  Unit 5: Storytelling
+
+Subject: Database Management & SQL
+  Unit 1: ER Model
+  Unit 2: Relational Model
+  Unit 3: SQL Queries
+  Unit 4: Normalization
+  Unit 5: Transactions
+
+Subject: Differential & Integral Calculus
+  Unit 1: Partial Differentiation
+  Unit 2: Multiple Integrals
+  Unit 3: Vector Calculus
+  Unit 4: Applications
+  Unit 5: Improper Integrals
+
+Subject: Instrumentation & Measurement
+  Unit 1: Measurement Basics
+  Unit 2: Transducers
+  Unit 3: Oscilloscopes
+  Unit 4: Signal Generators
+  Unit 5: Data Acquisition
+
+Subject: Mathematics III / Botany III
+  Unit 1: Real Analysis
+  Unit 2: Sequences
+  Unit 3: Series
+  Unit 4: Plant Systematics
+  Unit 5: Economic Botany
+
+Subject: Molecular Biology & Genetic Engineering
+  Unit 1: DNA Replication
+  Unit 2: Transcription
+  Unit 3: Translation
+  Unit 4: Cloning Vectors
+  Unit 5: Gene Therapy
+
+Subject: Molecular Biology Lab
+  Unit 1: Molecular Biology: Laboratory Safety Protocols & Instrumentation
+  Unit 2: Molecular Biology: Standard Preparations & Calibration Methods
+  Unit 3: Molecular Biology: Core Experimental Procedures & Synthesis
+  Unit 4: Molecular Biology: Quantitative Data Verification & Error Analysis
+  Unit 5: Molecular Biology: Comprehensive Practical Record & Viva Voce
+
+Subject: Numerical Methods & Optimization
+  Unit 1: Error Analysis
+  Unit 2: Root Finding
+  Unit 3: Linear Systems
+  Unit 4: Interpolation
+  Unit 5: Optimization Basics
+
+Subject: OOP / DBMS
+  Unit 1: OOP Concepts
+  Unit 2: Classes
+  Unit 3: Inheritance
+  Unit 4: Exception Handling
+  Unit 5: Collections
+
+Subject: OOP Lab
+  Unit 1: OOP: Laboratory Safety Protocols & Instrumentation
+  Unit 2: OOP: Standard Preparations & Calibration Methods
+  Unit 3: OOP: Core Experimental Procedures & Synthesis
+  Unit 4: OOP: Quantitative Data Verification & Error Analysis
+  Unit 5: OOP: Comprehensive Practical Record & Viva Voce
+
+Subject: Object Oriented Programming (Java/C++)
+  Unit 1: OOP Concepts
+  Unit 2: Classes & Objects
+  Unit 3: Inheritance & Polymorphism
+  Unit 4: Exception Handling
+  Unit 5: Collections
+
+Subject: Organic Chemistry – III
+  Unit 1: Alcohols & Phenols
+  Unit 2: Aldehydes & Ketones
+  Unit 3: Carboxylic Acids
+  Unit 4: Amines
+  Unit 5: Stereochemistry
+
+Subject: Physics III / Statistics III
+  Unit 1: Thermal Physics
+  Unit 2: Thermodynamics
+  Unit 3: Kinetic Theory
+  Unit 4: Statistical Distributions
+  Unit 5: Sampling
+
+Subject: Physics III: Thermal Physics / Statistics III
+  Unit 1: Kinetic Theory
+  Unit 2: Laws of Thermodynamics
+  Unit 3: Entropy
+  Unit 4: Heat Engines
+  Unit 5: Statistical Distributions
+
+Subject: Physics Lab III
+  Unit 1: Physics  III: Laboratory Safety Protocols & Instrumentation
+  Unit 2: Physics  III: Standard Preparations & Calibration Methods
+  Unit 3: Physics  III: Core Experimental Procedures & Synthesis
+  Unit 4: Physics  III: Quantitative Data Verification & Error Analysis
+  Unit 5: Physics  III: Comprehensive Practical Record & Viva Voce
+
+Subject: Physiology & Biochemistry
+  Unit 1: Digestion
+  Unit 2: Respiration
+  Unit 3: Circulation
+  Unit 4: Excretion
+  Unit 5: Enzymes & Metabolism
+
+Subject: Plant Anatomy & Embryology
+  Unit 1: Tissues
+  Unit 2: Root & Stem Anatomy
+  Unit 3: Leaf Anatomy
+  Unit 4: Embryo Development
+  Unit 5: Endosperm
+
+Subject: Problem Solving
+  Unit 1: Problem Solving: Core Concepts & Principles
+  Unit 2: Problem Solving: Theoretical Formulations & Modeling
+  Unit 3: Problem Solving: Analytical & Computational Methods
+  Unit 4: Problem Solving: Practical Engineering & Industrial Applications
+  Unit 5: Problem Solving: Modern Trends, Case Studies & Problem Solving
+
+Subject: Python Programming
+  Unit 1: Basics
+  Unit 2: Control Flow
+  Unit 3: Data Structures
+  Unit 4: Functions
+  Unit 5: File Handling
+
+Subject: Real Analysis
+  Unit 1: Sequences
+  Unit 2: Series
+  Unit 3: Limits & Continuity
+  Unit 4: Differentiation
+  Unit 5: Integration
+
+Subject: Statistical Inference / OOP
+  Unit 1: Point Estimation
+  Unit 2: Interval Estimation
+  Unit 3: Hypothesis Testing
+  Unit 4: ANOVA
+  Unit 5: Non-Parametric Tests
+
+Subject: Thermal Physics & Electronics
+  Unit 1: Kinetic Theory
+  Unit 2: Thermodynamics
+  Unit 3: Semiconductors
+  Unit 4: Amplifiers
+  Unit 5: Digital Logic
+
+Subject: Thermal Physics & Statistical Mechanics
+  Unit 1: Kinetic Theory
+  Unit 2: Laws of Thermodynamics
+  Unit 3: Entropy
+  Unit 4: Heat Engines
+  Unit 5: Statistical Distributions
+
+Subject: Web Design (HTML/CSS)
+  Unit 1: HTML Basics
+  Unit 2: CSS
+  Unit 3: Forms
+  Unit 4: Layouts
+  Unit 5: Responsive Design
+
+Subject: Zoology Lab III
+  Unit 1: Zoology  III: Laboratory Safety Protocols & Instrumentation
+  Unit 2: Zoology  III: Standard Preparations & Calibration Methods
+  Unit 3: Zoology  III: Core Experimental Procedures & Synthesis
+  Unit 4: Zoology  III: Quantitative Data Verification & Error Analysis
+  Unit 5: Zoology  III: Comprehensive Practical Record & Viva Voce

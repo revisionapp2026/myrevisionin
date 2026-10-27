@@ -1,0 +1,261 @@
+import json
+
+papers = {}
+
+def add_paper(key, q_list):
+    papers[key] = q_list
+
+# =========================================================================
+# 6. STATISTICS & DATABASE BASICS (B.Sc DS-AI, Math)
+# =========================================================================
+add_paper("stat_db_set1", [
+    {"id": "bsc-sdb-s1-q1", "question_no": 1, "marks": 2, "prompt": "Part A · 2 Marks",
+     "question": "Define Karl Pearson's correlation coefficient $r$ and state its limits.",
+     "answer_lines": ["$$r = \\frac{\\text{Cov}(X, Y)}{\\sigma_X \\sigma_Y} = \\frac{\\sum (X - \\bar{X})(Y - \\bar{Y})}{\\sqrt{\\sum(X - \\bar{X})^2 \\sum(Y - \\bar{Y})^2}}$$ Limits: $-1 \\le r \\le +1$."]},
+    {"id": "bsc-sdb-s1-q2", "question_no": 2, "marks": 2, "prompt": "Part A · 2 Marks",
+     "question": "What is the angle between two regression lines when $r = 0$ and $r = \\pm 1$?",
+     "answer_lines": ["When $r = 0$, lines are mutually perpendicular ($\\theta = 90^\\circ$). When $r = \\pm 1$, lines coincide ($\\theta = 0^\\circ$)."]},
+    {"id": "bsc-sdb-s1-q3", "question_no": 3, "marks": 2, "prompt": "Part A · 2 Marks",
+     "question": "Define Primary Key and Foreign Key in relational databases.",
+     "answer_lines": ["**Primary Key**: A column or minimal set of columns uniquely identifying each tuple in a table (non-null).", "**Foreign Key**: An attribute referencing the primary key of another table, enforcing referential integrity."]},
+    {"id": "bsc-sdb-s1-q4", "question_no": 4, "marks": 2, "prompt": "Part A · 2 Marks",
+     "question": "State the condition for a relation to be in Third Normal Form (3NF).",
+     "answer_lines": ["A relation is in 3NF if it is in 2NF and no non-prime attribute is transitively dependent on any candidate key (for $X \\to Y$, $X$ is a superkey or $Y$ is a prime attribute)."]},
+    {"id": "bsc-sdb-s1-q5", "question_no": 5, "marks": 2, "prompt": "Part A · 2 Marks",
+     "question": "Differentiate between `WHERE` and `HAVING` clauses in SQL.",
+     "answer_lines": ["`WHERE` filters rows before grouping occurs; `HAVING` filters aggregated groups produced by `GROUP BY`."]},
+    {"id": "bsc-sdb-s1-q6", "question_no": 6, "marks": 10, "prompt": "Part B · 10 Marks",
+     "question": "Calculate the coefficient of correlation $r$ between variables $X$ and $Y$ given data: $X = [1, 2, 3, 4, 5], Y = [2, 5, 3, 8, 7]$. Find the regression line of $Y$ on $X$.",
+     "answer_lines": [
+         "**1. Summary Stats**: $n = 5, \\sum X = 15, \\bar{X} = 3.0, \\sum Y = 25, \\bar{Y} = 5.0$.",
+         "• $\\sum X^2 = 1 + 4 + 9 + 16 + 25 = 55$. $\\sum (X - \\bar{X})^2 = 55 - 5(9) = 10$.",
+         "• $\\sum Y^2 = 4 + 25 + 9 + 64 + 49 = 151$. $\\sum (Y - \\bar{Y})^2 = 151 - 5(25) = 26$.",
+         "• $\\sum XY = 2 + 10 + 9 + 32 + 35 = 88$. $\\sum (X - \\bar{X})(Y - \\bar{Y}) = 88 - 5(3)(5) = 13$.",
+         "**2. Correlation Coefficient**:",
+         "$$r = \\frac{13}{\\sqrt{10 \\times 26}} = \\frac{13}{\\sqrt{260}} = \\frac{13}{16.1245} \\approx 0.806$$",
+         "**3. Regression Line of $Y$ on $X$**:",
+         "Slope $b_{yx} = \\frac{13}{10} = 1.3$.",
+         "$$Y - \\bar{Y} = b_{yx}(X - \\bar{X}) \\implies Y - 5 = 1.3(X - 3) \\implies Y = 1.3X + 1.1$$"
+     ]},
+    {"id": "bsc-sdb-s1-q7", "question_no": 7, "marks": 10, "prompt": "Part B · 10 Marks",
+     "question": "Explain Database Normalization from 1NF to BCNF with functional dependencies and anomaly prevention.",
+     "answer_lines": [
+         "**1NF**: Disallow multi-valued or composite attributes; all domain values must be atomic.",
+         "**2NF**: In 1NF and no partial dependencies (every non-prime attribute must depend on the whole candidate key).",
+         "**3NF**: In 2NF and no transitive dependencies ($X \\to Y \\implies X$ is superkey or $Y$ is prime).",
+         "**BCNF**: For every non-trivial functional dependency $X \\to Y$, $X$ must be a superkey. Eliminates all functional dependency redundancy."
+     ]},
+    {"id": "bsc-sdb-s1-q8", "question_no": 8, "marks": 10, "prompt": "Part B · 10 Marks",
+     "question": "Explain ACID Properties of Transactions in DBMS. Describe conflict serializability and precedence graphs.",
+     "answer_lines": [
+         "**ACID**: Atomicity (all-or-nothing), Consistency (preserves database integrity constraints), Isolation (concurrent transactions execute as if serial), Durability (committed changes persist across crashes).",
+         "**Conflict Serializability**: A schedule is conflict serializable if it can be transformed into a serial schedule by swapping non-conflicting concurrent operations. Precedence graph is acyclic if and only if schedule is conflict serializable."
+     ]},
+    {"id": "bsc-sdb-s1-q9", "question_no": 9, "marks": 10, "prompt": "Part B · 10 Marks",
+     "question": "Write SQL queries for relational schema: `Student(id, name, dept)`, `Course(cid, title, credits)`, `Enroll(id, cid, grade)`.",
+     "answer_lines": [
+         "**(i) Find names of students enrolled in CS courses**:",
+         "`SELECT DISTINCT s.name FROM Student s JOIN Enroll e ON s.id = e.id JOIN Course c ON e.cid = c.cid WHERE c.dept = 'CS';`",
+         "**(ii) Find average grade per department having > 5 students**:",
+         "`SELECT s.dept, AVG(e.grade) FROM Student s JOIN Enroll e ON s.id = e.id GROUP BY s.dept HAVING COUNT(DISTINCT s.id) > 5;`",
+         "**(iii) Find students not enrolled in any course**:",
+         "`SELECT name FROM Student WHERE id NOT IN (SELECT id FROM Enroll);`"
+     ]},
+    {"id": "bsc-sdb-s1-q10", "question_no": 10, "marks": 10, "prompt": "Part B · 10 Marks",
+     "question": "Explain Binomial and Normal distributions with their parameters, probability mass/density functions, and properties.",
+     "answer_lines": [
+         "**Binomial Distribution**: Discrete distribution with parameters $n$ trials and probability of success $p$. $P(X = k) = \\binom{n}{k} p^k (1-p)^{n-k}$. Mean $= n p$, Variance $= n p (1 - p)$.",
+         "**Normal Distribution**: Continuous bell-shaped distribution with mean $\\mu$ and variance $\\sigma^2$. PDF $f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-(x-\\mu)^2/(2\\sigma^2)}$. 68.27% of values lie within $\\mu \\pm \\sigma$, 95.45% within $\\mu \\pm 2\\sigma$."
+     ]}
+])
+
+add_paper("stat_db_set2", [
+    {"id": "bsc-sdb-s2-q1", "question_no": 1, "marks": 2, "prompt": "Part A · 2 Marks",
+     "question": "State the relationship between regression coefficients $b_{yx}, b_{xy}$ and correlation coefficient $r$.",
+     "answer_lines": ["$$r = \\pm \\sqrt{b_{yx} \\times b_{xy}}$$ Both regression coefficients and $r$ must have identical signs."]},
+    {"id": "bsc-sdb-s2-q2", "question_no": 2, "marks": 2, "prompt": "Part A · 2 Marks",
+     "question": "Define Null Hypothesis and Alternative Hypothesis.",
+     "answer_lines": ["**Null Hypothesis ($H_0$)**: A hypothesis of no difference or no effect under test.", "**Alternative Hypothesis ($H_1$)**: The statement accepted when $H_0$ is rejected based on sample evidence."]},
+    {"id": "bsc-sdb-s2-q3", "question_no": 3, "marks": 2, "prompt": "Part A · 2 Marks",
+     "question": "What is an Entity-Relationship (ER) model?",
+     "answer_lines": ["A conceptual data model representing real-world objects as entities with attributes, and associations between entities as relationships."]},
+    {"id": "bsc-sdb-s2-q4", "question_no": 4, "marks": 2, "prompt": "Part A · 2 Marks",
+     "question": "Differentiate between inner join and outer join in SQL.",
+     "answer_lines": ["Inner join returns only matching records from both tables. Outer join (LEFT, RIGHT, FULL) returns matching rows plus unmatched rows padded with NULLs."]},
+    {"id": "bsc-sdb-s2-q5", "question_no": 5, "marks": 2, "prompt": "Part A · 2 Marks",
+     "question": "What is a deadlock in transaction processing?",
+     "answer_lines": ["A state where two or more transactions are waiting indefinitely for locks held by each other, forming a cyclic dependency."]},
+    {"id": "bsc-sdb-s2-q6", "question_no": 6, "marks": 10, "prompt": "Part B · 10 Marks",
+     "question": "Explain Student's $t$-test for difference of means of two independent small samples. State assumptions and critical region.",
+     "answer_lines": [
+         "**1. Assumptions**: Populations are normally distributed with equal unknown variances $\\sigma_1^2 = \\sigma_2^2 = \\sigma^2$. Samples are drawn independently.",
+         "**2. Test Statistic**:",
+         "$$t = \\frac{\\bar{X}_1 - \\bar{X}_2}{S_p \\sqrt{\\frac{1}{n_1} + \\frac{1}{n_2}}} \\quad \\text{with degrees of freedom } df = n_1 + n_2 - 2$$",
+         "Where pooled variance is $S_p^2 = \\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}$.",
+         "**3. Decision**: Reject $H_0$ if $|t| > t_{\\alpha/2, df}$."
+     ]},
+    {"id": "bsc-sdb-s2-q7", "question_no": 7, "marks": 10, "prompt": "Part B · 10 Marks",
+     "question": "Explain Chi-Square Test of Independence of Attributes. Detail calculation of expected frequencies and contingency table degrees of freedom.",
+     "answer_lines": [
+         "**1. Test Statistic**:",
+         "$$\\chi^2 = \\sum \\frac{(O_{ij} - E_{ij})^2}{E_{ij}}$$",
+         "**2. Expected Frequency**: $E_{ij} = \\frac{R_i \\times C_j}{N}$ where $R_i$ is row total and $C_j$ is column total.",
+         "**3. Degrees of Freedom**: For an $r \\times c$ contingency table, $df = (r - 1)(c - 1)$.",
+         "If calculated $\\chi^2 > \\chi_{\\alpha, df}^2$, the hypothesis of independence is rejected."
+     ]},
+    {"id": "bsc-sdb-s2-q8", "question_no": 8, "marks": 10, "prompt": "Part B · 10 Marks",
+     "question": "Design an ER Diagram for a Hospital Management System. Convert the ER diagram into relational schemas with primary and foreign keys.",
+     "answer_lines": [
+         "**Entities**: `Patient` (P_ID, Name, Phone, Age), `Doctor` (D_ID, Name, Specialty), `Appointment` (Appt_ID, Date, Time), `Room` (Room_No, Type).",
+         "**Relationships**: Patient schedules Appointment (1:M); Doctor conducts Appointment (1:M); Patient admitted to Room (M:1).",
+         "**Schemas**: `Patient(P_ID PK, ...)`, `Doctor(D_ID PK, ...)`, `Appointment(Appt_ID PK, P_ID FK, D_ID FK, Date, Time)`, `Admission(Adm_ID PK, P_ID FK, Room_No FK, Admit_Date)`."
+     ]},
+    {"id": "bsc-sdb-s2-q9", "question_no": 9, "marks": 10, "prompt": "Part B · 10 Marks",
+     "question": "Explain Two-Phase Locking (2PL) Protocol for concurrency control. Differentiate between Strict 2PL and Rigorous 2PL.",
+     "answer_lines": [
+         "**1. 2PL Rule**: A transaction cannot request any lock after releasing any lock.",
+         "• Growing Phase: Locks acquired; no locks released.",
+         "• Shrinking Phase: Locks released; no locks acquired.",
+         "**2. Variations**:",
+         "• **Strict 2PL**: Holds all exclusive (write) locks until commit/abort. Prevents cascading rollbacks.",
+         "• **Rigorous 2PL**: Holds all shared and exclusive locks until commit/abort, guaranteeing serializability and easy crash recovery."
+     ]},
+    {"id": "bsc-sdb-s2-q10", "question_no": 10, "marks": 10, "prompt": "Part B · 10 Marks",
+     "question": "Explain SQL Views and Triggers with examples and performance trade-offs.",
+     "answer_lines": [
+         "**Views**: Virtual tables defined by a query (`CREATE VIEW TopStudents AS SELECT * FROM Student WHERE gpa > 3.8;`). Provide data security and simplify complex queries.",
+         "**Triggers**: Stored procedures executed automatically in response to DML events (`BEFORE INSERT`, `AFTER UPDATE`). Used for audit logging, enforcing complex business rules, and maintaining derived balances."
+     ]}
+])
+
+# =========================================================================
+# 7. PROBLEM SOLVING (B.Sc Math)
+# =========================================================================
+add_paper("ps_set1", [
+    {"id": "bsc-ps-s1-q1", "question_no": 1, "marks": 2, "prompt": "Part A · 2 Marks",
+     "question": "Define Big-O notation and write its formal mathematical definition.",
+     "answer_lines": ["$f(n) = O(g(n))$ if there exist positive constants $c$ and $n_0$ such that $0 \\le f(n) \\le c g(n)$ for all $n \\ge n_0$. It represents the asymptotic upper bound."]},
+    {"id": "bsc-ps-s1-q2", "question_no": 2, "marks": 2, "prompt": "Part A · 2 Marks",
+     "question": "Differentiate between Recursion and Iteration.",
+     "answer_lines": ["Iteration uses looping constructs (`for`, `while`) with constant memory overhead $O(1)$. Recursion uses function self-calls consuming call-stack memory $O(d)$ where $d$ is recursion depth."]},
+    {"id": "bsc-ps-s1-q3", "question_no": 3, "marks": 2, "prompt": "Part A · 2 Marks",
+     "question": "State the pre-condition required for Binary Search algorithm.",
+     "answer_lines": ["The array or collection must be sorted in monotonic order (ascending or descending) with random access capability ($O(1)$ indexing)."]},
+    {"id": "bsc-ps-s1-q4", "question_no": 4, "marks": 2, "prompt": "Part A · 2 Marks",
+     "question": "What is the Greedy Choice Property in algorithm design?",
+     "answer_lines": ["A globally optimal solution can be achieved by making locally optimal (greedy) choices at each step without ever reconsidering past choices."]},
+    {"id": "bsc-ps-s1-q5", "question_no": 5, "marks": 2, "prompt": "Part A · 2 Marks",
+     "question": "State the difference between Divide-and-Conquer and Dynamic Programming.",
+     "answer_lines": ["Divide-and-Conquer solves independent subproblems (Merge Sort). Dynamic Programming solves overlapping subproblems by memoizing solutions to avoid recomputation."]},
+    {"id": "bsc-ps-s1-q6", "question_no": 6, "marks": 10, "prompt": "Part B · 10 Marks",
+     "question": "Explain Binary Search algorithm. Write iterative and recursive implementations and prove its $O(\\log n)$ time complexity.",
+     "answer_lines": [
+         "**1. Algorithm**: Compare search key with middle element `mid = low + (high - low)/2`. If equal, return `mid`. If key < `arr[mid]`, search left half `high = mid - 1`. If key > `arr[mid]`, search right half `low = mid + 1`.",
+         "**2. Time Complexity Proof**: At each iteration, the search interval is halved: $n \\to n/2 \\to n/4 \\to \\dots \\to n/2^k = 1$.",
+         "$$2^k = n \\implies k = \\log_2 n$$",
+         "Hence at most $\\lceil \\log_2 n \\rceil$ comparisons are required. Running time is $O(\\log n)$."
+     ]},
+    {"id": "bsc-ps-s1-q7", "question_no": 7, "marks": 10, "prompt": "Part B · 10 Marks",
+     "question": "Explain the 0/1 Knapsack Problem using Dynamic Programming. Compute max profit for weights $[2, 3, 4, 5]$, values $[3, 4, 5, 6]$, and capacity $W = 5$.",
+     "answer_lines": [
+         "**1. Recurrence**: Let $dp[i][w]$ be max value with first $i$ items and capacity $w$:",
+         "$$dp[i][w] = \\max(dp[i-1][w], \\text{val}[i-1] + dp[i-1][w - \\text{wt}[i-1]]) \\quad (\\text{if } w \\ge \\text{wt}[i-1])$$",
+         "**2. DP Table Computation for $W = 5$**:",
+         "• Item 1 (wt 2, val 3): $dp[1][2..5] = 3$.",
+         "• Item 2 (wt 3, val 4): at $w=3: 4$, at $w=5: 3+4 = 7$.",
+         "• Item 3 (wt 4, val 5): at $w=4: 5$, at $w=5: \\max(7, 5) = 7$.",
+         "• Item 4 (wt 5, val 6): at $w=5: \\max(7, 6) = 7$.",
+         "**Max Profit**: 7 (by selecting Item 1 and Item 2, total weight $2 + 3 = 5$)."
+     ]},
+    {"id": "bsc-ps-s1-q8", "question_no": 8, "marks": 10, "prompt": "Part B · 10 Marks",
+     "question": "Explain Fractional Knapsack Problem using Greedy Strategy. Detail sorting criteria and compare with 0/1 Knapsack.",
+     "answer_lines": [
+         "**1. Greedy Criterion**: Sort items in decreasing order of value-to-weight ratio ($v_i / w_i$). Greedily take whole items as long as capacity permits; when capacity is insufficient, take the fractional portion $\\frac{W_{rem}}{w_i}$ of the next item.",
+         "**2. Optimality**: Fractional knapsack possesses the greedy choice property; 0/1 knapsack does not because taking a high-ratio item may leave empty capacity that cannot be filled efficiently."
+     ]},
+    {"id": "bsc-ps-s1-q9", "question_no": 9, "marks": 10, "prompt": "Part B · 10 Marks",
+     "question": "Explain Tower of Hanoi problem. Write recursive algorithm and derive recurrence relation for number of moves $T(n) = 2^n - 1$.",
+     "answer_lines": [
+         "**1. Algorithm**: Move $n-1$ disks from Source to Auxiliary peg. Move $n$-th disk from Source to Destination peg. Move $n-1$ disks from Auxiliary to Destination peg.",
+         "**2. Recurrence**: $T(n) = 2 T(n-1) + 1$ with $T(1) = 1$.",
+         "$$T(n) = 2(2 T(n-2) + 1) + 1 = 2^2 T(n-2) + 2 + 1 = \\dots = 2^{n-1} T(1) + \\sum_{k=0}^{n-2} 2^k = \\sum_{k=0}^{n-1} 2^k = 2^n - 1$$",
+         "Time complexity is exponential $O(2^n)$."
+     ]},
+    {"id": "bsc-ps-s1-q10", "question_no": 10, "marks": 10, "prompt": "Part B · 10 Marks",
+     "question": "Explain Backtracking algorithm paradigm. Detail the N-Queens problem on a $4 \\times 4$ chessboard.",
+     "answer_lines": [
+         "**1. Paradigm**: Systematically searches solution space by building candidate solutions incrementally. If candidate cannot possibly be completed to a valid solution, it abandons (backtracks) to prior decision point.",
+         "**2. 4-Queens**: Place 4 queens on $4 \\times 4$ board such that no two queens attack each other (same row, column, or diagonal).",
+         "Valid solution: Queen 1 at (Row 1, Col 2), Queen 2 at (Row 2, Col 4), Queen 3 at (Row 3, Col 1), Queen 4 at (Row 4, Col 3)."
+     ]}
+])
+
+add_paper("ps_set2", [
+    {"id": "bsc-ps-s2-q1", "question_no": 1, "marks": 2, "prompt": "Part A · 2 Marks",
+     "question": "Define space complexity of an algorithm.",
+     "answer_lines": ["The total amount of memory space required by the algorithm to execute to completion as a function of the input size $n$ (fixed space + variable space)."]},
+    {"id": "bsc-ps-s2-q2", "question_no": 2, "marks": 2, "prompt": "Part A · 2 Marks",
+     "question": "State the Master Theorem for divide-and-conquer recurrences.",
+     "answer_lines": ["For $T(n) = a T(n/b) + O(n^d)$: Case 1 ($d < \\log_b a$): $O(n^{\\log_b a})$; Case 2 ($d = \\log_b a$): $O(n^d \\log n)$; Case 3 ($d > \\log_b a$): $O(n^d)$."]},
+    {"id": "bsc-ps-s2-q3", "question_no": 3, "marks": 2, "prompt": "Part A · 2 Marks",
+     "question": "What is an in-place sorting algorithm?",
+     "answer_lines": ["An algorithm that transforms input using only a small, constant amount of additional memory space $O(1)$ beyond the input array (e.g., QuickSort, InsertionSort)."]},
+    {"id": "bsc-ps-s2-q4", "question_no": 4, "marks": 2, "prompt": "Part A · 2 Marks",
+     "question": "What is memoization in Dynamic Programming?",
+     "answer_lines": ["A top-down optimization technique that caches the results of expensive function calls and returns the cached result when identical inputs occur again."]},
+    {"id": "bsc-ps-s2-q5", "question_no": 5, "marks": 2, "prompt": "Part A · 2 Marks",
+     "question": "State the time complexity of linear search vs binary search.",
+     "answer_lines": ["Linear search is $O(n)$ in worst case; Binary search is $O(\\log n)$ in worst case."]},
+    {"id": "bsc-ps-s2-q6", "question_no": 6, "marks": 10, "prompt": "Part B · 10 Marks",
+     "question": "Explain QuickSort algorithm with partition mechanics. Trace QuickSort on array $[10, 80, 30, 90, 40, 50, 70]$ using Lomuto partition scheme.",
+     "answer_lines": [
+         "**1. Partitioning**: Choose last element as pivot. Maintain index $i$; scan with $j$. If $A[j] \\le \\text{pivot}$, increment $i$ and swap $A[i]$ with $A[j]$. Finally swap pivot with $A[i+1]$.",
+         "**2. Trace on $[10, 80, 30, 90, 40, 50, 70]$ (Pivot = 70)**:",
+         "• 10 <= 70: swap with itself.",
+         "• 30 <= 70: swap with 80 $\\to [10, 30, 80, 90, 40, 50, 70]$.",
+         "• 40 <= 70: swap with 80 $\\to [10, 30, 40, 90, 80, 50, 70]$.",
+         "• 50 <= 70: swap with 90 $\\to [10, 30, 40, 50, 80, 90, 70]$.",
+         "• Pivot 70 placed at index 4: $[10, 30, 40, 50, 70, 90, 80]$.",
+         "Recurse on left $[10, 30, 40, 50]$ and right $[90, 80]$."
+     ]},
+    {"id": "bsc-ps-s2-q7", "question_no": 7, "marks": 10, "prompt": "Part B · 10 Marks",
+     "question": "Explain Longest Common Subsequence (LCS) problem using Dynamic Programming. Find LCS of strings $X = \\text{\"ABCBDAB\"}$ and $Y = \\text{\"BDCABA\"}$.",
+     "answer_lines": [
+         "**1. Recurrence**: If $X[i] == Y[j]$, $dp[i][j] = 1 + dp[i-1][j-1]$; else $dp[i][j] = \\max(dp[i-1][j], dp[i][j-1])$.",
+         "**2. Trace**: Filling $7 \\times 6$ table yields max length 4.",
+         "Backtracking gives LCS: **\"BCBA\"** (or \"BDAB\"). Length is 4."
+     ]},
+    {"id": "bsc-ps-s2-q8", "question_no": 8, "marks": 10, "prompt": "Part B · 10 Marks",
+     "question": "Explain Prim's algorithm for Minimum Spanning Tree. Detail vertex cut property and comparison with Kruskal's algorithm.",
+     "answer_lines": [
+         "**1. Strategy**: Starts from arbitrary vertex and grows single tree by adding minimum weight edge connecting a visited vertex to an unvisited vertex.",
+         "**2. Comparison**: Prim's runs in $O(E + V \\log V)$ using Fibonacci Heap, superior on dense graphs ($E \\approx V^2$); Kruskal's is $O(E \\log V)$, superior on sparse graphs."
+     ]},
+    {"id": "bsc-ps-s2-q9", "question_no": 9, "marks": 10, "prompt": "Part B · 10 Marks",
+     "question": "Explain Job Sequencing with Deadlines using Greedy Strategy. Maximize profit for jobs $J_1(p:100, d:2), J_2(p:19, d:1), J_3(p:27, d:2), J_4(p:25, d:1), J_5(p:15, d:3)$.",
+     "answer_lines": [
+         "**1. Sort by Profit**: $J_1(100, 2), J_3(27, 2), J_4(25, 1), J_2(19, 1), J_5(15, 3)$.",
+         "**2. Schedule in Latest Available Slots**:",
+         "• $J_1$: slot [1-2].",
+         "• $J_3$: slot 2 taken; schedule in slot [0-1].",
+         "• $J_4$: slot [0-1] taken, discarded.",
+         "• $J_5$: schedule in slot [2-3].",
+         "**Optimal Sequence**: $J_3, J_1, J_5$ with total maximum profit $= 27 + 100 + 15 = 142$."
+     ]},
+    {"id": "bsc-ps-s2-q10", "question_no": 10, "marks": 10, "prompt": "Part B · 10 Marks",
+     "question": "Explain Huffman Coding for lossless data compression. Construct Huffman Tree and derive prefix codes for characters with frequencies: $a:45, b:13, c:12, d:16, e:9, f:5$.",
+     "answer_lines": [
+         "**1. Greedy Build**: Repeatedly merge two nodes with lowest frequencies.",
+         "• Merge $f(5) + e(9) = 14$.",
+         "• Merge $c(12) + b(13) = 25$.",
+         "• Merge $14 + d(16) = 30$.",
+         "• Merge $25 + 30 = 55$.",
+         "• Merge $a(45) + 55 = 100$.",
+         "**2. Prefix Codes**: $a = 0, c = 100, b = 101, f = 1100, e = 1101, d = 111$. Guarantees unambiguous instantaneous decoding."
+     ]}
+])
+
+with open("scripts/bsc_sem2_part4.json", "w", encoding="utf-8") as f:
+    json.dump(papers, f, indent=2)
+
+print("Part 4 written.")

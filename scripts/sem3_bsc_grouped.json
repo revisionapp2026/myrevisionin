@@ -1,0 +1,1382 @@
+[
+  {
+    "subject": "Object Oriented Programming (Java/C++)",
+    "unitNumber": 1,
+    "unitTitle": "OOP Concepts",
+    "ids": [
+      "bsc-cs-s3-object-oriented-programming-java-c-u1"
+    ]
+  },
+  {
+    "subject": "Object Oriented Programming (Java/C++)",
+    "unitNumber": 2,
+    "unitTitle": "Classes & Objects",
+    "ids": [
+      "bsc-cs-s3-object-oriented-programming-java-c-u2"
+    ]
+  },
+  {
+    "subject": "Object Oriented Programming (Java/C++)",
+    "unitNumber": 3,
+    "unitTitle": "Inheritance & Polymorphism",
+    "ids": [
+      "bsc-cs-s3-object-oriented-programming-java-c-u3"
+    ]
+  },
+  {
+    "subject": "Object Oriented Programming (Java/C++)",
+    "unitNumber": 4,
+    "unitTitle": "Exception Handling",
+    "ids": [
+      "bsc-cs-s3-object-oriented-programming-java-c-u4"
+    ]
+  },
+  {
+    "subject": "Object Oriented Programming (Java/C++)",
+    "unitNumber": 5,
+    "unitTitle": "Collections",
+    "ids": [
+      "bsc-cs-s3-object-oriented-programming-java-c-u5"
+    ]
+  },
+  {
+    "subject": "OOP Lab",
+    "unitNumber": 1,
+    "unitTitle": "OOP: Laboratory Safety Protocols & Instrumentation",
+    "ids": [
+      "bsc-cs-s3-oop-lab-u1"
+    ]
+  },
+  {
+    "subject": "OOP Lab",
+    "unitNumber": 2,
+    "unitTitle": "OOP: Standard Preparations & Calibration Methods",
+    "ids": [
+      "bsc-cs-s3-oop-lab-u2"
+    ]
+  },
+  {
+    "subject": "OOP Lab",
+    "unitNumber": 3,
+    "unitTitle": "OOP: Core Experimental Procedures & Synthesis",
+    "ids": [
+      "bsc-cs-s3-oop-lab-u3"
+    ]
+  },
+  {
+    "subject": "OOP Lab",
+    "unitNumber": 4,
+    "unitTitle": "OOP: Quantitative Data Verification & Error Analysis",
+    "ids": [
+      "bsc-cs-s3-oop-lab-u4"
+    ]
+  },
+  {
+    "subject": "OOP Lab",
+    "unitNumber": 5,
+    "unitTitle": "OOP: Comprehensive Practical Record & Viva Voce",
+    "ids": [
+      "bsc-cs-s3-oop-lab-u5"
+    ]
+  },
+  {
+    "subject": "Real Analysis",
+    "unitNumber": 1,
+    "unitTitle": "Sequences",
+    "ids": [
+      "bsc-cs-s3-real-analysis-u1",
+      "bsc-physics-s3-real-analysis-u1"
+    ]
+  },
+  {
+    "subject": "Real Analysis",
+    "unitNumber": 2,
+    "unitTitle": "Series",
+    "ids": [
+      "bsc-cs-s3-real-analysis-u2",
+      "bsc-physics-s3-real-analysis-u2"
+    ]
+  },
+  {
+    "subject": "Real Analysis",
+    "unitNumber": 3,
+    "unitTitle": "Limits & Continuity",
+    "ids": [
+      "bsc-cs-s3-real-analysis-u3",
+      "bsc-physics-s3-real-analysis-u3"
+    ]
+  },
+  {
+    "subject": "Real Analysis",
+    "unitNumber": 4,
+    "unitTitle": "Differentiation",
+    "ids": [
+      "bsc-cs-s3-real-analysis-u4",
+      "bsc-physics-s3-real-analysis-u4"
+    ]
+  },
+  {
+    "subject": "Real Analysis",
+    "unitNumber": 5,
+    "unitTitle": "Integration",
+    "ids": [
+      "bsc-cs-s3-real-analysis-u5",
+      "bsc-physics-s3-real-analysis-u5"
+    ]
+  },
+  {
+    "subject": "Physics III: Thermal Physics / Statistics III",
+    "unitNumber": 1,
+    "unitTitle": "Kinetic Theory",
+    "ids": [
+      "bsc-cs-s3-physics-iii-thermal-physics-statistics-iii-u1"
+    ]
+  },
+  {
+    "subject": "Physics III: Thermal Physics / Statistics III",
+    "unitNumber": 2,
+    "unitTitle": "Laws of Thermodynamics",
+    "ids": [
+      "bsc-cs-s3-physics-iii-thermal-physics-statistics-iii-u2"
+    ]
+  },
+  {
+    "subject": "Physics III: Thermal Physics / Statistics III",
+    "unitNumber": 3,
+    "unitTitle": "Entropy",
+    "ids": [
+      "bsc-cs-s3-physics-iii-thermal-physics-statistics-iii-u3"
+    ]
+  },
+  {
+    "subject": "Physics III: Thermal Physics / Statistics III",
+    "unitNumber": 4,
+    "unitTitle": "Heat Engines",
+    "ids": [
+      "bsc-cs-s3-physics-iii-thermal-physics-statistics-iii-u4"
+    ]
+  },
+  {
+    "subject": "Physics III: Thermal Physics / Statistics III",
+    "unitNumber": 5,
+    "unitTitle": "Statistical Distributions",
+    "ids": [
+      "bsc-cs-s3-physics-iii-thermal-physics-statistics-iii-u5"
+    ]
+  },
+  {
+    "subject": "Web Design (HTML/CSS)",
+    "unitNumber": 1,
+    "unitTitle": "HTML Basics",
+    "ids": [
+      "bsc-cs-s3-web-design-html-css-u1"
+    ]
+  },
+  {
+    "subject": "Web Design (HTML/CSS)",
+    "unitNumber": 2,
+    "unitTitle": "CSS",
+    "ids": [
+      "bsc-cs-s3-web-design-html-css-u2"
+    ]
+  },
+  {
+    "subject": "Web Design (HTML/CSS)",
+    "unitNumber": 3,
+    "unitTitle": "Forms",
+    "ids": [
+      "bsc-cs-s3-web-design-html-css-u3"
+    ]
+  },
+  {
+    "subject": "Web Design (HTML/CSS)",
+    "unitNumber": 4,
+    "unitTitle": "Layouts",
+    "ids": [
+      "bsc-cs-s3-web-design-html-css-u4"
+    ]
+  },
+  {
+    "subject": "Web Design (HTML/CSS)",
+    "unitNumber": 5,
+    "unitTitle": "Responsive Design",
+    "ids": [
+      "bsc-cs-s3-web-design-html-css-u5"
+    ]
+  },
+  {
+    "subject": "Database Management & SQL",
+    "unitNumber": 1,
+    "unitTitle": "ER Model",
+    "ids": [
+      "bsc-ds-ai-s3-database-management-and-sql-u1"
+    ]
+  },
+  {
+    "subject": "Database Management & SQL",
+    "unitNumber": 2,
+    "unitTitle": "Relational Model",
+    "ids": [
+      "bsc-ds-ai-s3-database-management-and-sql-u2"
+    ]
+  },
+  {
+    "subject": "Database Management & SQL",
+    "unitNumber": 3,
+    "unitTitle": "SQL Queries",
+    "ids": [
+      "bsc-ds-ai-s3-database-management-and-sql-u3"
+    ]
+  },
+  {
+    "subject": "Database Management & SQL",
+    "unitNumber": 4,
+    "unitTitle": "Normalization",
+    "ids": [
+      "bsc-ds-ai-s3-database-management-and-sql-u4"
+    ]
+  },
+  {
+    "subject": "Database Management & SQL",
+    "unitNumber": 5,
+    "unitTitle": "Transactions",
+    "ids": [
+      "bsc-ds-ai-s3-database-management-and-sql-u5"
+    ]
+  },
+  {
+    "subject": "DBMS Lab",
+    "unitNumber": 1,
+    "unitTitle": "DBMS: Laboratory Safety Protocols & Instrumentation",
+    "ids": [
+      "bsc-ds-ai-s3-dbms-lab-u1"
+    ]
+  },
+  {
+    "subject": "DBMS Lab",
+    "unitNumber": 2,
+    "unitTitle": "DBMS: Standard Preparations & Calibration Methods",
+    "ids": [
+      "bsc-ds-ai-s3-dbms-lab-u2"
+    ]
+  },
+  {
+    "subject": "DBMS Lab",
+    "unitNumber": 3,
+    "unitTitle": "DBMS: Core Experimental Procedures & Synthesis",
+    "ids": [
+      "bsc-ds-ai-s3-dbms-lab-u3"
+    ]
+  },
+  {
+    "subject": "DBMS Lab",
+    "unitNumber": 4,
+    "unitTitle": "DBMS: Quantitative Data Verification & Error Analysis",
+    "ids": [
+      "bsc-ds-ai-s3-dbms-lab-u4"
+    ]
+  },
+  {
+    "subject": "DBMS Lab",
+    "unitNumber": 5,
+    "unitTitle": "DBMS: Comprehensive Practical Record & Viva Voce",
+    "ids": [
+      "bsc-ds-ai-s3-dbms-lab-u5"
+    ]
+  },
+  {
+    "subject": "Numerical Methods & Optimization",
+    "unitNumber": 1,
+    "unitTitle": "Error Analysis",
+    "ids": [
+      "bsc-ds-ai-s3-numerical-methods-and-optimization-u1"
+    ]
+  },
+  {
+    "subject": "Numerical Methods & Optimization",
+    "unitNumber": 2,
+    "unitTitle": "Root Finding",
+    "ids": [
+      "bsc-ds-ai-s3-numerical-methods-and-optimization-u2"
+    ]
+  },
+  {
+    "subject": "Numerical Methods & Optimization",
+    "unitNumber": 3,
+    "unitTitle": "Linear Systems",
+    "ids": [
+      "bsc-ds-ai-s3-numerical-methods-and-optimization-u3"
+    ]
+  },
+  {
+    "subject": "Numerical Methods & Optimization",
+    "unitNumber": 4,
+    "unitTitle": "Interpolation",
+    "ids": [
+      "bsc-ds-ai-s3-numerical-methods-and-optimization-u4"
+    ]
+  },
+  {
+    "subject": "Numerical Methods & Optimization",
+    "unitNumber": 5,
+    "unitTitle": "Optimization Basics",
+    "ids": [
+      "bsc-ds-ai-s3-numerical-methods-and-optimization-u5"
+    ]
+  },
+  {
+    "subject": "Statistical Inference / OOP",
+    "unitNumber": 1,
+    "unitTitle": "Point Estimation",
+    "ids": [
+      "bsc-ds-ai-s3-statistical-inference-oop-u1"
+    ]
+  },
+  {
+    "subject": "Statistical Inference / OOP",
+    "unitNumber": 2,
+    "unitTitle": "Interval Estimation",
+    "ids": [
+      "bsc-ds-ai-s3-statistical-inference-oop-u2"
+    ]
+  },
+  {
+    "subject": "Statistical Inference / OOP",
+    "unitNumber": 3,
+    "unitTitle": "Hypothesis Testing",
+    "ids": [
+      "bsc-ds-ai-s3-statistical-inference-oop-u3"
+    ]
+  },
+  {
+    "subject": "Statistical Inference / OOP",
+    "unitNumber": 4,
+    "unitTitle": "ANOVA",
+    "ids": [
+      "bsc-ds-ai-s3-statistical-inference-oop-u4"
+    ]
+  },
+  {
+    "subject": "Statistical Inference / OOP",
+    "unitNumber": 5,
+    "unitTitle": "Non-Parametric Tests",
+    "ids": [
+      "bsc-ds-ai-s3-statistical-inference-oop-u5"
+    ]
+  },
+  {
+    "subject": "Data Visualization (Tableau/Power BI)",
+    "unitNumber": 1,
+    "unitTitle": "Visualization Principles",
+    "ids": [
+      "bsc-ds-ai-s3-data-visualization-tableau-power-bi-u1"
+    ]
+  },
+  {
+    "subject": "Data Visualization (Tableau/Power BI)",
+    "unitNumber": 2,
+    "unitTitle": "Charts",
+    "ids": [
+      "bsc-ds-ai-s3-data-visualization-tableau-power-bi-u2"
+    ]
+  },
+  {
+    "subject": "Data Visualization (Tableau/Power BI)",
+    "unitNumber": 3,
+    "unitTitle": "Dashboards",
+    "ids": [
+      "bsc-ds-ai-s3-data-visualization-tableau-power-bi-u3"
+    ]
+  },
+  {
+    "subject": "Data Visualization (Tableau/Power BI)",
+    "unitNumber": 4,
+    "unitTitle": "Tools",
+    "ids": [
+      "bsc-ds-ai-s3-data-visualization-tableau-power-bi-u4"
+    ]
+  },
+  {
+    "subject": "Data Visualization (Tableau/Power BI)",
+    "unitNumber": 5,
+    "unitTitle": "Storytelling",
+    "ids": [
+      "bsc-ds-ai-s3-data-visualization-tableau-power-bi-u5"
+    ]
+  },
+  {
+    "subject": "Plant Anatomy & Embryology",
+    "unitNumber": 1,
+    "unitTitle": "Tissues",
+    "ids": [
+      "bsc-life-sciences-s3-plant-anatomy-and-embryology-u1"
+    ]
+  },
+  {
+    "subject": "Plant Anatomy & Embryology",
+    "unitNumber": 2,
+    "unitTitle": "Root & Stem Anatomy",
+    "ids": [
+      "bsc-life-sciences-s3-plant-anatomy-and-embryology-u2"
+    ]
+  },
+  {
+    "subject": "Plant Anatomy & Embryology",
+    "unitNumber": 3,
+    "unitTitle": "Leaf Anatomy",
+    "ids": [
+      "bsc-life-sciences-s3-plant-anatomy-and-embryology-u3"
+    ]
+  },
+  {
+    "subject": "Plant Anatomy & Embryology",
+    "unitNumber": 4,
+    "unitTitle": "Embryo Development",
+    "ids": [
+      "bsc-life-sciences-s3-plant-anatomy-and-embryology-u4"
+    ]
+  },
+  {
+    "subject": "Plant Anatomy & Embryology",
+    "unitNumber": 5,
+    "unitTitle": "Endosperm",
+    "ids": [
+      "bsc-life-sciences-s3-plant-anatomy-and-embryology-u5"
+    ]
+  },
+  {
+    "subject": "Botany Lab III",
+    "unitNumber": 1,
+    "unitTitle": "Botany  III: Laboratory Safety Protocols & Instrumentation",
+    "ids": [
+      "bsc-life-sciences-s3-botany-lab-iii-u1"
+    ]
+  },
+  {
+    "subject": "Botany Lab III",
+    "unitNumber": 2,
+    "unitTitle": "Botany  III: Standard Preparations & Calibration Methods",
+    "ids": [
+      "bsc-life-sciences-s3-botany-lab-iii-u2"
+    ]
+  },
+  {
+    "subject": "Botany Lab III",
+    "unitNumber": 3,
+    "unitTitle": "Botany  III: Core Experimental Procedures & Synthesis",
+    "ids": [
+      "bsc-life-sciences-s3-botany-lab-iii-u3"
+    ]
+  },
+  {
+    "subject": "Botany Lab III",
+    "unitNumber": 4,
+    "unitTitle": "Botany  III: Quantitative Data Verification & Error Analysis",
+    "ids": [
+      "bsc-life-sciences-s3-botany-lab-iii-u4"
+    ]
+  },
+  {
+    "subject": "Botany Lab III",
+    "unitNumber": 5,
+    "unitTitle": "Botany  III: Comprehensive Practical Record & Viva Voce",
+    "ids": [
+      "bsc-life-sciences-s3-botany-lab-iii-u5"
+    ]
+  },
+  {
+    "subject": "Physiology & Biochemistry",
+    "unitNumber": 1,
+    "unitTitle": "Digestion",
+    "ids": [
+      "bsc-life-sciences-s3-physiology-and-biochemistry-u1"
+    ]
+  },
+  {
+    "subject": "Physiology & Biochemistry",
+    "unitNumber": 2,
+    "unitTitle": "Respiration",
+    "ids": [
+      "bsc-life-sciences-s3-physiology-and-biochemistry-u2"
+    ]
+  },
+  {
+    "subject": "Physiology & Biochemistry",
+    "unitNumber": 3,
+    "unitTitle": "Circulation",
+    "ids": [
+      "bsc-life-sciences-s3-physiology-and-biochemistry-u3"
+    ]
+  },
+  {
+    "subject": "Physiology & Biochemistry",
+    "unitNumber": 4,
+    "unitTitle": "Excretion",
+    "ids": [
+      "bsc-life-sciences-s3-physiology-and-biochemistry-u4"
+    ]
+  },
+  {
+    "subject": "Physiology & Biochemistry",
+    "unitNumber": 5,
+    "unitTitle": "Enzymes & Metabolism",
+    "ids": [
+      "bsc-life-sciences-s3-physiology-and-biochemistry-u5"
+    ]
+  },
+  {
+    "subject": "Zoology Lab III",
+    "unitNumber": 1,
+    "unitTitle": "Zoology  III: Laboratory Safety Protocols & Instrumentation",
+    "ids": [
+      "bsc-life-sciences-s3-zoology-lab-iii-u1"
+    ]
+  },
+  {
+    "subject": "Zoology Lab III",
+    "unitNumber": 2,
+    "unitTitle": "Zoology  III: Standard Preparations & Calibration Methods",
+    "ids": [
+      "bsc-life-sciences-s3-zoology-lab-iii-u2"
+    ]
+  },
+  {
+    "subject": "Zoology Lab III",
+    "unitNumber": 3,
+    "unitTitle": "Zoology  III: Core Experimental Procedures & Synthesis",
+    "ids": [
+      "bsc-life-sciences-s3-zoology-lab-iii-u3"
+    ]
+  },
+  {
+    "subject": "Zoology Lab III",
+    "unitNumber": 4,
+    "unitTitle": "Zoology  III: Quantitative Data Verification & Error Analysis",
+    "ids": [
+      "bsc-life-sciences-s3-zoology-lab-iii-u4"
+    ]
+  },
+  {
+    "subject": "Zoology Lab III",
+    "unitNumber": 5,
+    "unitTitle": "Zoology  III: Comprehensive Practical Record & Viva Voce",
+    "ids": [
+      "bsc-life-sciences-s3-zoology-lab-iii-u5"
+    ]
+  },
+  {
+    "subject": "Organic Chemistry \u2013 III",
+    "unitNumber": 1,
+    "unitTitle": "Alcohols & Phenols",
+    "ids": [
+      "bsc-life-sciences-s3-organic-chemistry-iii-u1",
+      "bsc-biotech-micro-s3-organic-chemistry-iii-u1",
+      "bsc-chemistry-s3-organic-chemistry-iii-u1"
+    ]
+  },
+  {
+    "subject": "Organic Chemistry \u2013 III",
+    "unitNumber": 2,
+    "unitTitle": "Aldehydes & Ketones",
+    "ids": [
+      "bsc-life-sciences-s3-organic-chemistry-iii-u2",
+      "bsc-biotech-micro-s3-organic-chemistry-iii-u2",
+      "bsc-chemistry-s3-organic-chemistry-iii-u2"
+    ]
+  },
+  {
+    "subject": "Organic Chemistry \u2013 III",
+    "unitNumber": 3,
+    "unitTitle": "Carboxylic Acids",
+    "ids": [
+      "bsc-life-sciences-s3-organic-chemistry-iii-u3",
+      "bsc-biotech-micro-s3-organic-chemistry-iii-u3",
+      "bsc-chemistry-s3-organic-chemistry-iii-u3"
+    ]
+  },
+  {
+    "subject": "Organic Chemistry \u2013 III",
+    "unitNumber": 4,
+    "unitTitle": "Amines",
+    "ids": [
+      "bsc-life-sciences-s3-organic-chemistry-iii-u4",
+      "bsc-biotech-micro-s3-organic-chemistry-iii-u4",
+      "bsc-chemistry-s3-organic-chemistry-iii-u4"
+    ]
+  },
+  {
+    "subject": "Organic Chemistry \u2013 III",
+    "unitNumber": 5,
+    "unitTitle": "Stereochemistry",
+    "ids": [
+      "bsc-life-sciences-s3-organic-chemistry-iii-u5",
+      "bsc-biotech-micro-s3-organic-chemistry-iii-u5",
+      "bsc-chemistry-s3-organic-chemistry-iii-u5"
+    ]
+  },
+  {
+    "subject": "Chemistry Lab III (Organic Synthesis)",
+    "unitNumber": 1,
+    "unitTitle": "Chemistry  III (Organic Synthesis): Laboratory Safety Protocols & Instrumentation",
+    "ids": [
+      "bsc-life-sciences-s3-chemistry-lab-iii-organic-synthesis-u1",
+      "bsc-chemistry-s3-chemistry-lab-iii-organic-synthesis-u1"
+    ]
+  },
+  {
+    "subject": "Chemistry Lab III (Organic Synthesis)",
+    "unitNumber": 2,
+    "unitTitle": "Chemistry  III (Organic Synthesis): Standard Preparations & Calibration Methods",
+    "ids": [
+      "bsc-life-sciences-s3-chemistry-lab-iii-organic-synthesis-u2",
+      "bsc-chemistry-s3-chemistry-lab-iii-organic-synthesis-u2"
+    ]
+  },
+  {
+    "subject": "Chemistry Lab III (Organic Synthesis)",
+    "unitNumber": 3,
+    "unitTitle": "Chemistry  III (Organic Synthesis): Core Experimental Procedures & Synthesis",
+    "ids": [
+      "bsc-life-sciences-s3-chemistry-lab-iii-organic-synthesis-u3",
+      "bsc-chemistry-s3-chemistry-lab-iii-organic-synthesis-u3"
+    ]
+  },
+  {
+    "subject": "Chemistry Lab III (Organic Synthesis)",
+    "unitNumber": 4,
+    "unitTitle": "Chemistry  III (Organic Synthesis): Quantitative Data Verification & Error Analysis",
+    "ids": [
+      "bsc-life-sciences-s3-chemistry-lab-iii-organic-synthesis-u4",
+      "bsc-chemistry-s3-chemistry-lab-iii-organic-synthesis-u4"
+    ]
+  },
+  {
+    "subject": "Chemistry Lab III (Organic Synthesis)",
+    "unitNumber": 5,
+    "unitTitle": "Chemistry  III (Organic Synthesis): Comprehensive Practical Record & Viva Voce",
+    "ids": [
+      "bsc-life-sciences-s3-chemistry-lab-iii-organic-synthesis-u5",
+      "bsc-chemistry-s3-chemistry-lab-iii-organic-synthesis-u5"
+    ]
+  },
+  {
+    "subject": "Bio-fertilizers / Herbal Technology",
+    "unitNumber": 1,
+    "unitTitle": "Bio-fertilizer Types",
+    "ids": [
+      "bsc-life-sciences-s3-bio-fertilizers-herbal-technology-u1"
+    ]
+  },
+  {
+    "subject": "Bio-fertilizers / Herbal Technology",
+    "unitNumber": 2,
+    "unitTitle": "Production",
+    "ids": [
+      "bsc-life-sciences-s3-bio-fertilizers-herbal-technology-u2"
+    ]
+  },
+  {
+    "subject": "Bio-fertilizers / Herbal Technology",
+    "unitNumber": 3,
+    "unitTitle": "Application",
+    "ids": [
+      "bsc-life-sciences-s3-bio-fertilizers-herbal-technology-u3"
+    ]
+  },
+  {
+    "subject": "Bio-fertilizers / Herbal Technology",
+    "unitNumber": 4,
+    "unitTitle": "Herbal Medicine",
+    "ids": [
+      "bsc-life-sciences-s3-bio-fertilizers-herbal-technology-u4"
+    ]
+  },
+  {
+    "subject": "Bio-fertilizers / Herbal Technology",
+    "unitNumber": 5,
+    "unitTitle": "Cultivation",
+    "ids": [
+      "bsc-life-sciences-s3-bio-fertilizers-herbal-technology-u5"
+    ]
+  },
+  {
+    "subject": "Molecular Biology & Genetic Engineering",
+    "unitNumber": 1,
+    "unitTitle": "DNA Replication",
+    "ids": [
+      "bsc-biotech-micro-s3-molecular-biology-and-genetic-engineering-u1"
+    ]
+  },
+  {
+    "subject": "Molecular Biology & Genetic Engineering",
+    "unitNumber": 2,
+    "unitTitle": "Transcription",
+    "ids": [
+      "bsc-biotech-micro-s3-molecular-biology-and-genetic-engineering-u2"
+    ]
+  },
+  {
+    "subject": "Molecular Biology & Genetic Engineering",
+    "unitNumber": 3,
+    "unitTitle": "Translation",
+    "ids": [
+      "bsc-biotech-micro-s3-molecular-biology-and-genetic-engineering-u3"
+    ]
+  },
+  {
+    "subject": "Molecular Biology & Genetic Engineering",
+    "unitNumber": 4,
+    "unitTitle": "Cloning Vectors",
+    "ids": [
+      "bsc-biotech-micro-s3-molecular-biology-and-genetic-engineering-u4"
+    ]
+  },
+  {
+    "subject": "Molecular Biology & Genetic Engineering",
+    "unitNumber": 5,
+    "unitTitle": "Gene Therapy",
+    "ids": [
+      "bsc-biotech-micro-s3-molecular-biology-and-genetic-engineering-u5"
+    ]
+  },
+  {
+    "subject": "Molecular Biology Lab",
+    "unitNumber": 1,
+    "unitTitle": "Molecular Biology: Laboratory Safety Protocols & Instrumentation",
+    "ids": [
+      "bsc-biotech-micro-s3-molecular-biology-lab-u1"
+    ]
+  },
+  {
+    "subject": "Molecular Biology Lab",
+    "unitNumber": 2,
+    "unitTitle": "Molecular Biology: Standard Preparations & Calibration Methods",
+    "ids": [
+      "bsc-biotech-micro-s3-molecular-biology-lab-u2"
+    ]
+  },
+  {
+    "subject": "Molecular Biology Lab",
+    "unitNumber": 3,
+    "unitTitle": "Molecular Biology: Core Experimental Procedures & Synthesis",
+    "ids": [
+      "bsc-biotech-micro-s3-molecular-biology-lab-u3"
+    ]
+  },
+  {
+    "subject": "Molecular Biology Lab",
+    "unitNumber": 4,
+    "unitTitle": "Molecular Biology: Quantitative Data Verification & Error Analysis",
+    "ids": [
+      "bsc-biotech-micro-s3-molecular-biology-lab-u4"
+    ]
+  },
+  {
+    "subject": "Molecular Biology Lab",
+    "unitNumber": 5,
+    "unitTitle": "Molecular Biology: Comprehensive Practical Record & Viva Voce",
+    "ids": [
+      "bsc-biotech-micro-s3-molecular-biology-lab-u5"
+    ]
+  },
+  {
+    "subject": "Chemistry Lab III",
+    "unitNumber": 1,
+    "unitTitle": "Chemistry  III: Laboratory Safety Protocols & Instrumentation",
+    "ids": [
+      "bsc-biotech-micro-s3-chemistry-lab-iii-u1"
+    ]
+  },
+  {
+    "subject": "Chemistry Lab III",
+    "unitNumber": 2,
+    "unitTitle": "Chemistry  III: Standard Preparations & Calibration Methods",
+    "ids": [
+      "bsc-biotech-micro-s3-chemistry-lab-iii-u2"
+    ]
+  },
+  {
+    "subject": "Chemistry Lab III",
+    "unitNumber": 3,
+    "unitTitle": "Chemistry  III: Core Experimental Procedures & Synthesis",
+    "ids": [
+      "bsc-biotech-micro-s3-chemistry-lab-iii-u3"
+    ]
+  },
+  {
+    "subject": "Chemistry Lab III",
+    "unitNumber": 4,
+    "unitTitle": "Chemistry  III: Quantitative Data Verification & Error Analysis",
+    "ids": [
+      "bsc-biotech-micro-s3-chemistry-lab-iii-u4"
+    ]
+  },
+  {
+    "subject": "Chemistry Lab III",
+    "unitNumber": 5,
+    "unitTitle": "Chemistry  III: Comprehensive Practical Record & Viva Voce",
+    "ids": [
+      "bsc-biotech-micro-s3-chemistry-lab-iii-u5"
+    ]
+  },
+  {
+    "subject": "Botany III / Zoology III",
+    "unitNumber": 1,
+    "unitTitle": "Plant Systematics",
+    "ids": [
+      "bsc-biotech-micro-s3-botany-iii-zoology-iii-u1"
+    ]
+  },
+  {
+    "subject": "Botany III / Zoology III",
+    "unitNumber": 2,
+    "unitTitle": "Economic Botany",
+    "ids": [
+      "bsc-biotech-micro-s3-botany-iii-zoology-iii-u2"
+    ]
+  },
+  {
+    "subject": "Botany III / Zoology III",
+    "unitNumber": 3,
+    "unitTitle": "Animal Physiology",
+    "ids": [
+      "bsc-biotech-micro-s3-botany-iii-zoology-iii-u3"
+    ]
+  },
+  {
+    "subject": "Botany III / Zoology III",
+    "unitNumber": 4,
+    "unitTitle": "Endocrinology",
+    "ids": [
+      "bsc-biotech-micro-s3-botany-iii-zoology-iii-u4"
+    ]
+  },
+  {
+    "subject": "Botany III / Zoology III",
+    "unitNumber": 5,
+    "unitTitle": "Reproductive Biology",
+    "ids": [
+      "bsc-biotech-micro-s3-botany-iii-zoology-iii-u5"
+    ]
+  },
+  {
+    "subject": "Bioinformatics Basics",
+    "unitNumber": 1,
+    "unitTitle": "Biological Databases",
+    "ids": [
+      "bsc-biotech-micro-s3-bioinformatics-basics-u1"
+    ]
+  },
+  {
+    "subject": "Bioinformatics Basics",
+    "unitNumber": 2,
+    "unitTitle": "Sequence Alignment",
+    "ids": [
+      "bsc-biotech-micro-s3-bioinformatics-basics-u2"
+    ]
+  },
+  {
+    "subject": "Bioinformatics Basics",
+    "unitNumber": 3,
+    "unitTitle": "Phylogenetics",
+    "ids": [
+      "bsc-biotech-micro-s3-bioinformatics-basics-u3"
+    ]
+  },
+  {
+    "subject": "Bioinformatics Basics",
+    "unitNumber": 4,
+    "unitTitle": "Structural Bioinformatics",
+    "ids": [
+      "bsc-biotech-micro-s3-bioinformatics-basics-u4"
+    ]
+  },
+  {
+    "subject": "Bioinformatics Basics",
+    "unitNumber": 5,
+    "unitTitle": "Tools",
+    "ids": [
+      "bsc-biotech-micro-s3-bioinformatics-basics-u5"
+    ]
+  },
+  {
+    "subject": "Thermal Physics & Statistical Mechanics",
+    "unitNumber": 1,
+    "unitTitle": "Kinetic Theory",
+    "ids": [
+      "bsc-physics-s3-thermal-physics-and-statistical-mechanics-u1"
+    ]
+  },
+  {
+    "subject": "Thermal Physics & Statistical Mechanics",
+    "unitNumber": 2,
+    "unitTitle": "Laws of Thermodynamics",
+    "ids": [
+      "bsc-physics-s3-thermal-physics-and-statistical-mechanics-u2"
+    ]
+  },
+  {
+    "subject": "Thermal Physics & Statistical Mechanics",
+    "unitNumber": 3,
+    "unitTitle": "Entropy",
+    "ids": [
+      "bsc-physics-s3-thermal-physics-and-statistical-mechanics-u3"
+    ]
+  },
+  {
+    "subject": "Thermal Physics & Statistical Mechanics",
+    "unitNumber": 4,
+    "unitTitle": "Heat Engines",
+    "ids": [
+      "bsc-physics-s3-thermal-physics-and-statistical-mechanics-u4"
+    ]
+  },
+  {
+    "subject": "Thermal Physics & Statistical Mechanics",
+    "unitNumber": 5,
+    "unitTitle": "Statistical Distributions",
+    "ids": [
+      "bsc-physics-s3-thermal-physics-and-statistical-mechanics-u5"
+    ]
+  },
+  {
+    "subject": "Physics Lab III",
+    "unitNumber": 1,
+    "unitTitle": "Physics  III: Laboratory Safety Protocols & Instrumentation",
+    "ids": [
+      "bsc-physics-s3-physics-lab-iii-u1"
+    ]
+  },
+  {
+    "subject": "Physics Lab III",
+    "unitNumber": 2,
+    "unitTitle": "Physics  III: Standard Preparations & Calibration Methods",
+    "ids": [
+      "bsc-physics-s3-physics-lab-iii-u2"
+    ]
+  },
+  {
+    "subject": "Physics Lab III",
+    "unitNumber": 3,
+    "unitTitle": "Physics  III: Core Experimental Procedures & Synthesis",
+    "ids": [
+      "bsc-physics-s3-physics-lab-iii-u3"
+    ]
+  },
+  {
+    "subject": "Physics Lab III",
+    "unitNumber": 4,
+    "unitTitle": "Physics  III: Quantitative Data Verification & Error Analysis",
+    "ids": [
+      "bsc-physics-s3-physics-lab-iii-u4"
+    ]
+  },
+  {
+    "subject": "Physics Lab III",
+    "unitNumber": 5,
+    "unitTitle": "Physics  III: Comprehensive Practical Record & Viva Voce",
+    "ids": [
+      "bsc-physics-s3-physics-lab-iii-u5"
+    ]
+  },
+  {
+    "subject": "Chemistry III / Data Structures",
+    "unitNumber": 1,
+    "unitTitle": "Organic Reactions",
+    "ids": [
+      "bsc-physics-s3-chemistry-iii-data-structures-u1"
+    ]
+  },
+  {
+    "subject": "Chemistry III / Data Structures",
+    "unitNumber": 2,
+    "unitTitle": "Carbonyl Compounds",
+    "ids": [
+      "bsc-physics-s3-chemistry-iii-data-structures-u2"
+    ]
+  },
+  {
+    "subject": "Chemistry III / Data Structures",
+    "unitNumber": 3,
+    "unitTitle": "Amines",
+    "ids": [
+      "bsc-physics-s3-chemistry-iii-data-structures-u3"
+    ]
+  },
+  {
+    "subject": "Chemistry III / Data Structures",
+    "unitNumber": 4,
+    "unitTitle": "Stereochemistry",
+    "ids": [
+      "bsc-physics-s3-chemistry-iii-data-structures-u4"
+    ]
+  },
+  {
+    "subject": "Chemistry III / Data Structures",
+    "unitNumber": 5,
+    "unitTitle": "Spectroscopy",
+    "ids": [
+      "bsc-physics-s3-chemistry-iii-data-structures-u5"
+    ]
+  },
+  {
+    "subject": "Instrumentation & Measurement",
+    "unitNumber": 1,
+    "unitTitle": "Measurement Basics",
+    "ids": [
+      "bsc-physics-s3-instrumentation-and-measurement-u1"
+    ]
+  },
+  {
+    "subject": "Instrumentation & Measurement",
+    "unitNumber": 2,
+    "unitTitle": "Transducers",
+    "ids": [
+      "bsc-physics-s3-instrumentation-and-measurement-u2"
+    ]
+  },
+  {
+    "subject": "Instrumentation & Measurement",
+    "unitNumber": 3,
+    "unitTitle": "Oscilloscopes",
+    "ids": [
+      "bsc-physics-s3-instrumentation-and-measurement-u3"
+    ]
+  },
+  {
+    "subject": "Instrumentation & Measurement",
+    "unitNumber": 4,
+    "unitTitle": "Signal Generators",
+    "ids": [
+      "bsc-physics-s3-instrumentation-and-measurement-u4"
+    ]
+  },
+  {
+    "subject": "Instrumentation & Measurement",
+    "unitNumber": 5,
+    "unitTitle": "Data Acquisition",
+    "ids": [
+      "bsc-physics-s3-instrumentation-and-measurement-u5"
+    ]
+  },
+  {
+    "subject": "Thermal Physics & Electronics",
+    "unitNumber": 1,
+    "unitTitle": "Kinetic Theory",
+    "ids": [
+      "bsc-chemistry-s3-thermal-physics-and-electronics-u1"
+    ]
+  },
+  {
+    "subject": "Thermal Physics & Electronics",
+    "unitNumber": 2,
+    "unitTitle": "Thermodynamics",
+    "ids": [
+      "bsc-chemistry-s3-thermal-physics-and-electronics-u2"
+    ]
+  },
+  {
+    "subject": "Thermal Physics & Electronics",
+    "unitNumber": 3,
+    "unitTitle": "Semiconductors",
+    "ids": [
+      "bsc-chemistry-s3-thermal-physics-and-electronics-u3"
+    ]
+  },
+  {
+    "subject": "Thermal Physics & Electronics",
+    "unitNumber": 4,
+    "unitTitle": "Amplifiers",
+    "ids": [
+      "bsc-chemistry-s3-thermal-physics-and-electronics-u4"
+    ]
+  },
+  {
+    "subject": "Thermal Physics & Electronics",
+    "unitNumber": 5,
+    "unitTitle": "Digital Logic",
+    "ids": [
+      "bsc-chemistry-s3-thermal-physics-and-electronics-u5"
+    ]
+  },
+  {
+    "subject": "Mathematics III / Botany III",
+    "unitNumber": 1,
+    "unitTitle": "Real Analysis",
+    "ids": [
+      "bsc-chemistry-s3-mathematics-iii-botany-iii-u1"
+    ]
+  },
+  {
+    "subject": "Mathematics III / Botany III",
+    "unitNumber": 2,
+    "unitTitle": "Sequences",
+    "ids": [
+      "bsc-chemistry-s3-mathematics-iii-botany-iii-u2"
+    ]
+  },
+  {
+    "subject": "Mathematics III / Botany III",
+    "unitNumber": 3,
+    "unitTitle": "Series",
+    "ids": [
+      "bsc-chemistry-s3-mathematics-iii-botany-iii-u3"
+    ]
+  },
+  {
+    "subject": "Mathematics III / Botany III",
+    "unitNumber": 4,
+    "unitTitle": "Plant Systematics",
+    "ids": [
+      "bsc-chemistry-s3-mathematics-iii-botany-iii-u4"
+    ]
+  },
+  {
+    "subject": "Mathematics III / Botany III",
+    "unitNumber": 5,
+    "unitTitle": "Economic Botany",
+    "ids": [
+      "bsc-chemistry-s3-mathematics-iii-botany-iii-u5"
+    ]
+  },
+  {
+    "subject": "Analytical Chemistry",
+    "unitNumber": 1,
+    "unitTitle": "Titrimetry",
+    "ids": [
+      "bsc-chemistry-s3-analytical-chemistry-u1"
+    ]
+  },
+  {
+    "subject": "Analytical Chemistry",
+    "unitNumber": 2,
+    "unitTitle": "Gravimetry",
+    "ids": [
+      "bsc-chemistry-s3-analytical-chemistry-u2"
+    ]
+  },
+  {
+    "subject": "Analytical Chemistry",
+    "unitNumber": 3,
+    "unitTitle": "Chromatography",
+    "ids": [
+      "bsc-chemistry-s3-analytical-chemistry-u3"
+    ]
+  },
+  {
+    "subject": "Analytical Chemistry",
+    "unitNumber": 4,
+    "unitTitle": "Spectroscopy",
+    "ids": [
+      "bsc-chemistry-s3-analytical-chemistry-u4"
+    ]
+  },
+  {
+    "subject": "Analytical Chemistry",
+    "unitNumber": 5,
+    "unitTitle": "Quality Control",
+    "ids": [
+      "bsc-chemistry-s3-analytical-chemistry-u5"
+    ]
+  },
+  {
+    "subject": "Differential & Integral Calculus",
+    "unitNumber": 1,
+    "unitTitle": "Partial Differentiation",
+    "ids": [
+      "bsc-math-s3-differential-and-integral-calculus-u1"
+    ]
+  },
+  {
+    "subject": "Differential & Integral Calculus",
+    "unitNumber": 2,
+    "unitTitle": "Multiple Integrals",
+    "ids": [
+      "bsc-math-s3-differential-and-integral-calculus-u2"
+    ]
+  },
+  {
+    "subject": "Differential & Integral Calculus",
+    "unitNumber": 3,
+    "unitTitle": "Vector Calculus",
+    "ids": [
+      "bsc-math-s3-differential-and-integral-calculus-u3"
+    ]
+  },
+  {
+    "subject": "Differential & Integral Calculus",
+    "unitNumber": 4,
+    "unitTitle": "Applications",
+    "ids": [
+      "bsc-math-s3-differential-and-integral-calculus-u4"
+    ]
+  },
+  {
+    "subject": "Differential & Integral Calculus",
+    "unitNumber": 5,
+    "unitTitle": "Improper Integrals",
+    "ids": [
+      "bsc-math-s3-differential-and-integral-calculus-u5"
+    ]
+  },
+  {
+    "subject": "Problem Solving",
+    "unitNumber": 1,
+    "unitTitle": "Problem Solving: Core Concepts & Principles",
+    "ids": [
+      "bsc-math-s3-problem-solving-u1"
+    ]
+  },
+  {
+    "subject": "Problem Solving",
+    "unitNumber": 2,
+    "unitTitle": "Problem Solving: Theoretical Formulations & Modeling",
+    "ids": [
+      "bsc-math-s3-problem-solving-u2"
+    ]
+  },
+  {
+    "subject": "Problem Solving",
+    "unitNumber": 3,
+    "unitTitle": "Problem Solving: Analytical & Computational Methods",
+    "ids": [
+      "bsc-math-s3-problem-solving-u3"
+    ]
+  },
+  {
+    "subject": "Problem Solving",
+    "unitNumber": 4,
+    "unitTitle": "Problem Solving: Practical Engineering & Industrial Applications",
+    "ids": [
+      "bsc-math-s3-problem-solving-u4"
+    ]
+  },
+  {
+    "subject": "Problem Solving",
+    "unitNumber": 5,
+    "unitTitle": "Problem Solving: Modern Trends, Case Studies & Problem Solving",
+    "ids": [
+      "bsc-math-s3-problem-solving-u5"
+    ]
+  },
+  {
+    "subject": "Physics III / Statistics III",
+    "unitNumber": 1,
+    "unitTitle": "Thermal Physics",
+    "ids": [
+      "bsc-math-s3-physics-iii-statistics-iii-u1"
+    ]
+  },
+  {
+    "subject": "Physics III / Statistics III",
+    "unitNumber": 2,
+    "unitTitle": "Thermodynamics",
+    "ids": [
+      "bsc-math-s3-physics-iii-statistics-iii-u2"
+    ]
+  },
+  {
+    "subject": "Physics III / Statistics III",
+    "unitNumber": 3,
+    "unitTitle": "Kinetic Theory",
+    "ids": [
+      "bsc-math-s3-physics-iii-statistics-iii-u3"
+    ]
+  },
+  {
+    "subject": "Physics III / Statistics III",
+    "unitNumber": 4,
+    "unitTitle": "Statistical Distributions",
+    "ids": [
+      "bsc-math-s3-physics-iii-statistics-iii-u4"
+    ]
+  },
+  {
+    "subject": "Physics III / Statistics III",
+    "unitNumber": 5,
+    "unitTitle": "Sampling",
+    "ids": [
+      "bsc-math-s3-physics-iii-statistics-iii-u5"
+    ]
+  },
+  {
+    "subject": "OOP / DBMS",
+    "unitNumber": 1,
+    "unitTitle": "OOP Concepts",
+    "ids": [
+      "bsc-math-s3-oop-dbms-u1"
+    ]
+  },
+  {
+    "subject": "OOP / DBMS",
+    "unitNumber": 2,
+    "unitTitle": "Classes",
+    "ids": [
+      "bsc-math-s3-oop-dbms-u2"
+    ]
+  },
+  {
+    "subject": "OOP / DBMS",
+    "unitNumber": 3,
+    "unitTitle": "Inheritance",
+    "ids": [
+      "bsc-math-s3-oop-dbms-u3"
+    ]
+  },
+  {
+    "subject": "OOP / DBMS",
+    "unitNumber": 4,
+    "unitTitle": "Exception Handling",
+    "ids": [
+      "bsc-math-s3-oop-dbms-u4"
+    ]
+  },
+  {
+    "subject": "OOP / DBMS",
+    "unitNumber": 5,
+    "unitTitle": "Collections",
+    "ids": [
+      "bsc-math-s3-oop-dbms-u5"
+    ]
+  },
+  {
+    "subject": "Python Programming",
+    "unitNumber": 1,
+    "unitTitle": "Basics",
+    "ids": [
+      "bsc-math-s3-python-programming-u1"
+    ]
+  },
+  {
+    "subject": "Python Programming",
+    "unitNumber": 2,
+    "unitTitle": "Control Flow",
+    "ids": [
+      "bsc-math-s3-python-programming-u2"
+    ]
+  },
+  {
+    "subject": "Python Programming",
+    "unitNumber": 3,
+    "unitTitle": "Data Structures",
+    "ids": [
+      "bsc-math-s3-python-programming-u3"
+    ]
+  },
+  {
+    "subject": "Python Programming",
+    "unitNumber": 4,
+    "unitTitle": "Functions",
+    "ids": [
+      "bsc-math-s3-python-programming-u4"
+    ]
+  },
+  {
+    "subject": "Python Programming",
+    "unitNumber": 5,
+    "unitTitle": "File Handling",
+    "ids": [
+      "bsc-math-s3-python-programming-u5"
+    ]
+  }
+]

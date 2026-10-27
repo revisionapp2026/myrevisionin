@@ -1,0 +1,132 @@
+{
+  "btech-dsa: arrays & linked lists": {
+    "highlights": [
+      "Linear Array Allocation: Sequential memory addressing with $O(1)$ direct access via formula $\\text{Loc}(A[i]) = B + i \\times W$, where $B$ is base address and $W$ is element word size.",
+      "Array Operation Constraints: Fixed static sizing in C/C++; element insertion or deletion at arbitrary index requires $O(n)$ data shifting to maintain contiguity.",
+      "Singly Linked List Mechanics: Dynamic nodes holding data and forward pointer $next$; insertions at head take $O(1)$ time, while random access requires $O(n)$ traversal.",
+      "Doubly Linked List Traversal: Contains $prev$ and $next$ pointers enabling bidirectional navigation; requires $2 \\times$ pointer memory overhead per node.",
+      "Circular Linked List Architecture: Tail node links directly to head node ($tail\\to next = head$); ideal for round-robin CPU scheduling and circular buffers.",
+      "Skip Lists: Probabilistic multi-level forward linked structures achieving $O(\\log n)$ average search, insertion, and deletion times.",
+      "Memory Locality vs Pointer Overhead: Contiguous arrays optimize CPU cache line spatial locality, whereas linked lists induce pointer indirection and cache misses.",
+      "Memory Management & Leaks: Unreferenced heap nodes must be explicitly deallocated using `free()` or `delete` to prevent progressive memory leaks.",
+      "Sparse Matrix Storage: Compresses $m \\times n$ matrices with predominantly zero entries into 3-tuple coordinate format $(row, col, value)$ or orthogonal linked lists.",
+      "University Exam Blueprint: Draw clean box-and-pointer diagrams showing node boundaries, pointer arrows, and terminal NULL ground symbols."
+    ],
+    "keyPoints": [
+      "1D Address Calculation: $\\text{Loc}(A[i]) = \\text{Base} + i \\times W$; Row-major 2D: $\\text{Base} + (i \\cdot C + j) \\cdot W$.",
+      "Insertion at Head: Create node, set $node\\to next = head$, update $head = node$; Time complexity $O(1)$.",
+      "Doubly Linked Deletion: $curr\\to prev\\to next = curr\\to next$ and $curr\\to next\\to prev = curr\\to prev$; Time $O(1)$.",
+      "Floyd Cycle Detection: Slow pointer advances 1 step, fast pointer advances 2 steps; collision detects loop in $O(n)$ time and $O(1)$ space.",
+      "Array vs List Trade-Off: Arrays provide $O(1)$ index access but $O(n)$ insert/delete; Linked lists provide $O(1)$ insert/delete at pointer but $O(n)$ access.",
+      "Sentinel Head Node: A dummy head node eliminates edge-case conditional branching during list insertions and deletions.",
+      "Polynomial Addition: Traverse two sorted linked lists by exponents, summing coefficients in $O(n + m)$ linear time.",
+      "Amortized Array Resizing: Geometric doubling from capacity $C$ to $2C$ guarantees $O(1)$ amortized insertion cost.",
+      "Common Bug: Segmentation fault caused by dereferencing NULL pointers ($curr\\to next$ when $curr == NULL$).",
+      "Exam Tip: In linked list algorithm questions, always state boundary checks for empty lists ($head == NULL$) and single-node lists."
+    ]
+  },
+  "btech-dsa: stacks & queues": {
+    "highlights": [
+      "Stack LIFO Protocol: Last-In First-Out abstract data type supporting $O(1)$ operations: $push(x)$, $pop()$, and $peek()$ executed exclusively at $top$.",
+      "Array vs Linked Stack: Array implementation uses fixed size with top index (overflow when $top == MAX - 1$); linked stack dynamically prepends nodes at head.",
+      "Arithmetic Expression Notations: Infix ($A + B$), Prefix ($+ A B$), and Postfix ($A B +$ Reverse Polish Notation); removes syntactic ambiguity without parentheses.",
+      "Shunting-Yard Algorithm: Dijkstra's parsing algorithm converts infix expressions into postfix notation using an operator precedence stack in $O(n)$ time.",
+      "Call Stack & Recursion Management: Activation record frames store parameters, local variables, and return addresses; excessive recursion depth triggers stack overflow.",
+      "Queue FIFO Protocol: First-In First-Out abstract data type supporting $enqueue(x)$ at $rear$ and $dequeue()$ at $front$ in $O(1)$ time.",
+      "Circular Queue Dynamics: Resolves false overflow in linear array queues by wrapping indices using modulo arithmetic: $rear = (rear + 1) \\bmod N$.",
+      "Double-Ended Queue (Deque): Allows insertion and deletion at both ends; foundational structure for sliding window maximum and work-stealing schedulers.",
+      "Priority Queue Implementations: Elements dequeued by priority rank; implemented via binary min/max heaps with $O(\\log n)$ insert and extract.",
+      "Industrial Engineering Applications: Stacks power undo/redo buffers and browser history; queues govern network packet buffers and printer spoolers."
+    ],
+    "keyPoints": [
+      "Stack Overflow & Underflow: Overflow when $top == MAX - 1$; Underflow when $top == -1$.",
+      "Postfix Evaluation: Scan left-to-right; push operands; when operator arrives, pop 2 operands, evaluate $b \\text{ op } a$, and push result.",
+      "Parentheses Matching: Push opening brackets; on closing bracket, match top of stack and pop; string is balanced if stack is empty at end.",
+      "Circular Queue Full Condition: $(rear + 1) \\bmod N == front$; Empty condition: $front == -1$.",
+      "Queue via Two Stacks: Enqueue pushes to Stack 1; Dequeue pops from Stack 2 (refilling from Stack 1 when empty); Amortized time $O(1)$.",
+      "Monotonic Stack: Computes Next Greater Element (NGE) for all elements in an array in $O(n)$ linear time.",
+      "Breadth-First Search (BFS): Graph exploration relies fundamentally on a FIFO queue to discover equidistant frontier vertices.",
+      "Heap Priority Queue Complexity: Insert $O(\\log n)$, Extract-Min $O(\\log n)$, Find-Min $O(1)$.",
+      "Recursion Unrolling: Any recursive algorithm can be converted into an iterative version by manually managing an auxiliary stack.",
+      "Exam Trace Table: For expression conversion, always construct a trace table with columns: Symbol, Stack Contents, and Postfix Output."
+    ]
+  },
+  "btech-dsa: trees & graphs": {
+    "highlights": [
+      "Binary Tree Architecture: Non-linear hierarchical structure where each parent node has at most two children ($left$ and $right$); height $h$ has at most $2^{h+1}-1$ nodes.",
+      "Binary Search Tree (BST) Invariant: For every node $u$, all keys in $left(u) < key(u) < right(u)$; average search time is $O(\\log n)$, degrading to $O(n)$ when skewed.",
+      "AVL Tree Height Balancing: Enforces balance factor $BF = h_L - h_R \\in \\{-1, 0, +1\\}$; restores balance via LL, RR, LR, RL rotations in $O(\\log n)$ time.",
+      "Red-Black Tree Properties: Self-balancing BST with node colors (root is black, red nodes have black children, identical black-height); guarantees height $h \\le 2\\log_2(n+1)$.",
+      "Tree Traversal Orders: Inorder ($L-Root-R$ outputs sorted BST keys), Preorder ($Root-L-R$), Postorder ($L-R-Root$), and Level-order (BFS queue-driven).",
+      "Graph Data Structures: Adjacency Matrix uses $O(V^2)$ memory with $O(1)$ edge checks; Adjacency List uses $O(V + E)$ memory, optimal for sparse topologies.",
+      "Graph Traversal Algorithms: Depth-First Search (DFS) uses recursion/stack with discovery/finish timestamps; Breadth-First Search (BFS) finds unweighted shortest paths.",
+      "Minimum Spanning Tree (MST): Spans all vertices with minimum total edge weight without cycles; Kruskal's uses Disjoint Set Union ($O(E \\log E)$), Prim's uses priority queue ($O(E \\log V)$).",
+      "Single-Source Shortest Path: Dijkstra's greedy algorithm solves non-negative weighted graphs in $O((V+E)\\log V)$; Bellman-Ford accommodates negative weights in $O(V \\cdot E)$.",
+      "Topological Sorting & DAGs: Linear ordering of vertices in Directed Acyclic Graphs such that edge $(u, v)$ implies $u$ precedes $v$; solved via Kahn's BFS or DFS finish times."
+    ],
+    "keyPoints": [
+      "AVL Tree Height Bound: Maximum height $h < 1.44 \\log_2(n + 2)$; strictly balanced compared to Red-Black trees.",
+      "AVL Rotations: Single rotation for LL and RR; Double rotation for LR (left-rotate child, right-rotate parent) and RL.",
+      "BST Inorder Invariant: Inorder traversal of a valid Binary Search Tree strictly produces ascending sorted output.",
+      "Complete vs Full Binary Tree: Full tree: every node has 0 or 2 children; Complete tree: all levels filled except possibly the last, filled left-to-right.",
+      "Dijkstra's Limitation: Fails on graphs containing negative edge weights; requires non-negative edge weights $w(u, v) \\ge 0$.",
+      "Bellman-Ford Cycle Detection: Relaxes all edges $V-1$ times; a successful relaxation on the $V$-th pass confirms a negative-weight cycle.",
+      "Kruskal's MST Greedy Step: Sort edges by weight; insert edge if endpoints belong to different disjoint sets using `find` and `union`.",
+      "Eulerian Path Condition: Connected undirected graph has an Euler path iff exactly 0 or 2 vertices have odd degrees.",
+      "Floyd-Warshall All-Pairs: Dynamic programming recurrence: $D^{(k)}[i][j] = \\min(D^{(k-1)}[i][j], D^{(k-1)}[i][k] + D^{(k-1)}[k][j])$.",
+      "Exam Tip: When drawing AVL tree insertions, write the balance factor beside every ancestor node before performing rotations."
+    ]
+  },
+  "btech-dsa: sorting & searching": {
+    "highlights": [
+      "Sequential vs Binary Search: Linear search operates in $O(n)$ time on unsorted data; Binary search halves the search space each step, requiring $O(\\log n)$ on sorted arrays.",
+      "Quadratic Comparison Sorts: Bubble, Selection, and Insertion Sort run in $O(n^2)$ worst-case; Insertion Sort runs in $O(n)$ linear time on nearly sorted inputs.",
+      "Merge Sort Divide-and-Conquer: Divides array into halves, recursively sorts, and merges in $O(n)$ time; guaranteed $O(n \\log n)$ time with $O(n)$ auxiliary memory.",
+      "Quick Sort Partitioning: Selects a pivot element, partitions into lower/higher segments; average runtime is $O(n \\log n)$, degrading to $O(n^2)$ when pivot selection is extremal.",
+      "Heap Sort Mechanism: Builds a binary max-heap in $O(n)$ time, repeatedly swaps root with last element and heapifies in $O(\\log n)$; in-place and non-stable $O(n \\log n)$.",
+      "Comparison Sort Lower Bound: Any deterministic comparison-based sorting algorithm requires at least $\\Omega(n \\log n)$ comparisons in the worst case via decision tree theorem.",
+      "Linear Time Non-Comparison Sorts: Counting Sort ($O(n + k)$), Radix Sort ($O(d(n + k))$), and Bucket Sort exploit key digit structures to beat the comparison lower bound.",
+      "Sorting Stability: A sorting algorithm is stable if elements with duplicate keys preserve their original relative input order (e.g. Merge Sort, Insertion Sort).",
+      "External Sorting Multi-Way Merge: Used when data exceeds RAM capacity; files are split into sorted runs in memory and merged using loser trees.",
+      "Industrial Implementations: Hybrid sorting engines like Timsort (Python / Java) combine Insertion Sort and Merge Sort to optimize real-world performance."
+    ],
+    "keyPoints": [
+      "Binary Search Recurrence: $T(n) = T(n/2) + O(1) \\implies T(n) = O(\\log n)$; mid computed as $low + (high - low)/2$ to prevent integer overflow.",
+      "Quick Sort Recurrence: Average case $T(n) = 2T(n/2) + O(n) \\implies O(n \\log n)$; Worst case $T(n) = T(n-1) + O(n) \\implies O(n^2)$.",
+      "Merge Sort Space Complexity: Requires $O(n)$ extra buffer space for arrays; linked lists can be merge sorted in $O(1)$ auxiliary memory.",
+      "Heapify Time Complexity: Sifting down takes $O(h)$; building heap from raw array takes $\\sum \\frac{n}{2^{h+1}} O(h) = O(n)$ linear time.",
+      "Stability Classification: Stable: Insertion Sort, Bubble Sort, Merge Sort, Counting Sort; Unstable: Quick Sort, Heap Sort, Selection Sort.",
+      "Hoare vs Lomuto Partitioning: Hoare's scheme uses two converging pointers, performing $3\\times$ fewer swaps on average than Lomuto's single pointer.",
+      "Dutch National Flag: Edsger Dijkstra's 3-way partitioning sorts arrays of 0s, 1s, and 2s in a single pass with $O(n)$ time and $O(1)$ space.",
+      "Radix Sort Stability Requirement: The underlying sub-routine sorting individual digits must be strictly stable (typically Counting Sort).",
+      "In-Place Definition: An algorithm is in-place if it requires $O(1)$ or at most $O(\\log n)$ auxiliary recursion stack space beyond input storage.",
+      "Big-O Summary Table: Memorize Best, Average, Worst Time, and Auxiliary Space for all 7 major sorting algorithms for written exams."
+    ]
+  },
+  "btech-dsa: hashing & algorithm analysis": {
+    "highlights": [
+      "Hash Function Mapping: Maps arbitrary large keys from universe $U$ into table slots $0 \\le h(k) < m$; must be deterministic, uniform, and fast ($O(1)$).",
+      "Division & Multiplication Hash Methods: Division method $h(k) = k \\bmod m$ (with $m$ prime); Multiplication method $h(k) = \\lfloor m (k A \\bmod 1) \\rfloor$ with Knuth's constant $A \\approx 0.618033$.",
+      "Separate Chaining Collision Resolution: Each table slot references a linked list of colliding entries; average lookup time is $O(1 + \\alpha)$ where load factor $\\alpha = n/m$.",
+      "Open Addressing Probing Techniques: All keys reside directly in table slots; Linear Probing ($h(k, i) = (h'(k) + i) \\bmod m$) suffers from primary clustering.",
+      "Quadratic Probing & Double Hashing: Quadratic probing resolves primary clustering; Double hashing uses two independent hash functions ($h(k, i) = (h_1(k) + i \\cdot h_2(k)) \\bmod m$).",
+      "Asymptotic Complexity Notations: Big-O ($O$, asymptotic upper bound), Big-Omega ($\\Omega$, lower bound), Big-Theta ($\\Theta$, tight bound), Little-o ($o$), and Little-omega ($\\omega$).",
+      "Master Theorem for Divide-and-Conquer: Solves recurrences $T(n) = a T(n/b) + f(n)$ by comparing driving function $f(n)$ against critical polynomial $n^{\\log_b a}$.",
+      "Amortized Complexity Techniques: Analyzes average cost per operation over worst-case sequence; methods include Aggregate method, Accounting method, and Potential function method.",
+      "Bloom Filters & Probabilistic Hashing: Space-efficient probabilistic bit-array testing set membership; guarantees zero false negatives with controllable false positive rate.",
+      "Industrial Hash Architectures: Distributed consistent hashing in Amazon DynamoDB and Apache Cassandra minimizes key remapping during cluster node resizing."
+    ],
+    "keyPoints": [
+      "Load Factor Formula: $\\alpha = \\frac{n}{m}$; for separate chaining $\\alpha$ can exceed 1; for open addressing $\\alpha < 1$ must be strictly maintained.",
+      "Double Hashing Coprimality: $h_2(k)$ must be relatively prime to table size $m$ (typically $m$ is chosen as a prime number) to probe all slots.",
+      "Master Theorem Case 1: If $f(n) = O(n^{\\log_b a - \\epsilon})$ for $\\epsilon > 0$, then $T(n) = \\Theta(n^{\\log_b a})$.",
+      "Master Theorem Case 2: If $f(n) = \\Theta(n^{\\log_b a} \\log^k n)$ for $k \\ge 0$, then $T(n) = \\Theta(n^{\\log_b a} \\log^{k+1} n)$.",
+      "Master Theorem Case 3: If $f(n) = \\Omega(n^{\\log_b a + \\epsilon})$ and satisfies regularity condition $a f(n/b) \\le c f(n)$ for $c < 1$, then $T(n) = \\Theta(f(n))$.",
+      "Table Dynamic Resizing: When load factor $\\alpha$ crosses threshold (e.g. 0.75), allocate a table of double prime size and re-hash all existing keys.",
+      "Bloom Filter Guarantee: Never produces false negatives (if filter returns false, item is definitely absent from the set).",
+      "Universal Hashing: Randomly selecting a hash function from a universal family guarantees expected collision count between distinct keys is $\\le 1/m$.",
+      "Amortized Dynamic Array: Inserting $n$ elements into an array with geometric doubling takes $O(n)$ total work, yielding $O(1)$ amortized insert cost.",
+      "Exam Notation Checklist: When writing asymptotic proofs, always state the positive constants $c_1, c_2, n_0$ and the corresponding inequality."
+    ]
+  }
+}

@@ -1,0 +1,688 @@
+{
+  "botany_zoology_set1": [
+    {
+      "id": "bsc-bz-s1-q1",
+      "question_no": 1,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "What is the function of the casparian strip in plant root endodermis?",
+      "answer_lines": [
+        "A hydrophobic band of suberin and lignin deposited in the radial and transverse walls of root endodermal cells that blocks apoplastic water transport, forcing water and dissolved minerals to enter the symplast for selective membrane filtration."
+      ]
+    },
+    {
+      "id": "bsc-bz-s1-q2",
+      "question_no": 2,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Differentiate between open and closed vascular bundles in plant anatomy.",
+      "answer_lines": [
+        "Open vascular bundles possess an active layer of intrafascicular cambium between xylem and phloem, enabling secondary growth (dicot stems). Closed vascular bundles lack cambium and cannot undergo secondary growth (monocot stems)."
+      ]
+    },
+    {
+      "id": "bsc-bz-s1-q3",
+      "question_no": 3,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "State the anatomical difference between myelinated and unmyelinated nerve fibers.",
+      "answer_lines": [
+        "Myelinated nerve fibers are insulated by concentric layers of myelin sheath formed by Schwann cells or oligodendrocytes, interrupted by Nodes of Ranvier for rapid saltatory conduction. Unmyelinated fibers lack thick myelin sheaths and conduct impulses much more slowly."
+      ]
+    },
+    {
+      "id": "bsc-bz-s1-q4",
+      "question_no": 4,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "What is Kranz anatomy and in which photosynthetic plants is it found?",
+      "answer_lines": [
+        "A specialized leaf anatomical arrangement found in C4 plants (maize, sugarcane) where vascular bundles are surrounded by a concentric wreath of large chloroplast-rich bundle sheath cells enclosed by radiating mesophyll cells, spatially separating initial carbon fixation from the Calvin cycle."
+      ]
+    },
+    {
+      "id": "bsc-bz-s1-q5",
+      "question_no": 5,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Define homeothermy and poikilothermy.",
+      "answer_lines": [
+        "Homeotherms (endotherms: birds, mammals) maintain a stable core body temperature via internal metabolic heat generation regardless of ambient environment. Poikilotherms (ectotherms: fish, amphibians, reptiles) have body temperatures fluctuating with ambient environmental temperatures."
+      ]
+    },
+    {
+      "id": "bsc-bz-s1-q6",
+      "question_no": 6,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Describe Secondary Growth in a Typical Dicot Stem. Detail the formation of vascular cambium, secondary xylem, secondary phloem, cork cambium (phellogen), and bark.",
+      "answer_lines": [
+        "1. Cambial Ring Formation: Intrafascicular cambium within vascular bundles unites with interfascicular cambium developed from medullary ray parenchyma, forming a continuous circular vascular cambium ring.",
+        "2. Activity of Vascular Cambium: Cambial cells divide tangentially, cutting off secondary xylem (wood) toward the interior and secondary phloem toward the exterior. Xylem is produced at a rate 4 to 8 times faster than phloem, causing radial expansion.",
+        "3. Annual Rings: Cambial activity varies seasonally; spring wood (early wood) with wide vessels and thin walls forms during spring, while autumn wood (late wood) with dense narrow vessels forms during autumn, creating distinct annual growth rings.",
+        "4. Periderm and Bark Formation: Epidermis ruptures under internal expanding pressure. Sub-epidermal cortical cells dedifferentiate into cork cambium (phellogen), which cuts off dead suberized cork cells (phellem) outward and secondary cortex (phelloderm) inward. Bark comprises all tissues exterior to the vascular cambium."
+      ]
+    },
+    {
+      "id": "bsc-bz-s1-q7",
+      "question_no": 7,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Explain Histology and Contraction Mechanics of Skeletal Muscle. Detail the sarcomere structure, actin and myosin filaments, and the Sliding Filament Theory.",
+      "answer_lines": [
+        "1. Microscopic Architecture: Skeletal muscle consists of multinucleated cylindrical muscle fibers packed with parallel myofibrils displaying alternating isotropic (I) bands and anisotropic (A) bands.",
+        "2. Sarcomere Anatomy: The functional contractile unit bounded by two Z-discs. Contains thick filaments (composed of motor protein myosin) centered at the M-line in the A-band, and thin filaments (actin, tropomyosin, troponin complex) anchored to Z-discs.",
+        "3. Sliding Filament Theory (Huxley and Hanson):",
+        "\u2022 Action potential triggers depolarization of sarcolemma, releasing calcium ions from sarcoplasmic reticulum into sarcoplasm.",
+        "\u2022 Calcium binds to troponin C, shifting tropomyosin away from myosin-binding sites on actin.",
+        "\u2022 Myosin heads hydrolyze ATP, bind to actin forming cross-bridges, and perform the power stroke, pulling thin filaments toward the center of the sarcomere.",
+        "\u2022 ATP binding releases myosin head from actin; repeating cycles narrow the H-zone and I-bands, producing gross muscle contraction without filament shortening."
+      ]
+    },
+    {
+      "id": "bsc-bz-s1-q8",
+      "question_no": 8,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Describe the Physiology of Urine Formation in the mammalian Nephron. Detail ultrafiltration, selective tubular reabsorption, tubular secretion, and counter-current multiplier.",
+      "answer_lines": [
+        "1. Glomerular Ultrafiltration: Blood enters glomerulus under high hydrostatic pressure (60 mmHg) via wide afferent arteriole. Water and small solutes filter across fenestrated endothelium, basement membrane, and podocyte slit diaphragms into Bowman's capsule, forming protein-free glomerular filtrate (180 L/day).",
+        "2. Selective Tubular Reabsorption in Proximal Convoluted Tubule (PCT): Brush-border microvilli reabsorb 65 to 70 percent of filtrate: 100 percent of glucose and amino acids by sodium co-transport, along with major fractions of sodium, potassium, water, and bicarbonate.",
+        "3. Counter-Current Multiplier in the Loop of Henle: Descending limb is permeable to water but impermeable to sodium chloride; ascending limb is impermeable to water and actively pumps out sodium and chloride into medullary interstitium, creating an osmotic medullary gradient up to 1200 mOsm/kg.",
+        "4. Distal Tubule and Collecting Duct Regulation: Regulated by antidiuretic hormone (ADH / vasopressin, inserting aquaporin channels to concentrate urine) and aldosterone (promoting sodium reabsorption and potassium excretion)."
+      ]
+    },
+    {
+      "id": "bsc-bz-s1-q9",
+      "question_no": 9,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Explain Phloem Translocation in plants. Detail Munch's Pressure-Flow (Mass-Flow) Hypothesis and phloem loading and unloading mechanisms.",
+      "answer_lines": [
+        "1. Pathway of Organic Transport: Sieve tube elements accompanied by companion cells transport photosynthetically fixed sucrose from sources (mature leaves) to sinks (growing roots, fruits, tubers).",
+        "2. Phloem Loading at Source: Sucrose synthesized in mesophyll cells is loaded into companion cells and sieve tubes via proton-sucrose symport transporters (requiring ATP), creating high solute concentration and lowering osmotic water potential.",
+        "3. Mass Flow Generation: Water diffuses from adjacent xylem conduits into sieve tubes by osmosis, generating high turgor hydrostatic pressure at the source.",
+        "4. Phloem Unloading at Sink: Sucrose is actively unloaded into sink cells and metabolized or converted into insoluble starch; water moves back into xylem, lowering hydrostatic pressure. The resulting pressure gradient drives bulk mass flow of sap from source to sink."
+      ]
+    },
+    {
+      "id": "bsc-bz-s1-q10",
+      "question_no": 10,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Describe the Endocrine Regulation of Digestion in vertebrates. Detail the hormones gastrin, secretin, cholecystokinin (CCK), and gastric inhibitory peptide (GIP).",
+      "answer_lines": [
+        "1. Gastrin: Secreted by G-cells in pyloric stomach antrum in response to food peptides and vagal stimulation. Stimulates parietal cells to secrete hydrochloric acid (HCl) and promotes gastric motility.",
+        "2. Secretin: Secreted by S-cells in duodenal mucosa upon entry of acidic chyme (pH below 4.5). Stimulates pancreatic ductal cells to secrete watery bicarbonate-rich juice, neutralizing gastric acid in duodenum.",
+        "3. Cholecystokinin (CCK): Secreted by I-cells in upper small intestine triggered by fatty acids and peptides. Stimulates contraction of gallbladder to release bile into duodenum and stimulates pancreatic acinar cells to secrete digestive enzymes (amylase, lipase, trypsinogen).",
+        "4. Gastric Inhibitory Peptide (GIP): Secreted by duodenal K-cells; inhibits gastric acid secretion and motility, while stimulating insulin release from pancreatic beta cells (incretin effect)."
+      ]
+    }
+  ],
+  "botany_zoology_set2": [
+    {
+      "id": "bsc-bz-s2-q1",
+      "question_no": 1,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Define stomatal index and state its botanical utility.",
+      "answer_lines": [
+        "The percentage proportion of stomata relative to total epidermal cells plus stomata: Stomatal Index = (S / (E + S)) * 100. It remains constant for a species regardless of leaf size, serving as a key diagnostic parameter in pharmacognosy."
+      ]
+    },
+    {
+      "id": "bsc-bz-s2-q2",
+      "question_no": 2,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "What is the function of the Juxtaglomerular Apparatus (JGA) in the kidney?",
+      "answer_lines": [
+        "A specialized microscopic structure composed of macula densa cells and juxtaglomerular cells that senses systemic arterial blood pressure and sodium chloride delivery, secreting Renin to activate the Renin-Angiotensin-Aldosterone System (RAAS)."
+      ]
+    },
+    {
+      "id": "bsc-bz-s2-q3",
+      "question_no": 3,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "What are tyloses and how do they impact wood durability?",
+      "answer_lines": [
+        "Balloon-like outgrowths of xylem axial parenchyma cells that penetrate into lumen cavities of inactive vessels through pits, blocking them and depositing tannins and resins, converting sapwood into decay-resistant heartwood."
+      ]
+    },
+    {
+      "id": "bsc-bz-s2-q4",
+      "question_no": 4,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Differentiate between rod cells and cone cells in vertebrate retina.",
+      "answer_lines": [
+        "Rods contain rhodopsin pigment, operate in low light (scotopic vision), and lack color discrimination. Cones operate in bright daylight (photopic vision), contain photopsins (iodopsin), and mediate high-acuity color vision."
+      ]
+    },
+    {
+      "id": "bsc-bz-s2-q5",
+      "question_no": 5,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "State the difference between xylem tracheids and vessels.",
+      "answer_lines": [
+        "Tracheids are elongated dead cells with tapering closed ends; water passes through bordered pits (found in all vascular plants). Vessels are cylindrical pipes formed by vertical fusion of vessel elements with perforated end plates (found in angiosperms)."
+      ]
+    },
+    {
+      "id": "bsc-bz-s2-q6",
+      "question_no": 6,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Explain Anomalous Secondary Growth in Plants. Detail adaptive anomalous structures in Bignonia, Boerhaavia, and Dracaena.",
+      "answer_lines": [
+        "1. Concept of Anomalous Growth: Variations from standard dicot secondary growth caused by unusual cambial activity or position, providing flexible tensile strength or storage capacity.",
+        "2. Bignonia Stem (Fissured Xylem Cylinder): Normal cambium ring exhibits anomalous functioning; four localized arcs produce excessive phloem inward and deficient xylem, resulting in four wedge-shaped phloem furrows penetrating the secondary xylem cylinder.",
+        "3. Boerhaavia Stem (Concentric Accessory Cambia): Medullary vascular bundles persist. Successive anomalous secondary cambial rings arise in the pericycle/cortex, each producing a ring of embedded vascular bundles separated by conjunctive parenchyma.",
+        "4. Dracaena (Monocot Secondary Growth): Monocots generally lack secondary growth. In arborescent Dracaena, an extrastelar secondary cambium arises in outer cortex, producing secondary ground tissue externally and closed amphivasal concentric vascular bundles internally."
+      ]
+    },
+    {
+      "id": "bsc-bz-s2-q7",
+      "question_no": 7,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Explain Nerve Impulse Conduction along an axon and Transmission across a Chemical Synapse. Detail action potential phases, ion channels, and neurotransmitter exocytosis.",
+      "answer_lines": [
+        "1. Resting Membrane Potential: Interior of axon is negative (-70 mV) relative to extracellular fluid, maintained by sodium-potassium ATPase pump (3 Na+ pumped out, 2 K+ pumped in) and resting potassium leak channels.",
+        "2. Generation of Action Potential:",
+        "\u2022 Depolarization: Stimulus exceeding threshold (-55 mV) opens voltage-gated sodium channels, causing massive inward Na+ influx, driving membrane potential to +30 mV.",
+        "\u2022 Repolarization: Voltage-gated sodium channels inactivate; voltage-gated potassium channels open, allowing rapid K+ efflux.",
+        "\u2022 Hyperpolarization and Refractory Period: Slow closing of K+ channels temporarily dips potential below -70 mV before resting state is restored.",
+        "3. Synaptic Transmission at Chemical Synapse: Arrival of action potential depolarizes axon terminal, opening voltage-gated calcium channels. Calcium influx triggers synaptic vesicles to fuse with presynaptic membrane, releasing neurotransmitter (acetylcholine) into synaptic cleft. Binding to ligand-gated postsynaptic receptors opens ion channels, propagating impulse."
+      ]
+    },
+    {
+      "id": "bsc-bz-s2-q8",
+      "question_no": 8,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Describe the Cardiac Cycle and its Electrical Regulation in the mammalian heart. Detail atrial/ventricular systole, diastole, ECG wave complexes, and cardiac output.",
+      "answer_lines": [
+        "1. Sequential Phases of the Cardiac Cycle (Duration approximately 0.8 seconds at 72 bpm):",
+        "\u2022 Joint Diastole (0.4 s): Atria and ventricles relaxed; AV valves open, blood flows passively into ventricles (70 percent filling).",
+        "\u2022 Atrial Systole (0.1 s): SA node fires, atria contract, pumping remaining 30 percent of blood into ventricles.",
+        "\u2022 Ventricular Systole (0.3 s): Isovolumetric contraction closes AV valves (first heart sound 'lub'); ventricular pressure exceeds aortic pressure, opening semilunar valves for rapid ejection.",
+        "\u2022 Ventricular Diastole: Semilunar valves snap shut (second heart sound 'dub'), followed by isovolumetric relaxation.",
+        "2. Electrocardiogram (ECG) Waves:",
+        "\u2022 P wave: Atrial depolarization.",
+        "\u2022 QRS complex: Rapid ventricular depolarization (masking atrial repolarization).",
+        "\u2022 T wave: Ventricular repolarization.",
+        "3. Cardiac Output: Stroke volume (70 mL) multiplied by heart rate (72 bpm) equals approximately 5.0 L/min."
+      ]
+    },
+    {
+      "id": "bsc-bz-s2-q9",
+      "question_no": 9,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Explain Photosynthetic Light Reactions in plants: Cyclic and Non-Cyclic Photophosphorylation (Z-Scheme) and ATP synthesis by Chemiosmosis.",
+      "answer_lines": [
+        "1. Non-Cyclic Photophosphorylation (Z-Scheme): Involves Photosystem II (P680) and Photosystem I (P700).",
+        "\u2022 Water-Splitting (Photolysis) at PSII oxygen-evolving complex generates protons, electrons, and molecular oxygen.",
+        "\u2022 Excited electrons pass from P680 through pheophytin, plastoquinone (PQ), cytochrome b6f complex, and plastocyanin (PC) to PSI.",
+        "\u2022 Cytochrome b6f pumps protons into the thylakoid lumen.",
+        "\u2022 Light absorption at PSI excites electrons to ferredoxin; ferredoxin-NADP+ reductase reduces NADP+ to NADPH.",
+        "2. Cyclic Photophosphorylation: Electrons from PSI ferredoxin loop back through cytochrome b6f to PSI, generating ATP without NADPH or O2 production.",
+        "3. Chemiosmotic ATP Synthesis (Mitchell Hypothesis): Proton accumulation in thylakoid lumen drives protons through CF0-CF1 ATP synthase into the stroma, phosphorylating ADP to ATP."
+      ]
+    },
+    {
+      "id": "bsc-bz-s2-q10",
+      "question_no": 10,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Describe the Physiology of Respiration and Gas Transport in mammalian blood. Detail oxygen-hemoglobin dissociation curves, Bohr effect, and carbon dioxide transport forms.",
+      "answer_lines": [
+        "1. Oxygen Transport: Over 98 percent transported bound to hemoglobin as oxyhemoglobin; each heme iron binds one O2 molecule cooperatively.",
+        "2. Oxygen-Hemoglobin Dissociation Curve: Sigmoidal curve reflecting positive allosteric cooperativity.",
+        "\u2022 Bohr Effect: Elevated partial pressure of CO2, high temperature, and acidic pH (high H+) shift the curve to the right, decreasing hemoglobin oxygen affinity and promoting oxygen unloading at active respiring tissues.",
+        "3. Carbon Dioxide Transport (Three Modes):",
+        "\u2022 Dissolved in plasma: 7 percent.",
+        "\u2022 Carbaminohemoglobin: 23 percent bound to amino termini of globin chains.",
+        "\u2022 Bicarbonate Ions (HCO3-): 70 percent. In erythrocyte cytoplasm, carbonic anhydrase converts CO2 and H2O into carbonic acid, which dissociates into H+ and HCO3-. Bicarbonate diffuses into plasma, coupled with inward chloride influx to maintain electrical neutrality (Chloride Shift / Hamburger Phenomenon)."
+      ]
+    }
+  ],
+  "ds_lab_set1": [
+    {
+      "id": "bsc-dsl-s1-q1",
+      "question_no": 1,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Write a C function to initialize a singly linked list node.",
+      "answer_lines": [
+        "`struct Node* createNode(int val) { struct Node* n = (struct Node*)malloc(sizeof(struct Node)); n->data = val; n->next = NULL; return n; }`"
+      ]
+    },
+    {
+      "id": "bsc-dsl-s1-q2",
+      "question_no": 2,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "State the condition to check if a singly linked list is circular.",
+      "answer_lines": [
+        "Traverse pointers; if any node's `next` equals `head`, it is circular; if a `NULL` pointer is encountered, it is linear."
+      ]
+    },
+    {
+      "id": "bsc-dsl-s1-q3",
+      "question_no": 3,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Write the C syntax to push an element onto a dynamically allocated stack.",
+      "answer_lines": [
+        "`void push(int x) { struct Node* t = createNode(x); t->next = top; top = t; }`"
+      ]
+    },
+    {
+      "id": "bsc-dsl-s1-q4",
+      "question_no": 4,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "How do you count the total number of nodes in a binary tree recursively?",
+      "answer_lines": [
+        "`int count(struct Node* root) { return (root == NULL) ? 0 : 1 + count(root->left) + count(root->right); }`"
+      ]
+    },
+    {
+      "id": "bsc-dsl-s1-q5",
+      "question_no": 5,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "State the worst-case space complexity of recursive DFS.",
+      "answer_lines": [
+        "$O(V)$ in the worst case of a skewed linear graph where call stack holds all vertices."
+      ]
+    },
+    {
+      "id": "bsc-dsl-s1-q6",
+      "question_no": 6,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Write a complete C program to implement a Singly Linked List with operations: insert at beginning, insert at end, delete node by key, and display list.",
+      "answer_lines": [
+        "Full C code allocating dynamic memory using `malloc`, updating pointers, handling empty list edge cases, freeing deleted node memory, and traversing list in linear time."
+      ]
+    },
+    {
+      "id": "bsc-dsl-s1-q7",
+      "question_no": 7,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Write a complete C program to evaluate a Postfix mathematical expression using a Stack. Test with expression `5 3 + 8 2 - *`.",
+      "answer_lines": [
+        "Program parses string tokens: if operand, pushes onto integer stack; if operator, pops two operands, computes result (`op1 operator op2`), and pushes back. Evaluation of `5 3 + 8 2 - *` yields: `(5 + 3) * (8 - 2) = 8 * 6 = 48`."
+      ]
+    },
+    {
+      "id": "bsc-dsl-s1-q8",
+      "question_no": 8,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Write a C program to implement Binary Search Tree (BST) insertion, search, and Inorder traversal.",
+      "answer_lines": [
+        "Complete C program showing recursive BST insertion: comparisons guide placement into left or right child. Search function returns pointer or NULL. Inorder traversal prints nodes in sorted non-decreasing order."
+      ]
+    },
+    {
+      "id": "bsc-dsl-s1-q9",
+      "question_no": 9,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Write a C program to implement QuickSort on an array of integers and display number of swaps performed.",
+      "answer_lines": [
+        "C implementation of recursive QuickSort using middle or end pivot, Lomuto partitioning, tracking swap counts, and demonstrating $O(n \\log n)$ average sorting."
+      ]
+    },
+    {
+      "id": "bsc-dsl-s1-q10",
+      "question_no": 10,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Write a C program to represent a graph using an Adjacency Matrix and implement Breadth-First Search (BFS) starting from vertex 0.",
+      "answer_lines": [
+        "Complete C program with queue ADT, visited boolean array, adjacency matrix scanning, and level-order traversal printing visited vertices."
+      ]
+    }
+  ],
+  "physics_lab_set1": [
+    {
+      "id": "bsc-pl-s1-q1",
+      "question_no": 1,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "What is the optical function of the glass plate tilted at $45^\\circ$ in Newton's rings experiment?",
+      "answer_lines": [
+        "It reflects light from the extended source downward to strike the air film at normal incidence ($90^\\circ$), while allowing reflected rays from the film to transmit upward into the microscope."
+      ]
+    },
+    {
+      "id": "bsc-pl-s1-q2",
+      "question_no": 2,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "State the formula for refractive index of liquid using Newton's rings.",
+      "answer_lines": [
+        "$$\\mu = \\frac{(D_{n+p}^2 - D_n^2)_{air}}{(D_{n+p}^2 - D_n^2)_{liquid}}$$"
+      ]
+    },
+    {
+      "id": "bsc-pl-s1-q3",
+      "question_no": 3,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Why is a sodium vapor lamp used in spectrometer experiments?",
+      "answer_lines": [
+        "It emits intense, virtually monochromatic yellow doublet light ($D_1 = 5896\\text{ \\AA}, D_2 = 5890\\text{ \\AA}$), producing sharp interference and diffraction patterns."
+      ]
+    },
+    {
+      "id": "bsc-pl-s1-q4",
+      "question_no": 4,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Define grating element in a diffraction experiment.",
+      "answer_lines": [
+        "The distance between centers of two consecutive transparent slits: $d = a + b = \\frac{2.54\\text{ cm}}{N}$ where $N$ is lines per inch."
+      ]
+    },
+    {
+      "id": "bsc-pl-s1-q5",
+      "question_no": 5,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "What is the purpose of Schuster's method in spectrometer adjustments?",
+      "answer_lines": [
+        "An optical focusing technique to focus the collimator and telescope for parallel light simultaneously without moving the spectrometer outside the laboratory."
+      ]
+    },
+    {
+      "id": "bsc-pl-s1-q6",
+      "question_no": 6,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Describe the experimental determination of the wavelength of sodium light using Newton's Rings. Detail apparatus setup, formula, observations, and error calculation.",
+      "answer_lines": [
+        "Complete laboratory procedure: cleaning glass plate and plano-convex lens, focusing traveling microscope, recording ring diameters $D_{n+p}$ and $D_n$, plotting $D_n^2$ vs $n$, measuring radius of curvature $R$ via spherometer, and computing $\\lambda = \\frac{\\text{Slope}}{4R}$."
+      ]
+    },
+    {
+      "id": "bsc-pl-s1-q7",
+      "question_no": 7,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Describe the experimental determination of the grating element and wavelength of light using a Diffraction Grating and Spectrometer in normal incidence.",
+      "answer_lines": [
+        "Laboratory procedure: leveling spectrometer prism table, setting grating for normal incidence using Schuster's method and Gauss eyepiece, measuring diffraction angles $\\theta$ for spectral orders on left and right verniers, calculating $\\lambda = \\frac{(a+b)\\sin\\theta}{n}$."
+      ]
+    },
+    {
+      "id": "bsc-pl-s1-q8",
+      "question_no": 8,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Describe the experiment to determine the Cauchy constants $A$ and $B$ of a glass prism using a spectrometer: $\\mu = A + \\frac{B}{\\lambda^2}$.",
+      "answer_lines": [
+        "Procedure: measure angle of prism $A$ and angle of minimum deviation $D_m$ for distinct spectral lines (mercury source: violet, green, yellow), compute refractive indices $\\mu = \\frac{\\sin((A+D_m)/2)}{\\sin(A/2)}$, plot $\\mu$ vs $1/\\lambda^2$ to find intercept $A$ and slope $B$."
+      ]
+    },
+    {
+      "id": "bsc-pl-s1-q9",
+      "question_no": 9,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Describe the determination of specific rotation of sugar solution using a Laurent's Half-Shade Polarimeter.",
+      "answer_lines": [
+        "Procedure: zero-calibration with pure distilled water for equal illumination field, preparing sugar solutions of known concentrations (5%, 10%, 15%), measuring optical rotation angles $\\theta$, plotting $\\theta$ vs $C$, and calculating specific rotation $[\\alpha] = \\frac{\\theta}{L \\cdot C}$."
+      ]
+    },
+    {
+      "id": "bsc-pl-s1-q10",
+      "question_no": 10,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Describe the determination of the frequency of an electrically maintained tuning fork using Melde's experiment in transverse and longitudinal modes.",
+      "answer_lines": [
+        "Procedure: setting string under tension $T = M g$, adjusting length $L$ for resonant stationary wave loops $p$, applying formula $n = \\frac{p}{2L}\\sqrt{\\frac{T}{m}}$ (transverse) and $n = \\frac{p}{L}\\sqrt{\\frac{T}{m}}$ (longitudinal), calculating linear mass density $m$ and fork frequency."
+      ]
+    }
+  ],
+  "chem_lab_set1": [
+    {
+      "id": "bsc-cl-s1-q1",
+      "question_no": 1,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Define cell constant of a conductivity cell and write its formula.",
+      "answer_lines": [
+        "$$\\text{Cell Constant} = \\frac{l}{A} = \\kappa \\times R$$ where $l$ is distance between electrodes, $A$ is electrode area, $\\kappa$ is specific conductance, and $R$ is measured resistance."
+      ]
+    },
+    {
+      "id": "bsc-cl-s1-q2",
+      "question_no": 2,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Why is AC current used instead of DC current in conductometric measurements?",
+      "answer_lines": [
+        "DC current causes electrolysis and electrode polarization (accumulation of gas bubbles and concentration gradients). High-frequency AC current alternates polarity, preventing polarization."
+      ]
+    },
+    {
+      "id": "bsc-cl-s1-q3",
+      "question_no": 3,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "What is the primary standard solution used to calibrate conductivity meters?",
+      "answer_lines": [
+        "Standard potassium chloride ($KCl$) solutions of precisely known concentration (typically $0.1\\text{ M}$ or $0.01\\text{ M}$) with certified specific conductance at $25^\\circ\\text{C}$."
+      ]
+    },
+    {
+      "id": "bsc-cl-s1-q4",
+      "question_no": 4,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "What is the eutectic temperature of the ice-salt freezing mixture?",
+      "answer_lines": [
+        "$-21.1^\\circ\\text{C}$ at $23.3\\text{ wt}\\%$ sodium chloride."
+      ]
+    },
+    {
+      "id": "bsc-cl-s1-q5",
+      "question_no": 5,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "State the principle of CST (Critical Solution Temperature) determination for phenol-water system.",
+      "answer_lines": [
+        "Phenol and water are partially miscible liquids whose mutual solubility increases with temperature until a single homogeneous phase forms at the Upper Critical Solution Temperature ($66.8^\\circ\\text{C}$ at $34\\% \\text{ phenol}$)."
+      ]
+    },
+    {
+      "id": "bsc-cl-s1-q6",
+      "question_no": 6,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Describe the Conductometric Titration of a mixture of Strong Acid (HCl) and Weak Acid (CH3COOH) against Strong Base (NaOH).",
+      "answer_lines": [
+        "Complete laboratory procedure: cell calibration with $KCl$, titration steps with standardized $0.1\\text{ M NaOH}$, plotting conductance vs volume of base. First break point indicates neutralization of $HCl$; second break point indicates complete neutralization of $CH_3COOH$."
+      ]
+    },
+    {
+      "id": "bsc-cl-s1-q7",
+      "question_no": 7,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Describe the experimental determination of the heat of neutralization of Strong Acid (HCl) with Strong Base (NaOH) using a Dewar flask calorimeter.",
+      "answer_lines": [
+        "Procedure: determining water equivalent of calorimeter, mixing equal volumes of $1\\text{ N HCl}$ and $1\\text{ N NaOH}$ at initial temperature $T_1$, recording maximum temperature $T_2$, calculating heat released $Q = (m + W) C_p (T_2 - T_1)$, yielding enthalpy of neutralization $\\Delta H_{neut} \\approx -57.3\\text{ kJ/equivalent}$."
+      ]
+    },
+    {
+      "id": "bsc-cl-s1-q8",
+      "question_no": 8,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Describe the experimental determination of the CST (Critical Solution Temperature) curve for the Phenol-Water partially miscible system.",
+      "answer_lines": [
+        "Procedure: preparing mixtures of varying weight fractions of phenol in water, heating in water bath until turbidity clears (miscibility temperature), cooling slowly until cloudiness reappears, plotting miscibility temperature vs composition to obtain binodal solubility curve and determine UCST."
+      ]
+    },
+    {
+      "id": "bsc-cl-s1-q9",
+      "question_no": 9,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Describe the experimental determination of the partition (distribution) coefficient of Iodine between Carbon Tetrachloride (CCl4) and Water.",
+      "answer_lines": [
+        "Procedure: equilibrating iodine in two immiscible liquid layers in separating funnel, separating layers, titrating aliquots of organic layer and aqueous layer against standardized sodium thiosulfate solution using starch indicator, calculating partition coefficient $K_D = \\frac{C_{CCl_4}}{C_{H_2O}}$."
+      ]
+    },
+    {
+      "id": "bsc-cl-s1-q10",
+      "question_no": 10,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Describe the systematic qualitative analysis of a simple inorganic salt mixture containing two cations and two anions (excluding interfering radicals).",
+      "answer_lines": [
+        "Systematic laboratory procedure: preliminary tests (flame test, borax bead test), wet tests for acid radicals (anions: carbonate, chloride, sulfate, nitrate), group separation of basic radicals (cations: Groups I through VI using group reagents $HCl, H_2S, NH_4OH, (NH_4)_2CO_3$), and confirmatory tests."
+      ]
+    }
+  ],
+  "life_labs_set1": [
+    {
+      "id": "bsc-ll-s1-q1",
+      "question_no": 1,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "State the principle of Gram Staining in microbiology.",
+      "answer_lines": [
+        "Differentiates bacteria based on cell wall peptidoglycan thickness: Gram-positive cells with thick peptidoglycan retain crystal violet-iodine complex (purple); Gram-negative cells with thin peptidoglycan and lipid outer membrane are decolorized by alcohol and counterstained pink by safranin."
+      ]
+    },
+    {
+      "id": "bsc-ll-s1-q2",
+      "question_no": 2,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "What is an ocular micrometer and how is it calibrated?",
+      "answer_lines": [
+        "A glass disc etched with arbitrary divisions inserted into microscope eyepiece, calibrated against a stage micrometer having known precise millimeter divisions (1 division = 0.01 mm = 10 micrometers)."
+      ]
+    },
+    {
+      "id": "bsc-ll-s1-q3",
+      "question_no": 3,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Name two common histological stains used in botanical sectioning.",
+      "answer_lines": [
+        "1. Safranin (stains lignified and suberized xylem cell walls brilliant red). 2. Fast Green (counterstains cellulosic non-lignified parenchyma cell walls green)."
+      ]
+    },
+    {
+      "id": "bsc-ll-s1-q4",
+      "question_no": 4,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "What is the clinical significance of counting White Blood Cells (Total Leukocyte Count) using a hemocytometer?",
+      "answer_lines": [
+        "Assesses immune and hematological status: elevated counts (leukocytosis) indicate acute bacterial infections, inflammation, or leukemia; reduced counts (leukopenia) indicate viral infections or bone marrow depression."
+      ]
+    },
+    {
+      "id": "bsc-ll-s1-q5",
+      "question_no": 5,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "State the function of a laminar air flow chamber in sterile microbiological culture.",
+      "answer_lines": [
+        "Provides a sterile aseptic working workspace by passing room air through High-Efficiency Particulate Air (HEPA) filters (trapping 99.97% of particles above 0.3 micrometers) in unidirectional laminar streamlines."
+      ]
+    },
+    {
+      "id": "bsc-ll-s1-q6",
+      "question_no": 6,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Describe the Step-by-Step Procedure for Gram Staining of Bacterial Smears. Detail reagents, exposure times, wash steps, and microscopic interpretation.",
+      "answer_lines": [
+        "1. Smear Preparation: Prepare thin bacterial smear on clean grease-free glass slide, air dry, and heat-fix by passing slide through Bunsen flame 2-3 times.",
+        "2. Primary Stain: Flood smear with Crystal Violet for 1 minute; wash gently with tap water.",
+        "3. Mordant: Flood with Gram's Iodine (mordant) for 1 minute to form insoluble crystal violet-iodine complex; wash gently.",
+        "4. Decolorization (Critical Step): Wash with 95 percent ethanol or acetone-alcohol dropwise for 10-15 seconds until color ceases to run; rinse immediately with water.",
+        "5. Counterstain: Flood with Safranin for 45 seconds; wash, blot dry with bibulous paper.",
+        "6. Oil Immersion Microscopic Examination (100x): Gram-positive bacteria appear purple/violet (e.g., Staphylococcus aureus, Bacillus subtilis); Gram-negative bacteria appear pink/red (e.g., Escherichia coli)."
+      ]
+    },
+    {
+      "id": "bsc-ll-s1-q7",
+      "question_no": 7,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Describe the anatomical procedure for preparing a double-stained transverse section (T.S.) of a dicot stem (Helianthus annuus). Detail staining protocol, mounting, and tissue identification.",
+      "answer_lines": [
+        "1. Sectioning: Cut razor-thin transverse sections of sunflower stem using a sharp safety razor blade in water.",
+        "2. Staining Sequence: Transfer thin sections into watch glass containing 1 percent Safranin for 2-3 minutes. Wash excess stain with water. Counterstain with Fast Green for 30 seconds. Dehydrate through ascending alcohol grades.",
+        "3. Mounting: Mount flat section in drop of pure glycerin or DPX mountant under clean coverslip avoiding air bubbles.",
+        "4. Microscopic Anatomical Identification:",
+        "\u2022 Epidermis with cuticular layer and multicellular trichomes.",
+        "\u2022 Collenchymatous hypodermis (angular thickening for mechanical flexural strength).",
+        "\u2022 Sclerenchymatous bundle caps (hard bast) over each vascular bundle.",
+        "\u2022 Open, conjoint, collateral vascular bundles arranged in a regular ring.",
+        "\u2022 Large central parenchymatous pith with radiating medullary rays."
+      ]
+    },
+    {
+      "id": "bsc-ll-s1-q8",
+      "question_no": 8,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Describe the experimental procedure for counting Red Blood Cells (RBCs) using a Hemocytometer (Neubauer Chamber). Detail dilution pipette, calculation formula, and clinical reference ranges.",
+      "answer_lines": [
+        "1. Blood Dilution: Draw finger-prick capillary blood up to 0.5 mark in red-bead RBC pipette. Draw Hayem's diluting fluid up to 101 mark (dilution 1:200). Mix thoroughly by rotating pipette horizontally.",
+        "2. Chamber Charging: Discard first few drops. Place polished coverslip over Neubauer counting grid. Touch pipette tip to chamber edge, allowing fluid to charge grid by capillary action without flooding moats.",
+        "3. Cell Counting: Allow cells to settle for 3 minutes. Under 40x objective, count erythrocyte counts across 5 medium squares (80 small squares) of the central 1 mm2 grid (four corner squares plus center square).",
+        "4. Calculation Formula: Total RBCs per cubic millimeter = (Number of cells counted * Dilution factor * Chamber depth factor) / (Number of small squares counted * Volume of 1 small square) = (N * 200 * 10) / (80 * (1/400)) = N * 10,000.",
+        "Normal Reference: 4.5 to 5.5 million cells/mm3 in adult males, 4.0 to 5.0 million cells/mm3 in adult females."
+      ]
+    },
+    {
+      "id": "bsc-ll-s1-q9",
+      "question_no": 9,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Describe the isolation of pure bacterial cultures using the Streak Plate Technique. Detail quadrant streaking, flaming between streaks, and colony morphology evaluation.",
+      "answer_lines": [
+        "1. Principle: Progressive dilution of microbial inoculum across agar surface to deposit individual isolated single bacterial cells that multiply into discrete clonal macroscopic colonies.",
+        "2. Quadrant Streaking Procedure: Sterilize nichrome inoculation loop in Bunsen flame until red hot; cool in air. Dip loop into bacterial broth culture. Streak back and forth closely across Quadrant 1 on nutrient agar plate. Flame loop and cool. Rotate plate 90 degrees; drag loop 2-3 times through Quadrant 1 and streak out across Quadrant 2. Repeat for Quadrants 3 and 4 without overlapping initial streaks.",
+        "3. Incubation: Incubate inverted agar plate at 37 degrees Celsius for 24 hours.",
+        "4. Colony Morphology Characterization: Evaluate isolated single colonies for Size (punctiform, small, large), Shape (circular, irregular), Elevation (flat, convex, pulvinate), Margin (entire, undulate, lobate), and Pigmentation."
+      ]
+    },
+    {
+      "id": "bsc-ll-s1-q10",
+      "question_no": 10,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Describe the experimental estimation of Dissolved Oxygen (DO) in a water sample using the Winkler Iodometric Titration Method.",
+      "answer_lines": [
+        "1. Principle: Dissolved oxygen oxidizes manganese(II) to higher-valent manganese hydroxide in alkaline iodide medium. Upon acidification, oxidized manganese oxidizes iodide to free iodine equivalent to original DO, which is titrated against standard sodium thiosulfate.",
+        "2. Chemical Reactions and Procedure:",
+        "\u2022 Collection in 300 mL BOD glass bottle without aeration bubbles.",
+        "\u2022 Add 2 mL manganous sulfate and 2 mL alkali-iodide-azide reagent beneath surface.",
+        "\u2022 Stopper and invert; brown precipitate indicates presence of dissolved oxygen.",
+        "\u2022 Add 2 mL concentrated sulfuric acid and invert; precipitate dissolves releasing iodine.",
+        "\u2022 Titrate 200 mL acidified solution against 0.025 N sodium thiosulfate until pale straw yellow; add 1 mL starch indicator (turns deep blue); titrate until colorless.",
+        "3. Calculation: DO in mg/L = (Volume of thiosulfate in mL * Normality * 8 * 1000) / Volume of sample titrated."
+      ]
+    }
+  ]
+}

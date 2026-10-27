@@ -1,0 +1,783 @@
+{
+  "oop_set1": [
+    {
+      "id": "oop-s1-q1",
+      "question_no": 1,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Define Encapsulation and explain how it is achieved in Object-Oriented Programming.",
+      "answer_lines": [
+        "**Definition**: Encapsulation is the mechanism of binding code and data together into a single unit (class) while restricting direct external access to internal state.",
+        "**Implementation**: Achieved by declaring class member variables as `private` and exposing controlled access via public getter and setter methods with validation logic."
+      ]
+    },
+    {
+      "id": "oop-s1-q2",
+      "question_no": 2,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Differentiate between the `==` operator and the `.equals()` method in Java.",
+      "answer_lines": [
+        "**`==` Operator**: Compares primitive values directly; for reference types, it checks reference identity (whether both variables point to the exact same memory address in heap).",
+        "**`.equals()` Method**: Compares the logical content/state of two objects. Classes like `String` and `Integer` override `.equals()` for deep value equality."
+      ]
+    },
+    {
+      "id": "oop-s1-q3",
+      "question_no": 3,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Explain the difference between `final`, `finally`, and `finalize` in Java.",
+      "answer_lines": [
+        "**`final`**: Keyword used to declare constants (variables), prevent method overriding (methods), or prevent inheritance (classes).",
+        "**`finally`**: Block accompanying `try-catch` that executes unconditionally for cleanup (e.g., closing file streams, DB connections).",
+        "**`finalize()`**: Method invoked by Garbage Collector prior to object reclamation (deprecated in modern Java)."
+      ]
+    },
+    {
+      "id": "oop-s1-q4",
+      "question_no": 4,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Differentiate between compile-time polymorphism and runtime polymorphism.",
+      "answer_lines": [
+        "**Compile-Time (Static) Polymorphism**: Resolved during compilation; achieved through Method Overloading and Operator Overloading (e.g., same method name with differing parameter lists).",
+        "**Runtime (Dynamic) Polymorphism**: Resolved during execution; achieved through Method Overriding using inheritance and dynamic method dispatch via base class references."
+      ]
+    },
+    {
+      "id": "oop-s1-q5",
+      "question_no": 2,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "What is the difference between `throw` and `throws` keywords in Java?",
+      "answer_lines": [
+        "**`throw`**: Used explicitly inside a method body to instantiate and throw a specific exception object: `throw new IOException(\"File missing\");`.",
+        "**`throws`**: Used in a method signature to declare exceptions that the method might propagate to its caller: `public void readFile() throws IOException`."
+      ]
+    },
+    {
+      "id": "oop-s1-q6",
+      "question_no": 6,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Explain Runtime Polymorphism with a complete Java program featuring an abstract class `Shape` and subclasses `Circle` and `Rectangle`.",
+      "answer_lines": [
+        "**1. Theoretical Foundation**: Runtime polymorphism occurs when an overridden method is called through a superclass reference variable. Java resolves the call at runtime based on the actual object type (Dynamic Method Dispatch).",
+        "**2. Code Implementation**:",
+        "```java",
+        "abstract class Shape {",
+        "    String color;",
+        "    Shape(String color) { this.color = color; }",
+        "    abstract double calculateArea();",
+        "    abstract double calculatePerimeter();",
+        "}",
+        "",
+        "class Circle extends Shape {",
+        "    double radius;",
+        "    Circle(String color, double radius) {",
+        "        super(color);",
+        "        this.radius = radius;",
+        "    }",
+        "    @Override double calculateArea() { return Math.PI * radius * radius; }",
+        "    @Override double calculatePerimeter() { return 2 * Math.PI * radius; }",
+        "}",
+        "",
+        "class Rectangle extends Shape {",
+        "    double length, width;",
+        "    Rectangle(String color, double length, double width) {",
+        "        super(color);",
+        "        this.length = length; this.width = width;",
+        "    }",
+        "    @Override double calculateArea() { return length * width; }",
+        "    @Override double calculatePerimeter() { return 2 * (length + width); }",
+        "}",
+        "",
+        "public class ShapeDemo {",
+        "    public static void main(String[] args) {",
+        "        Shape s1 = new Circle(\"Red\", 5.0);",
+        "        Shape s2 = new Rectangle(\"Blue\", 4.0, 6.0);",
+        "        System.out.println(\"Circle Area: \" + s1.calculateArea());",
+        "        System.out.println(\"Rectangle Area: \" + s2.calculateArea());",
+        "    }",
+        "}",
+        "```",
+        "**3. Key OOP Aspects**: `super(color)` demonstrates constructor chaining; `s1.calculateArea()` invokes `Circle.calculateArea()` via dynamic dispatch."
+      ]
+    },
+    {
+      "id": "oop-s1-q7",
+      "question_no": 7,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Explain Exception Handling hierarchy in Java. Create a custom checked exception `InsufficientFundsException` and show its usage in a `BankAccount` class.",
+      "answer_lines": [
+        "**1. Exception Hierarchy**: `Throwable` is the root, split into `Error` (irrecoverable system failures like `OutOfMemoryError`) and `Exception`. `Exception` is subdivided into Checked Exceptions (compile-time checked, e.g. `IOException`) and Unchecked Exceptions (`RuntimeException` subclasses like `NullPointerException`).",
+        "**2. Custom Exception Implementation**:",
+        "```java",
+        "class InsufficientFundsException extends Exception {",
+        "    private double deficit;",
+        "    public InsufficientFundsException(double deficit) {",
+        "        super(\"Withdrawal failed: deficit of $\" + deficit);",
+        "        this.deficit = deficit;",
+        "    }",
+        "    public double getDeficit() { return deficit; }",
+        "}",
+        "",
+        "class BankAccount {",
+        "    private double balance;",
+        "    public BankAccount(double initialBalance) { this.balance = initialBalance; }",
+        "    public void withdraw(double amount) throws InsufficientFundsException {",
+        "        if (amount > balance) {",
+        "            throw new InsufficientFundsException(amount - balance);",
+        "        }",
+        "        balance -= amount;",
+        "        System.out.println(\"Withdrew: \" + amount + \", Remaining: \" + balance);",
+        "    }",
+        "}",
+        "```",
+        "**3. Handling Demonstration**:",
+        "```java",
+        "public class BankTest {",
+        "    public static void main(String[] args) {",
+        "        BankAccount acc = new BankAccount(500.0);",
+        "        try {",
+        "            acc.withdraw(750.0);",
+        "        } catch (InsufficientFundsException e) {",
+        "            System.err.println(e.getMessage());",
+        "        } finally {",
+        "            System.out.println(\"Transaction audit complete.\");",
+        "        }",
+        "    }",
+        "}",
+        "```"
+      ]
+    },
+    {
+      "id": "oop-s1-q8",
+      "question_no": 8,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Compare `ArrayList` vs `LinkedList` in Java Collections. Write a program to sort a list of `Student` objects using `Comparator` by GPA descending.",
+      "answer_lines": [
+        "**1. Performance Comparison**:",
+        "\u2022 **Internal Representation**: `ArrayList` uses dynamic resizable arrays; `LinkedList` uses doubly-linked nodes.",
+        "\u2022 **Random Access**: `ArrayList` is $O(1)$ (`get(index)`); `LinkedList` is $O(n)$ due to pointer traversal.",
+        "\u2022 **Insert/Delete**: `ArrayList` is $O(n)$ in middle due to element shifting; `LinkedList` is $O(1)$ given node pointer.",
+        "\u2022 **Memory Overhead**: `LinkedList` incurs significant overhead due to forward and backward pointers per element.",
+        "**2. Sorting Implementation**:",
+        "```java",
+        "import java.util.*;",
+        "",
+        "class Student {",
+        "    int id; String name; double gpa;",
+        "    Student(int id, String name, double gpa) {",
+        "        this.id = id; this.name = name; this.gpa = gpa;",
+        "    }",
+        "    public String toString() { return name + \" (\" + gpa + \")\"; }",
+        "}",
+        "",
+        "public class SortDemo {",
+        "    public static void main(String[] args) {",
+        "        List<Student> students = new ArrayList<>();",
+        "        students.add(new Student(101, \"Alice\", 3.85));",
+        "        students.add(new Student(102, \"Bob\", 3.92));",
+        "        students.add(new Student(103, \"Charlie\", 3.65));",
+        "",
+        "        // Sort descending by GPA using Comparator lambda",
+        "        students.sort((s1, s2) -> Double.compare(s2.gpa, s1.gpa));",
+        "        System.out.println(\"Ranked: \" + students);",
+        "    }",
+        "}",
+        "```"
+      ]
+    },
+    {
+      "id": "oop-s1-q9",
+      "question_no": 9,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Explain the Producer-Consumer problem in Java multithreading and provide a thread-safe solution using `wait()`, `notify()`, and `synchronized` blocks.",
+      "answer_lines": [
+        "**1. Problem Statement**: A producer thread generates data items and deposits them into a bounded shared buffer. A consumer thread extracts items from the buffer. Synchronization is required so the producer does not add to a full buffer, and consumer does not remove from an empty buffer.",
+        "**2. Bounded Buffer Code**:",
+        "```java",
+        "import java.util.LinkedList;",
+        "",
+        "class SharedQueue {",
+        "    private final LinkedList<Integer> queue = new LinkedList<>();",
+        "    private final int CAPACITY = 5;",
+        "",
+        "    public synchronized void produce(int value) throws InterruptedException {",
+        "        while (queue.size() == CAPACITY) {",
+        "            wait(); // Release lock and wait for consumer",
+        "        }",
+        "        queue.add(value);",
+        "        System.out.println(\"Produced: \" + value);",
+        "        notifyAll(); // Wake up waiting consumer threads",
+        "    }",
+        "",
+        "    public synchronized int consume() throws InterruptedException {",
+        "        while (queue.isEmpty()) {",
+        "            wait(); // Release lock and wait for producer",
+        "        }",
+        "        int val = queue.removeFirst();",
+        "        System.out.println(\"Consumed: \" + val);",
+        "        notifyAll(); // Wake up waiting producer threads",
+        "        return val;",
+        "    }",
+        "}",
+        "```",
+        "**3. Thread Execution**: Producer and Consumer implement `Runnable` and invoke `produce()` / `consume()`. The `while` loop prevents spurious wakeups."
+      ]
+    },
+    {
+      "id": "oop-s1-q10",
+      "question_no": 10,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Explain the architecture of the Java Virtual Machine (JVM). Describe its major memory areas and the garbage collection process.",
+      "answer_lines": [
+        "**1. JVM Architecture Components**:",
+        "\u2022 **Class Loader Subsystem**: Loading (`.class` binary loading), Linking (Verification, Preparation of static variables, Resolution of symbolic references), and Initialization (static blocks).",
+        "\u2022 **Execution Engine**: Bytecode Interpreter, JIT (Just-In-Time) Compiler (compiles hot loops into native assembly), and Garbage Collector.",
+        "**2. JVM Runtime Data Areas**:",
+        "\u2022 **Method Area (Metaspace)**: Stores class structure, method metadata, runtime constant pool, and static variables.",
+        "\u2022 **Heap Memory**: Shared memory allocating all object instances and arrays. Partitioned into Young Generation (Eden, S0, S1) and Old (Tenured) Generation.",
+        "\u2022 **Java Thread Stack**: Per-thread memory storing stack frames for active method calls (local variables, operand stack, frame data).",
+        "\u2022 **PC Registers**: Per-thread register tracking the address of the currently executing JVM instruction.",
+        "\u2022 **Native Method Stack**: Dedicated stack for invoking C/C++ native libraries via JNI.",
+        "**3. Garbage Collection Mechanics**: GC identifies unreachable objects using Root Tracing (tracing from GC Roots like stack references, static variables, JNI handles). Generational collection uses Minor GC (copying live objects from Eden to Survivor spaces) and Major GC (compacting long-lived objects in Old Generation)."
+      ]
+    }
+  ],
+  "oop_set2": [
+    {
+      "id": "oop-s2-q1",
+      "question_no": 1,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "What is a virtual destructor in C++ and why is it essential when using polymorphism?",
+      "answer_lines": [
+        "**Definition**: A destructor declared with `virtual` in a base class (`virtual ~Base();`).",
+        "**Significance**: When deleting a derived class object through a base class pointer (`Base* p = new Derived(); delete p;`), a non-virtual destructor triggers undefined behavior and fails to invoke `~Derived()`, causing resource/memory leaks."
+      ]
+    },
+    {
+      "id": "oop-s2-q2",
+      "question_no": 2,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Explain the diamond problem in C++ and how virtual base classes resolve it.",
+      "answer_lines": [
+        "**Problem**: Occurs when class $D$ inherits from classes $B$ and $C$, which both inherit from base class $A$. $D$ inherits two duplicate copies of $A$, causing ambiguity and redundancy.",
+        "**Resolution**: Using `class B : virtual public A` and `class C : virtual public A` ensures that only a single shared instance of $A$ is present in $D$."
+      ]
+    },
+    {
+      "id": "oop-s2-q3",
+      "question_no": 3,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Differentiate between shallow copy and deep copy in object cloning.",
+      "answer_lines": [
+        "**Shallow Copy**: Copies primitive fields directly, but for object references, it only copies the memory address (both objects point to the exact same child object).",
+        "**Deep Copy**: Recursively creates new instances of all referenced child objects, making the cloned object completely independent of the original."
+      ]
+    },
+    {
+      "id": "oop-s2-q4",
+      "question_no": 4,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Explain RAII and differentiate between `std::unique_ptr` and `std::shared_ptr` in C++.",
+      "answer_lines": [
+        "**RAII**: Resource Acquisition Is Initialization binds resource lifecycle to object lifespan (acquired in constructor, released in destructor).",
+        "**`unique_ptr`**: Sole owner of dynamic memory; cannot be copied, only moved (`std::move`).",
+        "**`shared_ptr`**: Shared ownership using an atomic reference count; deallocates memory when reference count drops to zero."
+      ]
+    },
+    {
+      "id": "oop-s2-q5",
+      "question_no": 5,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "State the difference between `Runnable` and `Callable` interfaces in Java.",
+      "answer_lines": [
+        "**`Runnable`**: Defines `public void run()`; cannot return a result and cannot throw checked exceptions directly.",
+        "**`Callable<V>`**: Defines `public V call() throws Exception`; returns a parameterized computation result $V$ and can throw checked exceptions."
+      ]
+    },
+    {
+      "id": "oop-s2-q6",
+      "question_no": 6,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Implement a generic `Stack<T>` class in Java or C++ supporting `push`, `pop`, `peek`, and `isEmpty` with dynamic array resizing and exception handling.",
+      "answer_lines": [
+        "**1. Generic Stack Implementation in Java**:",
+        "```java",
+        "import java.util.EmptyStackException;",
+        "",
+        "public class GenericStack<T> {",
+        "    private Object[] elements;",
+        "    private int size = 0;",
+        "    private static final int DEFAULT_CAPACITY = 10;",
+        "",
+        "    public GenericStack() {",
+        "        elements = new Object[DEFAULT_CAPACITY];",
+        "    }",
+        "",
+        "    public void push(T item) {",
+        "        if (size == elements.length) resize(2 * elements.length);",
+        "        elements[size++] = item;",
+        "    }",
+        "",
+        "    @SuppressWarnings(\"unchecked\")",
+        "    public T pop() {",
+        "        if (isEmpty()) throw new EmptyStackException();",
+        "        T item = (T) elements[--size];",
+        "        elements[size] = null; // Prevent memory leak",
+        "        if (size > 0 && size == elements.length / 4) resize(elements.length / 2);",
+        "        return item;",
+        "    }",
+        "",
+        "    @SuppressWarnings(\"unchecked\")",
+        "    public T peek() {",
+        "        if (isEmpty()) throw new EmptyStackException();",
+        "        return (T) elements[size - 1];",
+        "    }",
+        "",
+        "    public boolean isEmpty() { return size == 0; }",
+        "    public int size() { return size; }",
+        "",
+        "    private void resize(int newCapacity) {",
+        "        Object[] temp = new Object[newCapacity];",
+        "        System.arraycopy(elements, 0, temp, 0, size);",
+        "        elements = temp;",
+        "    }",
+        "}",
+        "```",
+        "**2. Analysis**: Amortized time complexity for `push` and `pop` is $O(1)$. Dynamic doubling and quarter-shrinking maintain memory efficiency."
+      ]
+    },
+    {
+      "id": "oop-s2-q7",
+      "question_no": 7,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Explain Java 8 Interface enhancements. Discuss default methods, static methods, and functional interfaces with code examples.",
+      "answer_lines": [
+        "**1. Evolution of Interfaces**: Prior to Java 8, interfaces could only declare public abstract methods. Java 8 added:",
+        "\u2022 **Default Methods**: Methods with default implementation using `default` keyword to ensure backward compatibility for API evolution.",
+        "\u2022 **Static Methods**: Utility methods belonging to the interface directly, invoked without instantiating.",
+        "\u2022 **Functional Interfaces**: Interfaces with exactly one abstract method, annotated with `@FunctionalInterface`, enabling Lambdas.",
+        "**2. Implementation Code**:",
+        "```java",
+        "@FunctionalInterface",
+        "interface Vehicle {",
+        "    void drive(); // Single Abstract Method",
+        "",
+        "    default void turnAlarmOn() {",
+        "        System.out.println(\"Turning the vehicle alarm on.\");",
+        "    }",
+        "",
+        "    static int getHorsePower(int rpm, int torque) {",
+        "        return (rpm * torque) / 5252;",
+        "    }",
+        "}",
+        "",
+        "class ElectricCar implements Vehicle {",
+        "    @Override",
+        "    public void drive() {",
+        "        System.out.println(\"Silent electric motor engaged.\");",
+        "    }",
+        "    // Optionally override turnAlarmOn()",
+        "}",
+        "```"
+      ]
+    },
+    {
+      "id": "oop-s2-q8",
+      "question_no": 8,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Explain the internal architecture of `HashMap` in Java. Detail hashing, bucket array, collision resolution, and red-black tree conversion.",
+      "answer_lines": [
+        "**1. Structural Overview**: `HashMap` is an array of `Node<K,V>` buckets (default initial capacity 16, default load factor 0.75).",
+        "**2. Index Calculation**:",
+        "\u2022 Key hash is perturbed: `hash = (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16)` to spread bits.",
+        "\u2022 Bucket index: `index = hash & (capacity - 1)` (equivalent to modulo when capacity is power of 2).",
+        "**3. Collision Resolution**:",
+        "\u2022 Separate chaining: When multiple keys map to the same index, they form a singly-linked list.",
+        "\u2022 **Treeification (Java 8+)**: If a bucket's linked list length exceeds `TREEIFY_THRESHOLD = 8` and table capacity is $\\ge 64$, the bucket is converted into a balanced Red-Black Tree (`TreeNode`). This reduces search time from $O(n)$ to $O(\\log n)$.",
+        "**4. Rehashing**: When `size > capacity * loadFactor`, capacity is doubled and elements are redistributed."
+      ]
+    },
+    {
+      "id": "oop-s2-q9",
+      "question_no": 9,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Demonstrate the Java Concurrency Framework using `ExecutorService`, `Callable`, and `Future` to compute factorial asynchronously in parallel.",
+      "answer_lines": [
+        "**1. Concurrency Architecture**: `ExecutorService` abstracts thread management using thread pools (e.g., `FixedThreadPool`), eliminating the overhead of manual thread creation.",
+        "**2. Implementation Code**:",
+        "```java",
+        "import java.util.concurrent.*;",
+        "",
+        "class FactorialTask implements Callable<Long> {",
+        "    private final int number;",
+        "    public FactorialTask(int number) { this.number = number; }",
+        "",
+        "    @Override",
+        "    public Long call() {",
+        "        long fact = 1;",
+        "        for (int i = 2; i <= number; i++) fact *= i;",
+        "        return fact;",
+        "    }",
+        "}",
+        "",
+        "public class ExecutorDemo {",
+        "    public static void main(String[] args) throws Exception {",
+        "        ExecutorService executor = Executors.newFixedThreadPool(3);",
+        "        Future<Long> f1 = executor.submit(new FactorialTask(10));",
+        "        Future<Long> f2 = executor.submit(new FactorialTask(15));",
+        "",
+        "        System.out.println(\"Computing in background...\");",
+        "        System.out.println(\"Factorial 10: \" + f1.get()); // Blocks until done",
+        "        System.out.println(\"Factorial 15: \" + f2.get());",
+        "",
+        "        executor.shutdown();",
+        "    }",
+        "}",
+        "```"
+      ]
+    },
+    {
+      "id": "oop-s2-q10",
+      "question_no": 10,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Explain File I/O in Java using modern NIO.2 / streams and write a program using try-with-resources to count word frequencies in a file.",
+      "answer_lines": [
+        "**1. Java I/O Streams**: Byte streams (`InputStream`/`OutputStream`) handle raw binary; Character streams (`Reader`/`Writer`) handle Unicode character encodings.",
+        "**2. Word Frequency Counter Code**:",
+        "```java",
+        "import java.io.*;",
+        "import java.util.*;",
+        "",
+        "public class WordFrequency {",
+        "    public static void main(String[] args) {",
+        "        Map<String, Integer> wordCount = new HashMap<>();",
+        "        File inputFile = new File(\"input.txt\");",
+        "",
+        "        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {",
+        "            String line;",
+        "            while ((line = reader.readLine()) != null) {",
+        "                String[] words = line.toLowerCase().split(\"[^a-zA-Z0-9]+\");",
+        "                for (String word : words) {",
+        "                    if (!word.isEmpty()) {",
+        "                        wordCount.put(word, wordCount.getOrDefault(word, 0) + 1);",
+        "                    }",
+        "                }",
+        "            }",
+        "        } catch (IOException e) {",
+        "            System.err.println(\"I/O Error: \" + e.getMessage());",
+        "        }",
+        "        wordCount.forEach((k, v) -> System.out.println(k + \": \" + v));",
+        "    }",
+        "}",
+        "```",
+        "**3. Advantages**: Try-with-resources implements `AutoCloseable`, ensuring the stream closes safely even during exceptions."
+      ]
+    }
+  ],
+  "electronics_set1": [
+    {
+      "id": "be-s1-q1",
+      "question_no": 1,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "State the Shockley diode equation and define each term.",
+      "answer_lines": [
+        "$$I = I_0 \\left( e^{\\frac{V}{\\eta V_T}} - 1 \\right)$$",
+        "Where $I$ is diode current, $I_0$ is reverse saturation current, $V$ is applied voltage, $\\eta$ is ideality factor ($1$ for Ge, $2$ for Si), and $V_T = \\frac{kT}{q} \\approx 26\\text{ mV}$ at $300\\text{ K}$ is thermal voltage."
+      ]
+    },
+    {
+      "id": "be-s1-q2",
+      "question_no": 2,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Derive the mathematical relationship between transistor current gains $\\alpha$ and $\\beta$.",
+      "answer_lines": [
+        "Since $I_E = I_B + I_C$, divide by $I_C$: $\\frac{I_E}{I_C} = \\frac{I_B}{I_C} + 1$.",
+        "Substituting $\\alpha = \\frac{I_C}{I_E}$ and $\\beta = \\frac{I_C}{I_B}$ gives $\\frac{1}{\\alpha} = \\frac{1}{\\beta} + 1 = \\frac{1 + \\beta}{\\beta}$, hence:",
+        "$$\\beta = \\frac{\\alpha}{1 - \\alpha} \\quad \\text{and} \\quad \\alpha = \\frac{\\beta}{1 + \\beta}$$"
+      ]
+    },
+    {
+      "id": "be-s1-q3",
+      "question_no": 3,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "List four ideal characteristics of an Operational Amplifier (Op-Amp).",
+      "answer_lines": [
+        "1. Infinite open-loop voltage gain ($A_{OL} = \\infty$).",
+        "2. Infinite input impedance ($R_{in} = \\infty$), drawing zero input current ($I_+ = I_- = 0$).",
+        "3. Zero output impedance ($R_{out} = 0$).",
+        "4. Infinite bandwidth ($BW = \\infty$) and zero offset voltage ($V_{os} = 0$)."
+      ]
+    },
+    {
+      "id": "be-s1-q4",
+      "question_no": 4,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "State De Morgan's theorems in Boolean algebra.",
+      "answer_lines": [
+        "1. **First Theorem**: The complement of a product equals the sum of the complements: $\\overline{A \\cdot B} = \\overline{A} + \\overline{B}$.",
+        "2. **Second Theorem**: The complement of a sum equals the product of the complements: $\\overline{A + B} = \\overline{A} \\cdot \\overline{B}$."
+      ]
+    },
+    {
+      "id": "be-s1-q5",
+      "question_no": 5,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Define ripple factor and state its values for half-wave and full-wave rectifiers.",
+      "answer_lines": [
+        "**Definition**: $\\gamma = \\frac{V_{ac,rms}}{V_{dc}} = \\sqrt{\\left(\\frac{V_{rms}}{V_{dc}}\\right)^2 - 1}$.",
+        "\u2022 For Half-Wave Rectifier: $\\gamma = 1.21$.",
+        "\u2022 For Full-Wave Rectifier: $\\gamma = 0.482$."
+      ]
+    },
+    {
+      "id": "be-s1-q6",
+      "question_no": 6,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Explain the working of a Full-Wave Bridge Rectifier with a neat circuit diagram. Derive expressions for DC voltage, RMS voltage, ripple factor, and efficiency.",
+      "answer_lines": [
+        "**1. Circuit Working**: Consists of 4 diodes ($D_1, D_2, D_3, D_4$) in a bridge. During positive half cycle of AC input, $D_1$ and $D_3$ are forward-biased, conducting current through load $R_L$. During negative half cycle, $D_2$ and $D_4$ conduct, maintaining unidirectional current through $R_L$.",
+        "**2. Mathematical Derivations**:",
+        "\u2022 **DC (Average) Output Voltage**: $V_{dc} = \\frac{1}{\\pi}\\int_0^\\pi V_m \\sin(\\omega t) d(\\omega t) = \\frac{2V_m}{\\pi} \\approx 0.636 V_m$.",
+        "\u2022 **RMS Output Voltage**: $V_{rms} = \\sqrt{\\frac{1}{\\pi}\\int_0^\\pi V_m^2 \\sin^2(\\omega t) d(\\omega t)} = \\frac{V_m}{\\sqrt{2}} \\approx 0.707 V_m$.",
+        "\u2022 **Ripple Factor**: $\\gamma = \\sqrt{\\left(\\frac{V_{rms}}{V_{dc}}\\right)^2 - 1} = \\sqrt{\\left(\\frac{V_m / \\sqrt{2}}{2V_m / \\pi}\\right)^2 - 1} = \\sqrt{\\left(\\frac{\\pi}{2\\sqrt{2}}\\right)^2 - 1} = \\sqrt{1.2337 - 1} = 0.482$.",
+        "\u2022 **Efficiency**: $\\eta = \\frac{P_{dc}}{P_{ac}} = \\frac{I_{dc}^2 R_L}{I_{rms}^2 (R_L + 2r_f)} = \\frac{(2I_m/\\pi)^2}{(I_m/\\sqrt{2})^2} = \\frac{8}{\\pi^2} \\approx 81.2\\%$.",
+        "**3. PIV**: Peak Inverse Voltage per diode is $V_m$ (half that of a center-tapped transformer design)."
+      ]
+    },
+    {
+      "id": "be-s1-q7",
+      "question_no": 7,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Explain the input and output characteristics of a BJT in Common Emitter (CE) configuration. Discuss the active, saturation, and cutoff regions.",
+      "answer_lines": [
+        "**1. Circuit Configuration**: The emitter terminal is common to both input (base-emitter) and output (collector-emitter) circuits.",
+        "**2. Input Characteristics ($I_B$ vs $V_{BE}$ for constant $V_{CE}$)**: Resembles a forward-biased diode. As $V_{BE}$ exceeds knee voltage ($0.7\\text{ V}$ for Si), $I_B$ increases exponentially. Increasing $V_{CE}$ shifts curves slightly rightward due to Early effect (base width narrowing).",
+        "**3. Output Characteristics ($I_C$ vs $V_{CE}$ for constant $I_B$)**:",
+        "\u2022 **Active Region**: Emitter junction forward-biased, collector junction reverse-biased. $I_C = \\beta I_B$, curves are nearly horizontal (high dynamic output impedance). Ideal for linear amplification.",
+        "\u2022 **Saturation Region**: Both junctions forward-biased ($V_{CE} < 0.2\\text{ V}$). Transistor acts as an ON switch with minimum resistance.",
+        "\u2022 **Cutoff Region**: Both junctions reverse-biased ($I_B = 0$). Only tiny leakage current $I_{CEO}$ flows. Transistor acts as an OPEN switch.",
+        "**4. DC Load Line**: Plotting $V_{CE} = V_{CC} - I_C R_C$ on output characteristics gives saturation point $(0, V_{CC}/R_C)$ and cutoff point $(V_{CC}, 0)$. The intersection with operating base current sets the Q-point."
+      ]
+    },
+    {
+      "id": "be-s1-q8",
+      "question_no": 8,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Explain the working of a Zener Diode as a shunt voltage regulator. Calculate the series resistance $R_S$ for a $10\\text{ V}$ Zener with $V_{in} = 20-30\\text{ V}, I_L = 10-50\\text{ mA}$, and $I_{Z,min} = 5\\text{ mA}$.",
+      "answer_lines": [
+        "**1. Operating Principle**: Operated in reverse breakdown (Zener breakdown). In this region, despite large variations in Zener current $I_Z$, the voltage across the diode remains practically constant at $V_Z$.",
+        "**2. Circuit Analysis**: Unregulated voltage $V_{in}$ feeds series resistor $R_S$ in series with parallel combination of Zener diode and load $R_L$. Current relation: $I_S = I_Z + I_L$.",
+        "**3. Design Formula**: $R_S = \\frac{V_{in,min} - V_Z}{I_{Z,min} + I_{L,max}}$.",
+        "**4. Numerical Calculation**:",
+        "\u2022 Given: $V_{in,min} = 20\\text{ V}, V_Z = 10\\text{ V}, I_{Z,min} = 5\\text{ mA} = 0.005\\text{ A}, I_{L,max} = 50\\text{ mA} = 0.050\\text{ A}$.",
+        "\u2022 Total minimum supply current: $I_{S,min} = 0.005 + 0.050 = 0.055\\text{ A} = 55\\text{ mA}$.",
+        "$$R_S = \\frac{20 - 10}{0.055} = \\frac{10}{0.055} = 181.82\\;\\Omega$$",
+        "\u2022 Max power dissipation in Zener occurs at $V_{in,max} = 30\\text{ V}$ and $I_{L,min} = 10\\text{ mA}$:",
+        "$$I_{S,max} = \\frac{30 - 10}{181.82} = \\frac{20}{181.82} = 110\\text{ mA} \\implies I_{Z,max} = 110 - 10 = 100\\text{ mA}$$",
+        "$$P_Z = V_Z \\times I_{Z,max} = 10\\text{ V} \\times 0.1\\text{ A} = 1.0\\text{ W}$$"
+      ]
+    },
+    {
+      "id": "be-s1-q9",
+      "question_no": 9,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Derive the closed-loop voltage gain for Inverting and Non-Inverting Op-Amp configurations using the concept of Virtual Ground.",
+      "answer_lines": [
+        "**1. Concept of Virtual Ground**: Because ideal open loop gain $A_{OL} = \\infty$, the differential input voltage $V_d = V_+ - V_- = \\frac{V_o}{A_{OL}} = 0$, meaning $V_- = V_+$. Since input impedance is infinite, no current enters the op-amp terminals ($I_+ = I_- = 0$).",
+        "**2. Inverting Amplifier Derivation**:",
+        "\u2022 Non-inverting terminal grounded: $V_+ = 0 \\implies V_- = 0$ (virtual ground).",
+        "\u2022 Current from input through $R_1$: $I_1 = \\frac{V_{in} - V_-}{R_1} = \\frac{V_{in}}{R_1}$.",
+        "\u2022 Current through feedback $R_f$: $I_f = \\frac{V_- - V_o}{R_f} = -\\frac{V_o}{R_f}$.",
+        "\u2022 By KCL at inverting node: $I_1 = I_f \\implies \\frac{V_{in}}{R_1} = -\\frac{V_o}{R_f} \\implies A_v = \\frac{V_o}{V_{in}} = -\\frac{R_f}{R_1}$.",
+        "**3. Non-Inverting Amplifier Derivation**:",
+        "\u2022 Input connected to $V_+$: $V_+ = V_{in} \\implies V_- = V_{in}$.",
+        "\u2022 Potential divider at inverting terminal: $V_- = V_o \\left( \\frac{R_1}{R_1 + R_f} \\right)$.",
+        "\u2022 Equating $V_{in} = V_o \\left( \\frac{R_1}{R_1 + R_f} \\right) \\implies A_v = \\frac{V_o}{V_{in}} = 1 + \\frac{R_f}{R_1}$."
+      ]
+    },
+    {
+      "id": "be-s1-q10",
+      "question_no": 10,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Design a Full Adder circuit using basic logic gates. Formulate the truth table, derive simplified Boolean expressions for Sum and Carry, and draw the gate layout.",
+      "answer_lines": [
+        "**1. Definition**: A combinational logic circuit that computes the arithmetic sum of three one-bit binary inputs: $A, B$, and carry-in $C_{in}$.",
+        "**2. Truth Table Summary**:",
+        "\u2022 $(0,0,0) \\implies S=0, C_o=0$; $(0,0,1) \\implies S=1, C_o=0$; $(0,1,0) \\implies S=1, C_o=0$; $(0,1,1) \\implies S=0, C_o=1$.",
+        "\u2022 $(1,0,0) \\implies S=1, C_o=0$; $(1,0,1) \\implies S=0, C_o=1$; $(1,1,0) \\implies S=0, C_o=1$; $(1,1,1) \\implies S=1, C_o=1$.",
+        "**3. Boolean Expressions**:",
+        "\u2022 **Sum ($S$)**: $S = \\sum m(1, 2, 4, 7) = A \\oplus B \\oplus C_{in}$.",
+        "\u2022 **Carry Out ($C_{out}$)**: $C_{out} = \\sum m(3, 5, 6, 7) = AB + BC_{in} + AC_{in} = AB + C_{in}(A \\oplus B)$.",
+        "**4. Hardware Implementation**: Constructed using two Half Adders and one OR gate: First half adder takes $A, B$ to produce $S_1 = A \\oplus B$ and $C_1 = AB$. Second half adder takes $S_1$ and $C_{in}$ to produce final Sum $S = S_1 \\oplus C_{in}$ and carry $C_2 = S_1 C_{in}$. Final Carry $C_{out} = C_1 + C_2$."
+      ]
+    }
+  ],
+  "electronics_set2": [
+    {
+      "id": "be-s2-q1",
+      "question_no": 1,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Define pinch-off voltage $V_P$ in a JFET and write Shockley's equation.",
+      "answer_lines": [
+        "**Pinch-off Voltage ($V_P$)**: The value of drain-to-source voltage $V_{DS}$ at $V_{GS} = 0$ at which the depletion layers touch, causing drain current to saturate at $I_{DSS}$.",
+        "**Shockley's Equation**: $I_D = I_{DSS} \\left(1 - \\frac{V_{GS}}{V_P}\\right)^2$ for $V_P \\le V_{GS} \\le 0$."
+      ]
+    },
+    {
+      "id": "be-s2-q2",
+      "question_no": 2,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "State Barkhausen's criterion for sustained oscillations in feedback circuits.",
+      "answer_lines": [
+        "1. The magnitude of the loop gain must be equal to unity: $|A\\beta| = 1$.",
+        "2. The total phase shift around the feedback loop must be $0^\\circ$ or an integer multiple of $360^\\circ$."
+      ]
+    },
+    {
+      "id": "be-s2-q3",
+      "question_no": 3,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Differentiate between Enhancement and Depletion MOSFETs.",
+      "answer_lines": [
+        "**Depletion MOSFET**: Has a physical conducting channel built during fabrication; conducts at $V_{GS} = 0$ (normally ON) and can operate in both depletion and enhancement modes.",
+        "**Enhancement MOSFET**: Has no physical channel at $V_{GS} = 0$ (normally OFF); requires a gate threshold voltage $V_{GS} > V_{th}$ to induce an inversion channel."
+      ]
+    },
+    {
+      "id": "be-s2-q4",
+      "question_no": 4,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Define Slew Rate of an Op-Amp and state its typical value for IC 741.",
+      "answer_lines": [
+        "**Definition**: The maximum rate of change of output voltage per unit time in response to a step input: $SR = \\left.\\frac{dv_o}{dt}\\right|_{max}$ in $\\text{V}/\\mu\\text{s}$.",
+        "**Value**: For standard general-purpose Op-Amp IC 741, typical $SR = 0.5\\text{ V}/\\mu\\text{s}$."
+      ]
+    },
+    {
+      "id": "be-s2-q5",
+      "question_no": 5,
+      "marks": 2,
+      "prompt": "Part A \u00b7 2 Marks",
+      "question": "Convert the binary number $(110101)_2$ into decimal and hexadecimal representations.",
+      "answer_lines": [
+        "\u2022 **Decimal**: $1\\cdot 2^5 + 1\\cdot 2^4 + 0\\cdot 2^3 + 1\\cdot 2^2 + 0\\cdot 2^1 + 1\\cdot 2^0 = 32 + 16 + 0 + 4 + 0 + 1 = 53_{10}$.",
+        "\u2022 **Hexadecimal**: Group into 4 bits: $(0011\\;0101)_2 = 35_{16}$."
+      ]
+    },
+    {
+      "id": "be-s2-q6",
+      "question_no": 6,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Explain the construction and working principle of an N-Channel JFET. Plot drain and transfer characteristics and derive transconductance $g_m$.",
+      "answer_lines": [
+        "**1. Construction**: Consists of an N-type silicon bar with Ohmic contacts at two ends forming Drain and Source. Two heavily doped P-type regions ($P^+$) diffused on opposite sides are connected to form the Gate.",
+        "**2. Working**: When $V_{DS}$ is applied (positive to drain), electrons flow from source to drain. Applying reverse bias $V_{GS}$ widens depletion layers into the channel, constricting the channel width and reducing current.",
+        "**3. Characteristics**:",
+        "\u2022 **Drain Characteristics ($I_D$ vs $V_{DS}$)**: Exhibits Ohmic region ($V_{DS} < V_P - V_{GS}$), Saturation / Pinch-off region ($V_{DS} \\ge V_P - V_{GS}$ where current saturates at constant level), and Breakdown region.",
+        "\u2022 **Transfer Characteristics ($I_D$ vs $V_{GS}$)**: Governed by Shockley's equation $I_D = I_{DSS}(1 - V_{GS}/V_P)^2$.",
+        "**4. Transconductance Derivation**:",
+        "$$g_m = \\frac{dI_D}{dV_{GS}} = \\frac{d}{dV_{GS}}\\left[ I_{DSS} \\left(1 - \\frac{V_{GS}}{V_P}\\right)^2 \\right] = -\\frac{2I_{DSS}}{V_P}\\left(1 - \\frac{V_{GS}}{V_P}\\right) = g_{m0}\\left(1 - \\frac{V_{GS}}{V_P}\\right)$$",
+        "Where $g_{m0} = -\\frac{2I_{DSS}}{V_P}$ is the maximum transconductance at $V_{GS} = 0$."
+      ]
+    },
+    {
+      "id": "be-s2-q7",
+      "question_no": 7,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Draw the circuit diagram of an RC Phase Shift Oscillator using an Op-Amp. Derive the frequency of oscillation and the minimum gain requirement.",
+      "answer_lines": [
+        "**1. Circuit Design**: An inverting Op-Amp provides $180^\\circ$ phase shift. A three-stage cascaded RC ladder feedback network provides the additional $180^\\circ$ phase shift ($60^\\circ$ per stage) at frequency $f_0$, satisfying Barkhausen's criterion.",
+        "**2. Transfer Function Analysis**: Applying nodal analysis to the 3-mesh RC ladder network yields feedback attenuation factor $\\beta$:",
+        "$$\\beta = \\frac{V_f}{V_o} = \\frac{1}{1 - 5\\alpha^2 + j(6\\alpha - \\alpha^3)} \\quad \\text{where } \\alpha = \\frac{1}{\\omega R C}$$",
+        "**3. Frequency of Oscillation**: For zero imaginary phase shift, the imaginary denominator must vanish:",
+        "$$6\\alpha - \\alpha^3 = 0 \\implies \\alpha^2 = 6 \\implies \\frac{1}{\\omega^2 R^2 C^2} = 6 \\implies \\omega = \\frac{1}{R C \\sqrt{6}}$$",
+        "$$f_0 = \\frac{1}{2\\pi R C \\sqrt{6}}$$",
+        "**4. Gain Requirement**: At resonance, $\\beta = \\frac{1}{1 - 5(6)} = -\\frac{1}{29}$. To satisfy $|A_v \\beta| = 1$:",
+        "$$|A_v| = \\left|-\\frac{R_f}{R_1}\\right| = 29 \\implies R_f \\ge 29 R_1$$"
+      ]
+    },
+    {
+      "id": "be-s2-q8",
+      "question_no": 8,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Explain Op-Amp Integrator and Differentiator circuits. Derive the output voltage expressions and state practical circuit improvements.",
+      "answer_lines": [
+        "**1. Op-Amp Integrator**:",
+        "\u2022 Circuit has input resistor $R$ and feedback capacitor $C$. Virtual ground at inverting input gives $V_- = 0$.",
+        "\u2022 Current through resistor: $I = \\frac{V_{in}}{R}$. Current through capacitor: $I = -C \\frac{dV_o}{dt}$.",
+        "\u2022 Equating currents gives output voltage: $V_o(t) = -\\frac{1}{RC}\\int_0^t V_{in}(t) dt + V_o(0)$.",
+        "\u2022 **Practical Improvement**: Shunt resistor $R_f$ placed across $C$ to limit DC gain ($A_{dc} = R_f/R$) and prevent saturation due to offset drift.",
+        "**2. Op-Amp Differentiator**:",
+        "\u2022 Circuit has input capacitor $C$ and feedback resistor $R$.",
+        "\u2022 Current through capacitor: $I = C \\frac{dV_{in}}{dt}$. Current through resistor: $I = -\\frac{V_o}{R}$.",
+        "\u2022 Equating currents gives: $V_o(t) = -RC \\frac{dV_{in}}{dt}$.",
+        "\u2022 **Practical Improvement**: High frequencies amplify input noise. Placing series resistor $R_s$ with $C$ and capacitor $C_f$ in parallel with $R$ ensures stability and limits high-frequency bandwidth."
+      ]
+    },
+    {
+      "id": "be-s2-q9",
+      "question_no": 9,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Explain the frequency response of a Common Emitter (CE) BJT amplifier. Discuss the low-frequency and high-frequency roll-offs and define bandwidth.",
+      "answer_lines": [
+        "**1. Frequency Response Curve**: A plot of voltage gain in decibels ($20\\log_{10} A_v$) versus log frequency. Divided into three regions: Low-Frequency, Mid-Frequency (constant gain $A_{mid}$), and High-Frequency.",
+        "**2. Low-Frequency Roll-off**: At low frequencies, reactances of coupling capacitors ($C_1, C_2$) and emitter bypass capacitor ($C_E$) increase ($X_C = \\frac{1}{2\\pi f C}$). This creates voltage division and reduces voltage gain at $-20\\text{ dB/decade}$. Lower cutoff frequency $f_L$ is the frequency where gain falls to $\\frac{A_{mid}}{\\sqrt{2}}$ ($3\\text{ dB}$ below peak).",
+        "**3. High-Frequency Roll-off**: At high frequencies, internal parasitic junction capacitances (base-emitter $C_{\\pi}$ and collector-base $C_\\mu$) offer low impedance, shunting signal to ground. Collector-base capacitance is magnified by Miller Effect ($C_M = C_\\mu(1 + A_v)$), setting upper cutoff frequency $f_H$.",
+        "**4. Bandwidth ($BW$)**: The operational frequency span: $BW = f_H - f_L \\approx f_H$ (since $f_H \\gg f_L$)."
+      ]
+    },
+    {
+      "id": "be-s2-q10",
+      "question_no": 10,
+      "marks": 10,
+      "prompt": "Part B \u00b7 10 Marks",
+      "question": "Demonstrate that NAND is a Universal Gate by implementing NOT, AND, OR, XOR, and XNOR logic gates exclusively using 2-input NAND gates.",
+      "answer_lines": [
+        "**1. Universal Gate Definition**: A logic gate capable of synthesizing any arbitrary Boolean function without requiring any other gate type.",
+        "**2. Implementations using 2-input NAND gates**:",
+        "\u2022 **NOT Gate (1 gate)**: Tie both inputs together: $\\overline{A \\cdot A} = \\overline{A}$.",
+        "\u2022 **AND Gate (2 gates)**: Pass $A, B$ into NAND, then invert output through a NAND inverter: $\\overline{\\overline{A \\cdot B}} = A \\cdot B$.",
+        "\u2022 **OR Gate (3 gates)**: Invert $A$ and $B$ individually using two NANDs, then feed outputs into a third NAND: $\\overline{\\overline{A} \\cdot \\overline{B}} = \\overline{\\overline{A}} + \\overline{\\overline{B}} = A + B$ (by De Morgan's Law).",
+        "\u2022 **XOR Gate (4 gates)**: Output of first NAND $N_1 = \\overline{AB}$. Feed $N_1$ with $A$ into $N_2 = \\overline{A \\cdot \\overline{AB}}$, and $N_1$ with $B$ into $N_3 = \\overline{B \\cdot \\overline{AB}}$. Final NAND $N_4 = \\overline{N_2 \\cdot N_3} = A\\overline{B} + \\overline{A}B = A \\oplus B$.",
+        "\u2022 **XNOR Gate (5 gates)**: Take XOR output (4 gates) and invert with a 5th NAND gate: $\\overline{A \\oplus B} = AB + \\overline{A}\\overline{B}$."
+      ]
+    }
+  ]
+}

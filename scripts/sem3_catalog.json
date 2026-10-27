@@ -1,0 +1,524 @@
+{
+  "btech": {
+    "Data Structures & Algorithms": {
+      "1": "Arrays, Linked Lists",
+      "2": "Stacks & Queues",
+      "3": "Trees & Graphs",
+      "4": "Sorting & Searching",
+      "5": "Hashing & Algorithm Analysis"
+    },
+    "Digital Logic Design": {
+      "1": "Number Systems & Codes",
+      "2": "Boolean Algebra & Logic Gates",
+      "3": "Combinational Circuits",
+      "4": "Sequential Circuits (Flip-Flops, Counters)",
+      "5": "Memory & Programmable Logic"
+    },
+    "Discrete Mathematics": {
+      "1": "Set Theory & Logic",
+      "2": "Relations & Functions",
+      "3": "Graph Theory",
+      "4": "Combinatorics",
+      "5": "Algebraic Structures"
+    },
+    "Computer Organization & Architecture": {
+      "1": "Basic Computer Organization",
+      "2": "Instruction Sets & Addressing",
+      "3": "Arithmetic & Logic Unit",
+      "4": "Memory Hierarchy",
+      "5": "I/O Organization & Pipelining"
+    },
+    "Object Oriented Programming (Advanced)": {
+      "1": "Design Patterns",
+      "2": "GUI Programming",
+      "3": "Database Connectivity",
+      "4": "Network Programming",
+      "5": "Software Testing Basics"
+    },
+    "Electronic Devices & Circuits": {
+      "1": "Semiconductor Physics",
+      "2": "Diodes & Applications",
+      "3": "BJT & FET",
+      "4": "Amplifier Design",
+      "5": "Feedback & Oscillators"
+    },
+    "Network Theory": {
+      "1": "Circuit Elements & Laws",
+      "2": "Network Theorems",
+      "3": "Transient Analysis",
+      "4": "AC Circuit Analysis",
+      "5": "Two-Port Networks"
+    },
+    "Signals & Systems": {
+      "1": "Signal Classification",
+      "2": "LTI Systems",
+      "3": "Fourier Series & Transform",
+      "4": "Laplace Transform",
+      "5": "Z-Transform"
+    },
+    "Mathematics for ECE": {
+      "1": "Linear Algebra",
+      "2": "Complex Analysis",
+      "3": "Probability",
+      "4": "Random Processes",
+      "5": "Numerical Methods"
+    },
+    "Circuit Analysis & Synthesis": {
+      "1": "Network Theorems",
+      "2": "Transient Analysis",
+      "3": "AC Analysis",
+      "4": "Two-Port Networks",
+      "5": "Network Synthesis"
+    },
+    "Electrical Machines \u2014 I": {
+      "1": "Transformers",
+      "2": "DC Generators",
+      "3": "DC Motors",
+      "4": "Testing of DC Machines",
+      "5": "Special Machines"
+    },
+    "Digital Electronics": {
+      "1": "Logic Gates",
+      "2": "Combinational Circuits",
+      "3": "Sequential Circuits",
+      "4": "Counters & Registers",
+      "5": "Memory & PLDs"
+    },
+    "Electromagnetic Fields": {
+      "1": "Vector Analysis",
+      "2": "Electrostatics",
+      "3": "Magnetostatics",
+      "4": "Maxwell's Equations",
+      "5": "EM Wave Propagation"
+    },
+    "Strength of Materials": {
+      "1": "Stress & Strain",
+      "2": "Shear Force & Bending Moment",
+      "3": "Torsion",
+      "4": "Columns & Struts",
+      "5": "Combined Stresses"
+    },
+    "Thermodynamics": {
+      "1": "Basic Concepts & Laws",
+      "2": "Entropy",
+      "3": "Availability",
+      "4": "Properties of Steam",
+      "5": "Power Cycles"
+    },
+    "Material Science & Engineering": {
+      "1": "Crystal Structure",
+      "2": "Mechanical Properties",
+      "3": "Phase Diagrams",
+      "4": "Heat Treatment",
+      "5": "Engineering Materials"
+    },
+    "Manufacturing Technology \u2014 I": {
+      "1": "Casting Processes",
+      "2": "Welding",
+      "3": "Forming Processes",
+      "4": "Machining Basics",
+      "5": "Metrology"
+    },
+    "Machine Drawing": {
+      "1": "Drawing Standards",
+      "2": "Orthographic Projections",
+      "3": "Sectional Views",
+      "4": "Assembly Drawings",
+      "5": "CAD Basics"
+    },
+    "Surveying & Geomatics": {
+      "1": "Surveying Basics",
+      "2": "Leveling",
+      "3": "Theodolite & Traversing",
+      "4": "Contouring",
+      "5": "Modern Surveying (GPS, GIS)"
+    },
+    "Building Materials & Construction": {
+      "1": "Stones & Bricks",
+      "2": "Cement & Concrete",
+      "3": "Timber & Steel",
+      "4": "Masonry",
+      "5": "Foundations"
+    },
+    "Fluid Mechanics": {
+      "1": "Fluid Properties",
+      "2": "Fluid Statics",
+      "3": "Fluid Kinematics",
+      "4": "Fluid Dynamics",
+      "5": "Flow Measurement"
+    },
+    "Engineering Geology": {
+      "1": "Mineralogy",
+      "2": "Petrology",
+      "3": "Structural Geology",
+      "4": "Engineering Properties",
+      "5": "Geological Hazards"
+    },
+    "Fluid Mechanics (Momentum Transfer)": {
+      "1": "Fluid Properties",
+      "2": "Fluid Statics",
+      "3": "Fluid Dynamics",
+      "4": "Flow Through Pipes",
+      "5": "Pumps & Compressors"
+    },
+    "Chemical Engineering Thermodynamics \u2014 I": {
+      "1": "Laws of Thermodynamics",
+      "2": "PVT Behavior",
+      "3": "Heat Effects",
+      "4": "Entropy",
+      "5": "Gibbs Free Energy"
+    },
+    "Organic Chemistry": {
+      "1": "Reaction Mechanisms",
+      "2": "Functional Groups",
+      "3": "Stereochemistry",
+      "4": "Polymer Formation",
+      "5": "Industrial Organic Chemicals"
+    },
+    "Material Science": {
+      "1": "Crystal Structure",
+      "2": "Metals & Alloys",
+      "3": "Ceramics",
+      "4": "Polymers",
+      "5": "Composites"
+    },
+    "Numerical Methods": {
+      "1": "Error Analysis",
+      "2": "Roots of Equations",
+      "3": "Linear Systems",
+      "4": "Interpolation & Integration",
+      "5": "ODE Solutions"
+    },
+    "Linear Algebra & Probability": {
+      "1": "Vector Spaces",
+      "2": "Matrices & Eigenvalues",
+      "3": "Probability Distributions",
+      "4": "Random Variables",
+      "5": "Statistical Inference"
+    },
+    "Database Management Systems": {
+      "1": "ER Model",
+      "2": "Relational Model & SQL",
+      "3": "Normalization",
+      "4": "Transactions",
+      "5": "Indexing & Storage"
+    },
+    "Statistics & Probability": {
+      "1": "Descriptive Statistics",
+      "2": "Probability Distributions",
+      "3": "Sampling",
+      "4": "Hypothesis Testing",
+      "5": "Regression"
+    },
+    "Python for Data Science": {
+      "1": "Python Basics",
+      "2": "NumPy & Pandas",
+      "3": "Data Visualization",
+      "4": "Data Cleaning",
+      "5": "EDA"
+    },
+    "Aerospace Materials": {
+      "1": "Metals & Alloys",
+      "2": "Composites",
+      "3": "Ceramics",
+      "4": "Fatigue & Fracture",
+      "5": "Material Selection"
+    },
+    "Engineering Mathematics III": {
+      "1": "Numerical Methods",
+      "2": "Partial Differential Equations",
+      "3": "Complex Analysis",
+      "4": "Probability",
+      "5": "Statistics"
+    },
+    "Electrical Machines": {
+      "1": "Transformers",
+      "2": "DC Machines",
+      "3": "Induction Machines",
+      "4": "Synchronous Machines",
+      "5": "Applications"
+    },
+    "Sensors & Transducers": {
+      "1": "Sensor Fundamentals",
+      "2": "Displacement Sensors",
+      "3": "Temperature Sensors",
+      "4": "Optical Sensors",
+      "5": "Smart Sensors"
+    },
+    "Solar Energy": {
+      "1": "Solar Radiation",
+      "2": "Solar Thermal",
+      "3": "Solar PV",
+      "4": "Solar Systems",
+      "5": "Applications"
+    },
+    "Biochemistry": {
+      "1": "Biomolecules",
+      "2": "Enzymes",
+      "3": "Metabolism",
+      "4": "Molecular Biology",
+      "5": "Clinical Biochemistry"
+    },
+    "Human Anatomy & Physiology": {
+      "1": "Cell & Tissue",
+      "2": "Skeletal System",
+      "3": "Cardiovascular",
+      "4": "Nervous System",
+      "5": "Respiratory & Renal"
+    },
+    "Microbiology": {
+      "1": "Microbial Basics",
+      "2": "Bacteria",
+      "3": "Viruses",
+      "4": "Fungi",
+      "5": "Industrial Microbiology"
+    },
+    "Biomedical Instrumentation": {
+      "1": "Measurement Basics",
+      "2": "Bioelectrodes",
+      "3": "Biosensors",
+      "4": "Medical Devices",
+      "5": "Patient Safety"
+    }
+  },
+  "bsc": {
+    "Object Oriented Programming (Java/C++)": {
+      "1": "OOP Concepts",
+      "2": "Classes & Objects",
+      "3": "Inheritance & Polymorphism",
+      "4": "Exception Handling",
+      "5": "Collections"
+    },
+    "OOP Lab": {
+      "1": "OOP: Laboratory Safety Protocols & Instrumentation",
+      "2": "OOP: Standard Preparations & Calibration Methods",
+      "3": "OOP: Core Experimental Procedures & Synthesis",
+      "4": "OOP: Quantitative Data Verification & Error Analysis",
+      "5": "OOP: Comprehensive Practical Record & Viva Voce"
+    },
+    "Real Analysis": {
+      "1": "Sequences",
+      "2": "Series",
+      "3": "Limits & Continuity",
+      "4": "Differentiation",
+      "5": "Integration"
+    },
+    "Physics III: Thermal Physics / Statistics III": {
+      "1": "Kinetic Theory",
+      "2": "Laws of Thermodynamics",
+      "3": "Entropy",
+      "4": "Heat Engines",
+      "5": "Statistical Distributions"
+    },
+    "Web Design (HTML/CSS)": {
+      "1": "HTML Basics",
+      "2": "CSS",
+      "3": "Forms",
+      "4": "Layouts",
+      "5": "Responsive Design"
+    },
+    "Database Management & SQL": {
+      "1": "ER Model",
+      "2": "Relational Model",
+      "3": "SQL Queries",
+      "4": "Normalization",
+      "5": "Transactions"
+    },
+    "DBMS Lab": {
+      "1": "DBMS: Laboratory Safety Protocols & Instrumentation",
+      "2": "DBMS: Standard Preparations & Calibration Methods",
+      "3": "DBMS: Core Experimental Procedures & Synthesis",
+      "4": "DBMS: Quantitative Data Verification & Error Analysis",
+      "5": "DBMS: Comprehensive Practical Record & Viva Voce"
+    },
+    "Numerical Methods & Optimization": {
+      "1": "Error Analysis",
+      "2": "Root Finding",
+      "3": "Linear Systems",
+      "4": "Interpolation",
+      "5": "Optimization Basics"
+    },
+    "Statistical Inference / OOP": {
+      "1": "Point Estimation",
+      "2": "Interval Estimation",
+      "3": "Hypothesis Testing",
+      "4": "ANOVA",
+      "5": "Non-Parametric Tests"
+    },
+    "Data Visualization (Tableau/Power BI)": {
+      "1": "Visualization Principles",
+      "2": "Charts",
+      "3": "Dashboards",
+      "4": "Tools",
+      "5": "Storytelling"
+    },
+    "Plant Anatomy & Embryology": {
+      "1": "Tissues",
+      "2": "Root & Stem Anatomy",
+      "3": "Leaf Anatomy",
+      "4": "Embryo Development",
+      "5": "Endosperm"
+    },
+    "Botany Lab III": {
+      "1": "Botany  III: Laboratory Safety Protocols & Instrumentation",
+      "2": "Botany  III: Standard Preparations & Calibration Methods",
+      "3": "Botany  III: Core Experimental Procedures & Synthesis",
+      "4": "Botany  III: Quantitative Data Verification & Error Analysis",
+      "5": "Botany  III: Comprehensive Practical Record & Viva Voce"
+    },
+    "Physiology & Biochemistry": {
+      "1": "Digestion",
+      "2": "Respiration",
+      "3": "Circulation",
+      "4": "Excretion",
+      "5": "Enzymes & Metabolism"
+    },
+    "Zoology Lab III": {
+      "1": "Zoology  III: Laboratory Safety Protocols & Instrumentation",
+      "2": "Zoology  III: Standard Preparations & Calibration Methods",
+      "3": "Zoology  III: Core Experimental Procedures & Synthesis",
+      "4": "Zoology  III: Quantitative Data Verification & Error Analysis",
+      "5": "Zoology  III: Comprehensive Practical Record & Viva Voce"
+    },
+    "Organic Chemistry \u2013 III": {
+      "1": "Alcohols & Phenols",
+      "2": "Aldehydes & Ketones",
+      "3": "Carboxylic Acids",
+      "4": "Amines",
+      "5": "Stereochemistry"
+    },
+    "Chemistry Lab III (Organic Synthesis)": {
+      "1": "Chemistry  III (Organic Synthesis): Laboratory Safety Protocols & Instrumentation",
+      "2": "Chemistry  III (Organic Synthesis): Standard Preparations & Calibration Methods",
+      "3": "Chemistry  III (Organic Synthesis): Core Experimental Procedures & Synthesis",
+      "4": "Chemistry  III (Organic Synthesis): Quantitative Data Verification & Error Analysis",
+      "5": "Chemistry  III (Organic Synthesis): Comprehensive Practical Record & Viva Voce"
+    },
+    "Bio-fertilizers / Herbal Technology": {
+      "1": "Bio-fertilizer Types",
+      "2": "Production",
+      "3": "Application",
+      "4": "Herbal Medicine",
+      "5": "Cultivation"
+    },
+    "Molecular Biology & Genetic Engineering": {
+      "1": "DNA Replication",
+      "2": "Transcription",
+      "3": "Translation",
+      "4": "Cloning Vectors",
+      "5": "Gene Therapy"
+    },
+    "Molecular Biology Lab": {
+      "1": "Molecular Biology: Laboratory Safety Protocols & Instrumentation",
+      "2": "Molecular Biology: Standard Preparations & Calibration Methods",
+      "3": "Molecular Biology: Core Experimental Procedures & Synthesis",
+      "4": "Molecular Biology: Quantitative Data Verification & Error Analysis",
+      "5": "Molecular Biology: Comprehensive Practical Record & Viva Voce"
+    },
+    "Chemistry Lab III": {
+      "1": "Chemistry  III: Laboratory Safety Protocols & Instrumentation",
+      "2": "Chemistry  III: Standard Preparations & Calibration Methods",
+      "3": "Chemistry  III: Core Experimental Procedures & Synthesis",
+      "4": "Chemistry  III: Quantitative Data Verification & Error Analysis",
+      "5": "Chemistry  III: Comprehensive Practical Record & Viva Voce"
+    },
+    "Botany III / Zoology III": {
+      "1": "Plant Systematics",
+      "2": "Economic Botany",
+      "3": "Animal Physiology",
+      "4": "Endocrinology",
+      "5": "Reproductive Biology"
+    },
+    "Bioinformatics Basics": {
+      "1": "Biological Databases",
+      "2": "Sequence Alignment",
+      "3": "Phylogenetics",
+      "4": "Structural Bioinformatics",
+      "5": "Tools"
+    },
+    "Thermal Physics & Statistical Mechanics": {
+      "1": "Kinetic Theory",
+      "2": "Laws of Thermodynamics",
+      "3": "Entropy",
+      "4": "Heat Engines",
+      "5": "Statistical Distributions"
+    },
+    "Physics Lab III": {
+      "1": "Physics  III: Laboratory Safety Protocols & Instrumentation",
+      "2": "Physics  III: Standard Preparations & Calibration Methods",
+      "3": "Physics  III: Core Experimental Procedures & Synthesis",
+      "4": "Physics  III: Quantitative Data Verification & Error Analysis",
+      "5": "Physics  III: Comprehensive Practical Record & Viva Voce"
+    },
+    "Chemistry III / Data Structures": {
+      "1": "Organic Reactions",
+      "2": "Carbonyl Compounds",
+      "3": "Amines",
+      "4": "Stereochemistry",
+      "5": "Spectroscopy"
+    },
+    "Instrumentation & Measurement": {
+      "1": "Measurement Basics",
+      "2": "Transducers",
+      "3": "Oscilloscopes",
+      "4": "Signal Generators",
+      "5": "Data Acquisition"
+    },
+    "Thermal Physics & Electronics": {
+      "1": "Kinetic Theory",
+      "2": "Thermodynamics",
+      "3": "Semiconductors",
+      "4": "Amplifiers",
+      "5": "Digital Logic"
+    },
+    "Mathematics III / Botany III": {
+      "1": "Real Analysis",
+      "2": "Sequences",
+      "3": "Series",
+      "4": "Plant Systematics",
+      "5": "Economic Botany"
+    },
+    "Analytical Chemistry": {
+      "1": "Titrimetry",
+      "2": "Gravimetry",
+      "3": "Chromatography",
+      "4": "Spectroscopy",
+      "5": "Quality Control"
+    },
+    "Differential & Integral Calculus": {
+      "1": "Partial Differentiation",
+      "2": "Multiple Integrals",
+      "3": "Vector Calculus",
+      "4": "Applications",
+      "5": "Improper Integrals"
+    },
+    "Problem Solving": {
+      "1": "Problem Solving: Core Concepts & Principles",
+      "2": "Problem Solving: Theoretical Formulations & Modeling",
+      "3": "Problem Solving: Analytical & Computational Methods",
+      "4": "Problem Solving: Practical Engineering & Industrial Applications",
+      "5": "Problem Solving: Modern Trends, Case Studies & Problem Solving"
+    },
+    "Physics III / Statistics III": {
+      "1": "Thermal Physics",
+      "2": "Thermodynamics",
+      "3": "Kinetic Theory",
+      "4": "Statistical Distributions",
+      "5": "Sampling"
+    },
+    "OOP / DBMS": {
+      "1": "OOP Concepts",
+      "2": "Classes",
+      "3": "Inheritance",
+      "4": "Exception Handling",
+      "5": "Collections"
+    },
+    "Python Programming": {
+      "1": "Basics",
+      "2": "Control Flow",
+      "3": "Data Structures",
+      "4": "Functions",
+      "5": "File Handling"
+    }
+  }
+}

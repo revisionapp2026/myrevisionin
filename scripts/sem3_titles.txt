@@ -1,0 +1,521 @@
+=== BTECH SUBJECTS AND UNITS ===
+
+Data Structures & Algorithms:
+  U1: Arrays, Linked Lists
+  U2: Stacks & Queues
+  U3: Trees & Graphs
+  U4: Sorting & Searching
+  U5: Hashing & Algorithm Analysis
+
+Digital Logic Design:
+  U1: Number Systems & Codes
+  U2: Boolean Algebra & Logic Gates
+  U3: Combinational Circuits
+  U4: Sequential Circuits (Flip-Flops, Counters)
+  U5: Memory & Programmable Logic
+
+Discrete Mathematics:
+  U1: Set Theory & Logic
+  U2: Relations & Functions
+  U3: Graph Theory
+  U4: Combinatorics
+  U5: Algebraic Structures
+
+Computer Organization & Architecture:
+  U1: Basic Computer Organization
+  U2: Instruction Sets & Addressing
+  U3: Arithmetic & Logic Unit
+  U4: Memory Hierarchy
+  U5: I/O Organization & Pipelining
+
+Object Oriented Programming (Advanced):
+  U1: Design Patterns
+  U2: GUI Programming
+  U3: Database Connectivity
+  U4: Network Programming
+  U5: Software Testing Basics
+
+Electronic Devices & Circuits:
+  U1: Semiconductor Physics
+  U2: Diodes & Applications
+  U3: BJT & FET
+  U4: Amplifier Design
+  U5: Feedback & Oscillators
+
+Network Theory:
+  U1: Circuit Elements & Laws
+  U2: Network Theorems
+  U3: Transient Analysis
+  U4: AC Circuit Analysis
+  U5: Two-Port Networks
+
+Signals & Systems:
+  U1: Signal Classification
+  U2: LTI Systems
+  U3: Fourier Series & Transform
+  U4: Laplace Transform
+  U5: Z-Transform
+
+Mathematics for ECE:
+  U1: Linear Algebra
+  U2: Complex Analysis
+  U3: Probability
+  U4: Random Processes
+  U5: Numerical Methods
+
+Circuit Analysis & Synthesis:
+  U1: Network Theorems
+  U2: Transient Analysis
+  U3: AC Analysis
+  U4: Two-Port Networks
+  U5: Network Synthesis
+
+Electrical Machines — I:
+  U1: Transformers
+  U2: DC Generators
+  U3: DC Motors
+  U4: Testing of DC Machines
+  U5: Special Machines
+
+Digital Electronics:
+  U1: Logic Gates
+  U2: Combinational Circuits
+  U3: Sequential Circuits
+  U4: Counters & Registers
+  U5: Memory & PLDs
+
+Electromagnetic Fields:
+  U1: Vector Analysis
+  U2: Electrostatics
+  U3: Magnetostatics
+  U4: Maxwell's Equations
+  U5: EM Wave Propagation
+
+Strength of Materials:
+  U1: Stress & Strain
+  U2: Shear Force & Bending Moment
+  U3: Torsion
+  U4: Columns & Struts
+  U5: Combined Stresses
+
+Thermodynamics:
+  U1: Basic Concepts & Laws
+  U2: Entropy
+  U3: Availability
+  U4: Properties of Steam
+  U5: Power Cycles
+
+Material Science & Engineering:
+  U1: Crystal Structure
+  U2: Mechanical Properties
+  U3: Phase Diagrams
+  U4: Heat Treatment
+  U5: Engineering Materials
+
+Manufacturing Technology — I:
+  U1: Casting Processes
+  U2: Welding
+  U3: Forming Processes
+  U4: Machining Basics
+  U5: Metrology
+
+Machine Drawing:
+  U1: Drawing Standards
+  U2: Orthographic Projections
+  U3: Sectional Views
+  U4: Assembly Drawings
+  U5: CAD Basics
+
+Surveying & Geomatics:
+  U1: Surveying Basics
+  U2: Leveling
+  U3: Theodolite & Traversing
+  U4: Contouring
+  U5: Modern Surveying (GPS, GIS)
+
+Building Materials & Construction:
+  U1: Stones & Bricks
+  U2: Cement & Concrete
+  U3: Timber & Steel
+  U4: Masonry
+  U5: Foundations
+
+Fluid Mechanics:
+  U1: Fluid Properties
+  U2: Fluid Statics
+  U3: Fluid Kinematics
+  U4: Fluid Dynamics
+  U5: Flow Measurement
+
+Engineering Geology:
+  U1: Mineralogy
+  U2: Petrology
+  U3: Structural Geology
+  U4: Engineering Properties
+  U5: Geological Hazards
+
+Fluid Mechanics (Momentum Transfer):
+  U1: Fluid Properties
+  U2: Fluid Statics
+  U3: Fluid Dynamics
+  U4: Flow Through Pipes
+  U5: Pumps & Compressors
+
+Chemical Engineering Thermodynamics — I:
+  U1: Laws of Thermodynamics
+  U2: PVT Behavior
+  U3: Heat Effects
+  U4: Entropy
+  U5: Gibbs Free Energy
+
+Organic Chemistry:
+  U1: Reaction Mechanisms
+  U2: Functional Groups
+  U3: Stereochemistry
+  U4: Polymer Formation
+  U5: Industrial Organic Chemicals
+
+Material Science:
+  U1: Crystal Structure
+  U2: Metals & Alloys
+  U3: Ceramics
+  U4: Polymers
+  U5: Composites
+
+Numerical Methods:
+  U1: Error Analysis
+  U2: Roots of Equations
+  U3: Linear Systems
+  U4: Interpolation & Integration
+  U5: ODE Solutions
+
+Linear Algebra & Probability:
+  U1: Vector Spaces
+  U2: Matrices & Eigenvalues
+  U3: Probability Distributions
+  U4: Random Variables
+  U5: Statistical Inference
+
+Database Management Systems:
+  U1: ER Model
+  U2: Relational Model & SQL
+  U3: Normalization
+  U4: Transactions
+  U5: Indexing & Storage
+
+Statistics & Probability:
+  U1: Descriptive Statistics
+  U2: Probability Distributions
+  U3: Sampling
+  U4: Hypothesis Testing
+  U5: Regression
+
+Python for Data Science:
+  U1: Python Basics
+  U2: NumPy & Pandas
+  U3: Data Visualization
+  U4: Data Cleaning
+  U5: EDA
+
+Aerospace Materials:
+  U1: Metals & Alloys
+  U2: Composites
+  U3: Ceramics
+  U4: Fatigue & Fracture
+  U5: Material Selection
+
+Engineering Mathematics III:
+  U1: Numerical Methods
+  U2: Partial Differential Equations
+  U3: Complex Analysis
+  U4: Probability
+  U5: Statistics
+
+Electrical Machines:
+  U1: Transformers
+  U2: DC Machines
+  U3: Induction Machines
+  U4: Synchronous Machines
+  U5: Applications
+
+Sensors & Transducers:
+  U1: Sensor Fundamentals
+  U2: Displacement Sensors
+  U3: Temperature Sensors
+  U4: Optical Sensors
+  U5: Smart Sensors
+
+Solar Energy:
+  U1: Solar Radiation
+  U2: Solar Thermal
+  U3: Solar PV
+  U4: Solar Systems
+  U5: Applications
+
+Biochemistry:
+  U1: Biomolecules
+  U2: Enzymes
+  U3: Metabolism
+  U4: Molecular Biology
+  U5: Clinical Biochemistry
+
+Human Anatomy & Physiology:
+  U1: Cell & Tissue
+  U2: Skeletal System
+  U3: Cardiovascular
+  U4: Nervous System
+  U5: Respiratory & Renal
+
+Microbiology:
+  U1: Microbial Basics
+  U2: Bacteria
+  U3: Viruses
+  U4: Fungi
+  U5: Industrial Microbiology
+
+Biomedical Instrumentation:
+  U1: Measurement Basics
+  U2: Bioelectrodes
+  U3: Biosensors
+  U4: Medical Devices
+  U5: Patient Safety
+
+=== BSC SUBJECTS AND UNITS ===
+
+Object Oriented Programming (Java/C++):
+  U1: OOP Concepts
+  U2: Classes & Objects
+  U3: Inheritance & Polymorphism
+  U4: Exception Handling
+  U5: Collections
+
+OOP Lab:
+  U1: OOP: Laboratory Safety Protocols & Instrumentation
+  U2: OOP: Standard Preparations & Calibration Methods
+  U3: OOP: Core Experimental Procedures & Synthesis
+  U4: OOP: Quantitative Data Verification & Error Analysis
+  U5: OOP: Comprehensive Practical Record & Viva Voce
+
+Real Analysis:
+  U1: Sequences
+  U2: Series
+  U3: Limits & Continuity
+  U4: Differentiation
+  U5: Integration
+
+Physics III: Thermal Physics / Statistics III:
+  U1: Kinetic Theory
+  U2: Laws of Thermodynamics
+  U3: Entropy
+  U4: Heat Engines
+  U5: Statistical Distributions
+
+Web Design (HTML/CSS):
+  U1: HTML Basics
+  U2: CSS
+  U3: Forms
+  U4: Layouts
+  U5: Responsive Design
+
+Database Management & SQL:
+  U1: ER Model
+  U2: Relational Model
+  U3: SQL Queries
+  U4: Normalization
+  U5: Transactions
+
+DBMS Lab:
+  U1: DBMS: Laboratory Safety Protocols & Instrumentation
+  U2: DBMS: Standard Preparations & Calibration Methods
+  U3: DBMS: Core Experimental Procedures & Synthesis
+  U4: DBMS: Quantitative Data Verification & Error Analysis
+  U5: DBMS: Comprehensive Practical Record & Viva Voce
+
+Numerical Methods & Optimization:
+  U1: Error Analysis
+  U2: Root Finding
+  U3: Linear Systems
+  U4: Interpolation
+  U5: Optimization Basics
+
+Statistical Inference / OOP:
+  U1: Point Estimation
+  U2: Interval Estimation
+  U3: Hypothesis Testing
+  U4: ANOVA
+  U5: Non-Parametric Tests
+
+Data Visualization (Tableau/Power BI):
+  U1: Visualization Principles
+  U2: Charts
+  U3: Dashboards
+  U4: Tools
+  U5: Storytelling
+
+Plant Anatomy & Embryology:
+  U1: Tissues
+  U2: Root & Stem Anatomy
+  U3: Leaf Anatomy
+  U4: Embryo Development
+  U5: Endosperm
+
+Botany Lab III:
+  U1: Botany  III: Laboratory Safety Protocols & Instrumentation
+  U2: Botany  III: Standard Preparations & Calibration Methods
+  U3: Botany  III: Core Experimental Procedures & Synthesis
+  U4: Botany  III: Quantitative Data Verification & Error Analysis
+  U5: Botany  III: Comprehensive Practical Record & Viva Voce
+
+Physiology & Biochemistry:
+  U1: Digestion
+  U2: Respiration
+  U3: Circulation
+  U4: Excretion
+  U5: Enzymes & Metabolism
+
+Zoology Lab III:
+  U1: Zoology  III: Laboratory Safety Protocols & Instrumentation
+  U2: Zoology  III: Standard Preparations & Calibration Methods
+  U3: Zoology  III: Core Experimental Procedures & Synthesis
+  U4: Zoology  III: Quantitative Data Verification & Error Analysis
+  U5: Zoology  III: Comprehensive Practical Record & Viva Voce
+
+Organic Chemistry – III:
+  U1: Alcohols & Phenols
+  U2: Aldehydes & Ketones
+  U3: Carboxylic Acids
+  U4: Amines
+  U5: Stereochemistry
+
+Chemistry Lab III (Organic Synthesis):
+  U1: Chemistry  III (Organic Synthesis): Laboratory Safety Protocols & Instrumentation
+  U2: Chemistry  III (Organic Synthesis): Standard Preparations & Calibration Methods
+  U3: Chemistry  III (Organic Synthesis): Core Experimental Procedures & Synthesis
+  U4: Chemistry  III (Organic Synthesis): Quantitative Data Verification & Error Analysis
+  U5: Chemistry  III (Organic Synthesis): Comprehensive Practical Record & Viva Voce
+
+Bio-fertilizers / Herbal Technology:
+  U1: Bio-fertilizer Types
+  U2: Production
+  U3: Application
+  U4: Herbal Medicine
+  U5: Cultivation
+
+Molecular Biology & Genetic Engineering:
+  U1: DNA Replication
+  U2: Transcription
+  U3: Translation
+  U4: Cloning Vectors
+  U5: Gene Therapy
+
+Molecular Biology Lab:
+  U1: Molecular Biology: Laboratory Safety Protocols & Instrumentation
+  U2: Molecular Biology: Standard Preparations & Calibration Methods
+  U3: Molecular Biology: Core Experimental Procedures & Synthesis
+  U4: Molecular Biology: Quantitative Data Verification & Error Analysis
+  U5: Molecular Biology: Comprehensive Practical Record & Viva Voce
+
+Chemistry Lab III:
+  U1: Chemistry  III: Laboratory Safety Protocols & Instrumentation
+  U2: Chemistry  III: Standard Preparations & Calibration Methods
+  U3: Chemistry  III: Core Experimental Procedures & Synthesis
+  U4: Chemistry  III: Quantitative Data Verification & Error Analysis
+  U5: Chemistry  III: Comprehensive Practical Record & Viva Voce
+
+Botany III / Zoology III:
+  U1: Plant Systematics
+  U2: Economic Botany
+  U3: Animal Physiology
+  U4: Endocrinology
+  U5: Reproductive Biology
+
+Bioinformatics Basics:
+  U1: Biological Databases
+  U2: Sequence Alignment
+  U3: Phylogenetics
+  U4: Structural Bioinformatics
+  U5: Tools
+
+Thermal Physics & Statistical Mechanics:
+  U1: Kinetic Theory
+  U2: Laws of Thermodynamics
+  U3: Entropy
+  U4: Heat Engines
+  U5: Statistical Distributions
+
+Physics Lab III:
+  U1: Physics  III: Laboratory Safety Protocols & Instrumentation
+  U2: Physics  III: Standard Preparations & Calibration Methods
+  U3: Physics  III: Core Experimental Procedures & Synthesis
+  U4: Physics  III: Quantitative Data Verification & Error Analysis
+  U5: Physics  III: Comprehensive Practical Record & Viva Voce
+
+Chemistry III / Data Structures:
+  U1: Organic Reactions
+  U2: Carbonyl Compounds
+  U3: Amines
+  U4: Stereochemistry
+  U5: Spectroscopy
+
+Instrumentation & Measurement:
+  U1: Measurement Basics
+  U2: Transducers
+  U3: Oscilloscopes
+  U4: Signal Generators
+  U5: Data Acquisition
+
+Thermal Physics & Electronics:
+  U1: Kinetic Theory
+  U2: Thermodynamics
+  U3: Semiconductors
+  U4: Amplifiers
+  U5: Digital Logic
+
+Mathematics III / Botany III:
+  U1: Real Analysis
+  U2: Sequences
+  U3: Series
+  U4: Plant Systematics
+  U5: Economic Botany
+
+Analytical Chemistry:
+  U1: Titrimetry
+  U2: Gravimetry
+  U3: Chromatography
+  U4: Spectroscopy
+  U5: Quality Control
+
+Differential & Integral Calculus:
+  U1: Partial Differentiation
+  U2: Multiple Integrals
+  U3: Vector Calculus
+  U4: Applications
+  U5: Improper Integrals
+
+Problem Solving:
+  U1: Problem Solving: Core Concepts & Principles
+  U2: Problem Solving: Theoretical Formulations & Modeling
+  U3: Problem Solving: Analytical & Computational Methods
+  U4: Problem Solving: Practical Engineering & Industrial Applications
+  U5: Problem Solving: Modern Trends, Case Studies & Problem Solving
+
+Physics III / Statistics III:
+  U1: Thermal Physics
+  U2: Thermodynamics
+  U3: Kinetic Theory
+  U4: Statistical Distributions
+  U5: Sampling
+
+OOP / DBMS:
+  U1: OOP Concepts
+  U2: Classes
+  U3: Inheritance
+  U4: Exception Handling
+  U5: Collections
+
+Python Programming:
+  U1: Basics
+  U2: Control Flow
+  U3: Data Structures
+  U4: Functions
+  U5: File Handling
