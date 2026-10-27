@@ -5,6 +5,7 @@
 
 import { getSubject } from "./mock-data";
 import type { DbPaper, DbQuestion } from "./content";
+import { getBTechSem1PaperQuestions } from "./model-papers-btech-sem1";
 
 /**
  * Return model papers list for a B.Tech subject.
@@ -67,6 +68,13 @@ export function getBTechPaperDetail(paperId: string): { paper: DbPaper; question
     is_paid: !isSet1,
     position: isSet1 ? 1 : 2,
   };
+
+  if (subject.semester === 1) {
+    const sem1Questions = getBTechSem1PaperQuestions(subject.name, isSet1);
+    if (sem1Questions) {
+      return { paper, questions: sem1Questions };
+    }
+  }
 
   const units = subject.units.map((u) => u.title);
   const u1 = units[0] || "Foundations";

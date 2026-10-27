@@ -12,6 +12,11 @@
 
 import { getUnit } from "./mock-data";
 import type { RevisionPoint } from "./content";
+import { bscSem1Knowledge } from "./content-bsc-sem1";
+import { bscSem1ScienceKnowledge } from "./content-bsc-sem1-science";
+import { bscSem1LifeKnowledge } from "./content-bsc-sem1-life";
+import { bscSem1CoreKnowledge } from "./content-bsc-sem1-core";
+import { bscSem1AlliedKnowledge } from "./content-bsc-sem1-allied";
 
 export interface TopicKnowledge {
   highlights: string[];
@@ -407,6 +412,15 @@ export const bscKnowledge: Record<string, TopicKnowledge> = {
   },
 };
 
+export const allBScKnowledge: Record<string, TopicKnowledge> = {
+  ...bscKnowledge,
+  ...bscSem1Knowledge,
+  ...bscSem1ScienceKnowledge,
+  ...bscSem1LifeKnowledge,
+  ...bscSem1CoreKnowledge,
+  ...bscSem1AlliedKnowledge,
+};
+
 /**
  * Universal B.Sc generator that synthesizes detailed, accurate revision notes
  * for ANY subject & unit in the B.Sc syllabus.
@@ -416,81 +430,282 @@ export const bscKnowledge: Record<string, TopicKnowledge> = {
  * ZERO formulas or derivations, so the Formulas tab will not appear for them.
  */
 export function generateBScTopic(subjectName: string, unitTitle: string, unitNumber: number): TopicKnowledge {
-  const s = subjectName.toLowerCase();
-  const u = unitTitle.toLowerCase();
+  const s = subjectName.toLowerCase().trim();
+  const u = unitTitle.toLowerCase().trim();
 
-  // ==========================================================
-  // 1. DEDICATED UNIT-LEVEL KNOWLEDGE MATCHES (FIRST PRIORITY)
-  // ==========================================================
-
-  // Physics Sem 1: Mechanics & Oscillations units
-  if (u.includes("vector") && u.includes("kinematic")) {
-    return bscKnowledge["vectors & kinematics"];
-  }
-  if (u.includes("law") && u.includes("motion")) {
-    return bscKnowledge["laws of motion"];
-  }
-  if ((u.includes("work") || u.includes("energy")) && (u.includes("collision") || u.includes("power"))) {
-    return bscKnowledge["work, energy & collisions"];
-  }
-  if (u.includes("rotational")) {
-    return bscKnowledge["rotational dynamics"];
-  }
-  if (u.includes("oscillation") || u.includes("shm") || u.includes("harmonic")) {
-    return bscKnowledge["oscillations"];
-  }
-
-  // Mathematics: Calculus & Linear Algebra units
-  if (u.includes("limit") || u.includes("continuity")) {
-    return bscKnowledge["limits & continuity"];
-  }
-  if (u.includes("differentiation") || (u.includes("derivative") && !u.includes("application"))) {
-    return bscKnowledge["differentiation"];
-  }
-  if (u.includes("matrix") || u.includes("matrices") || u.includes("determinant")) {
-    return bscKnowledge["matrices & determinants"];
-  }
-  if (u.includes("eigenvalue") || u.includes("eigenvector") || (u.includes("rank") && !u.includes("application"))) {
-    return bscKnowledge["rank & eigenvalues"];
-  }
-
-  // ==========================================================
-  // 2. LABORATORY / PRACTICAL SUBJECT UNITS
-  // ==========================================================
-  const isLabSubject =
-    s.includes("lab") ||
-    s.includes("practical") ||
-    u.includes("laboratory") ||
-    u.includes("protocols & instrumentation") ||
-    u.includes("calibration methods") ||
-    u.includes("experimental procedures") ||
-    u.includes("error analysis") ||
-    u.includes("practical record & viva voce");
-
-  if (isLabSubject) {
-    const isPhysicsLab = s.includes("physics") || s.includes("mechanic") || s.includes("optics") || (!s.includes("chem") && !s.includes("program") && !s.includes("c ") && !s.includes("bio") && !s.includes("botan") && !s.includes("zool"));
-
-    if (isPhysicsLab) {
-      if (unitNumber === 1 || u.includes("safety") || u.includes("instrumentation")) {
-        return bscKnowledge["physics lab unit 1: safety & instrumentation"];
+  // 1. Laboratory Subjects Routing (Must precede theory routing)
+  const isLab = s.includes("lab") || s.includes("practical") || u.includes("laboratory");
+  if (isLab) {
+    if (s.includes("c programming") || s.includes("c lab")) {
+      const keys = [
+        "c programming: laboratory safety protocols & instrumentation",
+        "c programming: standard preparations & calibration methods",
+        "c programming: core experimental procedures & synthesis",
+        "c programming: quantitative data verification & error analysis",
+        "c programming: comprehensive practical record & viva voce",
+      ];
+      const match = allBScKnowledge[keys[unitNumber - 1] || keys[0]!];
+      if (match) return match;
+    }
+    if (s.includes("python")) {
+      const keys = [
+        "python: laboratory safety protocols & instrumentation",
+        "python: standard preparations & calibration methods",
+        "python: core experimental procedures & synthesis",
+        "python: quantitative data verification & error analysis",
+        "python: comprehensive practical record & viva voce",
+      ];
+      const match = allBScKnowledge[keys[unitNumber - 1] || keys[0]!];
+      if (match) return match;
+    }
+    if (s.includes("botany")) {
+      const keys = [
+        "botany lab unit 1: laboratory safety protocols & instrumentation",
+        "botany lab unit 2: standard preparations & calibration methods",
+        "botany lab unit 3: core experimental procedures & synthesis",
+        "botany lab unit 4: quantitative data verification & error analysis",
+        "botany lab unit 5: comprehensive practical record & viva voce",
+      ];
+      const match = allBScKnowledge[keys[unitNumber - 1] || keys[0]!];
+      if (match) return match;
+    }
+    if (s.includes("zoology")) {
+      const keys = [
+        "zoology lab unit 1: laboratory safety protocols & instrumentation",
+        "zoology lab unit 2: standard preparations & calibration methods",
+        "zoology lab unit 3: core experimental procedures & synthesis",
+        "zoology lab unit 4: quantitative data verification & error analysis",
+        "zoology lab unit 5: comprehensive practical record & viva voce",
+      ];
+      const match = allBScKnowledge[keys[unitNumber - 1] || keys[0]!];
+      if (match) return match;
+    }
+    if (s.includes("microbio")) {
+      const keys = [
+        "microbiology lab unit 1: laboratory safety protocols & instrumentation",
+        "microbiology lab unit 2: standard preparations & calibration methods",
+        "microbiology lab unit 3: core experimental procedures & synthesis",
+        "microbiology lab unit 4: quantitative data verification & error analysis",
+        "microbiology lab unit 5: comprehensive practical record & viva voce",
+      ];
+      const match = allBScKnowledge[keys[unitNumber - 1] || keys[0]!];
+      if (match) return match;
+    }
+    if (s.includes("chem")) {
+      if (s.includes("titration")) {
+        const keys = [
+          "chemistry lab unit 1: laboratory safety & volumetric apparatus",
+          "chemistry lab unit 2: standard preparations & calibration methods",
+          "chemistry lab unit 3: core experimental procedures & synthesis",
+          "chemistry lab unit 4: quantitative data verification & error analysis",
+          "chemistry lab unit 5: comprehensive practical record & viva voce",
+        ];
+        const match = allBScKnowledge[keys[unitNumber - 1] || keys[0]!];
+        if (match) return match;
+      } else {
+        const keys = [
+          "qual-chem lab unit 1: laboratory safety & semi-micro apparatus",
+          "qual-chem lab unit 2: preliminary dry tests & physical examination",
+          "qual-chem lab unit 3: systematic anion identification & confirmatory tests",
+          "qual-chem lab unit 4: systematic cation group separation & analysis",
+          "qual-chem lab unit 5: practical records, report synthesis & viva voce",
+        ];
+        const match = allBScKnowledge[keys[unitNumber - 1] || keys[0]!];
+        if (match) return match;
       }
-      if (unitNumber === 2 || u.includes("calibration") || u.includes("preparations")) {
-        return bscKnowledge["physics lab unit 2: calibration & preparations"];
-      }
-      if (unitNumber === 3 || u.includes("experimental") || u.includes("procedures") || u.includes("synthesis")) {
-        return bscKnowledge["physics lab unit 3: experimental procedures"];
-      }
-      if (unitNumber === 4 || u.includes("error") || u.includes("data verification")) {
-        return bscKnowledge["physics lab unit 4: error analysis"];
-      }
-      if (unitNumber === 5 || u.includes("record") || u.includes("viva")) {
-        return bscKnowledge["physics lab unit 5: practical records & viva"];
-      }
+    }
+    if (s.includes("physic") || (!s.includes("chem") && !s.includes("bio"))) {
+      const keys = [
+        "physics lab unit 1: safety & instrumentation",
+        "physics lab unit 2: calibration & preparations",
+        "physics lab unit 3: experimental procedures",
+        "physics lab unit 4: error analysis",
+        "physics lab unit 5: practical records & viva",
+      ];
+      const match = allBScKnowledge[keys[unitNumber - 1] || keys[0]!];
+      if (match) return match;
     }
   }
 
-  // Check direct matches from dictionary
-  for (const [key, val] of Object.entries(bscKnowledge)) {
+  // 2. Subject-Specific Curricular Unit Routing (Precedes generic dictionary lookup)
+  if (s.includes("differential equations")) {
+    if (u.includes("first order") || unitNumber === 1) return allBScKnowledge["first order odes"]!;
+    if (u.includes("higher order") || unitNumber === 2) return allBScKnowledge["higher order odes"]!;
+    if (u.includes("application") || unitNumber === 3) return allBScKnowledge["applications of odes"]!;
+    if (u.includes("laplace") || unitNumber === 4) return allBScKnowledge["laplace transforms"]!;
+    if (u.includes("series") || unitNumber === 5) return allBScKnowledge["series solutions"]!;
+  }
+
+  if (s.includes("differential calculus & matrices")) {
+    if (u.includes("limit") || unitNumber === 1) return allBScKnowledge["limits & continuity"]!;
+    if (u.includes("differentiation") || unitNumber === 2) return allBScKnowledge["differentiation"]!;
+    if (u.includes("application") || unitNumber === 3) return allBScKnowledge["applications of derivatives"]!;
+    if (u.includes("matrix") || u.includes("determinant") || unitNumber === 4) return allBScKnowledge["matrices & determinants"]!;
+    if (u.includes("eigen") || u.includes("rank") || unitNumber === 5) return allBScKnowledge["rank & eigenvalues"]!;
+  }
+
+  if (s.includes("calculus & linear algebra")) {
+    if (u.includes("derivative") || unitNumber === 1) return allBScKnowledge["limits & derivatives"]!;
+    if (u.includes("integration") || unitNumber === 2) return allBScKnowledge["integration"]!;
+    if (u.includes("matrices") || unitNumber === 3) return allBScKnowledge["la: matrices"]!;
+    if (u.includes("vector") || unitNumber === 4) return allBScKnowledge["vector spaces"]!;
+    if (u.includes("eigen") || unitNumber === 5) return allBScKnowledge["la: eigenvalues"]!;
+  }
+
+  if (s.includes("mathematics i / botany i")) {
+    if (u.includes("limit") || unitNumber === 1) return allBScKnowledge["chem-math: limits"]!;
+    if (u.includes("differentiation") || unitNumber === 2) return allBScKnowledge["chem-math: differentiation"]!;
+    if (u.includes("matrix") || unitNumber === 3) return allBScKnowledge["chem-math: matrices"]!;
+    if (u.includes("plant") || unitNumber === 4) return allBScKnowledge["chem-bot: plant diversity"]!;
+    if (u.includes("algae") || unitNumber === 5) return allBScKnowledge["chem-bot: algae"]!;
+  }
+
+  if (s === "computer fundamentals & c programming") {
+    if (u.includes("computer") || unitNumber === 1) return allBScKnowledge["math-c: computer basics"]!;
+    if (u.includes("algorithm") || unitNumber === 2) return allBScKnowledge["math-c: algorithms"]!;
+    if (u.includes("fundamental") || unitNumber === 3) return allBScKnowledge["math-c: c fundamentals"]!;
+    if (u.includes("control") || unitNumber === 4) return allBScKnowledge["math-c: control structures"]!;
+    if (u.includes("array") || unitNumber === 5) return allBScKnowledge["math-c: arrays & functions"]!;
+  }
+
+  if (s.includes("computer fundamentals & programming in c")) {
+    if (u.includes("computer") || unitNumber === 1) return allBScKnowledge["introduction to computers"]!;
+    if (u.includes("algorithm") || unitNumber === 2) return allBScKnowledge["algorithms & flowcharts"]!;
+    if (u.includes("fundamental") || unitNumber === 3) return allBScKnowledge["c fundamentals (data types, operators)"]!;
+    if (u.includes("control") || unitNumber === 4) return allBScKnowledge["control structures (if-else, loops)"]!;
+    if (u.includes("array") || unitNumber === 5) return allBScKnowledge["arrays & functions"]!;
+  }
+
+  if (s.includes("fundamentals of microbiology / cell biology")) {
+    if (u.includes("microbial world") || unitNumber === 1) return allBScKnowledge["microbial world"]!;
+    if (u.includes("bacterial cell") || unitNumber === 2) return allBScKnowledge["bacterial cell structure"]!;
+    if (u.includes("virus") || unitNumber === 3) return allBScKnowledge["viruses"]!;
+    if (u.includes("eukaryotic") || unitNumber === 4) return allBScKnowledge["eukaryotic cell"]!;
+    if (u.includes("cell division") || unitNumber === 5) return allBScKnowledge["cell division"]!;
+  }
+
+  if (s.includes("inorganic & organic chemistry")) {
+    if (u.includes("atomic") || unitNumber === 1) return allBScKnowledge["atomic structure"]!;
+    if (u.includes("periodic") || unitNumber === 2) return allBScKnowledge["periodic properties"]!;
+    if (u.includes("bonding") || unitNumber === 3) return allBScKnowledge["chemical bonding"]!;
+    if (u.includes("reaction") || unitNumber === 4) return allBScKnowledge["organic reaction basics"]!;
+    if (u.includes("hydrocarbon") || unitNumber === 5) return allBScKnowledge["hydrocarbons"]!;
+  }
+
+  if (s.includes("chemistry i / computer fundamentals")) {
+    if (u.includes("atomic") || unitNumber === 1) return allBScKnowledge["phys-chem: atomic structure"]!;
+    if (u.includes("bonding") || unitNumber === 2) return allBScKnowledge["phys-chem: bonding"]!;
+    if (u.includes("hydrocarbon") || unitNumber === 3) return allBScKnowledge["phys-chem: hydrocarbons"]!;
+    if (u.includes("organic") || unitNumber === 4) return allBScKnowledge["phys-chem: organic basics"]!;
+    if (u.includes("stereochem") || unitNumber === 5) return allBScKnowledge["phys-chem: stereochemistry"]!;
+  }
+
+  if (s.includes("botany i / zoology i")) {
+    if (u.includes("plant") || unitNumber === 1) return allBScKnowledge["biotech-bot: plant diversity"]!;
+    if (u.includes("algae") || unitNumber === 2) return allBScKnowledge["biotech-bot: algae"]!;
+    if (u.includes("fungi") || unitNumber === 3) return allBScKnowledge["biotech-bot: fungi"]!;
+    if (u.includes("bryophyte") || unitNumber === 4) return allBScKnowledge["biotech-bot: bryophytes"]!;
+    if (u.includes("pteridophyte") || unitNumber === 5) return allBScKnowledge["biotech-bot: pteridophytes"]!;
+  }
+
+  if (s.includes("mechanics & properties of matter")) {
+    if (u.includes("vector") || unitNumber === 1) return allBScKnowledge["prop-phys: vectors"]!;
+    if (u.includes("law") || unitNumber === 2) return allBScKnowledge["prop-phys: laws of motion"]!;
+    if (u.includes("work") || unitNumber === 3) return allBScKnowledge["work & energy"]!;
+    if (u.includes("elasticity") || unitNumber === 4) return allBScKnowledge["elasticity"]!;
+    if (u.includes("surface") || unitNumber === 5) return allBScKnowledge["surface tension"]!;
+  }
+
+  if (s === "physics i / statistics i") {
+    if (u.includes("vector") || unitNumber === 1) return allBScKnowledge["math-phys: vectors"]!;
+    if (u.includes("law") || unitNumber === 2) return allBScKnowledge["math-phys: laws of motion"]!;
+    if (u.includes("work") || unitNumber === 3) return allBScKnowledge["math-phys: work & energy"]!;
+    if (u.includes("rotational") || unitNumber === 4) return allBScKnowledge["math-phys: rotational motion"]!;
+    if (u.includes("gravitation") || unitNumber === 5) return allBScKnowledge["math-phys: gravitation"]!;
+  }
+
+  if (s.includes("physics i: mechanics / statistics i")) {
+    if (u.includes("vector") || unitNumber === 1) return allBScKnowledge["vectors & kinematics"]!;
+    if (u.includes("law") || unitNumber === 2) return allBScKnowledge["laws of motion"]!;
+    if (u.includes("work") || unitNumber === 3) return allBScKnowledge["work, energy & power"]!;
+    if (u.includes("rotational") || unitNumber === 4) return allBScKnowledge["rotational motion"]!;
+    if (u.includes("gravitation") || unitNumber === 5) return allBScKnowledge["gravitation"]!;
+  }
+
+  if (s.includes("mechanics & oscillations")) {
+    if (u.includes("vector") || unitNumber === 1) return allBScKnowledge["osc-phys: vectors & kinematics"]!;
+    if (u.includes("law") || unitNumber === 2) return allBScKnowledge["osc-phys: laws of motion"]!;
+    if (u.includes("work") || unitNumber === 3) return allBScKnowledge["work, energy & collisions"]!;
+    if (u.includes("rotational") || unitNumber === 4) return allBScKnowledge["rotational dynamics"]!;
+    if (u.includes("oscillation") || unitNumber === 5) return allBScKnowledge["oscillations"]!;
+  }
+
+  if (s.includes("english / mil communication")) {
+    if (u.includes("grammar") || unitNumber === 1) return allBScKnowledge["mil-english: grammar, vocabulary & syntax"]!;
+    if (u.includes("reading") || u.includes("comprehension") || unitNumber === 2) return allBScKnowledge["mil-english: reading comprehension & critical analysis"]!;
+    if (u.includes("writing") || unitNumber === 3) return allBScKnowledge["mil-english: academic & technical writing skills"]!;
+    if (u.includes("oral") || unitNumber === 4) return allBScKnowledge["mil-english: oral communication & active listening"]!;
+    if (u.includes("presentation") || unitNumber === 5) return allBScKnowledge["mil-english: professional presentations & interview skills"]!;
+  }
+
+  if (s.includes("english")) {
+    if (u.includes("grammar") || unitNumber === 1) return allBScKnowledge["grammar"]!;
+    if (u.includes("comprehension") || unitNumber === 2) return allBScKnowledge["comprehension"]!;
+    if (u.includes("writing") || unitNumber === 3) return allBScKnowledge["writing skills"]!;
+    if (u.includes("oral") || unitNumber === 4) return allBScKnowledge["oral communication"]!;
+    if (u.includes("presentation") || unitNumber === 5) return allBScKnowledge["presentations"]!;
+  }
+
+  if (s.includes("programming for data science") || s.includes("python")) {
+    if (u.includes("oop") || unitNumber === 5) return allBScKnowledge["oop basics"]!;
+    if (u.includes("file") || unitNumber === 4) return allBScKnowledge["file handling & exceptions"]!;
+    if (u.includes("structure") || unitNumber === 3) return allBScKnowledge["data structures"]!;
+    if (u.includes("control") || unitNumber === 2) return allBScKnowledge["control flow & functions"]!;
+    if (u.includes("basic") || unitNumber === 1) return allBScKnowledge["python basics"]!;
+  }
+
+  if (s.includes("microbial diversity")) {
+    if (u.includes("archae") || unitNumber === 1) return allBScKnowledge["archaebacteria & actinomycetes"]!;
+    if (u.includes("cyano") || unitNumber === 2) return allBScKnowledge["cyanobacteria"]!;
+    if (u.includes("algae") || unitNumber === 3) return allBScKnowledge["algae"]!;
+    if (u.includes("fungi") || unitNumber === 4) return allBScKnowledge["fungi"]!;
+    if (u.includes("bryo") || unitNumber === 5) return allBScKnowledge["bryophytes"]!;
+  }
+
+  if (s.includes("invertebrates")) {
+    if (u.includes("protozoa") || unitNumber === 1) return allBScKnowledge["protozoa & porifera"]!;
+    if (u.includes("coelenterata") || unitNumber === 2) return allBScKnowledge["coelenterata & platyhelminthes"]!;
+    if (u.includes("annelida") || unitNumber === 3) return allBScKnowledge["annelida & arthropoda"]!;
+    if (u.includes("mollusca") || unitNumber === 4) return allBScKnowledge["mollusca & echinodermata"]!;
+    if (u.includes("cell") || unitNumber === 5) return allBScKnowledge["cell structure & division"]!;
+  }
+
+  if (s.includes("statistics") && s.includes("computer fundamentals")) {
+    if (u.includes("data type") || unitNumber === 1) return allBScKnowledge["data types"]!;
+    if (u.includes("tendency") || unitNumber === 2) return allBScKnowledge["measures of central tendency"]!;
+    if (u.includes("dispersion") || unitNumber === 3) return allBScKnowledge["dispersion"]!;
+    if (u.includes("probability") || unitNumber === 4) return allBScKnowledge["probability basics"]!;
+    if (u.includes("distribution") || unitNumber === 5) return allBScKnowledge["distributions"]!;
+  }
+
+  if (s.includes("problem solving")) {
+    const keys = [
+      "problem solving: core concepts & principles",
+      "problem solving: theoretical formulations & modeling",
+      "problem solving: analytical & computational methods",
+      "problem solving: practical engineering & industrial applications",
+      "problem solving: modern trends, case studies & problem solving",
+    ];
+    return allBScKnowledge[keys[unitNumber - 1] || keys[0]!]!;
+  }
+
+  // 3. Direct exact key match (for any other units)
+  if (allBScKnowledge[u]) {
+    return allBScKnowledge[u];
+  }
+
+  // 4. Substring dictionary search
+  for (const [key, val] of Object.entries(allBScKnowledge)) {
     if (u === key || u.includes(key) || key.includes(u)) {
       return val;
     }

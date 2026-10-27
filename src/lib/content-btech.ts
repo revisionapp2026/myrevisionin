@@ -9,6 +9,7 @@
 
 import { getUnit } from "./mock-data";
 import type { RevisionPoint } from "./content";
+import { btechSem1Knowledge } from "./content-btech-sem1";
 
 export interface TopicKnowledge {
   highlights: string[];
@@ -17,6 +18,7 @@ export interface TopicKnowledge {
 
 // Specialized knowledge map for core engineering disciplines
 export const specializedKnowledge: Record<string, TopicKnowledge> = {
+  ...btechSem1Knowledge,
   // ----------------------------------------------------
   // MATHEMATICS & COMPUTATIONAL METHODS
   // ----------------------------------------------------
@@ -277,7 +279,17 @@ export function generateTechnicalTopic(
   const s = subjectName.toLowerCase();
   const u = unitTitle.toLowerCase();
 
-  // Check direct specialized matches by unit title
+  // 1. Direct match in Semester 1 verified curriculum
+  if (btechSem1Knowledge[u]) {
+    return btechSem1Knowledge[u];
+  }
+  for (const [key, val] of Object.entries(btechSem1Knowledge)) {
+    if (u === key || u.includes(key) || key.includes(u)) {
+      return val;
+    }
+  }
+
+  // 2. Check direct specialized matches by unit title
   for (const [key, val] of Object.entries(specializedKnowledge)) {
     if (u.includes(key) || key.includes(u)) {
       return val;
