@@ -46,7 +46,8 @@ export function unescapeHtmlAndEntities(str: string): string {
 }
 
 /**
- * Adjusts and breaks long LaTeX formulas into aligned multi-line equations
+ * Finds top-level equals signs not enclosed in brackets or braces.
+ */
 function findTopLevelEquals(str: string): number[] {
   const indices: number[] = [];
   let braceDepth = 0;
@@ -82,38 +83,42 @@ function findTopLevelEquals(str: string): number[] {
  */
 export function fitLatexForDisplay(raw: string): string {
   if (!raw) return "";
-  const cleaned = cleanLatex(raw);
+  try {
+    const cleaned = cleanLatex(raw);
 
-  // If already wrapped in an aligned/matrix environment, return as is
-  if (
-    cleaned.includes("\\begin{aligned}") ||
-    cleaned.includes("\\begin{matrix}") ||
-    cleaned.includes("\\begin{cases}") ||
-    cleaned.includes("\\begin{gather}")
-  ) {
-    return cleaned;
-  }
+    // If already wrapped in an aligned/matrix environment, return as is
+    if (
+      cleaned.includes("\\begin{aligned}") ||
+      cleaned.includes("\\begin{matrix}") ||
+      cleaned.includes("\\begin{cases}") ||
+      cleaned.includes("\\begin{gather}")
+    ) {
+      return cleaned;
+    }
 
-  // Multi-step equalities: e.g. A = B = C (only top-level unbracketed equals!)
-  if (!cleaned.includes("&")) {
-    const topEquals = findTopLevelEquals(cleaned);
-    if (topEquals.length >= 2) {
-      const parts: string[] = [];
-      let last = 0;
-      for (const idx of topEquals) {
-        parts.push(cleaned.slice(last, idx).trim());
-        last = idx + 1;
-      }
-      parts.push(cleaned.slice(last).trim());
+    // Multi-step equalities: e.g. A = B = C (only top-level unbracketed equals!)
+    if (!cleaned.includes("&")) {
+      const topEquals = findTopLevelEquals(cleaned);
+      if (topEquals.length >= 2) {
+        const parts: string[] = [];
+        let last = 0;
+        for (const idx of topEquals) {
+          parts.push(cleaned.slice(last, idx).trim());
+          last = idx + 1;
+        }
+        parts.push(cleaned.slice(last).trim());
 
-      if (parts.length >= 3 && parts.every((p) => p.length > 0)) {
-        const [lhs, ...rhs] = parts;
-        return `\\begin{aligned} ${lhs} &= ${rhs.join(" \\\\[5pt] &= ")} \\end{aligned}`;
+        if (parts.length >= 3 && parts.every((p) => p.length > 0)) {
+          const [lhs, ...rhs] = parts;
+          return `\\begin{aligned} ${lhs} &= ${rhs.join(" \\\\[5pt] &= ")} \\end{aligned}`;
+        }
       }
     }
-  }
 
-  return cleaned;
+    return cleaned;
+  } catch {
+    return cleanLatex(raw);
+  }
 }
 
 /**

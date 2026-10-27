@@ -38,6 +38,30 @@ export const Route = createFileRoute("/unit/$unitId")({
     ],
   }),
   component: UnitScreen,
+  errorComponent: ({ reset }) => (
+    <div className="flex min-h-dvh flex-col items-center justify-center bg-background px-4 text-center">
+      <div className="max-w-md">
+        <h2 className="text-xl font-bold text-foreground">Unable to load this chapter</h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          A temporary error occurred while displaying this chapter.
+        </p>
+        <div className="mt-5 flex justify-center gap-3">
+          <button
+            onClick={() => reset()}
+            className="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
+          >
+            Try Again
+          </button>
+          <Link
+            to="/dashboard"
+            className="rounded-xl border border-input bg-card px-4 py-2 text-sm font-semibold text-foreground"
+          >
+            Back to Dashboard
+          </Link>
+        </div>
+      </div>
+    </div>
+  ),
 });
 
 type Tab = "highlights" | "key points" | "formulas" | "saved";
@@ -450,23 +474,31 @@ function hlClass(color: HighlightColor | null) {
 }
 
 function RenderPointContent({ content, hlColor }: { content: string; hlColor: string }) {
-  const colonIdx = content.indexOf(":");
-  if (colonIdx > 2 && colonIdx < 70) {
-    const title = content.slice(0, colonIdx).trim();
-    const rest = content.slice(colonIdx + 1).trim();
+  try {
+    const colonIdx = content.indexOf(":");
+    if (colonIdx > 2 && colonIdx < 70) {
+      const title = content.slice(0, colonIdx).trim();
+      const rest = content.slice(colonIdx + 1).trim();
+      return (
+        <div className={cn("min-w-0 break-words leading-relaxed text-left", hlColor)}>
+          <span className="font-bold text-foreground inline mr-1.5">{title}:</span>
+          <RichMathText text={rest} />
+        </div>
+      );
+    }
+
     return (
       <div className={cn("min-w-0 break-words leading-relaxed text-left", hlColor)}>
-        <span className="font-bold text-foreground inline mr-1.5">{title}:</span>
-        <RichMathText text={rest} />
+        <RichMathText text={content} />
+      </div>
+    );
+  } catch {
+    return (
+      <div className={cn("min-w-0 break-words leading-relaxed text-left", hlColor)}>
+        {content}
       </div>
     );
   }
-
-  return (
-    <div className={cn("min-w-0 break-words leading-relaxed text-left", hlColor)}>
-      <RichMathText text={content} />
-    </div>
-  );
 }
 
 function ToolButton({
