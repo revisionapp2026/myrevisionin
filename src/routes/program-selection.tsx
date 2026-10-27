@@ -6,6 +6,7 @@ import { useAppState } from "@/lib/app-state";
 import { StepIndicator } from "@/components/ui-bits";
 import { cn } from "@/lib/utils";
 
+import { useEffect } from "react";
 import { useAuth } from "@/lib/auth";
 
 export const Route = createFileRoute("/program-selection")({
@@ -28,7 +29,13 @@ const icons = { bba: GraduationCap, bcom: BarChart3, btech: Cpu, bsc: FlaskConic
 function ProgramSelection() {
   const navigate = useNavigate();
   const { program, setProgram, setSemester } = useAppState();
-  const { user, saveProfile } = useAuth();
+  const { user, loading: authLoading, saveProfile } = useAuth();
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      navigate({ to: "/auth", replace: true });
+    }
+  }, [user, authLoading, navigate]);
 
   const choose = (id: string) => {
     setProgram(id);

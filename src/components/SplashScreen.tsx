@@ -144,13 +144,7 @@ export function SplashScreen() {
           return;
         }
 
-        // Guest returning user with chosen program & semester
-        if (program && semester) {
-          navigate({ to: "/dashboard", replace: true });
-          return;
-        }
-
-        // New student / visitor
+        // When unauthenticated or after clearing cache, always show the auth page first!
         navigate({ to: "/auth", replace: true });
       } catch (err) {
         console.warn("[SplashScreen] Session check error:", err);

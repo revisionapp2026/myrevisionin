@@ -73,13 +73,17 @@ function Dashboard() {
   const name = profile?.full_name?.split(" ")[0] || user?.email?.split("@")[0] || "Student";
 
   useEffect(() => {
+    if (!user) {
+      navigate({ to: "/auth", replace: true });
+      return;
+    }
     if (!ready) return;
     if (!program) {
       navigate({ to: "/program-selection", replace: true });
     } else if (!semester) {
       navigate({ to: "/semester-selection", replace: true });
     }
-  }, [ready, program, semester, navigate]);
+  }, [ready, program, semester, user, navigate]);
 
   return (
     <>
