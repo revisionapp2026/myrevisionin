@@ -10,6 +10,7 @@
 import { getUnit } from "./mock-data";
 import type { RevisionPoint } from "./content";
 import { btechSem1Knowledge } from "./content-btech-sem1";
+import { btechSem2Knowledge } from "./content-btech-sem2";
 
 export interface TopicKnowledge {
   highlights: string[];
@@ -19,6 +20,7 @@ export interface TopicKnowledge {
 // Specialized knowledge map for core engineering disciplines
 export const specializedKnowledge: Record<string, TopicKnowledge> = {
   ...btechSem1Knowledge,
+  ...btechSem2Knowledge,
   // ----------------------------------------------------
   // MATHEMATICS & COMPUTATIONAL METHODS
   // ----------------------------------------------------
@@ -289,7 +291,72 @@ export function generateTechnicalTopic(
     }
   }
 
-  // 2. Check direct specialized matches by unit title
+  // 2. Semester 2 specific subject-scoped routing
+  if (s.includes("mathematics ii") || s.includes("maths ii") || s.includes("engineering mathematics ii")) {
+    if (u.includes("ordinary differential") || u.includes("ode") || unitNumber === 1) return btechSem2Knowledge["btech-m2: ordinary differential equations"];
+    if (u.includes("laplace") || unitNumber === 2) return btechSem2Knowledge["btech-m2: laplace transforms"];
+    if (u.includes("fourier") || unitNumber === 3) return btechSem2Knowledge["btech-m2: fourier series"];
+    if (u.includes("complex") || unitNumber === 4) return btechSem2Knowledge["btech-m2: complex analysis"];
+    if (u.includes("probability") || u.includes("statistics") || unitNumber === 5) return btechSem2Knowledge["btech-m2: probability & statistics"];
+  }
+
+  if (s.includes("object oriented") || s.includes("java/c++") || s.includes("oop")) {
+    if (u.includes("concept") || unitNumber === 1) return btechSem2Knowledge["btech-oop: oop concepts"];
+    if (u.includes("classes") || unitNumber === 2) return btechSem2Knowledge["btech-oop: classes & objects"];
+    if (u.includes("inheritance") || u.includes("polymorphism") || unitNumber === 3) return btechSem2Knowledge["btech-oop: inheritance & polymorphism"];
+    if (u.includes("exception") || u.includes("i/o") || unitNumber === 4) return btechSem2Knowledge["btech-oop: exception handling & i/o"];
+    if (u.includes("collection") || u.includes("thread") || unitNumber === 5) return btechSem2Knowledge["btech-oop: collections & multithreading"];
+  }
+
+  if (s.includes("basic electronics") || s.includes("electronics engineering")) {
+    if (u.includes("semiconductor") || u.includes("diode") || unitNumber === 1) return btechSem2Knowledge["btech-be: semiconductors & diodes"];
+    if (u.includes("transistor") || u.includes("bjt") || u.includes("fet") || unitNumber === 2) return btechSem2Knowledge["btech-be: transistors (bjt & fet)"];
+    if (u.includes("operational amplifier") || u.includes("op-amp") || u.includes("op amp") || unitNumber === 4) return btechSem2Knowledge["btech-be: operational amplifiers"];
+    if (u.includes("amplifier") || unitNumber === 3) return btechSem2Knowledge["btech-be: amplifiers"];
+    if (u.includes("digital") || u.includes("logic") || unitNumber === 5) return btechSem2Knowledge["btech-be: digital logic basics"];
+  }
+
+  if (s.includes("engineering mechanics") || (s.includes("mechanics") && !s.includes("quantum") && !s.includes("solid") && !s.includes("fluid"))) {
+    if (u.includes("particle") || unitNumber === 1) return btechSem2Knowledge["btech-em: statics of particles"];
+    if (u.includes("equilibrium") || u.includes("rigid") || unitNumber === 2) return btechSem2Knowledge["btech-em: equilibrium of rigid bodies"];
+    if (u.includes("friction") || u.includes("truss") || unitNumber === 3) return btechSem2Knowledge["btech-em: friction & trusses"];
+    if (u.includes("centroid") || u.includes("inertia") || unitNumber === 4) return btechSem2Knowledge["btech-em: centroids & moments of inertia"];
+    if (u.includes("dynamic") || u.includes("kinemat") || u.includes("kinetic") || unitNumber === 5) return btechSem2Knowledge["btech-em: dynamics (kinematics & kinetics)"];
+  }
+
+  if (s.includes("workshop")) {
+    if (u.includes("safety") || u.includes("measurement") || unitNumber === 1) return btechSem2Knowledge["btech-ws: safety & measurement"];
+    if (u.includes("carpentry") || u.includes("fitting") || unitNumber === 2) return btechSem2Knowledge["btech-ws: carpentry & fitting"];
+    if (u.includes("welding") || u.includes("sheet") || unitNumber === 3) return btechSem2Knowledge["btech-ws: welding & sheet metal"];
+    if (u.includes("machin") || unitNumber === 4) return btechSem2Knowledge["btech-ws: machining basics"];
+    if (u.includes("electrical") || u.includes("electronic") || unitNumber === 5) return btechSem2Knowledge["btech-ws: electrical & electronic workshop"];
+  }
+
+  if (s.includes("python")) {
+    if (u.includes("basic") || unitNumber === 1) return btechSem2Knowledge["btech-py: python basics"];
+    if (u.includes("flow") || u.includes("function") || unitNumber === 2) return btechSem2Knowledge["btech-py: control flow & functions"];
+    if (u.includes("structure") || u.includes("list") || u.includes("dict") || unitNumber === 3) return btechSem2Knowledge["btech-py: data structures (lists, dicts)"];
+    if (u.includes("file") || u.includes("module") || unitNumber === 4) return btechSem2Knowledge["btech-py: file handling & modules"];
+    if (u.includes("librar") || u.includes("numpy") || u.includes("pandas") || unitNumber === 5) return btechSem2Knowledge["btech-py: introduction to libraries (numpy, pandas)"];
+  }
+
+  if (s.includes("chemical process calculations") || s.includes("process calculations")) {
+    if (u.includes("unit") || u.includes("dimension") || unitNumber === 1) return btechSem2Knowledge["btech-cpc: units & dimensions"];
+    if (u.includes("material") || unitNumber === 2) return btechSem2Knowledge["btech-cpc: material balance"];
+    if (u.includes("energy") || unitNumber === 3) return btechSem2Knowledge["btech-cpc: energy balance"];
+    if (u.includes("combustion") || unitNumber === 4) return btechSem2Knowledge["btech-cpc: combustion"];
+    if (u.includes("recycle") || u.includes("bypass") || unitNumber === 5) return btechSem2Knowledge["btech-cpc: recycle & bypass"];
+  }
+
+  if (s.includes("biology for engineers")) {
+    if (unitNumber === 1 || u.includes("introduction") || u.includes("living")) return btechSem2Knowledge["btech-bio: introduction to biology & living organisms"];
+    if (unitNumber === 2 || (u.includes("biomolecule") && !u.includes("bioenergetic"))) return btechSem2Knowledge["btech-bio: biomolecules & cell biology"];
+    if (unitNumber === 3 || u.includes("genetics") || u.includes("molecular")) return btechSem2Knowledge["btech-bio: genetics & molecular biology"];
+    if (unitNumber === 4 || u.includes("bioenergetic") || u.includes("metabolism")) return btechSem2Knowledge["btech-bio: bioenergetics & cellular metabolism"];
+    if (unitNumber === 5 || u.includes("microbio") || u.includes("application")) return btechSem2Knowledge["btech-bio: microbiology & bio-applications in engineering"];
+  }
+
+  // 3. Check direct specialized matches by unit title
   for (const [key, val] of Object.entries(specializedKnowledge)) {
     if (u.includes(key) || key.includes(u)) {
       return val;
