@@ -18,12 +18,12 @@ export function SplashScreen() {
 
     // Detect if this is an incoming OAuth callback landing on root /
     const urlParams = new URLSearchParams(window.location.search);
-    const hasCode = Boolean(urlParams.get("code"));
-    const hasHash = Boolean(
-      window.location.hash &&
-        (window.location.hash.includes("access_token") || window.location.hash.length > 1),
-    );
-    const isOAuthReturn = hasCode || hasHash;
+    const code = urlParams.get("code");
+    const rawHash = window.location.hash.replace(/^#/, "");
+    const hashParams = new URLSearchParams(rawHash);
+    const accessToken = hashParams.get("access_token");
+    const refreshToken = hashParams.get("refresh_token");
+    const isOAuthReturn = Boolean(code || accessToken || rawHash.length > 1);
 
     const completeRedirect = async (userId: string) => {
       if (handledRef.current || !active) return;
@@ -52,6 +52,17 @@ export function SplashScreen() {
         /* fallback */
       }
 
+      // Direct local storage persistence of program and semester before navigation
+      try {
+        const raw = localStorage.getItem("revision.state.v2");
+        const state = raw ? JSON.parse(raw) : {};
+        if (activeProg) state.program = activeProg;
+        if (activeSem) state.semester = activeSem;
+        localStorage.setItem("revision.state.v2", JSON.stringify(state));
+      } catch {
+        /* ignore */
+      }
+
       const target =
         activeProg && activeSem
           ? "/dashboard"
@@ -78,22 +89,46 @@ export function SplashScreen() {
       navigate({ to: target as any, replace: true });
     };
 
-    // 1. Immediately check if a session exists
+    // 1. If authorization code is present (PKCE), explicitly exchange it!
+    if (code) {
+      supabase.auth
+        .exchangeCodeForSession(code)
+        .then(({ data }) => {
+          if (data?.session?.user && active) {
+            void completeRedirect(data.session.user.id);
+          }
+        })
+        .catch(() => {});
+    }
+
+    // 2. If access_token is present in hash (Implicit flow)
+    if (accessToken && refreshToken) {
+      supabase.auth
+        .setSession({ access_token: accessToken, refresh_token: refreshToken })
+        .then(({ data }) => {
+          if (data?.session?.user && active) {
+            void completeRedirect(data.session.user.id);
+          }
+        })
+        .catch(() => {});
+    }
+
+    // 3. Immediately check if a session exists
     void supabase.auth.getSession().then(({ data }) => {
       if (data?.session?.user && active) {
         void completeRedirect(data.session.user.id);
       }
     });
 
-    // 2. Unconditionally listen to Supabase's automatic URL session extraction & auth changes
+    // 4. Unconditionally listen to Supabase's automatic URL session extraction & auth changes
     const { data: authSub } = supabase.auth.onAuthStateChange((event, s) => {
       if ((event === "SIGNED_IN" || event === "INITIAL_SESSION") && s?.user && active) {
         void completeRedirect(s.user.id);
       }
     });
 
-    // 3. Fallback timer: for OAuth return give 4s for network, otherwise 1.8s for splash experience
-    const waitDuration = isOAuthReturn ? 4000 : 1800;
+    // 5. Fallback timer: for OAuth return give 4.5s for network, otherwise 1.8s for splash experience
+    const waitDuration = isOAuthReturn ? 4500 : 1800;
     const timer = setTimeout(async () => {
       if (handledRef.current || !active) return;
 

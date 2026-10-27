@@ -48,10 +48,30 @@ export function registerServiceWorker() {
     const hadController = Boolean(navigator.serviceWorker.controller);
     navigator.serviceWorker.addEventListener("controllerchange", () => {
       if (hadController && !refreshing) {
+        if (
+          window.location.pathname.startsWith("/auth") ||
+          window.location.search.includes("code=") ||
+          window.location.hash.includes("access_token")
+        ) {
+          return;
+        }
         refreshing = true;
         window.location.reload();
       }
     });
+
+    // Auto-purge outdated client cache versions on boot
+    try {
+      const CURRENT_VER = "v6-20261027";
+      if (localStorage.getItem("revision_pwa_cache_ver") !== CURRENT_VER) {
+        localStorage.setItem("revision_pwa_cache_ver", CURRENT_VER);
+        if (navigator.serviceWorker.controller) {
+          navigator.serviceWorker.controller.postMessage({ type: "CLEAR_ALL_CACHES" });
+        }
+      }
+    } catch {
+      /* ignore */
+    }
 
     navigator.serviceWorker
       .register(SW_URL, { scope: "/" })

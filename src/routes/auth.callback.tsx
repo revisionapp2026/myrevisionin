@@ -31,11 +31,18 @@ function AuthCallbackScreen() {
     let handled = false;
 
     const urlParams = new URLSearchParams(window.location.search);
+    const code = search.code || urlParams.get("code");
+    const rawHash = window.location.hash.replace(/^#/, "");
+    const hashParams = new URLSearchParams(rawHash);
+    const accessToken = hashParams.get("access_token");
+    const refreshToken = hashParams.get("refresh_token");
     const err =
       search.error_description ||
       search.error ||
       urlParams.get("error_description") ||
-      urlParams.get("error");
+      urlParams.get("error") ||
+      hashParams.get("error_description") ||
+      hashParams.get("error");
 
     if (err) {
       setErrorMsg(decodeURIComponent(err));
@@ -69,6 +76,17 @@ function AuthCallbackScreen() {
         /* proceed with fallback target */
       }
 
+      // Direct local storage persistence of program and semester before navigation
+      try {
+        const raw = localStorage.getItem("revision.state.v2");
+        const state = raw ? JSON.parse(raw) : {};
+        if (targetProg) state.program = targetProg;
+        if (targetSem) state.semester = targetSem;
+        localStorage.setItem("revision.state.v2", JSON.stringify(state));
+      } catch {
+        /* ignore */
+      }
+
       const target =
         targetProg && targetSem
           ? "/dashboard"
@@ -95,21 +113,45 @@ function AuthCallbackScreen() {
       window.location.href = target;
     };
 
-    // 1. Check existing session immediately (or if Supabase already resolved it)
+    // 1. If authorization code is present (PKCE), explicitly exchange it!
+    if (code) {
+      supabase.auth
+        .exchangeCodeForSession(code)
+        .then(({ data }) => {
+          if (data?.session?.user) {
+            void completeRedirect(data.session.user.id);
+          }
+        })
+        .catch(() => {});
+    }
+
+    // 2. If access_token and refresh_token are present in hash (Implicit flow)
+    if (accessToken && refreshToken) {
+      supabase.auth
+        .setSession({ access_token: accessToken, refresh_token: refreshToken })
+        .then(({ data }) => {
+          if (data?.session?.user) {
+            void completeRedirect(data.session.user.id);
+          }
+        })
+        .catch(() => {});
+    }
+
+    // 3. Check existing session immediately (or if Supabase already resolved it)
     void supabase.auth.getSession().then(({ data }) => {
       if (data?.session?.user) {
         void completeRedirect(data.session.user.id);
       }
     });
 
-    // 2. Listen to Supabase's automatic URL session detection
+    // 4. Listen to Supabase's automatic URL session detection
     const { data: authSub } = supabase.auth.onAuthStateChange((event, session) => {
       if ((event === "SIGNED_IN" || event === "INITIAL_SESSION") && session?.user) {
         void completeRedirect(session.user.id);
       }
     });
 
-    // 3. Safety timeout: never leave the user spinning forever
+    // 5. Safety timeout: never leave the user spinning forever
     const timer = setTimeout(async () => {
       if (handled) return;
       const { data } = await supabase.auth.getSession();
@@ -118,7 +160,7 @@ function AuthCallbackScreen() {
       } else {
         setErrorMsg("Sign-in session could not be established. Please tap below to try again.");
       }
-    }, 4500);
+    }, 5000);
 
     return () => {
       clearTimeout(timer);

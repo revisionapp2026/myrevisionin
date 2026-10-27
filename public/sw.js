@@ -1,5 +1,5 @@
-// REVISION PWA Service Worker - Auto-Invalidating v5
-const CACHE_NAME = "revision-cache-v5-20261014";
+// REVISION PWA Service Worker - Auto-Invalidating v6
+const CACHE_NAME = "revision-cache-v6-20261027";
 const PRECACHE_URLS = [
   "/",
   "/favicon.png",
@@ -50,8 +50,15 @@ self.addEventListener("fetch", (event) => {
   // Skip non-GET and chrome extensions/internal
   if (request.method !== "GET" || !url.protocol.startsWith("http")) return;
 
-  // API endpoints: network only
-  if (url.pathname.startsWith("/api/")) return;
+  // API endpoints, auth routes, and OAuth callbacks: network only, never cache
+  if (
+    url.pathname.startsWith("/api/") ||
+    url.pathname.startsWith("/auth") ||
+    url.searchParams.has("code") ||
+    url.hash.includes("access_token")
+  ) {
+    return;
+  }
 
   // Navigation requests and JS/CSS bundles: NetworkFirst with fallback
   // This guarantees updates (such as permanent ₹199 pricing) reflect immediately

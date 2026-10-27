@@ -67,17 +67,23 @@ function AuthScreen() {
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
 
-  // Handle incoming OAuth callback (detect session safely without double-exchange collision)
+  // Handle incoming OAuth callback (detect session safely with explicit PKCE exchange and hash support)
   useEffect(() => {
     if (typeof window === "undefined") return;
     const urlParams = new URLSearchParams(window.location.search);
     const code = search.code || urlParams.get("code");
-    const hasHash = window.location.hash && window.location.hash.length > 1;
+    const rawHash = window.location.hash.replace(/^#/, "");
+    const hashParams = new URLSearchParams(rawHash);
+    const accessToken = hashParams.get("access_token");
+    const refreshToken = hashParams.get("refresh_token");
+    const hasHash = Boolean(accessToken || (rawHash && rawHash.length > 1));
     const errParam =
       search.error_description ||
       search.error ||
       urlParams.get("error_description") ||
-      urlParams.get("error");
+      urlParams.get("error") ||
+      hashParams.get("error_description") ||
+      hashParams.get("error");
 
     if (errParam) {
       setError(decodeURIComponent(errParam));
@@ -114,6 +120,17 @@ function AuthScreen() {
           /* fallback */
         }
 
+        // Direct local storage persistence of program and semester before navigation
+        try {
+          const raw = localStorage.getItem("revision.state.v2");
+          const state = raw ? JSON.parse(raw) : {};
+          if (targetProg) state.program = targetProg;
+          if (targetSem) state.semester = targetSem;
+          localStorage.setItem("revision.state.v2", JSON.stringify(state));
+        } catch {
+          /* ignore */
+        }
+
         const target =
           targetProg && targetSem
             ? "/dashboard"
@@ -140,21 +157,58 @@ function AuthScreen() {
         window.location.href = target;
       };
 
-      // 1. Check existing session immediately
+      // 1. If authorization code is present (PKCE), explicitly exchange it!
+      if (code) {
+        supabase.auth
+          .exchangeCodeForSession(code)
+          .then(({ data, error }) => {
+            if (error) {
+              console.warn("[Auth] exchangeCodeForSession warning:", error.message);
+            }
+            if (data?.session?.user) {
+              void finishOAuth(data.session.user.id);
+            }
+          })
+          .catch((err) => {
+            console.warn("[Auth] exchangeCodeForSession failed:", err);
+          });
+      }
+
+      // 2. If access_token and refresh_token are present in hash (Implicit flow)
+      if (accessToken && refreshToken) {
+        supabase.auth
+          .setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+          })
+          .then(({ data, error }) => {
+            if (error) {
+              console.warn("[Auth] setSession warning:", error.message);
+            }
+            if (data?.session?.user) {
+              void finishOAuth(data.session.user.id);
+            }
+          })
+          .catch((err) => {
+            console.warn("[Auth] setSession failed:", err);
+          });
+      }
+
+      // 3. Check existing session immediately
       void supabase.auth.getSession().then(({ data }) => {
         if (data?.session?.user) {
           void finishOAuth(data.session.user.id);
         }
       });
 
-      // 2. Listen to Supabase's automatic URL session extraction
+      // 4. Listen to Supabase's automatic URL session extraction
       const { data: authSub } = supabase.auth.onAuthStateChange((event, s) => {
         if ((event === "SIGNED_IN" || event === "INITIAL_SESSION") && s?.user) {
           void finishOAuth(s.user.id);
         }
       });
 
-      // 3. Fallback safety timer: never spin infinitely
+      // 5. Fallback safety timer: give enough time for network exchange
       const safetyTimer = setTimeout(async () => {
         if (handled) return;
         const { data } = await supabase.auth.getSession();
@@ -164,7 +218,7 @@ function AuthScreen() {
           setOauthResolving(false);
           setError("Sign-in is taking longer than expected. Please try again.");
         }
-      }, 4000);
+      }, 5000);
 
       return () => {
         clearTimeout(safetyTimer);
@@ -382,8 +436,12 @@ function AuthScreen() {
     setNotice(null);
 
     const framed = typeof window !== "undefined" && window.top !== window.self;
-    const origin = typeof window !== "undefined" ? window.location.origin : "https://myrevision.in";
-    const callbackUrl = `${origin}/auth`;
+    const isLocal =
+      typeof window !== "undefined" &&
+      (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
+    const callbackUrl = isLocal
+      ? `${window.location.origin}/auth`
+      : `${import.meta.env["VITE_APP_URL"] || "https://myrevision.in"}/auth`;
 
     // Listen for postMessage from popup if one is opened
     const handleAuthMessage = (e: MessageEvent) => {

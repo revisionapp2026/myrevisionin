@@ -205,10 +205,36 @@ export const pointsCountQuery = (unitIds: string[]) =>
     },
   });
 
+const SYSTEM_NOTIFICATIONS: DbNotification[] = [
+  {
+    id: "e4a77d12-1b15-4c02-9a3d-baeb5c202601",
+    title: "New B.Tech & B.Sc Programs Added!",
+    body: "Comprehensive revision notes, formula guides, and solved model papers are now live for all Engineering (B.Tech) branches and B.Sc streams across all semesters. Choose your program to start revising!",
+    category: "material",
+    link: "/program-selection",
+    program: null,
+    semester: null,
+    is_published: true,
+    created_at: "2026-10-27T11:00:00.000Z",
+  },
+  {
+    id: "f8b98e23-2c26-4d13-8b4e-202610270002",
+    title: "App Update & Authentication Fix",
+    body: "Critical authentication bug in PWA has been fixed. If you were logged out, kindly re-login. Please clear your cache or reinstall the PWA to see the updated version.",
+    category: "general",
+    link: "/dashboard",
+    program: null,
+    semester: null,
+    is_published: true,
+    created_at: "2026-10-27T10:30:00.000Z",
+  },
+];
+
 export const notificationsQuery = (program: string | null, semester: number | null) =>
   queryOptions({
     queryKey: ["notifications", program, semester],
     queryFn: async (): Promise<DbNotification[]> => {
+      let rows: DbNotification[] = [];
       try {
         const { data, error } = await supabase
           .from("notifications")
@@ -216,16 +242,23 @@ export const notificationsQuery = (program: string | null, semester: number | nu
           .eq("is_published", true)
           .order("created_at", { ascending: false })
           .limit(50);
-        if (error) return [];
-        const rows = (data ?? []) as DbNotification[];
-        return rows.filter(
-          (n) =>
-            (!n.program || n.program === (program ?? n.program)) &&
-            (!n.semester || n.semester === (semester ?? n.semester)),
-        );
+        if (!error && data) {
+          rows = data as DbNotification[];
+        }
       } catch (e) {
         console.warn("[Content] failed to fetch notifications:", e);
-        return [];
       }
+
+      // Merge system notifications (placed at the top so students see recent updates immediately)
+      const merged = [
+        ...SYSTEM_NOTIFICATIONS,
+        ...rows.filter((r) => !SYSTEM_NOTIFICATIONS.some((s) => s.id === r.id)),
+      ];
+
+      return merged.filter(
+        (n) =>
+          (!n.program || n.program === (program ?? n.program)) &&
+          (!n.semester || n.semester === (semester ?? n.semester)),
+      );
     },
   });
