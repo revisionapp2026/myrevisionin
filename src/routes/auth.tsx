@@ -756,23 +756,6 @@ function AuthScreen() {
             </Button>
           </form>
 
-          {mode === "signin" && (
-            <div className="mt-3 rounded-xl border border-primary/20 bg-primary-soft/50 p-2.5 text-center text-[12px] text-muted-foreground">
-              <span className="font-semibold text-primary">Demo student account:</span>{" "}
-              <button
-                type="button"
-                onClick={() => {
-                  setEmail("student@myrevision.in");
-                  setPassword("revision2026");
-                }}
-                className="font-mono font-medium text-foreground underline decoration-primary/40 underline-offset-2 hover:text-primary"
-              >
-                student@myrevision.in
-              </button>{" "}
-              / <span className="font-mono font-medium text-foreground">revision2026</span>
-            </div>
-          )}
-
           {mode !== "admin" && (
             <>
               <div className="my-4 flex items-center gap-3">

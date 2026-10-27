@@ -202,24 +202,13 @@ function ProfileScreen() {
               </IconTile>
             }
           />
-          {isAdmin ? (
+          {isAdmin && (
             <ListRow
               to="/admin"
               title="Admin Panel"
               meta="Manage content"
               leading={
                 <IconTile tone="accent">
-                  <Shield className="size-[19px]" />
-                </IconTile>
-              }
-            />
-          ) : (
-            <ListRow
-              to="/adminlogin"
-              title="Admin Login"
-              meta="Platform management"
-              leading={
-                <IconTile tone="muted">
                   <Shield className="size-[19px]" />
                 </IconTile>
               }
