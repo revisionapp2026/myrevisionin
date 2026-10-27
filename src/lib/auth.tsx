@@ -63,6 +63,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAdmin, setIsAdmin] = useState(checkLocalAdmin);
   const [loading, setLoading] = useState(true);
   const app = useAppState();
+  const appRef = useRef(app);
+  appRef.current = app;
 
   useEffect(() => {
     let active = true;
@@ -122,8 +124,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
               (session.user.user_metadata?.["full_name"] as string | undefined) ??
               (session.user.user_metadata?.["name"] as string | undefined) ??
               null,
-            program_id: app.program ?? null,
-            semester: app.semester ?? null,
+            program_id: appRef.current.program ?? null,
+            semester: appRef.current.semester ?? null,
           };
           const { data: created } = await supabase
             .from("profiles")
@@ -144,20 +146,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setProfile(loadedProfile);
         profileLoadedRef.current = true;
         if (loadedProfile.is_premium) {
-          app.setPremium(true);
+          appRef.current.setPremium(true);
         } else {
-          app.setPremium(false);
+          appRef.current.setPremium(false);
           if (typeof window !== "undefined") {
             window.localStorage.removeItem("revision_lifetime_unlocked");
             window.sessionStorage.removeItem("revision_lifetime_unlocked");
           }
         }
-        // Authoritative database sync: adopt program & semester from profile if present
-        if (loadedProfile.program_id && app.program !== loadedProfile.program_id) {
-          app.setProgram(loadedProfile.program_id);
+        // If student does NOT have a program selected locally yet, adopt from profile
+        if (loadedProfile.program_id && !appRef.current.program) {
+          appRef.current.setProgram(loadedProfile.program_id);
+        } else if (appRef.current.program && appRef.current.program !== loadedProfile.program_id) {
+          // Student explicitly chose a program locally on this device; sync it up to DB so DB doesn't stay stale
+          void supabase.from("profiles").update({ program_id: appRef.current.program }).eq("id", loadedProfile.id);
+          loadedProfile.program_id = appRef.current.program;
         }
-        if (loadedProfile.semester && app.semester !== loadedProfile.semester) {
-          app.setSemester(loadedProfile.semester);
+
+        if (loadedProfile.semester && !appRef.current.semester) {
+          appRef.current.setSemester(loadedProfile.semester);
         }
       }
       const isRoleAdmin = (role?.length ?? 0) > 0;
@@ -167,7 +174,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (err) {
       console.warn("Failed to refresh profile:", err);
     }
-  }, [userId, session?.user, app]);
+  }, [userId, session?.user]);
 
   useEffect(() => {
     profileLoadedRef.current = false;
@@ -199,19 +206,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             const next = payload.new as Profile;
             setProfile(next);
             if (next.is_premium) {
-              app.setPremium(true);
+              appRef.current.setPremium(true);
             } else {
-              app.setPremium(false);
+              appRef.current.setPremium(false);
               if (typeof window !== "undefined") {
                 window.localStorage.removeItem("revision_lifetime_unlocked");
                 window.sessionStorage.removeItem("revision_lifetime_unlocked");
               }
             }
-            if (next.program_id && app.program !== next.program_id) {
-              app.setProgram(next.program_id);
+            if (next.program_id && !appRef.current.program) {
+              appRef.current.setProgram(next.program_id);
             }
-            if (next.semester && app.semester !== next.semester) {
-              app.setSemester(next.semester);
+            if (next.semester && !appRef.current.semester) {
+              appRef.current.setSemester(next.semester);
             }
           }
         },
@@ -234,7 +241,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       window.removeEventListener("focus", onFocus);
       window.removeEventListener("online", onFocus);
     };
-  }, [userId, refreshProfile, app]);
+  }, [userId, refreshProfile]);
 
   // Only sync student choices back to profile once the authoritative profile has been loaded
   useEffect(() => {

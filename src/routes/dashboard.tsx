@@ -55,7 +55,7 @@ function Dashboard() {
     setSemester,
   } = useAppState();
   const { isPremium, planName } = useEntitlements();
-  const { user, profile, loading: authLoading } = useAuth();
+  const { user, profile, loading: authLoading, saveProfile } = useAuth();
   const [query, setQuery] = useState("");
   const { data: notifications = [] } = useQuery(notificationsQuery(program, semester));
   const unreadCount = notifications.filter((n) => !readNotifications.includes(n.id)).length;
@@ -164,7 +164,13 @@ function Dashboard() {
               <select
                 aria-label="Program"
                 value={program ?? "bcom"}
-                onChange={(event) => setProgram(event.target.value)}
+                onChange={(event) => {
+                  const nextProg = event.target.value;
+                  setProgram(nextProg);
+                  if (user && saveProfile) {
+                    void saveProfile({ program_id: nextProg }).catch(() => {});
+                  }
+                }}
                 className="h-10 w-full rounded-lg border border-border bg-background px-3 text-[13.5px] font-semibold outline-none focus:border-primary"
               >
                 <option value="bcom">B.Com</option>

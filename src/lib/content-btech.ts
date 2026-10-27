@@ -277,9 +277,9 @@ export function generateTechnicalTopic(
   const s = subjectName.toLowerCase();
   const u = unitTitle.toLowerCase();
 
-  // Check direct specialized matches
+  // Check direct specialized matches by unit title
   for (const [key, val] of Object.entries(specializedKnowledge)) {
-    if (u.includes(key) || key.includes(u) || s.includes(key)) {
+    if (u.includes(key) || key.includes(u)) {
       return val;
     }
   }

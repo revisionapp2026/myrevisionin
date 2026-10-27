@@ -37,11 +37,15 @@ function ProgramSelection() {
     }
   }, [user, authLoading, navigate]);
 
-  const choose = (id: string) => {
+  const choose = async (id: string) => {
     setProgram(id);
     setSemester(null);
     if (user && saveProfile) {
-      void saveProfile({ program_id: id, semester: null as any }).catch(() => {});
+      try {
+        await saveProfile({ program_id: id, semester: null as any });
+      } catch (err) {
+        console.warn("[ProgramSelection] saveProfile failed:", err);
+      }
     }
     navigate({ to: "/semester-selection" });
   };
