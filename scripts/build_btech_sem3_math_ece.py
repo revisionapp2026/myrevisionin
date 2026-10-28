@@ -1,0 +1,143 @@
+import json
+
+data = {}
+
+def add(sub, num, title, hl, bm):
+    assert len(hl) == 10, f"{sub} U{num} hl count {len(hl)}"
+    assert len(bm) == 10, f"{sub} U{num} bm count {len(bm)}"
+    key = f"{sub}:::Unit {num}"
+    data[key] = {
+        "subject": sub,
+        "unitNumber": num,
+        "unitTitle": title,
+        "highlights": hl,
+        "bookmarks": bm
+    }
+
+# ==============================================================================
+# 1. Mathematics for ECE (5 units)
+# ==============================================================================
+add("Mathematics for ECE", 1, "Linear Algebra", [
+    "Vector Spaces and Matrix Decompositions in Communications: Linear vector spaces over complex field $\\mathbb{C}^n$, Inner product spaces, Cauchy-Schwarz inequality $|\\langle u, v \\rangle|^2 \\le \\langle u, u \\rangle \\langle v, v \\rangle$, and Gram-Schmidt orthonormalization generating unitary basis sets for orthogonal signal constellations.",
+    "Eigenvalue Decomposition and Diagonalization: For square matrix $A \\in \\mathbb{C}^{n \\times n}$, characteristic equation $\\det(A - \\lambda I) = 0$; Diagonalization $A = V \\Lambda V^{-1}$ when $A$ possesses $n$ linearly independent eigenvectors; Application in finding powers of state-transition matrices $A^k = V \\Lambda^k V^{-1}$.",
+    "Hermitian and Unitary Matrices: Hermitian matrices ($A = A^\\dagger = (A^*)^T$) exhibit strictly real eigenvalues and mutually orthogonal eigenvectors; Unitary matrices ($U^\\dagger U = I$) preserve inner products and signal energy, forming unitary beamforming matrices in wireless transmissions.",
+    "Cayley-Hamilton Theorem & Matrix Inverses: Every square matrix satisfies its own characteristic polynomial equation $p(A) = 0$; Enables expressing higher-order powers $A^m$ and inverse $A^{-1} = -\\frac{1}{a_0} (A^{n-1} + a_{n-1} A^{n-2} + \\dots + a_1 I)$ as low-degree polynomials.",
+    "Singular Value Decomposition (SVD): Factorization of arbitrary rectangular matrix $A \\in \\mathbb{C}^{m \\times n}$ as $A = U \\Sigma V^\\dagger$, where $U \\in \\mathbb{C}^{m \\times m}$ and $V \\in \\mathbb{C}^{n \\times n}$ are unitary matrices, and $\\Sigma$ is diagonal with non-negative real singular values $\\sigma_1 \\ge \\sigma_2 \\ge \\dots \\ge \\sigma_r > 0$.",
+    "Application of SVD in MIMO Wireless Channels: Channel transfer matrix $H = U \\Sigma V^\\dagger$ decouples coupled multiple-input multiple-output antenna channels into $r$ parallel, non-interfering spatial sub-channels $\\tilde{y}_i = \\sigma_i \\tilde{x}_i + \\tilde{n}_i$, maximizing channel capacity via water-filling power allocation.",
+    "Moore-Penrose Pseudoinverse & Zero-Forcing Receivers: Generalized pseudoinverse $A^+ = (A^\\dagger A)^{-1} A^\\dagger$ (for full column rank); Provides minimum norm least-squares solution to overdetermined linear systems $A x = b$; Direct application in Zero-Forcing (ZF) MIMO equalization filters $W_{ZF} = (H^\\dagger H)^{-1} H^\\dagger$.",
+    "Quadratic Forms and Definiteness in Signal Processing: Scalar quadratic form $Q(x) = x^\\dagger A x$; Positive definite matrices ($x^\\dagger A x > 0$ for all $x \\ne 0$) govern covariance matrices $R_{xx} = E[x x^\\dagger]$; Sylvester's criterion: all leading principal minors must be strictly positive.",
+    "Matrix Norms and Condition Numbers: Frobenius norm $\\|A\\|_F = \\sqrt{\\sum |a_{ij}|^2} = \\sqrt{\\text{Tr}(A^\\dagger A)}$; Spectral norm $\\|A\\|_2 = \\sigma_{\\max}$; Condition number $\\kappa(A) = \\sigma_{\\max} / \\sigma_{\\min}$; High condition numbers indicate ill-conditioned channel matrices prone to severe noise enhancement.",
+    "University Examination Strategy: Solve characteristic polynomials to compute eigenvalues/eigenvectors, apply Cayley-Hamilton to find $A^{-1}$ and $A^4$, perform full Singular Value Decomposition on $2 \\times 2$ or $3 \\times 2$ matrices identifying singular values and singular vectors, and formulate MIMO spatial multiplexing channel decoupling equations."
+], [
+    "Cauchy-Schwarz Inequality: $|\\langle u, v \\rangle|^2 \\le \\langle u, u \\rangle \\langle v, v \\rangle$.",
+    "Matrix Diagonalization: $A = V \\Lambda V^{-1}$ (eigenvector matrix $V$).",
+    "Hermitian Property: $A^\\dagger = (A^*)^T = A$ (real eigenvalues).",
+    "Unitary Property: $U^\\dagger U = U U^\\dagger = I$.",
+    "Singular Value Decomposition: $A = U \\Sigma V^\\dagger$.",
+    "MIMO Channel Decoupling: $\\tilde{y}_i = \\sigma_i \\tilde{x}_i + \\tilde{n}_i$ ($r = \\text{rank}(H)$).",
+    "Moore-Penrose Pseudoinverse: $A^+ = (A^\\dagger A)^{-1} A^\\dagger$.",
+    "Zero-Forcing Filter: $W_{ZF} = (H^\\dagger H)^{-1} H^\\dagger$.",
+    "Matrix Condition Number: $\\kappa(A) = \\frac{\\sigma_{\\max}}{\\sigma_{\\min}}$.",
+    "Exam Gold Tip: For MIMO antenna channel $H$, the non-zero eigenvalues of $H H^\\dagger$ are precisely the squares of the singular values $\\lambda_i = \\sigma_i^2$, and total channel capacity is $C = \\sum_{i=1}^r \\log_2(1 + \\frac{P_i \\sigma_i^2}{N_0})$."
+])
+
+add("Mathematics for ECE", 2, "Complex Analysis", [
+    "Analytic Functions and Cauchy-Riemann Equations: Function $f(z) = u(x,y) + i v(x,y)$ is complex differentiable (analytic) in domain $D$ if and only if partial derivatives satisfy C-R conditions: $\\frac{\\partial u}{\\partial x} = \\frac{\\partial v}{\\partial y}$ and $\\frac{\\partial u}{\\partial y} = -\\frac{\\partial v}{\\partial x}$; Harmonic conjugate functions satisfy Laplace's equation $\\nabla^2 u = 0$.",
+    "Milne-Thomson Method: Direct construction of analytic function $f(z)$ from known real part $u(x,y)$ or imaginary part $v(x,y)$ without calculating intermediate harmonic conjugates: $f'(z) = u_x(z, 0) - i u_y(z, 0)$, integrated directly with respect to $z$.",
+    "Hilbert Transform in Communications: Quadrature phase shifter defined by linear convolution $\\hat{x}(t) = \\mathcal{H}\\{x(t)\\} = \\frac{1}{\\pi} \\text{p.v.} \\int_{-\\infty}^\\infty \\frac{x(\\tau)}{t - \\tau} d\\tau$; Frequency response $H(f) = -j \\text{ sgn}(f)$; Shifts positive frequency spectral components by $-90^\\circ$ and negative frequencies by $+90^\\circ$.",
+    "Analytic Signal Representation: Pre-envelope $z(t) = x(t) + j \\hat{x}(t)$ possessing zero negative-frequency energy; Natural representation for single-sideband (SSB) modulated signals, instantaneous envelope $A(t) = \\sqrt{x^2(t) + \\hat{x}^2(t)}$, and instantaneous phase $\\phi(t) = \\arctan(\\hat{x}(t) / x(t))$.",
+    "Conformal Mapping & Bilinear Transformations: Angle-preserving holomorphic mappings $w = f(z)$; Mobius / Bilinear transformation $w = \\frac{a z + b}{c z + d}$ ($ad - bc \\ne 0$) maps generalized circles/lines to circles/lines and preserves cross-ratios $\\frac{(w - w_1)(w_2 - w_3)}{(w - w_3)(w_2 - w_1)} = \\frac{(z - z_1)(z_2 - z_3)}{(z - z_3)(z_2 - z_1)}$; Basis of Smith Chart microwave impedance transformations.",
+    "Cauchy's Integral Theorem & Formulas: For analytic $f(z)$ inside and on simple closed curve $C$: $\\oint_C f(z) dz = 0$; Cauchy's Integral Formula: $f(z_0) = \\frac{1}{2 \\pi i} \\oint_C \\frac{f(z)}{z - z_0} dz$; Higher derivatives formula: $f^{(n)}(z_0) = \\frac{n!}{2 \\pi i} \\oint_C \\frac{f(z)}{(z - z_0)^{n+1}} dz$.",
+    "Laurent Series Expansions: Representation in annular region $r_1 < |z - z_0| < r_2$: $f(z) = \\sum_{n=0}^\\infty a_n (z - z_0)^n + \\sum_{n=1}^\\infty \\frac{b_n}{(z - z_0)^n}$; Principal part $\\sum \\frac{b_n}{(z - z_0)^n}$ determines singularity classification: removable ($b_n=0$), pole of order $m$ ($b_m \\ne 0, b_{k>m}=0$), or essential singularity (infinite terms).",
+    "Cauchy's Residue Theorem: $\\oint_C f(z) dz = 2 \\pi i \\sum_{k=1}^N \\text{Res}(f, z_k)$; Residue calculation at simple pole: $\\text{Res}(f, z_0) = \\lim_{z \\to z_0} (z - z_0) f(z)$; Residue at multiple pole of order $m$: $\\text{Res}(f, z_0) = \\frac{1}{(m-1)!} \\lim_{z \\to z_0} \\frac{d^{m-1}}{dz^{m-1}} [(z - z_0)^m f(z)]$.",
+    "Bromwich Contour Integration for Inverse Transforms: Evaluation of inverse Laplace transforms $x(t) = \\frac{1}{2\\pi i} \\int_{\\gamma - i\\infty}^{\\gamma + i\\infty} X(s) e^{s t} ds$ and inverse z-transforms $x[n] = \\frac{1}{2\\pi i} \\oint_C X(z) z^{n-1} dz$ by closing contour and summing residues inside pole boundaries.",
+    "University Examination Strategy: Verify analytic conditions using Cauchy-Riemann equations, determine harmonic conjugate functions $v(x,y)$, construct bilinear transformations mapping three given $z$-plane points to $w$-plane points, and evaluate contour integrals of rational functions using Cauchy's Residue Theorem."
+], [
+    "Cauchy-Riemann Equations: $u_x = v_y$ and $u_y = -v_x$.",
+    "Milne-Thomson Formula: $f'(z) = u_x(z, 0) - i u_y(z, 0)$.",
+    "Hilbert Transform Frequency Response: $H(f) = -j \\text{ sgn}(f)$.",
+    "Analytic Signal (Pre-envelope): $z(t) = x(t) + j \\hat{x}(t)$.",
+    "Bilinear (Mobius) Transformation: $w = \\frac{a z + b}{c z + d}$ ($ad - bc \\ne 0$).",
+    "Cross-Ratio Invariance: $\\frac{(w - w_1)(w_2 - w_3)}{(w - w_3)(w_2 - w_1)} = \\frac{(z - z_1)(z_2 - z_3)}{(z - z_3)(z_2 - z_1)}$.",
+    "Cauchy's Integral Formula: $f^{(n)}(z_0) = \\frac{n!}{2 \\pi i} \\oint_C \\frac{f(z)}{(z - z_0)^{n+1}} dz$.",
+    "Cauchy's Residue Theorem: $\\oint_C f(z) dz = 2 \\pi i \\sum \\text{Res}$.",
+    "Residue at Simple Pole: $\\text{Res}(f, z_0) = \\lim_{z \\to z_0} (z - z_0) f(z)$.",
+    "Exam Gold Tip: The Hilbert transform of $\\cos(\\omega_0 t)$ is $\\sin(\\omega_0 t)$, and its transfer function imparts a $-90^\\circ$ phase shift without altering the magnitude spectrum, preserving total signal power."
+])
+
+add("Mathematics for ECE", 3, "Probability", [
+    "Axiomatic Foundations & Conditional Probability: Probability space $(\\Omega, \\mathcal{F}, P)$; Axioms of Kolmogorov; Conditional probability $P(A|B) = \\frac{P(A \\cap B)}{P(B)}$; Total Probability Theorem $P(A) = \\sum_{i=1}^n P(A|B_i) P(B_i)$ for mutually exclusive and exhaustive partition $\\{B_i\\}$.",
+    "Bayes' Rule in Signal Detection: Posterior probability $P(H_i|y) = \\frac{P(y|H_i) P(H_i)}{\\sum_{k} P(y|H_k) P(H_k)}$; Forms theoretical foundation for Maximum A Posteriori (MAP) and Maximum Likelihood (ML) digital receiver decision rules.",
+    "Bivariate Random Variables & Joint Distributions: Joint cumulative distribution function $F_{XY}(x,y) = P(X \\le x, Y \\le y)$; Joint probability density function $f_{XY}(x,y) = \\frac{\\partial^2 F_{XY}}{\\partial x \\partial y}$; Marginal distributions: $f_X(x) = \\int_{-\\infty}^\\infty f_{XY}(x,y) dy$; Conditional density: $f_{X|Y}(x|y) = \\frac{f_{XY}(x,y)}{f_Y(y)}$.",
+    "Statistical Independence and Correlation: $X$ and $Y$ are statistically independent if and only if $f_{XY}(x,y) = f_X(x) f_Y(y)$; Covariance $\\text{Cov}(X,Y) = E[(X-\\mu_X)(Y-\\mu_Y)] = E[XY] - \\mu_X \\mu_Y$; Correlation coefficient $\\rho_{XY} = \\frac{\\text{Cov}(X,Y)}{\\sigma_X \\sigma_Y} \\in [-1, +1]$; Independence implies uncorrelatedness ($\\rho=0$), but converse holds only for joint Gaussian variables.",
+    "Bivariate Gaussian (Normal) Distribution: Joint PDF defined by $f_{XY}(x,y) = \\frac{1}{2\\pi \\sigma_X \\sigma_Y \\sqrt{1-\\rho^2}} \\exp\\left( -\\frac{1}{2(1-\\rho^2)} \\left[ \\frac{(x-\\mu_X)^2}{\\sigma_X^2} - \\frac{2\\rho(x-\\mu_X)(y-\\mu_Y)}{\\sigma_X \\sigma_Y} + \\frac{(y-\\mu_Y)^2}{\\sigma_Y^2} \\right] \\right)$; Uncorrelated Gaussian variables are strictly independent.",
+    "Transformations of Random Variables & Jacobian: For bivariate functions $U = g_1(X,Y)$ and $V = g_2(X,Y)$, joint density of transformed variables is $f_{UV}(u,v) = f_{XY}(x(u,v), y(u,v)) |J|^{-1}$, where Jacobian determinant is $J = \\det\\begin{bmatrix} \\frac{\\partial u}{\\partial x} & \\frac{\\partial u}{\\partial y} \\\\ \\frac{\\partial v}{\\partial x} & \\frac{\\partial v}{\\partial y} \\end{bmatrix}$.",
+    "Generation of Rayleigh and Ricean Fading Distributions: Transformation from Cartesian I/Q Gaussian channel components ($X, Y \\sim \\mathcal{N}(0, \\sigma^2)$) to Polar coordinates ($R = \\sqrt{X^2+Y^2}, \\Theta = \\arctan(Y/X)$) yields Rayleigh envelope $f_R(r) = \\frac{r}{\\sigma^2} e^{-r^2 / 2\\sigma^2}$ and uniform phase $\\Theta \\sim U[0, 2\\pi)$ modeling wireless fading channels.",
+    "Moment Generating and Characteristic Functions: Moment Generating Function $M_X(t) = E[e^{t X}]$; Characteristic function $\\Phi_X(\\omega) = E[e^{j \\omega X}] = \\int_{-\\infty}^\\infty f_X(x) e^{j \\omega x} dx$ (Fourier transform of PDF with sign reversal); Moments extracted via $E[X^n] = \\frac{1}{j^n} \\left. \\frac{d^n \\Phi_X(\\omega)}{d\\omega^n} \\right|_{\\omega=0}$.",
+    "Central Limit Theorem (CLT) in Communications: Sum of $N$ independent, identically distributed random variables $S_N = \\sum_{i=1}^N X_i$ with mean $\\mu$ and variance $\\sigma^2$ converges in distribution to Gaussian $\\mathcal{N}(N\\mu, N\\sigma^2)$ as $N \\to \\infty$; Explains Gaussian nature of thermal noise accumulated from billions of random electron collisions.",
+    "University Examination Strategy: Apply Bayes' rule to binary symmetric communication channel (BSC) error probabilities, evaluate joint marginal and conditional densities from 2D continuous functions, calculate covariance and correlation coefficient $\\rho$, apply Jacobian transformation to derive Rayleigh density, and use characteristic functions to sum independent random variables."
+], [
+    "Bayes' Detection Formula: $P(H_i|y) = \\frac{P(y|H_i) P(H_i)}{\\sum P(y|H_k) P(H_k)}$.",
+    "Joint Marginal Density: $f_X(x) = \\int_{-\\infty}^\\infty f_{XY}(x,y) dy$.",
+    "Conditional Probability Density: $f_{X|Y}(x|y) = \\frac{f_{XY}(x,y)}{f_Y(y)}$.",
+    "Covariance Formula: $\\text{Cov}(X,Y) = E[XY] - E[X] E[Y]$.",
+    "Correlation Coefficient: $\\rho_{XY} = \\frac{\\text{Cov}(X,Y)}{\\sigma_X \\sigma_Y}$.",
+    "Jacobian Transformation: $f_{UV}(u,v) = f_{XY}(x,y) |J|^{-1}$.",
+    "Rayleigh Fading Distribution: $f_R(r) = \\frac{r}{\\sigma^2} \\exp\\left(-\\frac{r^2}{2\\sigma^2}\\right)$ ($r \\ge 0$).",
+    "Characteristic Function: $\\Phi_X(\\omega) = E[e^{j \\omega X}]$.",
+    "Central Limit Theorem: $\\frac{S_N - N\\mu}{\\sigma \\sqrt{N}} \\xrightarrow{d} \\mathcal{N}(0, 1)$.",
+    "Exam Gold Tip: If two random variables are jointly Gaussian and their correlation coefficient $\\rho_{XY} = 0$, they are strictly statistically independent, a unique property that fails for non-Gaussian distributions."
+])
+
+add("Mathematics for ECE", 4, "Random Processes", [
+    "Definition and Classification of Random Processes: Random process $X(t, \\omega)$ is an indexed family of random variables parameterized by continuous or discrete time $t \\in T$; Ensemble realizations vs time-series sample paths; First-order and second-order cumulative distributions and probability densities.",
+    "Stationarity Principles: Strict-Sense Stationary (SSS): statistical properties invariant to arbitrary time shift $t \\to t+\\tau$ for all orders; Wide-Sense Stationary (WSS): (1) Mean is constant independent of time $E[X(t)] = \\mu_X$; (2) Autocorrelation depends exclusively on time lag $\\tau$: $R_{XX}(t, t+\\tau) = R_{XX}(\\tau) = E[X(t) X(t+\\tau)]$.",
+    "Properties of Autocorrelation Function $R_{XX}(\\tau)$: (1) Even symmetry $R_{XX}(-\\tau) = R_{XX}(\\tau)$; (2) Maximum value at origin $|R_{XX}(\tau)| \\le R_{XX}(0)$; (3) Origin equals total average power $R_{XX}(0) = E[X^2(t)]$; (4) As $\\tau \\to \\infty$, $R_{XX}(\\tau) \\to \\mu_X^2$ if no periodic components exist.",
+    "Power Spectral Density (PSD) & Wiener-Khinchin Theorem: PSD $S_{XX}(f)$ characterizes frequency distribution of signal power; Wiener-Khinchin theorem: Autocorrelation function and Power Spectral Density form a Fourier transform pair: $S_{XX}(f) = \\int_{-\\infty}^\\infty R_{XX}(\\tau) e^{-j 2\\pi f \\tau} d\\tau$ and $R_{XX}(\\tau) = \\int_{-\\infty}^\\infty S_{XX}(f) e^{j 2\\pi f \\tau} df$.",
+    "Properties of PSD: (1) Real and non-negative $S_{XX}(f) \\ge 0$; (2) Even symmetric for real processes $S_{XX}(-f) = S_{XX}(f)$; (3) Area under PSD equals total average power $P_{avg} = R_{XX}(0) = \\int_{-\\infty}^\\infty S_{XX}(f) df$; (4) Cross-PSD satisfies $S_{XY}(f) = S_{YX}^*(f)$.",
+    "LTI System Response to Random Inputs: For Linear Time-Invariant system with impulse response $h(t)$ and transfer function $H(f)$: output process $Y(t) = X(t) * h(t)$ is WSS if $X(t)$ is WSS; Mean: $\\mu_Y = \\mu_X H(0)$; Cross-correlation: $R_{XY}(\\tau) = R_{XX}(\\tau) * h^*(-\\tau)$; Output PSD: $S_{YY}(f) = |H(f)|^2 S_{XX}(f)$; Output autocorrelation: $R_{YY}(\\tau) = R_{XX}(\\tau) * h(\\tau) * h^*(-\\tau)$.",
+    "White Noise and Additive White Gaussian Noise (AWGN): Ideal white noise has flat power spectral density across all frequencies $S_{NN}(f) = \\frac{N_0}{2} \\text{ W/Hz}$; Autocorrelation is a Dirac delta function $R_{NN}(\\tau) = \\frac{N_0}{2} \\delta(\\tau)$; Strictly uncorrelated at non-zero lags; Thermal noise in resistors: $N_0 = k T_e$ ($k = 1.38 \\times 10^{-23} \\text{ J/K}$).",
+    "Bandlimited White Noise: White noise passed through ideal lowpass filter of bandwidth $B$: $S_{YY}(f) = \\frac{N_0}{2}$ for $|f| \\le B$, and $0$ elsewhere; Resulting autocorrelation function is $R_{YY}(\\tau) = N_0 B \\text{sinc}(2 B \\tau)$; Exhibits zero correlation at discrete sampling intervals $\\tau = k / (2B)$.",
+    "Ergodicity in Random Processes: Random process is ergodic if ensemble averages equal corresponding infinite-time averages for almost all realizations; Mean-ergodic: $\\lim_{T \\to \\infty} \\frac{1}{2T} \\int_{-T}^T X(t) dt = E[X(t)]$; Correlation-ergodic: enables estimating autocorrelation and spectrum from a single measured oscilloscope trace.",
+    "University Examination Strategy: Test processes for wide-sense stationarity given $X(t) = A \\cos(\\omega_0 t + \\Theta)$ with uniform phase, verify autocorrelation properties, apply Wiener-Khinchin theorem to evaluate PSD from given $R_{XX}(\\tau) = e^{-\\alpha |\\tau|}$, compute output power and PSD through LTI filters with transfer function $H(f)$, and calculate equivalent noise bandwidth."
+], [
+    "WSS Mean Condition: $E[X(t)] = \\mu_X = \\text{constant}$.",
+    "WSS Autocorrelation: $R_{XX}(t, t+\\tau) = R_{XX}(\\tau) = E[X(t) X(t+\\tau)]$.",
+    "Autocorrelation Symmetry: $R_{XX}(-\\tau) = R_{XX}(\\tau)$.",
+    "Total Average Signal Power: $P_{avg} = R_{XX}(0) = E[X^2(t)]$.",
+    "Wiener-Khinchin Theorem: $S_{XX}(f) = \\int_{-\\infty}^\\infty R_{XX}(\\tau) e^{-j 2\\pi f \\tau} d\\tau$.",
+    "System Output PSD: $S_{YY}(f) = |H(f)|^2 S_{XX}(f)$.",
+    "Output Mean Formula: $\\mu_Y = \\mu_X H(0) = \\mu_X \\int_{-\\infty}^\\infty h(t) dt$.",
+    "AWGN Power Spectral Density: $S_{NN}(f) = \\frac{N_0}{2}$ ($-\\infty < f < \\infty$).",
+    "AWGN Autocorrelation Function: $R_{NN}(\\tau) = \\frac{N_0}{2} \\delta(\\tau)$.",
+    "Exam Gold Tip: For carrier modulated process $X(t) = A \\cos(\\omega_c t + \\Theta)$ where $\\Theta \\sim U[0, 2\\pi]$, the process is strictly WSS with $R_{XX}(\\tau) = \\frac{A^2}{2} \\cos(\\omega_c \\tau)$ and average power $P = R_{XX}(0) = A^2 / 2$."
+])
+
+add("Mathematics for ECE", 5, "Numerical Methods", [
+    "Numerical Solutions of Non-linear Semiconductor Equations: Finding root $V_D$ of transcendental diode circuit equation $I_s (e^{q V_D / k T} - 1) + \\frac{V_D - V_{DD}}{R} = 0$; Newton-Raphson iterative formulation $x_{n+1} = x_n - \\frac{f(x_n)}{f'(x_n)}$ with quadratic order of convergence $\\epsilon_{n+1} \\propto \\epsilon_n^2$.",
+    "Numerical Linear Algebra for Circuit Simulation: Formulation of Modified Nodal Analysis (MNA) equations $[G] [V] = [I]$; Direct solution via Gaussian elimination with partial pivoting (row swapping to minimize roundoff error) and LU decomposition (Crout's and Doolittle's algorithms).",
+    "Iterative Methods for Large Sparse Network Equations: Gauss-Jacobi method $x_i^{(k+1)} = \\frac{1}{a_{ii}} \\left( b_i - \\sum_{j \\ne i} a_{ij} x_j^{(k)} \\right)$; Gauss-Seidel method utilizing immediately updated components; Convergence guaranteed by strict diagonal dominance condition $|a_{ii}| > \\sum_{j \\ne i} |a_{ij}|$.",
+    "Successive Over-Relaxation (SOR): Accelerated iteration $x_i^{(k+1)} = (1-\\omega) x_i^{(k)} + \\frac{\\omega}{a_{ii}} \\left( b_i - \\sum_{j < i} a_{ij} x_j^{(k+1)} - \\sum_{j > i} a_{ij} x_j^{(k)} \\right)$; Optimal relaxation parameter $1 < \\omega < 2$ significantly speeds convergence in EM field finite difference grids.",
+    "Interpolation in Signal Processing: Lagrange interpolating polynomial $P_n(x) = \\sum_{i=0}^n L_i(x) y_i$ where $L_i(x) = \\prod_{j \\ne i} \\frac{x - x_j}{x_i - x_j}$; Newton's divided difference interpolation for non-uniformly sampled sensor data; Error term $E(x) = \\frac{f^{(n+1)}(\\xi)}{(n+1)!} \\prod (x - x_i)$.",
+    "Numerical Quadrature for Antenna Radiation Patterns: Numerical integration of complex radiation integrals; Trapezoidal rule $\\int_a^b f(x) dx \\approx \\frac{h}{2} [f_0 + 2\\sum f_i + f_n]$ with error $O(h^2)$; Simpson's 1/3rd Rule $\\int_a^b f(x) dx \\approx \\frac{h}{3} [f_0 + 4\\sum_{odd} f_i + 2\\sum_{even} f_i + f_n]$ with error $O(h^4)$.",
+    "Gauss-Legendre Quadrature: Optimal numerical integration evaluating function at roots of Legendre polynomials $P_n(x)$; Achieves exact integration for polynomials of degree up to $2n-1$ using only $n$ evaluation points: $\\int_{-1}^1 f(x) dx = \\sum_{i=1}^n w_i f(x_i)$.",
+    "Numerical Solutions of ODEs in Transient Circuit Analysis: Single-step Runge-Kutta 4th Order (RK4) method for initial value problems $\\frac{dy}{dt} = f(t,y)$: $y_{n+1} = y_n + \\frac{h}{6} (k_1 + 2 k_2 + 2 k_3 + k_4)$, where $k_1 = f(t_n, y_n)$, $k_2 = f(t_n + \\frac{h}{2}, y_n + \\frac{h}{2} k_1)$, $k_3 = f(t_n + \\frac{h}{2}, y_n + \\frac{h}{2} k_2)$, $k_4 = f(t_n + h, y_n + h k_3)$; Global truncation error $O(h^4)$.",
+    "Finite Difference Method (FDM) in Electromagnetics: Discretization of 2D Laplace equation $\\nabla^2 V = \\frac{\\partial^2 V}{\\partial x^2} + \\frac{\\partial^2 V}{\\partial y^2} = 0$ on uniform grid: five-point finite difference stencil $V_{i,j} = \\frac{1}{4} [V_{i+1,j} + V_{i-1,j} + V_{i,j+1} + V_{i,j-1}]$; Solved iteratively to find electric potential in coaxial cables and microstrip lines.",
+    "University Examination Strategy: Perform 3 iterations of Newton-Raphson method for non-linear equations, solve $3 \\times 3$ linear systems using Gauss-Seidel method, interpolate values using Lagrange formula, evaluate integrals using Simpson's $1/3$rd rule, compute transient ODE responses via RK4, and set up FDM grid equations for electrostatics."
+], [
+    "Newton-Raphson Iteration: $x_{n+1} = x_n - \\frac{f(x_n)}{f'(x_n)}$.",
+    "Newton-Raphson Convergence: $\\epsilon_{n+1} \\approx \\frac{f''(\\alpha)}{2 f'(\\alpha)} \\epsilon_n^2$ (quadratic order 2).",
+    "Gauss-Seidel Convergence Condition: Strict diagonal dominance $|a_{ii}| > \\sum_{j \\ne i} |a_{ij}|$.",
+    "Lagrange Basis Polynomial: $L_i(x) = \\prod_{j \\ne i} \\frac{x - x_j}{x_i - x_j}$.",
+    "Trapezoidal Quadrature Formula: $\\int_a^b f(x) dx \\approx \\frac{h}{2} [f_0 + 2 \\sum_{i=1}^{n-1} f_i + f_n]$.",
+    "Simpson's 1/3rd Rule Formula: $\\int_a^b f(x) dx \\approx \\frac{h}{3} [f_0 + 4\\sum f_{odd} + 2\\sum f_{even} + f_n]$.",
+    "Simpson's 1/3rd Truncation Error: $E_S = -\\frac{(b-a) h^4}{180} f^{(4)}(\\xi) = O(h^4)$.",
+    "RK4 Slope Formulation: $y_{n+1} = y_n + \\frac{h}{6} (k_1 + 2 k_2 + 2 k_3 + k_4)$.",
+    "Five-Point FDM Laplace Stencil: $V_{i,j} = \\frac{1}{4} [V_{i+1,j} + V_{i-1,j} + V_{i,j+1} + V_{i,j-1}]$.",
+    "Exam Gold Tip: Simpson's 1/3 rule requires an even number of subintervals (odd number of ordinates) and provides exact integration for cubic polynomials because the error term depends on the 4th derivative."
+])
+
+with open("scripts/sem3_btech_math_ece.json", "w", encoding="utf-8") as f:
+    json.dump(data, f, indent=2, ensure_ascii=False)
+
+print(f"Generated {len(data)} units for Mathematics for ECE!")

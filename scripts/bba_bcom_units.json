@@ -1,0 +1,1897 @@
+[
+  {
+    "id": "bba-s1-principles-and-practices-of-management",
+    "name": "Principles & Practices of Management",
+    "program": "bba",
+    "semester": 1,
+    "units": [
+      {
+        "id": "bba-s1-principles-and-practices-of-management-u1",
+        "unit_number": 1,
+        "title": "Introduction to Management"
+      },
+      {
+        "id": "bba-s1-principles-and-practices-of-management-u2",
+        "unit_number": 2,
+        "title": "Management Thought & Planning"
+      },
+      {
+        "id": "bba-s1-principles-and-practices-of-management-u3",
+        "unit_number": 3,
+        "title": "Planning & Decision-Making"
+      },
+      {
+        "id": "bba-s1-principles-and-practices-of-management-u4",
+        "unit_number": 4,
+        "title": "Organizing"
+      },
+      {
+        "id": "bba-s1-principles-and-practices-of-management-u5",
+        "unit_number": 5,
+        "title": "Staffing, Directing & Controlling"
+      }
+    ]
+  },
+  {
+    "id": "bba-s1-business-mathematics-and-statistics",
+    "name": "Business Mathematics & Statistics",
+    "program": "bba",
+    "semester": 1,
+    "units": [
+      {
+        "id": "bba-s1-business-mathematics-and-statistics-u1",
+        "unit_number": 1,
+        "title": "Functions, Interest & Progressions"
+      },
+      {
+        "id": "bba-s1-business-mathematics-and-statistics-u2",
+        "unit_number": 2,
+        "title": "Theory of Sets, Relations & Functions"
+      },
+      {
+        "id": "bba-s1-business-mathematics-and-statistics-u3",
+        "unit_number": 3,
+        "title": "Differentiation & Applications"
+      },
+      {
+        "id": "bba-s1-business-mathematics-and-statistics-u4",
+        "unit_number": 4,
+        "title": "Integration & Vectors"
+      },
+      {
+        "id": "bba-s1-business-mathematics-and-statistics-u5",
+        "unit_number": 5,
+        "title": "Matrix Algebra"
+      }
+    ]
+  },
+  {
+    "id": "bba-s1-basics-of-business-economics",
+    "name": "Basics of Business Economics",
+    "program": "bba",
+    "semester": 1,
+    "units": [
+      {
+        "id": "bba-s1-basics-of-business-economics-u1",
+        "unit_number": 1,
+        "title": "Introduction to Business Economics"
+      },
+      {
+        "id": "bba-s1-basics-of-business-economics-u2",
+        "unit_number": 2,
+        "title": "Utility and Demand Analysis"
+      },
+      {
+        "id": "bba-s1-basics-of-business-economics-u3",
+        "unit_number": 3,
+        "title": "Production, Cost and Supply Analysis"
+      },
+      {
+        "id": "bba-s1-basics-of-business-economics-u4",
+        "unit_number": 4,
+        "title": "Market Structure and Price Determination"
+      },
+      {
+        "id": "bba-s1-basics-of-business-economics-u5",
+        "unit_number": 5,
+        "title": "Entrepreneur and Entrepreneurial Development"
+      }
+    ]
+  },
+  {
+    "id": "bba-s1-financial-accounting",
+    "name": "Financial Accounting",
+    "program": "bba",
+    "semester": 1,
+    "units": [
+      {
+        "id": "bba-s1-financial-accounting-u1",
+        "unit_number": 1,
+        "title": "Accounting Process"
+      },
+      {
+        "id": "bba-s1-financial-accounting-u2",
+        "unit_number": 2,
+        "title": "Subsidiary Books"
+      },
+      {
+        "id": "bba-s1-financial-accounting-u3",
+        "unit_number": 3,
+        "title": "Bank Reconciliation Statement"
+      },
+      {
+        "id": "bba-s1-financial-accounting-u4",
+        "unit_number": 4,
+        "title": "Rectification of Errors and Depreciation"
+      },
+      {
+        "id": "bba-s1-financial-accounting-u5",
+        "unit_number": 5,
+        "title": "Final Accounts of Sole Trader"
+      }
+    ]
+  },
+  {
+    "id": "bba-s1-business-organization-and-management",
+    "name": "Business Organization & Management",
+    "program": "bba",
+    "semester": 1,
+    "units": [
+      {
+        "id": "bba-s1-business-organization-and-management-u1",
+        "unit_number": 1,
+        "title": "Introduction to Business Organization"
+      },
+      {
+        "id": "bba-s1-business-organization-and-management-u2",
+        "unit_number": 2,
+        "title": "Joint Stock Company"
+      },
+      {
+        "id": "bba-s1-business-organization-and-management-u3",
+        "unit_number": 3,
+        "title": "Introduction to Management & Functions"
+      },
+      {
+        "id": "bba-s1-business-organization-and-management-u4",
+        "unit_number": 4,
+        "title": "Planning and Organizing"
+      },
+      {
+        "id": "bba-s1-business-organization-and-management-u5",
+        "unit_number": 5,
+        "title": "Staffing, Directing & Controlling"
+      }
+    ]
+  },
+  {
+    "id": "bba-s2-organizational-behaviour",
+    "name": "Organizational Behaviour",
+    "program": "bba",
+    "semester": 2,
+    "units": [
+      {
+        "id": "bba-s2-organizational-behaviour-u1",
+        "unit_number": 1,
+        "title": "Introduction to Organizational Behaviour"
+      },
+      {
+        "id": "bba-s2-organizational-behaviour-u2",
+        "unit_number": 2,
+        "title": "Individual Behaviour"
+      },
+      {
+        "id": "bba-s2-organizational-behaviour-u3",
+        "unit_number": 3,
+        "title": "Motivation and Leadership"
+      },
+      {
+        "id": "bba-s2-organizational-behaviour-u4",
+        "unit_number": 4,
+        "title": "Group Dynamics and Teams"
+      },
+      {
+        "id": "bba-s2-organizational-behaviour-u5",
+        "unit_number": 5,
+        "title": "Organizational Culture, Change and Contemporary Issues"
+      }
+    ]
+  },
+  {
+    "id": "bba-s2-business-statistics",
+    "name": "Business Statistics",
+    "program": "bba",
+    "semester": 2,
+    "units": [
+      {
+        "id": "bba-s2-business-statistics-u1",
+        "unit_number": 1,
+        "title": "Introduction to Statistics and Data Presentation"
+      },
+      {
+        "id": "bba-s2-business-statistics-u2",
+        "unit_number": 2,
+        "title": "Measures of Central Tendency and Dispersion"
+      },
+      {
+        "id": "bba-s2-business-statistics-u3",
+        "unit_number": 3,
+        "title": "Correlation and Regression Analysis"
+      },
+      {
+        "id": "bba-s2-business-statistics-u4",
+        "unit_number": 4,
+        "title": "Time Series Analysis and Index Numbers"
+      },
+      {
+        "id": "bba-s2-business-statistics-u5",
+        "unit_number": 5,
+        "title": "Probability and Sampling Theory"
+      }
+    ]
+  },
+  {
+    "id": "bba-s2-financial-accounting-ii",
+    "name": "Financial Accounting – II",
+    "program": "bba",
+    "semester": 2,
+    "units": [
+      {
+        "id": "bba-s2-financial-accounting-ii-u1",
+        "unit_number": 1,
+        "title": "Bills of Exchange"
+      },
+      {
+        "id": "bba-s2-financial-accounting-ii-u2",
+        "unit_number": 2,
+        "title": "Consignment Accounts"
+      },
+      {
+        "id": "bba-s2-financial-accounting-ii-u3",
+        "unit_number": 3,
+        "title": "Joint Venture Accounts"
+      },
+      {
+        "id": "bba-s2-financial-accounting-ii-u4",
+        "unit_number": 4,
+        "title": "Accounts from Incomplete Records"
+      },
+      {
+        "id": "bba-s2-financial-accounting-ii-u5",
+        "unit_number": 5,
+        "title": "Accounting for Non-Profit Organizations"
+      }
+    ]
+  },
+  {
+    "id": "bba-s3-fundamentals-of-human-resource-management",
+    "name": "Fundamentals of Human Resource Management",
+    "program": "bba",
+    "semester": 3,
+    "units": [
+      {
+        "id": "bba-s3-fundamentals-of-human-resource-management-u1",
+        "unit_number": 1,
+        "title": "Introduction to Human Resource Management"
+      },
+      {
+        "id": "bba-s3-fundamentals-of-human-resource-management-u2",
+        "unit_number": 2,
+        "title": "Human Resource Planning and Recruitment"
+      },
+      {
+        "id": "bba-s3-fundamentals-of-human-resource-management-u3",
+        "unit_number": 3,
+        "title": "Training and Development"
+      },
+      {
+        "id": "bba-s3-fundamentals-of-human-resource-management-u4",
+        "unit_number": 4,
+        "title": "Compensation and Employee Welfare"
+      },
+      {
+        "id": "bba-s3-fundamentals-of-human-resource-management-u5",
+        "unit_number": 5,
+        "title": "Employee Relations and Emerging Trends"
+      }
+    ]
+  },
+  {
+    "id": "bba-s3-business-law-and-ethics",
+    "name": "Business Law and Ethics",
+    "program": "bba",
+    "semester": 3,
+    "units": [
+      {
+        "id": "bba-s3-business-law-and-ethics-u1",
+        "unit_number": 1,
+        "title": "Law of Contracts"
+      },
+      {
+        "id": "bba-s3-business-law-and-ethics-u2",
+        "unit_number": 2,
+        "title": "Law Relating to Special Contracts"
+      },
+      {
+        "id": "bba-s3-business-law-and-ethics-u3",
+        "unit_number": 3,
+        "title": "Companies Act"
+      },
+      {
+        "id": "bba-s3-business-law-and-ethics-u4",
+        "unit_number": 4,
+        "title": "Consumer Protection Law"
+      },
+      {
+        "id": "bba-s3-business-law-and-ethics-u5",
+        "unit_number": 5,
+        "title": "Business Ethics"
+      }
+    ]
+  },
+  {
+    "id": "bba-s3-operations-management",
+    "name": "Operations Management",
+    "program": "bba",
+    "semester": 3,
+    "units": [
+      {
+        "id": "bba-s3-operations-management-u1",
+        "unit_number": 1,
+        "title": "Introduction to Operations Management"
+      },
+      {
+        "id": "bba-s3-operations-management-u2",
+        "unit_number": 2,
+        "title": "Facility Location and Layout"
+      },
+      {
+        "id": "bba-s3-operations-management-u3",
+        "unit_number": 3,
+        "title": "Production Planning and Control"
+      },
+      {
+        "id": "bba-s3-operations-management-u4",
+        "unit_number": 4,
+        "title": "Quality Management and Maintenance"
+      },
+      {
+        "id": "bba-s3-operations-management-u5",
+        "unit_number": 5,
+        "title": "Inventory Control and Stores Management"
+      }
+    ]
+  },
+  {
+    "id": "bba-s3-operations-research",
+    "name": "Operations Research",
+    "program": "bba",
+    "semester": 3,
+    "units": [
+      {
+        "id": "bba-s3-operations-research-u1",
+        "unit_number": 1,
+        "title": "Introduction to Operations Research"
+      },
+      {
+        "id": "bba-s3-operations-research-u2",
+        "unit_number": 2,
+        "title": "Linear Programming"
+      },
+      {
+        "id": "bba-s3-operations-research-u3",
+        "unit_number": 3,
+        "title": "Transportation and Assignment Problems"
+      },
+      {
+        "id": "bba-s3-operations-research-u4",
+        "unit_number": 4,
+        "title": "Network Analysis (PERT and CPM)"
+      },
+      {
+        "id": "bba-s3-operations-research-u5",
+        "unit_number": 5,
+        "title": "Queuing Theory, Game Theory and Simulation"
+      }
+    ]
+  },
+  {
+    "id": "bba-s4-business-environment-and-legal-aspects",
+    "name": "Business Environment & Legal Aspects",
+    "program": "bba",
+    "semester": 4,
+    "units": [
+      {
+        "id": "bba-s4-business-environment-and-legal-aspects-u1",
+        "unit_number": 1,
+        "title": "Business Environment – An Overview"
+      },
+      {
+        "id": "bba-s4-business-environment-and-legal-aspects-u2",
+        "unit_number": 2,
+        "title": "Economic Environment of Business"
+      },
+      {
+        "id": "bba-s4-business-environment-and-legal-aspects-u3",
+        "unit_number": 3,
+        "title": "Legal Environment of Business"
+      },
+      {
+        "id": "bba-s4-business-environment-and-legal-aspects-u4",
+        "unit_number": 4,
+        "title": "Consumer Protection Law"
+      },
+      {
+        "id": "bba-s4-business-environment-and-legal-aspects-u5",
+        "unit_number": 5,
+        "title": "Business Ethics and Social Responsibility"
+      }
+    ]
+  },
+  {
+    "id": "bba-s4-quantitative-techniques-for-business",
+    "name": "Quantitative Techniques for Business",
+    "program": "bba",
+    "semester": 4,
+    "units": [
+      {
+        "id": "bba-s4-quantitative-techniques-for-business-u1",
+        "unit_number": 1,
+        "title": "Introduction to Statistics and Data Presentation"
+      },
+      {
+        "id": "bba-s4-quantitative-techniques-for-business-u2",
+        "unit_number": 2,
+        "title": "Measures of Central Tendency and Dispersion"
+      },
+      {
+        "id": "bba-s4-quantitative-techniques-for-business-u3",
+        "unit_number": 3,
+        "title": "Correlation and Regression Analysis"
+      },
+      {
+        "id": "bba-s4-quantitative-techniques-for-business-u4",
+        "unit_number": 4,
+        "title": "Time Series Analysis and Index Numbers"
+      },
+      {
+        "id": "bba-s4-quantitative-techniques-for-business-u5",
+        "unit_number": 5,
+        "title": "Probability and Probability Distributions"
+      }
+    ]
+  },
+  {
+    "id": "bba-s4-entrepreneurship-development",
+    "name": "Entrepreneurship Development",
+    "program": "bba",
+    "semester": 4,
+    "units": [
+      {
+        "id": "bba-s4-entrepreneurship-development-u1",
+        "unit_number": 1,
+        "title": "Introduction to Entrepreneurship"
+      },
+      {
+        "id": "bba-s4-entrepreneurship-development-u2",
+        "unit_number": 2,
+        "title": "Entrepreneurial Mindset and Motivation"
+      },
+      {
+        "id": "bba-s4-entrepreneurship-development-u3",
+        "unit_number": 3,
+        "title": "Business Opportunity Identification and Assessment"
+      },
+      {
+        "id": "bba-s4-entrepreneurship-development-u4",
+        "unit_number": 4,
+        "title": "Business Planning and Project Formulation"
+      },
+      {
+        "id": "bba-s4-entrepreneurship-development-u5",
+        "unit_number": 5,
+        "title": "Launching and Managing a Venture"
+      }
+    ]
+  },
+  {
+    "id": "bba-s5-strategic-management",
+    "name": "Strategic Management",
+    "program": "bba",
+    "semester": 5,
+    "units": [
+      {
+        "id": "bba-s5-strategic-management-u1",
+        "unit_number": 1,
+        "title": "Introduction to Strategic Management"
+      },
+      {
+        "id": "bba-s5-strategic-management-u2",
+        "unit_number": 2,
+        "title": "Environmental Appraisal"
+      },
+      {
+        "id": "bba-s5-strategic-management-u3",
+        "unit_number": 3,
+        "title": "Strategy Formulation"
+      },
+      {
+        "id": "bba-s5-strategic-management-u4",
+        "unit_number": 4,
+        "title": "Alternative Strategies"
+      },
+      {
+        "id": "bba-s5-strategic-management-u5",
+        "unit_number": 5,
+        "title": "Strategy Implementation and Control"
+      }
+    ]
+  },
+  {
+    "id": "bba-s5-international-business",
+    "name": "International Business",
+    "program": "bba",
+    "semester": 5,
+    "units": [
+      {
+        "id": "bba-s5-international-business-u1",
+        "unit_number": 1,
+        "title": "Introduction to Global Business"
+      },
+      {
+        "id": "bba-s5-international-business-u2",
+        "unit_number": 2,
+        "title": "Business & Regulation"
+      },
+      {
+        "id": "bba-s5-international-business-u3",
+        "unit_number": 3,
+        "title": "Global Business and Multilateral Agreements"
+      },
+      {
+        "id": "bba-s5-international-business-u4",
+        "unit_number": 4,
+        "title": "International Trade and Investment"
+      },
+      {
+        "id": "bba-s5-international-business-u5",
+        "unit_number": 5,
+        "title": "Global Strategy and Operations"
+      }
+    ]
+  },
+  {
+    "id": "bba-s5-business-ethics-and-corporate-governance",
+    "name": "Business Ethics & Corporate Governance",
+    "program": "bba",
+    "semester": 5,
+    "units": [
+      {
+        "id": "bba-s5-business-ethics-and-corporate-governance-u1",
+        "unit_number": 1,
+        "title": "Introduction to Business Ethics"
+      },
+      {
+        "id": "bba-s5-business-ethics-and-corporate-governance-u2",
+        "unit_number": 2,
+        "title": "Corporate Governance"
+      },
+      {
+        "id": "bba-s5-business-ethics-and-corporate-governance-u3",
+        "unit_number": 3,
+        "title": "Regulatory Framework"
+      },
+      {
+        "id": "bba-s5-business-ethics-and-corporate-governance-u4",
+        "unit_number": 4,
+        "title": "Corporate Social Responsibility"
+      },
+      {
+        "id": "bba-s5-business-ethics-and-corporate-governance-u5",
+        "unit_number": 5,
+        "title": "Emerging Issues in Governance"
+      }
+    ]
+  },
+  {
+    "id": "bba-s6-supply-chain-management",
+    "name": "Supply Chain Management",
+    "program": "bba",
+    "semester": 6,
+    "units": [
+      {
+        "id": "bba-s6-supply-chain-management-u1",
+        "unit_number": 1,
+        "title": "Introduction to Supply Chain Management"
+      },
+      {
+        "id": "bba-s6-supply-chain-management-u2",
+        "unit_number": 2,
+        "title": "Sourcing Strategy"
+      },
+      {
+        "id": "bba-s6-supply-chain-management-u3",
+        "unit_number": 3,
+        "title": "Distribution Strategy"
+      },
+      {
+        "id": "bba-s6-supply-chain-management-u4",
+        "unit_number": 4,
+        "title": "Inventory Strategy"
+      },
+      {
+        "id": "bba-s6-supply-chain-management-u5",
+        "unit_number": 5,
+        "title": "Channels of Distribution and Customer Service Strategy"
+      }
+    ]
+  },
+  {
+    "id": "bba-el-finance-investment-analysis-and-portfolio-management",
+    "name": "Investment Analysis & Portfolio Management",
+    "program": "bba",
+    "semester": null,
+    "electiveGroup": "Finance",
+    "units": [
+      {
+        "id": "bba-el-finance-investment-analysis-and-portfolio-management-u1",
+        "unit_number": 1,
+        "title": "Conceptual Framework of Investment and Portfolio Management"
+      },
+      {
+        "id": "bba-el-finance-investment-analysis-and-portfolio-management-u2",
+        "unit_number": 2,
+        "title": "Risk, Return and Fundamental Analysis"
+      },
+      {
+        "id": "bba-el-finance-investment-analysis-and-portfolio-management-u3",
+        "unit_number": 3,
+        "title": "Share Valuation"
+      },
+      {
+        "id": "bba-el-finance-investment-analysis-and-portfolio-management-u4",
+        "unit_number": 4,
+        "title": "Portfolio Analysis and Asset Allocation"
+      },
+      {
+        "id": "bba-el-finance-investment-analysis-and-portfolio-management-u5",
+        "unit_number": 5,
+        "title": "Capital Asset Pricing Model (CAPM)"
+      }
+    ]
+  },
+  {
+    "id": "bba-el-finance-financial-markets-and-services",
+    "name": "Financial Markets & Services",
+    "program": "bba",
+    "semester": null,
+    "electiveGroup": "Finance",
+    "units": [
+      {
+        "id": "bba-el-finance-financial-markets-and-services-u1",
+        "unit_number": 1,
+        "title": "Overview of Financial System"
+      },
+      {
+        "id": "bba-el-finance-financial-markets-and-services-u2",
+        "unit_number": 2,
+        "title": "Financial Institutions"
+      },
+      {
+        "id": "bba-el-finance-financial-markets-and-services-u3",
+        "unit_number": 3,
+        "title": "Financial Services"
+      },
+      {
+        "id": "bba-el-finance-financial-markets-and-services-u4",
+        "unit_number": 4,
+        "title": "Financial Markets and Instruments"
+      },
+      {
+        "id": "bba-el-finance-financial-markets-and-services-u5",
+        "unit_number": 5,
+        "title": "Financial Institutions and Regulatory Framework"
+      }
+    ]
+  },
+  {
+    "id": "bba-el-finance-banking-and-insurance",
+    "name": "Banking & Insurance",
+    "program": "bba",
+    "semester": null,
+    "electiveGroup": "Finance",
+    "units": [
+      {
+        "id": "bba-el-finance-banking-and-insurance-u1",
+        "unit_number": 1,
+        "title": "Banking Theory and Practice"
+      },
+      {
+        "id": "bba-el-finance-banking-and-insurance-u2",
+        "unit_number": 2,
+        "title": "Principles of Insurance"
+      },
+      {
+        "id": "bba-el-finance-banking-and-insurance-u3",
+        "unit_number": 3,
+        "title": "Types of Insurance"
+      },
+      {
+        "id": "bba-el-finance-banking-and-insurance-u4",
+        "unit_number": 4,
+        "title": "Insurance Business in India"
+      },
+      {
+        "id": "bba-el-finance-banking-and-insurance-u5",
+        "unit_number": 5,
+        "title": "Regulatory Framework"
+      }
+    ]
+  },
+  {
+    "id": "bba-el-finance-financial-derivatives",
+    "name": "Financial Derivatives",
+    "program": "bba",
+    "semester": null,
+    "electiveGroup": "Finance",
+    "units": [
+      {
+        "id": "bba-el-finance-financial-derivatives-u1",
+        "unit_number": 1,
+        "title": "Introduction to Derivatives"
+      },
+      {
+        "id": "bba-el-finance-financial-derivatives-u2",
+        "unit_number": 2,
+        "title": "Forward and Futures Contracts"
+      },
+      {
+        "id": "bba-el-finance-financial-derivatives-u3",
+        "unit_number": 3,
+        "title": "Options Trading Strategies"
+      },
+      {
+        "id": "bba-el-finance-financial-derivatives-u4",
+        "unit_number": 4,
+        "title": "Option Valuation"
+      }
+    ]
+  },
+  {
+    "id": "bba-el-finance-international-finance",
+    "name": "International Finance",
+    "program": "bba",
+    "semester": null,
+    "electiveGroup": "Finance",
+    "units": [
+      {
+        "id": "bba-el-finance-international-finance-u1",
+        "unit_number": 1,
+        "title": "Introduction to International Finance"
+      },
+      {
+        "id": "bba-el-finance-international-finance-u2",
+        "unit_number": 2,
+        "title": "Exchange Rate Determination and Risk Management"
+      },
+      {
+        "id": "bba-el-finance-international-finance-u3",
+        "unit_number": 3,
+        "title": "Foreign Exchange Markets"
+      },
+      {
+        "id": "bba-el-finance-international-finance-u4",
+        "unit_number": 4,
+        "title": "International Financial Instruments"
+      },
+      {
+        "id": "bba-el-finance-international-finance-u5",
+        "unit_number": 5,
+        "title": "Multinational Corporate Decisions in Global Markets"
+      }
+    ]
+  },
+  {
+    "id": "bba-el-finance-international-financial-reporting-i",
+    "name": "International Financial Reporting - I",
+    "program": "bba",
+    "semester": null,
+    "electiveGroup": "Finance",
+    "units": [
+      {
+        "id": "bba-el-finance-international-financial-reporting-i-u1",
+        "unit_number": 1,
+        "title": "Introduction to International Financial Reporting"
+      }
+    ]
+  },
+  {
+    "id": "bba-el-finance-international-auditing",
+    "name": "International Auditing",
+    "program": "bba",
+    "semester": null,
+    "electiveGroup": "Finance",
+    "units": [
+      {
+        "id": "bba-el-finance-international-auditing-u1",
+        "unit_number": 1,
+        "title": "Introduction to International Auditing"
+      }
+    ]
+  },
+  {
+    "id": "bba-el-finance-e-filing-of-tax-returns",
+    "name": "E-Filing of Tax Returns",
+    "program": "bba",
+    "semester": null,
+    "electiveGroup": "Finance",
+    "units": [
+      {
+        "id": "bba-el-finance-e-filing-of-tax-returns-u1",
+        "unit_number": 1,
+        "title": "Introduction to E-Filing of Tax Returns"
+      }
+    ]
+  },
+  {
+    "id": "bba-el-marketing-buyer-behaviour",
+    "name": "Buyer Behaviour",
+    "program": "bba",
+    "semester": null,
+    "electiveGroup": "Marketing",
+    "units": [
+      {
+        "id": "bba-el-marketing-buyer-behaviour-u1",
+        "unit_number": 1,
+        "title": "Introduction to Buyer Behaviour"
+      },
+      {
+        "id": "bba-el-marketing-buyer-behaviour-u2",
+        "unit_number": 2,
+        "title": "Theories of Buyer Behaviour"
+      },
+      {
+        "id": "bba-el-marketing-buyer-behaviour-u3",
+        "unit_number": 3,
+        "title": "Impact of Culture on Buyer Behaviour"
+      },
+      {
+        "id": "bba-el-marketing-buyer-behaviour-u4",
+        "unit_number": 4,
+        "title": "Buyer Behaviour Decision"
+      },
+      {
+        "id": "bba-el-marketing-buyer-behaviour-u5",
+        "unit_number": 5,
+        "title": "Models of Buyer Behaviour"
+      }
+    ]
+  },
+  {
+    "id": "bba-el-marketing-services-marketing",
+    "name": "Services Marketing",
+    "program": "bba",
+    "semester": null,
+    "electiveGroup": "Marketing",
+    "units": [
+      {
+        "id": "bba-el-marketing-services-marketing-u1",
+        "unit_number": 1,
+        "title": "Introduction to Services Marketing"
+      },
+      {
+        "id": "bba-el-marketing-services-marketing-u2",
+        "unit_number": 2,
+        "title": "Understanding Customer Expectations and Behavior"
+      },
+      {
+        "id": "bba-el-marketing-services-marketing-u3",
+        "unit_number": 3,
+        "title": "Service Design and Delivery"
+      },
+      {
+        "id": "bba-el-marketing-services-marketing-u4",
+        "unit_number": 4,
+        "title": "Pricing, Promotion and Place in Services"
+      },
+      {
+        "id": "bba-el-marketing-services-marketing-u5",
+        "unit_number": 5,
+        "title": "Service Quality, Customer Satisfaction and Relationship Marketing"
+      }
+    ]
+  },
+  {
+    "id": "bba-el-marketing-digital-marketing",
+    "name": "Digital Marketing",
+    "program": "bba",
+    "semester": null,
+    "electiveGroup": "Marketing",
+    "units": [
+      {
+        "id": "bba-el-marketing-digital-marketing-u1",
+        "unit_number": 1,
+        "title": "Introduction to Digital Marketing"
+      },
+      {
+        "id": "bba-el-marketing-digital-marketing-u2",
+        "unit_number": 2,
+        "title": "Search Marketing"
+      },
+      {
+        "id": "bba-el-marketing-digital-marketing-u3",
+        "unit_number": 3,
+        "title": "Social Media Marketing"
+      },
+      {
+        "id": "bba-el-marketing-digital-marketing-u4",
+        "unit_number": 4,
+        "title": "Web Analytics and Conversion Tracking"
+      },
+      {
+        "id": "bba-el-marketing-digital-marketing-u5",
+        "unit_number": 5,
+        "title": "YouTube Advertising and Conversions"
+      }
+    ]
+  },
+  {
+    "id": "bba-el-marketing-product-and-brand-management",
+    "name": "Product & Brand Management",
+    "program": "bba",
+    "semester": null,
+    "electiveGroup": "Marketing",
+    "units": [
+      {
+        "id": "bba-el-marketing-product-and-brand-management-u1",
+        "unit_number": 1,
+        "title": "Introduction to Product Management"
+      },
+      {
+        "id": "bba-el-marketing-product-and-brand-management-u2",
+        "unit_number": 2,
+        "title": "Brand Management"
+      },
+      {
+        "id": "bba-el-marketing-product-and-brand-management-u3",
+        "unit_number": 3,
+        "title": "New Product Development"
+      },
+      {
+        "id": "bba-el-marketing-product-and-brand-management-u4",
+        "unit_number": 4,
+        "title": "Product Portfolio Analysis"
+      },
+      {
+        "id": "bba-el-marketing-product-and-brand-management-u5",
+        "unit_number": 5,
+        "title": "Product and Brand Management Practices"
+      }
+    ]
+  },
+  {
+    "id": "bba-el-marketing-customer-relationship-management",
+    "name": "Customer Relationship Management",
+    "program": "bba",
+    "semester": null,
+    "electiveGroup": "Marketing",
+    "units": [
+      {
+        "id": "bba-el-marketing-customer-relationship-management-u1",
+        "unit_number": 1,
+        "title": "Evolution of Customer Relationship"
+      },
+      {
+        "id": "bba-el-marketing-customer-relationship-management-u2",
+        "unit_number": 2,
+        "title": "CRM Concepts"
+      },
+      {
+        "id": "bba-el-marketing-customer-relationship-management-u3",
+        "unit_number": 3,
+        "title": "Planning for CRM"
+      },
+      {
+        "id": "bba-el-marketing-customer-relationship-management-u4",
+        "unit_number": 4,
+        "title": "CRM and Marketing Strategy"
+      },
+      {
+        "id": "bba-el-marketing-customer-relationship-management-u5",
+        "unit_number": 5,
+        "title": "CRM Planning and Implementation"
+      }
+    ]
+  },
+  {
+    "id": "bba-el-marketing-international-marketing",
+    "name": "International Marketing",
+    "program": "bba",
+    "semester": null,
+    "electiveGroup": "Marketing",
+    "units": [
+      {
+        "id": "bba-el-marketing-international-marketing-u1",
+        "unit_number": 1,
+        "title": "Introduction to International Marketing and Trade"
+      },
+      {
+        "id": "bba-el-marketing-international-marketing-u2",
+        "unit_number": 2,
+        "title": "International Marketing Environment and Marketing Research"
+      },
+      {
+        "id": "bba-el-marketing-international-marketing-u3",
+        "unit_number": 3,
+        "title": "International Marketing Mix"
+      },
+      {
+        "id": "bba-el-marketing-international-marketing-u4",
+        "unit_number": 4,
+        "title": "Developments in International Marketing"
+      },
+      {
+        "id": "bba-el-marketing-international-marketing-u5",
+        "unit_number": 5,
+        "title": "International Institutional Infrastructure and Documentation"
+      }
+    ]
+  },
+  {
+    "id": "bba-el-hr-performance-management",
+    "name": "Performance Management",
+    "program": "bba",
+    "semester": null,
+    "electiveGroup": "HR",
+    "units": [
+      {
+        "id": "bba-el-hr-performance-management-u1",
+        "unit_number": 1,
+        "title": "Introduction to Performance Management"
+      },
+      {
+        "id": "bba-el-hr-performance-management-u2",
+        "unit_number": 2,
+        "title": "Performance Appraisal"
+      },
+      {
+        "id": "bba-el-hr-performance-management-u3",
+        "unit_number": 3,
+        "title": "Performance Benchmarking"
+      },
+      {
+        "id": "bba-el-hr-performance-management-u4",
+        "unit_number": 4,
+        "title": "Competency Mapping and Pay Plans"
+      },
+      {
+        "id": "bba-el-hr-performance-management-u5",
+        "unit_number": 5,
+        "title": "Performance Metrics and Models"
+      }
+    ]
+  },
+  {
+    "id": "bba-el-hr-talent-management",
+    "name": "Talent Management",
+    "program": "bba",
+    "semester": null,
+    "electiveGroup": "HR",
+    "units": [
+      {
+        "id": "bba-el-hr-talent-management-u1",
+        "unit_number": 1,
+        "title": "Introduction to Talent Management"
+      },
+      {
+        "id": "bba-el-hr-talent-management-u2",
+        "unit_number": 2,
+        "title": "Talent Acquisition and Development"
+      },
+      {
+        "id": "bba-el-hr-talent-management-u3",
+        "unit_number": 3,
+        "title": "Talent Retention and Engagement"
+      },
+      {
+        "id": "bba-el-hr-talent-management-u4",
+        "unit_number": 4,
+        "title": "Succession Planning and Career Management"
+      },
+      {
+        "id": "bba-el-hr-talent-management-u5",
+        "unit_number": 5,
+        "title": "Talent Analytics and Workforce Planning"
+      }
+    ]
+  },
+  {
+    "id": "bba-el-hr-compensation-management",
+    "name": "Compensation Management",
+    "program": "bba",
+    "semester": null,
+    "electiveGroup": "HR",
+    "units": [
+      {
+        "id": "bba-el-hr-compensation-management-u1",
+        "unit_number": 1,
+        "title": "Introduction to Compensation Management"
+      },
+      {
+        "id": "bba-el-hr-compensation-management-u2",
+        "unit_number": 2,
+        "title": "Job Evaluation and Pay Structures"
+      },
+      {
+        "id": "bba-el-hr-compensation-management-u3",
+        "unit_number": 3,
+        "title": "Incentives and Variable Pay"
+      },
+      {
+        "id": "bba-el-hr-compensation-management-u4",
+        "unit_number": 4,
+        "title": "Benefits and Employee Well-being"
+      },
+      {
+        "id": "bba-el-hr-compensation-management-u5",
+        "unit_number": 5,
+        "title": "Strategic Compensation and Legal Compliance"
+      }
+    ]
+  },
+  {
+    "id": "bba-el-hr-industrial-relations-and-labour-laws",
+    "name": "Industrial Relations & Labour Laws",
+    "program": "bba",
+    "semester": null,
+    "electiveGroup": "HR",
+    "units": [
+      {
+        "id": "bba-el-hr-industrial-relations-and-labour-laws-u1",
+        "unit_number": 1,
+        "title": "Introduction to Industrial Relations"
+      },
+      {
+        "id": "bba-el-hr-industrial-relations-and-labour-laws-u2",
+        "unit_number": 2,
+        "title": "Trade Unions and Collective Bargaining"
+      },
+      {
+        "id": "bba-el-hr-industrial-relations-and-labour-laws-u3",
+        "unit_number": 3,
+        "title": "Industrial Disputes and Resolution"
+      },
+      {
+        "id": "bba-el-hr-industrial-relations-and-labour-laws-u4",
+        "unit_number": 4,
+        "title": "Labour Laws in India"
+      },
+      {
+        "id": "bba-el-hr-industrial-relations-and-labour-laws-u5",
+        "unit_number": 5,
+        "title": "Social Security and Labour Law Reforms"
+      }
+    ]
+  },
+  {
+    "id": "bba-el-hr-training-and-development",
+    "name": "Training & Development",
+    "program": "bba",
+    "semester": null,
+    "electiveGroup": "HR",
+    "units": [
+      {
+        "id": "bba-el-hr-training-and-development-u1",
+        "unit_number": 1,
+        "title": "Introduction to Training and Development"
+      },
+      {
+        "id": "bba-el-hr-training-and-development-u2",
+        "unit_number": 2,
+        "title": "Training Needs Analysis and Design"
+      },
+      {
+        "id": "bba-el-hr-training-and-development-u3",
+        "unit_number": 3,
+        "title": "Training Methods"
+      },
+      {
+        "id": "bba-el-hr-training-and-development-u4",
+        "unit_number": 4,
+        "title": "Training Evaluation"
+      },
+      {
+        "id": "bba-el-hr-training-and-development-u5",
+        "unit_number": 5,
+        "title": "Career Development and HRD"
+      }
+    ]
+  },
+  {
+    "id": "bba-el-hr-organizational-development",
+    "name": "Organizational Development",
+    "program": "bba",
+    "semester": null,
+    "electiveGroup": "HR",
+    "units": [
+      {
+        "id": "bba-el-hr-organizational-development-u1",
+        "unit_number": 1,
+        "title": "Introduction to Organizational Development"
+      },
+      {
+        "id": "bba-el-hr-organizational-development-u2",
+        "unit_number": 2,
+        "title": "Management of Change"
+      },
+      {
+        "id": "bba-el-hr-organizational-development-u3",
+        "unit_number": 3,
+        "title": "Change Agents"
+      },
+      {
+        "id": "bba-el-hr-organizational-development-u4",
+        "unit_number": 4,
+        "title": "OD Process"
+      },
+      {
+        "id": "bba-el-hr-organizational-development-u5",
+        "unit_number": 5,
+        "title": "OD Interventions"
+      }
+    ]
+  },
+  {
+    "id": "bba-el-e-commerce-e-commerce",
+    "name": "E-Commerce",
+    "program": "bba",
+    "semester": null,
+    "electiveGroup": "E-Commerce",
+    "units": [
+      {
+        "id": "bba-el-e-commerce-e-commerce-u1",
+        "unit_number": 1,
+        "title": "Introduction to E-Commerce"
+      },
+      {
+        "id": "bba-el-e-commerce-e-commerce-u2",
+        "unit_number": 2,
+        "title": "E-Commerce Technology and Security"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s1-financial-accounting-i",
+    "name": "Financial Accounting - I",
+    "program": "bcom",
+    "semester": 1,
+    "units": [
+      {
+        "id": "bcom-s1-financial-accounting-i-u1",
+        "unit_number": 1,
+        "title": "Introduction to Accounting"
+      },
+      {
+        "id": "bcom-s1-financial-accounting-i-u2",
+        "unit_number": 2,
+        "title": "Final Accounts"
+      },
+      {
+        "id": "bcom-s1-financial-accounting-i-u3",
+        "unit_number": 3,
+        "title": "Bills of Exchange"
+      },
+      {
+        "id": "bcom-s1-financial-accounting-i-u4",
+        "unit_number": 4,
+        "title": "Bank Reconciliation Statement"
+      },
+      {
+        "id": "bcom-s1-financial-accounting-i-u5",
+        "unit_number": 5,
+        "title": "Depreciation and Reserves"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s1-business-organization-and-management",
+    "name": "Business Organization & Management",
+    "program": "bcom",
+    "semester": 1,
+    "units": [
+      {
+        "id": "bcom-s1-business-organization-and-management-u1",
+        "unit_number": 1,
+        "title": "Introduction to Business Organization"
+      },
+      {
+        "id": "bcom-s1-business-organization-and-management-u2",
+        "unit_number": 2,
+        "title": "Joint Stock Company"
+      },
+      {
+        "id": "bcom-s1-business-organization-and-management-u3",
+        "unit_number": 3,
+        "title": "Introduction to Management and Functions"
+      },
+      {
+        "id": "bcom-s1-business-organization-and-management-u4",
+        "unit_number": 4,
+        "title": "Planning and Organizing"
+      },
+      {
+        "id": "bcom-s1-business-organization-and-management-u5",
+        "unit_number": 5,
+        "title": "Authority, Coordination and Control"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s1-business-economics",
+    "name": "Business Economics",
+    "program": "bcom",
+    "semester": 1,
+    "units": [
+      {
+        "id": "bcom-s1-business-economics-u1",
+        "unit_number": 1,
+        "title": "Introduction to Business Economics"
+      },
+      {
+        "id": "bcom-s1-business-economics-u2",
+        "unit_number": 2,
+        "title": "Demand and Supply Analysis"
+      },
+      {
+        "id": "bcom-s1-business-economics-u3",
+        "unit_number": 3,
+        "title": "Production and Cost Analysis"
+      },
+      {
+        "id": "bcom-s1-business-economics-u4",
+        "unit_number": 4,
+        "title": "Market Structures and Pricing Strategies"
+      },
+      {
+        "id": "bcom-s1-business-economics-u5",
+        "unit_number": 5,
+        "title": "Macro-Economic Environment"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s2-financial-accounting-ii",
+    "name": "Financial Accounting - II",
+    "program": "bcom",
+    "semester": 2,
+    "units": [
+      {
+        "id": "bcom-s2-financial-accounting-ii-u1",
+        "unit_number": 1,
+        "title": "Bills of Exchange"
+      },
+      {
+        "id": "bcom-s2-financial-accounting-ii-u2",
+        "unit_number": 2,
+        "title": "Consignment Accounts"
+      },
+      {
+        "id": "bcom-s2-financial-accounting-ii-u3",
+        "unit_number": 3,
+        "title": "Joint Venture Accounts"
+      },
+      {
+        "id": "bcom-s2-financial-accounting-ii-u4",
+        "unit_number": 4,
+        "title": "Accounts from Incomplete Records"
+      },
+      {
+        "id": "bcom-s2-financial-accounting-ii-u5",
+        "unit_number": 5,
+        "title": "Accounting for Non-Profit Organizations"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s2-business-laws",
+    "name": "Business Laws",
+    "program": "bcom",
+    "semester": 2,
+    "units": [
+      {
+        "id": "bcom-s2-business-laws-u1",
+        "unit_number": 1,
+        "title": "Indian Contract Act, 1872"
+      },
+      {
+        "id": "bcom-s2-business-laws-u2",
+        "unit_number": 2,
+        "title": "Sale of Goods Act and Consumer Protection Act"
+      },
+      {
+        "id": "bcom-s2-business-laws-u3",
+        "unit_number": 3,
+        "title": "Intellectual Property Rights"
+      },
+      {
+        "id": "bcom-s2-business-laws-u4",
+        "unit_number": 4,
+        "title": "Companies Act, 2013"
+      },
+      {
+        "id": "bcom-s2-business-laws-u5",
+        "unit_number": 5,
+        "title": "Winding Up and Insolvency"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s2-banking-and-financial-services",
+    "name": "Banking and Financial Services",
+    "program": "bcom",
+    "semester": 2,
+    "units": [
+      {
+        "id": "bcom-s2-banking-and-financial-services-u1",
+        "unit_number": 1,
+        "title": "Commercial Banking"
+      },
+      {
+        "id": "bcom-s2-banking-and-financial-services-u2",
+        "unit_number": 2,
+        "title": "Banker-Customer Relationship"
+      },
+      {
+        "id": "bcom-s2-banking-and-financial-services-u3",
+        "unit_number": 3,
+        "title": "Negotiable Instruments"
+      },
+      {
+        "id": "bcom-s2-banking-and-financial-services-u4",
+        "unit_number": 4,
+        "title": "Financial Services"
+      },
+      {
+        "id": "bcom-s2-banking-and-financial-services-u5",
+        "unit_number": 5,
+        "title": "Merchant Banking, Venture Capital and Leasing"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s3-advanced-accounting",
+    "name": "Advanced Accounting",
+    "program": "bcom",
+    "semester": 3,
+    "units": [
+      {
+        "id": "bcom-s3-advanced-accounting-u1",
+        "unit_number": 1,
+        "title": "Partnership Accounts – Final Accounts and Admission"
+      },
+      {
+        "id": "bcom-s3-advanced-accounting-u2",
+        "unit_number": 2,
+        "title": "Partnership Accounts – Retirement, Death and Dissolution"
+      },
+      {
+        "id": "bcom-s3-advanced-accounting-u3",
+        "unit_number": 3,
+        "title": "Branch and Departmental Accounts"
+      },
+      {
+        "id": "bcom-s3-advanced-accounting-u4",
+        "unit_number": 4,
+        "title": "Accounting for Non-Profit Organizations"
+      },
+      {
+        "id": "bcom-s3-advanced-accounting-u5",
+        "unit_number": 5,
+        "title": "Company Accounts – Issue of Shares and Debentures"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s3-business-statistics-i",
+    "name": "Business Statistics – I",
+    "program": "bcom",
+    "semester": 3,
+    "units": [
+      {
+        "id": "bcom-s3-business-statistics-i-u1",
+        "unit_number": 1,
+        "title": "Introduction to Statistics and Data Presentation"
+      },
+      {
+        "id": "bcom-s3-business-statistics-i-u2",
+        "unit_number": 2,
+        "title": "Measures of Central Tendency"
+      },
+      {
+        "id": "bcom-s3-business-statistics-i-u3",
+        "unit_number": 3,
+        "title": "Measures of Dispersion"
+      },
+      {
+        "id": "bcom-s3-business-statistics-i-u4",
+        "unit_number": 4,
+        "title": "Correlation and Regression"
+      },
+      {
+        "id": "bcom-s3-business-statistics-i-u5",
+        "unit_number": 5,
+        "title": "Time Series and Index Numbers"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s3-corporate-accounting",
+    "name": "Corporate Accounting",
+    "program": "bcom",
+    "semester": 3,
+    "units": [
+      {
+        "id": "bcom-s3-corporate-accounting-u1",
+        "unit_number": 1,
+        "title": "Issue and Redemption of Shares"
+      },
+      {
+        "id": "bcom-s3-corporate-accounting-u2",
+        "unit_number": 2,
+        "title": "Issue and Redemption of Debentures"
+      },
+      {
+        "id": "bcom-s3-corporate-accounting-u3",
+        "unit_number": 3,
+        "title": "Final Accounts of Companies"
+      },
+      {
+        "id": "bcom-s3-corporate-accounting-u4",
+        "unit_number": 4,
+        "title": "Valuation of Goodwill and Shares"
+      },
+      {
+        "id": "bcom-s3-corporate-accounting-u5",
+        "unit_number": 5,
+        "title": "Accounts of Banking and Insurance Companies"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s4-business-statistics-ii",
+    "name": "Business Statistics – II",
+    "program": "bcom",
+    "semester": 4,
+    "units": [
+      {
+        "id": "bcom-s4-business-statistics-ii-u1",
+        "unit_number": 1,
+        "title": "Regression Analysis"
+      },
+      {
+        "id": "bcom-s4-business-statistics-ii-u2",
+        "unit_number": 2,
+        "title": "Index Numbers"
+      },
+      {
+        "id": "bcom-s4-business-statistics-ii-u3",
+        "unit_number": 3,
+        "title": "Time Series Analysis"
+      },
+      {
+        "id": "bcom-s4-business-statistics-ii-u4",
+        "unit_number": 4,
+        "title": "Probability"
+      },
+      {
+        "id": "bcom-s4-business-statistics-ii-u5",
+        "unit_number": 5,
+        "title": "Theoretical Distributions"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s4-auditing",
+    "name": "Auditing",
+    "program": "bcom",
+    "semester": 4,
+    "units": [
+      {
+        "id": "bcom-s4-auditing-u1",
+        "unit_number": 1,
+        "title": "Introduction to Auditing"
+      },
+      {
+        "id": "bcom-s4-auditing-u2",
+        "unit_number": 2,
+        "title": "Audit Procedure"
+      },
+      {
+        "id": "bcom-s4-auditing-u3",
+        "unit_number": 3,
+        "title": "Company Audit"
+      },
+      {
+        "id": "bcom-s4-auditing-u4",
+        "unit_number": 4,
+        "title": "Audit of Special Entities"
+      },
+      {
+        "id": "bcom-s4-auditing-u5",
+        "unit_number": 5,
+        "title": "Emerging Trends in Auditing"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s4-marketing-management",
+    "name": "Marketing Management",
+    "program": "bcom",
+    "semester": 4,
+    "units": [
+      {
+        "id": "bcom-s4-marketing-management-u1",
+        "unit_number": 1,
+        "title": "Introduction to Marketing"
+      },
+      {
+        "id": "bcom-s4-marketing-management-u2",
+        "unit_number": 2,
+        "title": "Consumer Behavior"
+      },
+      {
+        "id": "bcom-s4-marketing-management-u3",
+        "unit_number": 3,
+        "title": "Product and Pricing Decisions"
+      },
+      {
+        "id": "bcom-s4-marketing-management-u4",
+        "unit_number": 4,
+        "title": "Promotion Decisions"
+      },
+      {
+        "id": "bcom-s4-marketing-management-u5",
+        "unit_number": 5,
+        "title": "Distribution Decisions"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s5-cost-accounting",
+    "name": "Cost Accounting",
+    "program": "bcom",
+    "semester": 5,
+    "units": [
+      {
+        "id": "bcom-s5-cost-accounting-u1",
+        "unit_number": 1,
+        "title": "Introduction to Cost Accounting"
+      },
+      {
+        "id": "bcom-s5-cost-accounting-u2",
+        "unit_number": 2,
+        "title": "Material Cost"
+      },
+      {
+        "id": "bcom-s5-cost-accounting-u3",
+        "unit_number": 3,
+        "title": "Labour Cost"
+      },
+      {
+        "id": "bcom-s5-cost-accounting-u4",
+        "unit_number": 4,
+        "title": "Overheads and Cost Sheet"
+      },
+      {
+        "id": "bcom-s5-cost-accounting-u5",
+        "unit_number": 5,
+        "title": "Methods of Costing"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s5-business-ethics-and-corporate-governance",
+    "name": "Business Ethics & Corporate Governance",
+    "program": "bcom",
+    "semester": 5,
+    "units": [
+      {
+        "id": "bcom-s5-business-ethics-and-corporate-governance-u1",
+        "unit_number": 1,
+        "title": "Introduction to Business Ethics"
+      },
+      {
+        "id": "bcom-s5-business-ethics-and-corporate-governance-u2",
+        "unit_number": 2,
+        "title": "Corporate Governance"
+      },
+      {
+        "id": "bcom-s5-business-ethics-and-corporate-governance-u3",
+        "unit_number": 3,
+        "title": "Regulatory Framework"
+      },
+      {
+        "id": "bcom-s5-business-ethics-and-corporate-governance-u4",
+        "unit_number": 4,
+        "title": "CSR and Accountability"
+      },
+      {
+        "id": "bcom-s5-business-ethics-and-corporate-governance-u5",
+        "unit_number": 5,
+        "title": "Issues in Corporate Governance"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s5-introduction-to-accounting",
+    "name": "Introduction to Accounting",
+    "program": "bcom",
+    "semester": 5,
+    "units": [
+      {
+        "id": "bcom-s5-introduction-to-accounting-u1",
+        "unit_number": 1,
+        "title": "Introduction to Accounting"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s5-communication-skills",
+    "name": "Communication Skills",
+    "program": "bcom",
+    "semester": 5,
+    "units": [
+      {
+        "id": "bcom-s5-communication-skills-u1",
+        "unit_number": 1,
+        "title": "Communication Skills"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s5-environmental-science",
+    "name": "Environmental Science",
+    "program": "bcom",
+    "semester": 5,
+    "units": [
+      {
+        "id": "bcom-s5-environmental-science-u1",
+        "unit_number": 1,
+        "title": "Introduction to Environmental Science"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s6-management-accounting",
+    "name": "Management Accounting",
+    "program": "bcom",
+    "semester": 6,
+    "units": [
+      {
+        "id": "bcom-s6-management-accounting-u1",
+        "unit_number": 1,
+        "title": "Introduction to Management Accounting"
+      },
+      {
+        "id": "bcom-s6-management-accounting-u2",
+        "unit_number": 2,
+        "title": "Financial Statement Analysis"
+      },
+      {
+        "id": "bcom-s6-management-accounting-u3",
+        "unit_number": 3,
+        "title": "Budgetary Control"
+      },
+      {
+        "id": "bcom-s6-management-accounting-u4",
+        "unit_number": 4,
+        "title": "Standard Costing and Variance Analysis"
+      },
+      {
+        "id": "bcom-s6-management-accounting-u5",
+        "unit_number": 5,
+        "title": "Marginal Costing and Break-Even Analysis"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s6-theory-and-practice-of-gst",
+    "name": "Theory and Practice of GST",
+    "program": "bcom",
+    "semester": 6,
+    "units": [
+      {
+        "id": "bcom-s6-theory-and-practice-of-gst-u1",
+        "unit_number": 1,
+        "title": "Introduction to GST"
+      },
+      {
+        "id": "bcom-s6-theory-and-practice-of-gst-u2",
+        "unit_number": 2,
+        "title": "Supply under GST"
+      },
+      {
+        "id": "bcom-s6-theory-and-practice-of-gst-u3",
+        "unit_number": 3,
+        "title": "Input Tax Credit and Registration"
+      },
+      {
+        "id": "bcom-s6-theory-and-practice-of-gst-u4",
+        "unit_number": 4,
+        "title": "Returns, Payment and Refunds"
+      },
+      {
+        "id": "bcom-s6-theory-and-practice-of-gst-u5",
+        "unit_number": 5,
+        "title": "Special Provisions and Emerging Issues"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s6-research-methodology-and-project-report",
+    "name": "Research Methodology & Project Report",
+    "program": "bcom",
+    "semester": 6,
+    "units": [
+      {
+        "id": "bcom-s6-research-methodology-and-project-report-u1",
+        "unit_number": 1,
+        "title": "Introduction to Research"
+      },
+      {
+        "id": "bcom-s6-research-methodology-and-project-report-u2",
+        "unit_number": 2,
+        "title": "Parametric and Non-Parametric Tests and Research Report"
+      },
+      {
+        "id": "bcom-s6-research-methodology-and-project-report-u3",
+        "unit_number": 3,
+        "title": "Project Work Guidelines"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s6-fundamentals-of-ai-tools-sec",
+    "name": "Fundamentals of AI Tools (SEC)",
+    "program": "bcom",
+    "semester": 6,
+    "units": [
+      {
+        "id": "bcom-s6-fundamentals-of-ai-tools-sec-u1",
+        "unit_number": 1,
+        "title": "Introduction to AI"
+      },
+      {
+        "id": "bcom-s6-fundamentals-of-ai-tools-sec-u2",
+        "unit_number": 2,
+        "title": "AI Applications in Business"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s6-computerized-accounting-sec",
+    "name": "Computerized Accounting (SEC)",
+    "program": "bcom",
+    "semester": 6,
+    "units": [
+      {
+        "id": "bcom-s6-computerized-accounting-sec-u1",
+        "unit_number": 1,
+        "title": "Maintaining Chart of Accounts in ERP"
+      }
+    ]
+  },
+  {
+    "id": "bcom-s6-cyber-security-and-laws-vac",
+    "name": "Cyber Security & Laws (VAC)",
+    "program": "bcom",
+    "semester": 6,
+    "units": [
+      {
+        "id": "bcom-s6-cyber-security-and-laws-vac-u1",
+        "unit_number": 1,
+        "title": "Introduction to Cyber Security"
+      }
+    ]
+  }
+]

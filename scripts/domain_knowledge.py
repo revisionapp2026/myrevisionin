@@ -7,6 +7,7 @@ Guarantees:
 4. Model papers with Part A (5x2M) + Part B (5x10M) with step-by-step solved derivations.
 5. High diversity ensuring < 40% pairwise shingle similarity.
 """
+import re
 
 def get_discipline(subject_name: str, unit_title: str) -> str:
     s = subject_name.lower().strip()
@@ -19,11 +20,12 @@ def get_discipline(subject_name: str, unit_title: str) -> str:
     if any(w in s for w in [
         'botany', 'zoology', 'microbio', 'anatomy', 'physiology', 'biochem',
         'herbal', 'cell', 'molecular bio', 'immunol', 'embryol', 'pathol',
-        'plant', 'animal', 'genetic engineering', 'bio-fertilizer', 'bioinformatics'
+        'plant', 'animal', 'genetic engineering', 'bio-fertilizer', 'bioinformatics',
+        'biotech', 'biology', 'biological'
     ]) or (s == 'biomedical instrumentation' and any(w in u for w in ['electrode', 'sensor', 'safety', 'device'])) \
        or any(w in u for w in ['plant', 'animal', 'tissue', 'cell', 'dna', 'rna', 'bacteria', 'virus', 'fungi', 'embryo', 'endosperm']):
         if 'math' in s and 'botany' in s:
-            if any(w in u for w in ['plant', 'botany', 'systematics']):
+            if any(w in u for w in ['plant', 'botany', 'systematics', 'algae', 'anatomy', 'physiology', 'genetics', 'genetic', 'biotech', 'biotechnology', 'embryo', 'endosperm', 'cell']):
                 return 'LIFE'
             return 'MATH'
         return 'LIFE'
@@ -32,18 +34,18 @@ def get_discipline(subject_name: str, unit_title: str) -> str:
     if any(w in s for w in [
         'english', 'communication', 'ethics', 'constitution', 'management',
         'law', 'governance', 'ipr', 'humanities', 'entrepreneurship', 'sociology',
-        'environmental studies'
+        'environmental studies', 'value', 'values', 'social'
     ]):
         return 'QUALITATIVE'
 
     # Computing & IT
     if any(w in s for w in [
         'data structure', 'algorithm', 'database', 'dbms', 'sql', 'operating system',
-        'compiler', 'automata', 'toc', 'software', 'network', 'cloud', 'ai', 'artificial intelligence',
+        'compiler', 'automata', 'toc', 'software', 'network', 'cloud', 'artificial intelligence',
         'machine learning', 'deep learning', 'data science', 'python', 'java', 'c++', 'oop',
-        'web design', 'cyber', 'security', 'crypto', 'distributed', 'blockchain', 'iot',
+        'web design', 'cyber', 'security', 'crypto', 'distributed', 'blockchain',
         'big data', 'tableau', 'power bi', 'visualization', 'devops', 'nlp', 'vision', 'problem solving'
-    ]):
+    ]) or any(re.search(r'\b' + re.escape(w) + r'\b', s) for w in ['ai', 'iot']):
         return 'COMPUTING'
 
     # Electrical & Electronics
@@ -417,29 +419,107 @@ def generate_model_questions(subject_name: str, is_set1: bool, unit_titles: list
 
         if is_life_or_qual:
             if is_set1:
-                q_text = f"Define {u} and state its primary biological/practical significance in {s}."
+                q_text = f"Define {u} and state its primary significance in {s}."
                 ans = [
-                    f"Definition: {u} represents a fundamental structural and operational concept within {s}, establishing core functional mechanisms.",
-                    f"Significance: It coordinates essential cellular pathways or regulatory standards, ensuring physiological homeostasis and accurate diagnostic characterization in biological systems."
+                    f"**Definition**: {u} forms a fundamental structural and operational concept within {s}, establishing core functional mechanisms.",
+                    f"**Significance**: It coordinates essential biological pathways, organizational structures, or regulatory standards, ensuring system integrity and accurate diagnostic characterization."
                 ]
             else:
                 q_text = f"State two primary diagnostic characteristics or procedural benchmarks associated with {u}."
                 ans = [
-                    f"1. Primary Character: It exhibits distinct morphological ultrastructure, biochemical specificity, or recognized institutional benchmarks under standard laboratory conditions.",
-                    f"2. Practical Function: It acts as a critical regulatory checkpoint, preventing physiological dysfunction or procedural errors during systematic implementation."
+                    f"1. **Primary Character**: It exhibits distinct morphological ultrastructure, biochemical specificity, or recognized institutional benchmarks under standard operating conditions.",
+                    f"2. **Practical Function**: It acts as a critical regulatory checkpoint, preventing physiological dysfunction or procedural errors during systematic implementation."
                 ]
-        else:
+        elif disc == 'COMPUTING':
             if is_set1:
-                q_text = f"Define {u} and state its primary governing formula or principle in {s}."
+                q_text = f"Define {u} and state its primary asymptotic time complexity in {s}."
                 ans = [
-                    f"Definition: {u} establishes the foundational mathematical and physical formulation essential for analyzing dynamic responses in {s}.",
-                    "Governing Formula: Evaluated under standard operating conditions by state balance: $\\mathbf{Z}(s) = \\frac{\\mathbf{V}(s)}{\\mathbf{I}(s)}$ or $\\sum F = m a$, satisfying physical equilibrium with SI units."
+                    f"**Definition**: In {s}, {u} establishes core algorithmic logic, data representations, and memory pointer mappings.",
+                    "**Complexity & Invariant**: Operates with worst-case asymptotic bound $T(n) = O(n \\log n)$ or $O(1)$ direct index access, ensuring optimal memory hierarchy utilization."
                 ]
             else:
-                q_text = f"State the primary performance figure of merit and limiting boundary condition for {u}."
+                q_text = f"State the primary data representation and recurrence relation associated with {u}."
                 ans = [
-                    "1. Performance Figure of Merit: Characterized by efficiency $\\eta = \\frac{P_{out}}{P_{in}} \\times 100\\%$ or bandwidth/complexity bound $T(n) = O(n \\log n)$.",
-                    "2. Boundary Constraint: Strictly requires operational parameters to satisfy domain continuity and stability margins: Factor of Safety $SF \\ge 1.5$."
+                    f"1. **Data Representation**: Organized using dynamic contiguous memory buffers or pointer-linked node structures conforming to structural invariants in {u}.",
+                    "2. **Recurrence Relation**: Formulated via recurrence $T(n) = 2T(n/2) + O(n)$, resolving by the Master Theorem to strictly bound execution time."
+                ]
+        elif disc == 'ELECTRICAL':
+            if is_set1:
+                q_text = f"State the governing circuit law or mathematical formulation for {u} in {s}."
+                ans = [
+                    "**Formulation**: Governed by constitutive state relationship $\\mathbf{Z}(s) = R + s L + \\frac{1}{s C}$ or Faraday-Maxwell induction $e = -\\frac{d\\lambda}{dt}$.",
+                    f"**Physical Significance**: Formulates dynamic AC phase relationships, reactive power balance, and frequency-domain stability margins in {u}."
+                ]
+            else:
+                q_text = f"Define the quality factor and resonant threshold condition for {u}."
+                ans = [
+                    "1. **Quality Factor (Q)**: Dimensionless figure of merit $Q = \\frac{\\omega_0 L}{R} = \\frac{1}{\\omega_0 C R}$, measuring energy stored per cycle versus power dissipation.",
+                    "2. **Resonant Threshold**: Occurs when inductive and capacitive reactances cancel ($X_L = X_C$), yielding unity power factor and pure resistive input impedance."
+                ]
+        elif disc == 'MECHANICAL':
+            if is_set1:
+                q_text = f"State the primary governing equation and boundary assumptions for {u} in {s}."
+                ans = [
+                    "**Governing Equation**: Modeled by Euler-Bernoulli bending $\\frac{M}{I} = \\frac{\\sigma}{y} = \\frac{E}{R}$ or fluid momentum $\\sum F = m a$, maintaining physical continuum equilibrium.",
+                    "**Boundary Assumptions**: Assumes linear elasticity (Hooke's law $\\sigma = E \\varepsilon$), steady-state mass conservation, and factor of safety $SF \\ge 1.5$."
+                ]
+            else:
+                q_text = f"Define thermal efficiency and state the Reynolds number criterion for {u}."
+                ans = [
+                    "1. **Thermal Efficiency**: Ratio of useful work output to high-temperature heat input $\\eta_{th} = 1 - \\frac{Q_L}{Q_H} = \\frac{W_{net}}{Q_{in}}$.",
+                    "2. **Flow Regime Criterion**: Reynolds number $Re = \\frac{\\rho v D}{\\mu}$; flow is laminar for $Re < 2300$ and fully turbulent for $Re > 4000$ in circular conduits."
+                ]
+        elif disc == 'CIVIL':
+            if is_set1:
+                q_text = f"State Terzaghi's bearing capacity equation or the limiting moment formulation for {u}."
+                ans = [
+                    "**Formulation**: Ultimate soil bearing capacity $q_u = c N_c + \\gamma D_f N_q + 0.5 \\gamma B N_\\gamma$ or limit state bending moment $M_u = 0.138 f_{ck} b d^2$ for Fe415 steel.",
+                    f"**Significance**: Ensures structural foundation stability without exceeding shear failure thresholds or allowable settlement limits in {s}."
+                ]
+            else:
+                q_text = f"State the permissible deflection limit and concrete characteristic compressive strength for {u}."
+                ans = [
+                    "1. **Characteristic Strength ($f_{ck}$)**: The compressive strength of $150\\text{ mm}$ concrete cubes at 28 days below which not more than $5\\%$ of test results fall.",
+                    "2. **Deflection Limit**: Maximum permissible final deflection for reinforced concrete beams and slabs restricted to $\\text{Span} / 250$ to prevent cracking."
+                ]
+        elif disc == 'CHEMICAL':
+            if is_set1:
+                q_text = f"State the Arrhenius reaction rate equation and define conversion for {u} in {s}."
+                ans = [
+                    "**Arrhenius Equation**: Specific reaction rate constant $k = A e^{-E_a / RT}$, where $A$ is the frequency pre-exponential factor and $E_a$ is the activation energy.",
+                    "**Fractional Conversion ($X_A$)**: $X_A = \\frac{N_{A0} - N_A}{N_{A0}}$, representing the moles of limiting reactant consumed per mole fed."
+                ]
+            else:
+                q_text = f"State Raoult's law and the performance equation for an ideal CSTR in {u}."
+                ans = [
+                    "1. **Raoult's Law**: Partial vapor pressure of species $i$ equals its liquid mole fraction times its saturation vapor pressure: $P_i = x_i P_i^*$.",
+                    "2. **CSTR Performance**: Space time required for fractional conversion $X_A$: $\\tau = \\frac{V}{v_0} = \\frac{C_{A0} X_A}{-r_A}$."
+                ]
+        elif disc == 'MATH':
+            if is_set1:
+                q_text = f"State the Cauchy-Riemann equations and define an analytic function in {s}."
+                ans = [
+                    "**Cauchy-Riemann Conditions**: A function $f(z) = u(x,y) + i v(x,y)$ satisfies $\\frac{\\partial u}{\\partial x} = \\frac{\\partial v}{\\partial y}$ and $\\frac{\\partial u}{\\partial y} = -\\frac{\\partial v}{\\partial x}$.",
+                    "**Analyticity**: $f(z)$ is analytic at $z_0$ if its derivative $f'(z)$ exists not only at $z_0$ but at every point in a neighborhood of $z_0$."
+                ]
+            else:
+                q_text = f"State Cayley-Hamilton theorem and the formula for matrix inverse in {u}."
+                ans = [
+                    "1. **Cayley-Hamilton Theorem**: Every square matrix $A$ satisfies its own characteristic equation: $p(A) = A^n + c_{n-1} A^{n-1} + \\dots + c_0 I = \\mathbf{0}$.",
+                    "2. **Matrix Inverse**: Expressed as polynomial: $A^{-1} = -\\frac{1}{c_0}(A^{n-1} + c_{n-1} A^{n-2} + \\dots + c_1 I)$, provided $\\det(A) = (-1)^n c_0 \\ne 0$."
+                ]
+        else: # LAB or STEM_GENERAL
+            if is_set1:
+                q_text = f"Define {u} and state its primary measurement protocol in {s}."
+                ans = [
+                    f"**Definition**: {u} represents a core empirical or experimental procedure in {s}, establishing standardized laboratory measurements.",
+                    "**Protocol**: Enforces calibrated sensor instrumentation, zero-offset adjustments, duplicate trials, and systematic error tracking with SI units."
+                ]
+            else:
+                q_text = f"State the formula for percentage experimental error and tolerance verification for {u}."
+                ans = [
+                    "1. **Percentage Error**: Calculated as $\\text{Percentage Error} = \\frac{|\\text{Experimental Value} - \\text{Theoretical Value}|}{\\text{Theoretical Value}} \\times 100\\%$.",
+                    "2. **Tolerance Verification**: Ensures calibrated instrumentation operates within specified precision margins ($< 2\\%$ full-scale error)."
                 ]
 
         questions.append({
@@ -463,69 +543,250 @@ def generate_model_questions(subject_name: str, is_set1: bool, unit_titles: list
             if is_set1:
                 q_text = f"Explain the detailed structural organization, biochemical/procedural mechanisms, and functional regulation of {u} with neat schematics."
                 ans = [
-                    "1. Overview & Theoretical Framework:",
-                    f"{u} serves as a cornerstone study module in {s}. It models physiological, anatomical, and regulatory interactions through systematic cellular and molecular pathways.",
+                    "1. Overview & Conceptual Architecture:",
+                    f"{u} serves as a foundational study module in {s}. It coordinates physiological, biochemical, and operational interactions through structured pathways.",
                     "2. Step-by-Step Mechanistic Sequence:",
-                    "Step 1: Initiation and Receptive Binding: Substrates or signaling molecules bind specifically to target receptor complexes, inducing conformational activation.",
-                    "Step 2: Signal Transduction & Intermediary Processing: Intracellular cascades phosphorylate intermediate enzymes, amplifying biological flux across cellular compartments.",
-                    "Step 3: Downstream Functional Execution: Activated effector complexes coordinate gene transcription, membrane transport, or catalytic synthesis of vital biomolecules.",
-                    "Step 4: Regulatory Feedback & Inactivation: Accumulation of terminal end-products triggers negative allosteric feedback loops, restoring baseline cellular homeostasis.",
-                    "3. Practical Applications & Laboratory Significance:",
-                    f"Knowledge of {u} is directly applied in clinical pathology, agricultural bio-fertilizer formulation, bioprocess fermentation, and pharmacological drug targeting.",
+                    "• Step 1 (Initiation & Molecular Binding): Specific substrates, cellular signals, or initial inputs engage target complexes, triggering conformational changes.",
+                    "• Step 2 (Intermediate Cascade & Transduction): Intracellular enzyme cascades or procedural milestones process and amplify biological flux across operational boundaries.",
+                    "• Step 3 (Functional Execution): Effector complexes coordinate downstream transcription, active membrane transport, or structured project deliverable synthesis.",
+                    "• Step 4 (Homeostatic Feedback): Accumulation of terminal end-products engages negative feedback loops, restoring steady-state baseline equilibrium.",
+                    "3. Practical Applications & Diagnostic Relevance:",
+                    f"Knowledge of {u} is directly applied in clinical pathology, agricultural bioprocessing, pharmacological drug formulation, or institutional quality audit.",
                     "4. Examination Checklist & Summary:",
-                    "Draw neat pencil structural diagrams, label key anatomical features on the right margin, and cite relevant scientific binomial nomenclature."
+                    "Draw neat pencil structural schematics, label key anatomical/functional features on the right margin, and cite relevant scientific terminology."
                 ]
             else:
                 q_text = f"Discuss the experimental methodology, comparative classification, and clinical/industrial applications of {u}. Provide a comprehensive analytical breakdown."
                 ans = [
-                    "1. Architectural & Morphological Classification:",
-                    f"Structural entities in {u} are categorized based on organizational hierarchy, staining affinities, enzymatic properties, and physiological adaptation modes.",
-                    "2. Detailed Experimental / Diagnostic Protocol:",
-                    "Step 1: Sample Collection & Fixation: Specimens are collected under sterile conditions and preserved in standard chemical fixatives to prevent enzymatic autolysis.",
-                    "Step 2: Microscopic Preparation & Differential Staining: Thin histological sections or bacterial smears are treated with specialized differential stains (e.g. Gram stain, safranin).",
-                    "Step 3: Quantitative Spectrophotometry & Assay Recording: Optical densities or substrate conversion rates are measured across controlled temperature and pH regimes.",
-                    "Step 4: Statistical Verification & Inference: Observed measurements are verified against standard biological reference curves, establishing diagnostic conclusions.",
+                    "1. Structural & Taxonomic Classification:",
+                    f"Entities within {u} are categorized by morphological hierarchy, biochemical specificity, enzymatic markers, and physiological adaptation strategies.",
+                    "2. Detailed Experimental & Diagnostic Protocol:",
+                    "• Step 1 (Sample Collection & Sterile Preparation): Specimens are collected under sterile conditions and preserved in fixatives to prevent enzymatic autolysis.",
+                    "• Step 2 (Differential Staining & Microscopic Assay): Specialized stains or molecular probes are applied to resolve cellular ultrastructure and diagnostic organelle morphology.",
+                    "• Step 3 (Quantitative Measurement): Optical density, biochemical flux, or performance indicators are recorded across controlled temperature and pH regimes.",
+                    "• Step 4 (Statistical Verification & Inference): Empirical measurements are compared against standardized reference curves to establish validated conclusions.",
                     "3. Comparative Distinction Matrix:",
-                    "Contrast primary structures against alternative physiological forms across diagnostic criteria, highlighting efficiency, stability, and evolutionary specialization.",
+                    "Contrast primary functional forms against alternative types across stability, catalytic efficiency, and evolutionary specialization.",
                     "4. Academic Conclusion:",
                     f"A thorough understanding of {u} provides the scientific foundation for modern biotechnology, diagnostic clinical screening, and microbiological bioprocessing."
                 ]
-        else:
+        elif disc == 'COMPUTING':
+            if is_set1:
+                q_text = f"Explain the fundamental design principles, detailed algorithmic implementation, and asymptotic complexity analysis of {u} with neat trace schematics."
+                ans = [
+                    "1. Problem Definition & Architectural Abstraction:",
+                    f"{u} serves as a core computational building block in {s}, optimizing storage efficiency, access latency, and data integrity.",
+                    "2. Algorithmic Workflow & Pseudo-Code Implementation:",
+                    "• Step 1: Initialize data structures, validate boundary conditions ($head \\ne \\text{NULL}$, $n > 0$), and establish invariants.",
+                    "• Step 2: Traverse data partitions or execute divide-and-conquer splitting around pivot/midpoint indices.",
+                    "• Step 3: Execute in-place pointer updates, dynamic programming table memoization, or balanced rotation adjustments.",
+                    "• Step 4: Verify terminal base cases and return processed references or sorted collection outputs.",
+                    "3. Asymptotic Complexity Derivation:",
+                    "• Time Complexity: Formulated by recurrence $T(n) = a T(n/b) + f(n)$. Applying the Master Theorem yields worst-case time $O(n \\log n)$ and average lookup $O(1)$.",
+                    "• Space Complexity: Requires $O(1)$ auxiliary memory for in-place routines or $O(n)$ for tree/graph representations.",
+                    "4. Industry Applications & Examination Tip:",
+                    "Deployed in high-throughput database index engines, operating system schedulers, and distributed networks. Show step-by-step array state traces."
+                ]
+            else:
+                q_text = f"Discuss the component architecture, data flow diagrams, and edge-case handling for {u}. Trace its execution on sample inputs."
+                ans = [
+                    "1. Structural Hierarchy & Invariants:",
+                    f"Analyzes component interactions, pointer linkages, and state transitions maintaining structural invariants in {u}.",
+                    "2. Step-by-Step Analytical Execution Trace:",
+                    "• Step 1: Define sample input vector $A = [x_1, x_2, \\dots, x_n]$ and track state variables across iterations.",
+                    "• Step 2: Show loop invariant preservation at initialization, maintenance, and termination phases.",
+                    "• Step 3: Handle critical edge conditions: empty collections, duplicate keys, negative indices, and integer overflow.",
+                    "• Step 4: Rebalance structural hierarchies (e.g. tree rotations, hash collision resolution via open addressing).",
+                    "3. Performance Trade-Off Evaluation:",
+                    "Balancing fast $O(1)$ query speed against additional $O(n)$ auxiliary indexing overhead and cache locality.",
+                    "4. Examination Scoring Blueprint:",
+                    "Draw box-and-arrow pointer diagrams, construct trace tables showing variables per loop iteration, and state Big-O bounds explicitly."
+                ]
+        elif disc == 'ELECTRICAL':
+            if is_set1:
+                q_text = f"Explain the fundamental working principle, detailed mathematical derivation, and frequency response of {u} with neat system schematics."
+                ans = [
+                    "1. Physical Principle & Equivalent Circuit:",
+                    f"{u} models electromagnetic and circuit dynamics in {s}. Draw the complete equivalent schematic with active/passive components.",
+                    "2. Step-by-Step Calculus Derivation:",
+                    "• Step 1: Formulate Kirchhoff's voltage or current balance in the time domain: $v(t) = R i(t) + L \\frac{di}{dt} + \\frac{1}{C}\\int i dt$.",
+                    "• Step 2: Apply the Laplace transform assuming zero initial conditions: $V(s) = \\left(R + s L + \\frac{1}{s C}\\right) I(s)$.",
+                    "• Step 3: Solve for the continuous-time transfer function: $H(s) = \\frac{I(s)}{V(s)} = \\frac{s / L}{s^2 + \\frac{R}{L}s + \\frac{1}{LC}}$.",
+                    "• Step 4: Evaluate resonant peak $\\omega_0 = \\frac{1}{\\sqrt{LC}}$ and damping factor $\\zeta = \\frac{R}{2}\\sqrt{\\frac{C}{L}}$ for transient stability.",
+                    "3. Frequency Response & Bode Plot Analysis:",
+                    "Magnitude profile exhibits bandpass resonance with $-3\\text{ dB}$ cutoff frequencies $\\omega_1, \\omega_2$ and bandwidth $BW = \\frac{\\omega_0}{Q}$.",
+                    "4. Engineering Conclusion:",
+                    "Provides exact design equations for impedance matching networks, active filters, and power conversion equipment. Box all numerical solutions."
+                ]
+            else:
+                q_text = f"Discuss the subsystem architecture, power conversion efficiency, and steady-state analysis for {u}. Solve for voltage regulation."
+                ans = [
+                    "1. Subsystem Decomposition & Magnetic Circuit:",
+                    f"Decomposes {u} into power input stages, energy conversion magnetic/semiconductor cores, and output filtering loads.",
+                    "2. Analytical Steady-State Solution:",
+                    "• Step 1: Draw the phasor diagram with reference voltage vector $\\vec{V}_2$ and lagging load current $\\vec{I}_2$.",
+                    "• Step 2: Formulate the approximate voltage regulation expression: $\%VR = \\frac{I_2 R_{eq}\\cos\\phi_2 \\pm I_2 X_{eq}\\sin\\phi_2}{V_2} \\times 100\\%$.",
+                    "• Step 3: Derive condition for zero voltage regulation: occurs at leading power factor $\\tan\\phi_2 = -\\frac{R_{eq}}{X_{eq}}$.",
+                    "• Step 4: Calculate total full-load efficiency: $\\eta = \\frac{V_2 I_2 \\cos\\phi_2}{V_2 I_2 \\cos\\phi_2 + P_{core} + I_2^2 R_{eq}} \\times 100\\%$.",
+                    "3. Industrial Applications & Standards Compliance:",
+                    "Utilized in utility distribution grids, industrial variable frequency drives, and renewable power inverters.",
+                    "4. Examination Checklist:",
+                    "Draw annotated phasor diagrams with directional arrows, state sign conventions (+ for lag, - for lead), and box final percentages."
+                ]
+        elif disc == 'MECHANICAL':
             if is_set1:
                 q_text = f"Explain the fundamental working principle, detailed mathematical derivation, and operational characteristics of {u} with neat system schematics."
                 ans = [
-                    "1. Introduction & Physical Concept:",
-                    f"{u} represents a critical analytical methodology in {s}. It models physical and mathematical interactions using first-principles conservation equations.",
-                    "2. Step-by-Step Mathematical Derivation:",
-                    "Step 1: Consider an idealized system operating under standard boundary conditions. Define independent state variables $x(t)$ and input stimuli $u(t)$.",
-                    "Step 2: Formulate the governing differential state equation linking dynamic forces to observed rates:",
-                    "$$\\frac{d}{dt}[x(t)] = A x(t) + B u(t) \\quad \\text{and} \\quad y(t) = C x(t) + D u(t)$$",
-                    "Step 3: Apply the Laplace transform under zero initial conditions to determine the continuous-time transfer function:",
-                    "$$H(s) = \\frac{Y(s)}{U(s)} = C (s I - A)^{-1} B + D$$",
-                    "Step 4: Solve the characteristic polynomial to determine system eigenvalues, resonant poles, and stability margins:",
-                    "$$\\det(s I - A) = 0 \\implies s^n + a_{n-1} s^{n-1} + \\dots + a_1 s + a_0 = 0$$",
-                    "3. Key Operational Performance Characteristics:",
-                    "• Robust stability and predictable repeatability across nominal operating temperature and load variations.",
-                    "• Minimal harmonic distortion and low parasitic energy dissipation when operated within rated continuous specifications.",
+                    "1. Continuum Mechanics / Thermodynamic Model:",
+                    f"{u} models structural stress transmission or thermal energy conversion in {s}. Sketch the physical schematic and free-body diagram.",
+                    "2. Step-by-Step Analytical Derivation:",
+                    "• Step 1: Consider an infinitesimal differential element $dx \\times dy$ under equilibrium. State balance of forces: $\\sum F_x = 0, \\sum F_y = 0$.",
+                    "• Step 2: Relate kinematic strain to displacement: $\\varepsilon_x = \\frac{\\partial u}{\\partial x}$. Apply Hooke's constitutive relation: $\\sigma_x = E \\varepsilon_x$.",
+                    "• Step 3: Integrate moment of resistance across cross-sectional area: $M = \\int y \\sigma dA = \\frac{E}{R}\\int y^2 dA = \\frac{E I}{R}$.",
+                    "• Step 4: Establish the canonical flexure formula: $\\frac{M}{I} = \\frac{\\sigma}{y} = \\frac{E}{R}$, relating bending stress to section modulus.",
+                    "3. Failure Criteria & Factor of Safety:",
+                    "Compare maximum shear stress $\\tau_{\\max} = \\frac{\\sigma_1 - \\sigma_3}{2}$ against Tresca/Von Mises yield thresholds, maintaining $SF = \\frac{\\sigma_y}{\\sigma_{allow}} \\ge 1.5$.",
                     "4. Engineering Conclusion:",
-                    f"The derived closed-form expressions provide an exact baseline for designing practical industrial prototypes and sizing structural elements in {s}."
+                    "Provides closed-form equations for sizing mechanical drive shafts, pressure vessels, and aerospace structural members. State all SI units."
                 ]
             else:
-                q_text = f"Discuss the structural architecture, component interactions, and analytical problem-solving procedure for {u}. Solve for state variables under boundary loading."
+                q_text = f"Discuss the thermodynamic cycle / fluid dynamics analysis, efficiency equations, and component design for {u}."
                 ans = [
-                    "1. Architectural & Subsystem Decomposition:",
-                    f"{u} comprises three primary functional stages: (a) Input conditioning and transducer interface, (b) Central processing and computational transformation, and (c) Output stage and power actuation.",
-                    "2. Step-by-Step Analytical Problem-Solving Procedure:",
-                    "Step 1: Identify all known boundary inputs, material constants, and operational tolerances from the problem statement.",
-                    "Step 2: Draw the complete equivalent schematic or free-body diagram, labeling all nodes and branch quantities systematically.",
-                    "Step 3: Apply the governing system equilibrium equations to formulate independent differential state equations:",
-                    "$$[M] \\ddot{x}(t) + [C] \\dot{x}(t) + [K] x(t) = F(t)$$",
-                    "Step 4: Execute matrix inversion or numerical integration to solve for unknown steady-state and transient responses:",
-                    "$$X(s) = [M s^2 + C s + K]^{-1} F(s)$$",
-                    "3. Practical Industrial Applications & Design Standards:",
-                    "Utilized in automated industrial production lines, structural integrity blueprints, high-speed telemetry systems, and digital twins.",
-                    "4. Examination Scoring Checklist:",
-                    "Draw clean schematics with standard symbols, state all boundary assumptions, box final derived formulas, and specify SI units explicitly."
+                    "1. System Thermodynamics & State Diagrams:",
+                    f"Analyzes state changes in {u} plotted on pressure-volume ($P-v$) and temperature-entropy ($T-s$) coordinate planes.",
+                    "2. Step-by-Step Cycle Calculation:",
+                    "• Step 1: State the First Law energy balance for each process: $q - w = \\Delta h = c_p \\Delta T$.",
+                    "• Step 2: Formulate isentropic compression and expansion relationships: $\\frac{T_2}{T_1} = \\left(\\frac{P_2}{P_1}\\right)^{\\frac{\\gamma-1}{\\gamma}} = r_p^{\\frac{\\gamma-1}{\\gamma}}$.",
+                    "• Step 3: Derive thermal efficiency expression: $\\eta_{th} = 1 - \\frac{T_4 - T_1}{T_3 - T_2} = 1 - \\frac{1}{r_p^{(\\gamma-1)/\\gamma}}$.",
+                    "• Step 4: Evaluate back work ratio $BWR = \\frac{W_c}{W_t}$ and determine optimum pressure ratio for maximum specific net work output.",
+                    "3. Industrial Applications & Energy Efficiency:",
+                    "Deployed in gas turbine aviation propulsion, combined-cycle power generation plants, and industrial refrigeration compressors.",
+                    "4. Examination Checklist:",
+                    "Sketch neatly labeled $P-v$ and $T-s$ cycle diagrams with numbered state points, show isobaric and isentropic lines clearly, and box final efficiency values."
+                ]
+        elif disc == 'CIVIL':
+            if is_set1:
+                q_text = f"Explain the fundamental structural / geotechnical analysis, detailed design procedure, and governing equations for {u} with neat diagrams."
+                ans = [
+                    "1. Engineering Overview & Design Philosophy:",
+                    f"{u} governs structural stability, foundation bearing capacity, or geometric geodetic control in {s}. Conform to IS 456 / IS 800 standards.",
+                    "2. Step-by-Step Structural Design Procedure:",
+                    "• Step 1: Calculate factored design loads applying partial safety factors: $w_u = 1.5 DL + 1.5 LL$.",
+                    "• Step 2: Determine critical bending moment $M_u = \\frac{w_u L^2}{8}$ and shear force $V_u = \\frac{w_u L}{2}$ at support sections.",
+                    "• Step 3: Verify effective section depth using limiting moment capacity: $d = \\sqrt{\\frac{M_u}{0.138 f_{ck} b}}$.",
+                    "• Step 4: Calculate required area of longitudinal tensile steel: $A_{st} = \\frac{0.5 f_{ck}}{f_y}\\left[1 - \\sqrt{1 - \\frac{4.6 M_u}{f_{ck} b d^2}}\\right] b d$.",
+                    "3. Serviceability & Durability Checks:",
+                    "Verify crack width compliance, minimum reinforcement percentage ($A_{st,\\min} = 0.85 b d / f_y$), and nominal shear stress $\\tau_v < \\tau_{c,\\max}$.",
+                    "4. Engineering Blueprint:",
+                    "Draw longitudinal structural elevation and cross-sections showing tensile reinforcement bars, stirrup spacing, and concrete cover dimensions."
+                ]
+            else:
+                q_text = f"Discuss the geotechnical soil mechanics / surveying traverse computation, field testing protocols, and stability analysis for {u}."
+                ans = [
+                    "1. Geotechnical Equilibrium & Soil Stratum:",
+                    f"Evaluates shear strength parameters ($c, \\phi$), effective stress $\\sigma' = \\sigma - u$, and stability factors governing {u}.",
+                    "2. Analytical Stability Formulation:",
+                    "• Step 1: Formulate Mohr-Coulomb shear strength criterion: $\\tau_f = c' + \\sigma_n' \\tan\\phi'$.",
+                    "• Step 2: Evaluate factor of safety against slope sliding: $FOS = \\frac{\\sum [c' l + (W\\cos\\alpha - u l)\\tan\\phi']}{\\sum W\\sin\\alpha}$.",
+                    "• Step 3: For deep foundations, compute ultimate pile capacity: $Q_{up} = q_b A_b + \\sum f_s A_s = (c N_c + \\bar{\\sigma}_v' N_q) A_b + \\alpha \\bar{c} A_s$.",
+                    "• Step 4: Check immediate elastic settlement and primary consolidation settlement: $S_c = \\frac{C_c H_0}{1 + e_0}\\log_{10}\\left(\\frac{\\sigma_0' + \\Delta\\sigma'}{\\sigma_0'}\\right)$.",
+                    "3. Field Investigation Standards:",
+                    "Conducted via Standard Penetration Test (SPT $N$-value), cone penetrometer (CPT), and piezometer pore pressure telemetry.",
+                    "4. Examination Checklist:",
+                    "Sketch soil profile with groundwater table elevation, draw Mohr stress failure envelope, and box final factor of safety with recommendations."
+                ]
+        elif disc == 'CHEMICAL':
+            if is_set1:
+                q_text = f"Explain the fundamental reaction kinetics / transport phenomena, reactor design derivation, and operational curves for {u} with neat schematics."
+                ans = [
+                    "1. Kinetic Formulation & Stoichiometry:",
+                    f"{u} models chemical reaction rates and transport mechanisms in {s}. Formulate species conservation: $\\text{{In}} - \\text{{Out}} + \\text{{Generation}} = \\text{{Accumulation}}$.",
+                    "2. Step-by-Step Reactor Design Derivation:",
+                    "• Step 1: Consider an ideal Plug Flow Reactor (PFR) with differential volume element $dV$. Mass balance: $F_A - (F_A + dF_A) + (-r_A) dV = 0$.",
+                    "• Step 2: Simplify differential balance: $dF_A = (-r_A) dV$. Substitute molar flow rate $F_A = F_{A0}(1 - X_A) \\implies dF_A = -F_{A0} dX_A$.",
+                    "• Step 3: Separate variables: $dV = F_{A0} \\frac{dX_A}{-r_A}$. Integrate over total reactor volume: $V = F_{A0}\\int_0^{X_A} \\frac{dX_A}{-r_A}$.",
+                    "• Step 4: For first-order reaction $-r_A = k C_A = k C_{A0}(1 - X_A)$: space time evaluates to $\\tau = \\frac{C_{A0} V}{F_{A0}} = \\frac{1}{k}\\ln\\left(\\frac{1}{1 - X_A}\\right)$.",
+                    "3. Industrial Optimization & Thermal Stability:",
+                    "Examines Levenspiel comparison plots (PFR vs CSTR volume requirements) and runaway exothermic temperature trajectories.",
+                    "4. Engineering Conclusion:",
+                    "Provides exact sizing formulas for industrial chemical synthesis, catalytic reactors, and fractional distillation units. Box final volume."
+                ]
+            else:
+                q_text = f"Discuss the mass transfer / distillation column separation analysis, equilibrium stage computation, and phase equilibrium for {u}."
+                ans = [
+                    "1. Phase Equilibrium & McCabe-Thiele Method:",
+                    f"Analyzes binary vapor-liquid equilibrium (VLE) curves and continuous fractional distillation stage requirements in {u}.",
+                    "2. Analytical Column Stage Formulation:",
+                    "• Step 1: Formulate overall and component material balances: $F = D + B$ and $F z_F = D x_D + B x_B$.",
+                    "• Step 2: Write rectifying section operating line (ROL): $y_{n+1} = \\frac{R}{R + 1} x_n + \\frac{x_D}{R + 1}$, where $R = L/D$ is reflux ratio.",
+                    "• Step 3: Write feed line ($q$-line) equation: $y = \\frac{q}{q - 1} x - \\frac{z_F}{q - 1}$, accounting for thermal condition of the feed.",
+                    "• Step 4: Step off theoretical stages between equilibrium curve and operating lines from distillate composition $x_D$ to bottoms $x_B$.",
+                    "3. Minimum Reflux & Column Efficiency:",
+                    "Evaluate minimum reflux ratio $R_{\\min}$ from pinch point intersection and calculate actual stages using overall column efficiency $\\eta_0$.",
+                    "4. Examination Checklist:",
+                    "Draw accurate McCabe-Thiele equilibrium diagram with $45^\\circ$ diagonal, sketch $q$-line and operating lines, and clearly show theoretical stage steps."
+                ]
+        elif disc == 'MATH':
+            if is_set1:
+                q_text = f"Explain the fundamental mathematical theorem, detailed calculus derivation, and analytical solution procedure for {u} with step-by-step proofs."
+                ans = [
+                    "1. Theorem Statement & Prerequisites:",
+                    f"Establishes formal mathematical conditions and functional domain boundaries for {u} within {s}.",
+                    "2. Step-by-Step Analytical Derivation:",
+                    "• Step 1: Formulate the auxiliary / characteristic equation from the governing differential operator: $f(D) y = R(x)$.",
+                    "• Step 2: Solve the auxiliary polynomial $f(m) = 0$ to construct the complementary function $y_c(x) = \\sum c_i y_i(x)$.",
+                    "• Step 3: Evaluate the Wronskian determinant: $W(y_1, y_2) = y_1 y_2' - y_1' y_2 \\ne 0$, confirming linear independence of basis solutions.",
+                    "• Step 4: Compute the particular integral via variation of parameters: $y_p(x) = -y_1 \\int \\frac{y_2 R}{W} dx + y_2 \\int \\frac{y_1 R}{W} dx$.",
+                    "3. Convergence Bounds & Domain Validity:",
+                    "Verify radius of convergence using ratio test $\\lim_{n \\to \\infty} |\\frac{a_{n+1}}{a_n}| = L < 1$ and establish singular boundary behaviors.",
+                    "4. Examination Gold Tip:",
+                    "Write out the full general solution $y(x) = y_c(x) + y_p(x)$, substitute initial boundary values to evaluate constants, and box the final closed-form answer."
+                ]
+            else:
+                q_text = f"Discuss the complex variable / transform analysis, residue contour integration, and series expansion for {u}."
+                ans = [
+                    "1. Complex Domain / Transform Architecture:",
+                    f"Analyzes singularity classifications, branch cuts, and harmonic conjugates governing {u} in {s}.",
+                    "2. Step-by-Step Residue Integration Solution:",
+                    "• Step 1: Identify all poles of the rational integrand $f(z) = \\frac{P(z)}{Q(z)}$ and determine their orders by setting denominator $Q(z) = 0$.",
+                    "• Step 2: Select a closed contour $C$ (e.g. circle $|z| = R$ or upper-half Bromwich semicircular contour) enclosing the target singularities.",
+                    "• Step 3: Calculate residues at enclosed poles: for simple pole $z_0$, $\\text{Res}(f, z_0) = \\lim_{z \\to z_0} (z - z_0) f(z)$.",
+                    "• Step 4: Apply Cauchy's Residue Theorem: $\\oint_C f(z) dz = 2 \\pi i \\sum \\text{Res}(f, z_k)$ and establish Jordan's lemma vanishing arc integral.",
+                    "3. Practical Applications in Engineering:",
+                    "Directly applied in evaluating inverse Laplace transforms, frequency spectra of modulated signals, and stability criteria.",
+                    "4. Examination Checklist:",
+                    "Sketch the complex plane showing contour $C$, mark poles with $\\times$, indicate direction of contour traversal, and box the final integral value."
+                ]
+        else: # LAB or STEM_GENERAL
+            if is_set1:
+                q_text = f"Explain the fundamental experimental principles, instrumentation setup, procedural sequence, and error minimization for {u} with neat schematics."
+                ans = [
+                    "1. Experimental Objective & Apparatus Setup:",
+                    f"Establishes physical measurement objectives and calibration procedures for {u} within {s}. Draw the complete apparatus wiring / setup schematic.",
+                    "2. Step-by-Step Experimental Procedure:",
+                    "• Step 1: Perform zero-error calibration and sensitivity adjustments on all measurement meters and transducers.",
+                    "• Step 2: Vary the independent input excitation in uniform increments across the rated operational span.",
+                    "• Step 3: Record multiple sets of stabilized output readings in a standardized observation table.",
+                    "• Step 4: Compute calculated derived quantities using governing constitutive formulas, applying temperature and environmental corrections.",
+                    "3. Error Analysis & Uncertainty Propagation:",
+                    "Compute standard deviation $s = \\sqrt{\\frac{\\sum (x_i - \\bar{x})^2}{n - 1}}$ and fractional uncertainty propagation $\\frac{\\Delta y}{y} = \\sqrt{\\sum \\left(\\frac{\\Delta x_i}{x_i}\\right)^2}$.",
+                    "4. Examination Strategy:",
+                    "Draw neat apparatus schematics, plot experimental curves with SI units on both axes, identify linear working regions, and box final calculated values."
+                ]
+            else:
+                q_text = f"Discuss the characteristic curves, calibration standards, failure troubleshooting, and quantitative evaluation for {u}."
+                ans = [
+                    "1. Equipment Specifications & Operational Limits:",
+                    f"Details rated tolerances, thermal thresholds, and precision standards governing apparatus and instrumentation used in {u}.",
+                    "2. Step-by-Step Data Analysis & Curve Plotting:",
+                    "• Step 1: Plot dependent response versus independent stimulus on standardized linear or semi-logarithmic grid axes.",
+                    "• Step 2: Determine slope $m = \\frac{\\Delta y}{\\Delta x}$ using points from the linear region to calculate fundamental physical constants.",
+                    "• Step 3: Identify systematic deviations, saturation plateaus, or hysteresis loops occurring at operational extremes.",
+                    "• Step 4: Compute absolute error $E_a = |x_{\\text{exp}} - x_{\\text{true}}|$ and percentage error $E_p = \\frac{E_a}{x_{\\text{true}}} \\times 100\\%$.",
+                    "3. Common Experimental Failure Modes & Mitigation:",
+                    "Address parallax errors, thermal resistance drift, loose terminal contacts, and electrical ground loops with systematic mitigation steps.",
+                    "4. Examination Checklist:",
+                    "Draw characteristic response curves with clearly labeled coordinate axes and units, tabulate representative numerical trials, and write clear experimental inferences."
                 ]
 
         questions.append({
@@ -539,4 +800,5 @@ def generate_model_questions(subject_name: str, is_set1: bool, unit_titles: list
 
     return questions
 
-print("domain_knowledge.py fully ready.")
+print("domain_knowledge.py fully ready with multi-discipline engine.")
+

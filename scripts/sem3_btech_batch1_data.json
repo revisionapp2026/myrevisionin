@@ -1,0 +1,677 @@
+{
+  "Data Structures & Algorithms:::1": {
+    "title": "Arrays, Linked Lists",
+    "highlights": [
+      "Array Data Structures & Memory Addressing: Contiguous memory allocation, Row-major vs Column-major 2D array address translation: $\\text{Loc}(A[i][j]) = \\text{Base} + [(i - \\text{LB}_1) \\times C + (j - \\text{LB}_2)] \\times w$; Static vs dynamic arrays; Amortized analysis of dynamic resizing ($O(1)$ amortized insertion).",
+      "Linear vs Non-Linear Structures: Abstract Data Types (ADT); Trade-offs between spatial locality in cache lines and insertion/deletion flexibility in dynamic memory.",
+      "Singly Linked List Implementation & Algorithms: Node pointer structure; Traversal, head/tail insertion, deletion; Time complexities: insertion at head $O(1)$, insertion at tail $O(n)$ without tail pointer, arbitrary search $O(n)$.",
+      "Doubly Linked Lists & Sentinel Nodes: Bidirectional pointer traversal (`prev` and `next`); Symmetric deletion in $O(1)$ given node pointer; Doubly linked dummy header and trailer sentinels simplifying edge cases.",
+      "Circular Linked Lists: Tail node pointing back to head; Applications in round-robin process scheduling in operating systems; Josephus problem simulation.",
+      "Skip Lists & Probabilistic Indexing: Multi-level linked list hierarchy with randomized geometric distribution forward pointers; Search, insert, delete in expected $O(\\log n)$ time; Space complexity $O(n)$.",
+      "Pointer Manipulation & Memory Hazards: Dangling pointers, memory leaks in unmanaged languages (C/C++), double-free bugs; Pointer reversal algorithm for in-place linked list reversal.",
+      "Linked List Cycle Detection Algorithms: Floyd's cycle-finding tortoise and hare algorithm ($O(n)$ time, $O(1)$ space); Brent's cycle detection algorithm; Finding the cycle start node via synchronized pointer advancement from head and collision point.",
+      "Sparse Matrix Representation via Orthogonal Linked Lists: Triplet format $(row, col, value)$ vs multi-linked orthogonal lists with cross-pointers for rows and columns; Compressed Sparse Row (CSR) array format.",
+      "University Examination Strategy: Solve complete address calculation numericals for 2D/3D arrays, write bug-free C code for reversing singly and doubly linked lists, and trace Floyd's cycle detection algorithm mathematically."
+    ],
+    "keyPoints": [
+      "Row-Major 2D Address: $\\text{Loc}(A[i][j]) = \\text{Base} + w [i \\cdot N + j]$.",
+      "Column-Major 2D Address: $\\text{Loc}(A[i][j]) = \\text{Base} + w [j \\cdot M + i]$.",
+      "Dynamic Array Amortization: Doubling capacity upon saturation yields $O(1)$ amortized insert cost.",
+      "Singly Linked List Inversion: Uses three sliding pointers: `prev = NULL`, `curr = head`, `next = NULL`.",
+      "Doubly Linked Node Deletion: `node->prev->next = node->next; node->next->prev = node->prev;` in $O(1)$ time.",
+      "Floyd Cycle Detection Phase 1: Slow pointer advances 1 step, fast advances 2 steps; collision inside loop confirms cycle.",
+      "Floyd Cycle Detection Phase 2: Reset slow pointer to head, advance slow and fast by 1 step each; intersection is loop start.",
+      "Circular List Sentry: Insertion at head requires updating the final tail node's `next` pointer or using tail-only reference.",
+      "Skip List Height Probabilities: Probability of node reaching level $k$ is $p^k = (1/2)^k$, yielding $O(\\log n)$ average levels.",
+      "Exam Scoring Tip: In array address calculations, always explicitly identify whether 0-based or 1-based indexing applies."
+    ]
+  },
+  "Data Structures & Algorithms:::2": {
+    "title": "Stacks & Queues",
+    "highlights": [
+      "Stack Abstract Data Type & LIFO Discipline: Fundamental operations `push`, `pop`, `peek`/`top`, `isEmpty`, `isFull`; Array-based static implementation vs linked-list dynamic implementation; Stack overflow and underflow conditions.",
+      "Expression Parsing & Notations: Infix ($A + B$), Prefix ($+ A B$), and Postfix ($A B +$); Operator precedence and associativity tables; Infix to postfix conversion algorithm using operator stack and shunting-yard logic.",
+      "Postfix Expression Evaluation Algorithm: Single-pass scan from left to right; Operands pushed onto evaluation stack; Operators pop two operands, compute $op_1 \\text{ op } op_2$, and push intermediate result back; Time complexity $O(n)$, space $O(n)$.",
+      "Recursion Architecture & System Call Stack: Activation records / stack frames (local variables, parameters, return address, saved registers); Recursive depth limits; Eliminating tail recursion into iterative loops.",
+      "Queue Abstract Data Type & FIFO Discipline: Fundamental operations `enqueue` and `dequeue`; Linear queue array limitation (false overflow due to front drift); Circular queue utilizing modulo arithmetic (`rear = (rear + 1) % MAX`).",
+      "Double-Ended Queue (Deque): Insertions and deletions supported at both front and rear ends; Input-restricted deque vs output-restricted deque; Implementation of Sliding Window Maximum algorithm using monotonic decreasing deque in $O(n)$ time.",
+      "Priority Queues & Binary Heap Implementation: Min-heap and Max-heap structures; Complete binary tree array mapping; Array indices: parent $\\lfloor(i-1)/2\\rfloor$, left child $2i+1$, right child $2i+2$; `heapify-up` ($O(\\log n)$) and `heapify-down` ($O(\\log n)$); Linear-time heap construction (`build-heap` in $O(n)$).",
+      "Queue Simulation with Two Stacks: Enqueue in $O(1)$ on Stack 1; Dequeue pops from Stack 2, transferring all elements from Stack 1 when Stack 2 is empty ($O(1)$ amortized dequeue time).",
+      "Industrial Applications of Stacks & Queues: Browser back-forward navigation cache, undo-redo edit buffers in IDEs; CPU scheduling run-queues, network router packet buffer management.",
+      "University Examination Strategy: Convert complex infix expressions containing parentheses and exponents to postfix, evaluate postfix traces in tabular format, and implement circular queue array logic with exact boundary conditions."
+    ],
+    "keyPoints": [
+      "Circular Queue Empty Condition: `front == rear` (or `count == 0`).",
+      "Circular Queue Full Condition: `(rear + 1) % MAX == front`.",
+      "Infix to Postfix Operator Rule: Higher or equal precedence operator on top of stack is popped before pushing incoming operator.",
+      "Right-Associative Operators: Exponentiation ($^$) is evaluated right-to-left; not popped on equal precedence.",
+      "Monotonic Deque Window Maximum: Pops elements from rear smaller than incoming element to maintain descending order.",
+      "Binary Heap Parent-Child Indices: Parent $\\lfloor(i-1)/2\\rfloor$, Left $2i+1$, Right $2i+2$ in 0-indexed arrays.",
+      "Heap Property Formulation: Max-Heap: $A[parent(i)] \\ge A[i]$; Min-Heap: $A[parent(i)] \\le A[i]$.",
+      "Build-Heap Linear Complexity: $\\sum_{h=0}^{\\lfloor\\log n\\rfloor} \\frac{n}{2^{h+1}} O(h) = O(n)$.",
+      "Queue Using Stacks Invariant: Elements must only be transferred from Stack 1 to Stack 2 when Stack 2 is completely empty.",
+      "Exam Gold Rule: In parenthesized expression validation, check that stack is completely empty after consuming the final token."
+    ]
+  },
+  "Data Structures & Algorithms:::3": {
+    "title": "Trees & Graphs",
+    "highlights": [
+      "Binary Trees & Structural Taxonomy: Definition, properties: maximum nodes at level $i$ is $2^i$; Maximum nodes in tree of height $h$ is $2^{h+1}-1$; Full, complete, perfect, degenerate, and balanced binary trees.",
+      "Tree Traversal Algorithms: Depth-First Search (DFS): Preorder (Root-Left-Right), Inorder (Left-Root-Right), Postorder (Left-Right-Root); Iterative traversal using explicit stack; Breadth-First Search (BFS) / Level-order traversal using FIFO queue.",
+      "Binary Search Tree (BST) Properties: For every node $X$, all keys in left subtree $< X.key$ and all keys in right subtree $> X.key$; Inorder traversal produces strictly ascending sorted order; Search, insertion, and deletion algorithms ($O(h)$ time where $h = O(\\log n)$ best, $h = O(n)$ worst).",
+      "BST Deletion Mechanics: Case 1: Node is leaf (remove directly); Case 2: Node has one child (bypass node); Case 3: Node has two children (replace key with in-order successor or predecessor, recursively delete successor).",
+      "Self-Balancing AVL Trees: Balance factor $BF(node) = \\text{height}(left) - \\text{height}(right) \\in \\{-1, 0, +1\\}$; Rotations for rebalancing: Left-Left (Single Right), Right-Right (Single Left), Left-Right (Double Left-Right), Right-Left (Double Right-Left); Height strictly bounded by $1.44\\log_2(n+2)$.",
+      "Red-Black Trees & Multi-Way B-Trees: Red-Black invariants (root is black, no consecutive red nodes, equal black-height on all paths); B-Tree of order $m$ for external storage indexing: node keys bounded between $\\lceil m/2 \\rceil - 1$ and $m-1$.",
+      "Graph Representations & Graph Traversal: Adjacency Matrix ($O(V^2)$ space, $O(1)$ edge query) vs Adjacency List ($O(V+E)$ space); Graph BFS (queue, shortest path in unweighted graph) and Graph DFS (recursion/stack, cycle detection, connected components).",
+      "Topological Sorting & Directed Acyclic Graphs (DAG): Linear ordering of vertices such that for every directed edge $(u, v)$, $u$ precedes $v$; Kahn's algorithm using in-degree array and queue; DFS-based topological sort using finish times.",
+      "Minimum Spanning Tree (MST) Algorithms: Prim's algorithm (greedy vertex-growing using min-priority queue, $O(E \\log V)$); Kruskal's algorithm (greedy edge-adding using Disjoint Set Union DSU with union-by-rank and path compression, $O(E \\log E)$).",
+      "Shortest Path Algorithms: Dijkstra's algorithm for single-source shortest path with non-negative weights ($O((V+E)\\log V)$ using Fibonacci/binary heap); Bellman-Ford algorithm handling negative edge weights and detecting negative cycles ($O(V \\cdot E)$); Floyd-Warshall all-pairs shortest paths ($O(V^3)$ DP)."
+    ],
+    "keyPoints": [
+      "AVL Balance Factor Constraint: $|BF| = |h_L - h_R| \\le 1$ for every node.",
+      "AVL Height Bound: Maximum height $h < 1.4404 \\log_2(N+2) - 0.328$.",
+      "Red-Black Black-Height Rule: Every simple path from node to descendant leaf contains same number of black nodes.",
+      "Kruskal DSU Complexity: Ackermann inverse $\\alpha(V)$ yields nearly linear $O(E \\alpha(V))$ amortized disjoint-set operations.",
+      "Dijkstra Non-Negative Constraint: Fails on graphs with negative edge weights due to greedy relaxation finality.",
+      "Bellman-Ford Cycle Criterion: If distance reduces on the $V$-th iteration, a negative-weight cycle exists.",
+      "Floyd-Warshall Recurrence: $D^{(k)}[i][j] = \\min(D^{(k-1)}[i][j], D^{(k-1)}[i][k] + D^{(k-1)}[k][j])$.",
+      "Kahn Algorithm In-Degree Tracking: Vertices with in-degree 0 are queued; processed vertices decrement neighbor in-degrees.",
+      "B-Tree Key Capacity: Internal nodes contain at most $m-1$ keys and at least $\\lceil m/2 \\rceil - 1$ keys.",
+      "Exam Scoring Tip: When constructing binary trees from traversals, unique reconstruction requires Inorder combined with either Preorder or Postorder."
+    ]
+  },
+  "Data Structures & Algorithms:::4": {
+    "title": "Sorting & Searching",
+    "highlights": [
+      "Comparison-Based Sorting Lower Bound: Information-theoretic decision tree model; $n!$ possible permutations require minimum decision tree height $h \\ge \\log_2(n!) = \\Omega(n \\log n)$; No comparison-based sort can beat $O(n \\log n)$ in the worst case.",
+      "Elementary Sorting Algorithms: Bubble Sort (pairwise adjacent swaps, $O(n^2)$ worst, $O(n)$ best with swapped flag); Selection Sort (find minimum, swap to current slot, strictly $O(n^2)$ comparisons, minimum data movement $O(n)$ swaps); Insertion Sort (shift elements to insert, $O(n^2)$ worst, $O(n)$ best on nearly sorted arrays, stable).",
+      "Merge Sort & Divide-and-Conquer: Recurrence relation $T(n) = 2T(n/2) + O(n)$; Master Theorem case 2 yields $T(n) = \\Theta(n \\log n)$ in all cases; Two-way merge subroutine requiring $O(n)$ auxiliary memory; Stability preservation.",
+      "Quick Sort Partitioning Strategies: Lomuto partition scheme (single tracking index, more swaps) vs Hoare partition scheme (two converging pointers, fewer swaps); Recurrence $T(n) = T(k) + T(n-k-1) + O(n)$; Worst case $O(n^2)$ on sorted arrays with naive pivot; Randomized pivot selection achieving expected $O(n \\log n)$; Median-of-three pivot.",
+      "Heap Sort Architecture: Phase 1: Build max-heap in $O(n)$ time; Phase 2: Repeatedly swap root with last unsorted leaf and call `heapify` on root ($n-1$ times, each taking $O(\\log n)$); Overall time $\\Theta(n \\log n)$, in-place $O(1)$ auxiliary space, unstable.",
+      "Non-Comparison Sorting in Linear Time: Counting Sort (integer keys in range $[0, k]$, $O(n+k)$ time, requires auxiliary count array); Radix Sort (LSD vs MSD sorting digit-by-digit using stable counting sort subroutine, $O(d(n+k))$ time); Bucket Sort (distribute into buckets, sort uniformly distributed floating-point numbers in expected $O(n)$ time).",
+      "External Sorting for Big Data: Multi-way external merge sort; Run generation, replacement selection using tournament trees (losers tree), polyphase merge to minimize secondary disk I/O head seeks.",
+      "Searching Algorithms: Linear Search ($O(n)$ time); Binary Search on sorted arrays (iterative vs recursive, recurrence $T(n) = T(n/2) + O(1)$, time $O(\\log n)$, space $O(1)$); Interpolation Search for uniformly distributed keys ($O(\\log\\log n)$ average, $O(n)$ worst).",
+      "Binary Search Variations & Bound Calculations: Finding lower bound (`std::lower_bound`: first element $\\ge target$) and upper bound (`std::upper_bound`: first element $> target$); Peak finding, rotated sorted array search.",
+      "University Examination Strategy: State the Master Theorem derivation for Merge Sort, trace Hoare vs Lomuto Quick Sort partitions on arrays with duplicate keys, and demonstrate Radix Sort passes on multi-digit integer lists."
+    ],
+    "keyPoints": [
+      "Comparison Sort Lower Bound: $\\log_2(n!) \\approx n \\log_2 n - n \\log_2 e = \\Omega(n \\log n)$.",
+      "Merge Sort Recurrence: $T(n) = 2T(n/2) + c n \\implies T(n) = O(n \\log n)$ guaranteed in all cases.",
+      "Quick Sort Worst-Case Trigger: Occurs when pivot is consistently extreme minimum or maximum ($T(n) = T(n-1) + O(n) = O(n^2)$).",
+      "Hoare Partition Swapping: Two indices converge from left and right, swapping inverted pairs; does not guarantee pivot at final index.",
+      "Heap Sort Memory Efficiency: Achieves optimal $O(n \\log n)$ time while requiring strictly $O(1)$ auxiliary memory.",
+      "Counting Sort Stability: Elements must be placed into output array by traversing input array in reverse order.",
+      "Radix Sort LSD Constraint: Subordinate sorting algorithm applied at each digit stage must be strictly stable.",
+      "Binary Search Midpoint Overflow: Calculate `mid = low + (high - low) / 2` instead of `(low + high) / 2` to prevent 32-bit integer overflow.",
+      "Interpolation Search Formula: $pos = low + \\left[ \\frac{target - A[low]}{A[high] - A[low]} \\right] (high - low)$.",
+      "Exam Gold Tip: Always state whether each sorting algorithm is stable (preserves relative order of equal keys) and in-place."
+    ]
+  },
+  "Data Structures & Algorithms:::5": {
+    "title": "Hashing & Algorithm Analysis",
+    "highlights": [
+      "Hashing Foundations & Direct Addressing: Direct Address Table (DAT) limitations; Hash function mapping universe of keys $U$ into hash table buckets $[0, m-1]$; Criteria for ideal hash functions (uniform distribution, deterministic, fast computation).",
+      "Hash Functions & Compression Maps: Division method ($h(k) = k \\bmod m$, where $m$ is prime not close to power of 2); Multiplication method ($h(k) = \\lfloor m (k A \\bmod 1) \\rfloor$ with Knuth's golden ratio $A = (\\sqrt{5}-1)/2$); Mid-square method and Universal Hashing.",
+      "Collision Resolution by Chaining: Each bucket stores a linked list of collided keys; Load factor $\\alpha = n / m$; Under Simple Uniform Hashing Assumption (SUHA), expected search time is $\\Theta(1 + \\alpha)$; Worst-case search $O(n)$ when all keys hash to single bucket.",
+      "Open Addressing Schemes: Linear Probing ($h(k, i) = (h'(k) + i) \\bmod m$, suffers from primary clustering); Quadratic Probing ($h(k, i) = (h'(k) + c_1 i + c_2 i^2) \\bmod m$, suffers from secondary clustering); Double Hashing ($h(k, i) = (h_1(k) + i \\cdot h_2(k)) \\bmod m$, where $h_2(k)$ must be coprime to $m$).",
+      "Open Addressing Performance Bounds: Under uniform hashing, expected probes in unsuccessful search $\\frac{1}{1 - \\alpha}$; Expected probes in successful search $\\frac{1}{\\alpha} \\ln\\frac{1}{1 - \\alpha}$; Requires $\\alpha < 1$; Table resizing and rehashing when $\\alpha > 0.75$.",
+      "Asymptotic Notations & Complexity Classes: Big-O ($O$, asymptotic upper bound), Big-Omega ($\\Omega$, asymptotic lower bound), Big-Theta ($\\Theta$, asymptotically tight bound); Little-o and little-omega; Formal limit definitions.",
+      "Mathematical Recurrence Resolution: Substitution method (mathematical induction); Recursion Tree method; Master Theorem: $T(n) = a T(n/b) + f(n)$ with three cases comparing $f(n)$ to $n^{\\log_b a}$; Akra-Bazzi method for irregular recurrences.",
+      "Dynamic Programming vs Greedy Paradigms: Optimal substructure and overlapping subproblems (DP, memoization top-down vs tabulation bottom-up); Greedy-choice property (locally optimal choices lead to globally optimal solution; fractional knapsack vs 0/1 knapsack).",
+      "String Matching & Pattern Search: Naive string matching ($O((n-m+1)m)$); Knuth-Morris-Pratt (KMP) algorithm using Longest Prefix which is also Suffix (LPS) array ($O(n+m)$ time); Rabin-Karp algorithm using rolling hash.",
+      "University Examination Strategy: Solve Master Theorem recurrence problems across all three cases, compute exact probing sequences for linear vs double hashing, and write KMP prefix table generation algorithms."
+    ],
+    "keyPoints": [
+      "Load Factor Definition: $\\alpha = n / m$, where $n$ is number of stored keys and $m$ is table capacity.",
+      "Double Hashing Coprime Rule: $h_2(k)$ must produce a value relatively prime to $m$ so all $m$ slots are probed.",
+      "Open Addressing Search Bound: Unsuccessful search probes average $\\frac{1}{1 - \\alpha}$; successful search averages $\\frac{1}{\\alpha} \\ln\\frac{1}{1 - \\alpha}$.",
+      "Master Theorem Case 1: If $f(n) = O(n^{\\log_b a - \\epsilon})$, then $T(n) = \\Theta(n^{\\log_b a})$.",
+      "Master Theorem Case 2: If $f(n) = \\Theta(n^{\\log_b a} \\log^k n)$, then $T(n) = \\Theta(n^{\\log_b a} \\log^{k+1} n)$.",
+      "Master Theorem Case 3: If $f(n) = \\Omega(n^{\\log_b a + \\epsilon})$ and regularity holds, then $T(n) = \\Theta(f(n))$.",
+      "Big-O Formal Definition: $f(n) = O(g(n)) \\iff \\exists c > 0, n_0 \\ge 0 \\text{ s.t. } 0 \\le f(n) \\le c \\cdot g(n), \\forall n \\ge n_0$.",
+      "KMP LPS Array Meaning: `lps[i]` stores length of longest proper prefix of `pattern[0..i]` that is also a suffix of `pattern[0..i]`.",
+      "0/1 Knapsack Complexity: Solved via dynamic programming in pseudo-polynomial time $O(n W)$ and space $O(W)$.",
+      "Exam Scoring Tip: In Master Theorem analysis, always verify the regularity condition $a f(n/b) \\le c f(n)$ for case 3."
+    ]
+  },
+  "Computer Organization & Architecture:::1": {
+    "title": "Basic Computer Organization",
+    "highlights": [
+      "Von Neumann Architecture vs Harvard Architecture: Stored-program concept; Shared memory for instructions and data (Von Neumann bottleneck) vs separate physical memories/buses for instructions and data (Harvard); Functional units: CPU, memory, I/O devices.",
+      "Central Processing Unit (CPU) Internal Bus Structure: Program Counter (PC), Instruction Register (IR), Memory Address Register (MAR), Memory Data Register (MDR), Accumulator (AC), General Purpose Registers (GPRs); System bus architecture (Data bus, Address bus, Control bus).",
+      "Instruction Cycle Phases: Fetch cycle (MAR $\\leftarrow$ PC, Memory read, MDR $\\leftarrow$ Data, IR $\\leftarrow$ MDR, PC $\\leftarrow$ PC + 1); Indirect cycle (fetch effective address); Execute cycle; Interrupt cycle (save PC onto stack, load interrupt service routine address).",
+      "Micro-Operations & Register Transfer Language (RTL): Basic register transfer $R_2 \\leftarrow R_1$; Arithmetic micro-operations (addition, subtraction via 2's complement, increment); Logic micro-operations (AND, OR, XOR, NOT); Shift micro-operations (logical, arithmetic, circular).",
+      "Hardwired Control Unit Design: Fixed logic gates, flip-flops, decoders, and counter circuits; High-speed execution, rigid design, difficult to modify or expand instruction set; State-table and delay-element methods.",
+      "Microprogrammed Control Unit Design: Control memory (ROM) storing microinstructions; Control Address Register (CAR), Control Data Register (CDR), Next-Address Generator (sequencer); Horizontal microprogramming (wide control word, unencoded, high parallelism) vs Vertical microprogramming (narrow control word, highly encoded, requires decoder).",
+      "Bus Arbitration & Bus Timing: Master-slave bus protocols; Centralized arbitration (Daisy chaining, Polling, Independent request lines) vs Distributed arbitration; Synchronous bus (common clock pulse) vs Asynchronous bus (handshake control lines: `req` and `ack`).",
+      "System Performance Metrics: CPU Execution Time = $\\text{Instruction Count} \\times \\text{CPI} \\times \\text{Clock Cycle Time}$; MIPS (Million Instructions Per Second) and MFLOPS; Amdahl's Law for speedup: $S = \\frac{1}{(1 - f) + \\frac{f}{k}}$.",
+      "Instruction Format Types: Zero-address instructions (stack-based), One-address instructions (accumulator-based), Two-address instructions, Three-address instructions (register-to-register architectures like RISC).",
+      "University Examination Strategy: Draw complete block schematics of Von Neumann architecture with bus interconnections, trace RTL micro-operations for instruction fetch and execute, and contrast Hardwired vs Microprogrammed control units in tabular format."
+    ],
+    "keyPoints": [
+      "CPU Execution Time Formula: $T = \\text{IC} \\times \\text{CPI} \\times T_{clk} = \\frac{\\text{IC} \\times \\text{CPI}}{\\text{Frequency}}$.",
+      "Amdahl's Law Speedup: $S = \\frac{1}{(1 - f) + f / k}$, where $f$ is parallelizable fraction and $k$ is speedup factor.",
+      "Fetch Cycle RTL Sequence: $T_0: \\text{MAR} \\leftarrow \\text{PC}; T_1: \\text{MDR} \\leftarrow M[\\text{MAR}], \\text{PC} \\leftarrow \\text{PC} + 1; T_2: \\text{IR} \\leftarrow \\text{MDR}$.",
+      "Horizontal vs Vertical Microcode: Horizontal requires no decoding and enables maximum concurrency; Vertical minimizes ROM storage width.",
+      "Daisy Chaining Arbitration: Priority determined by physical distance from bus arbiter; lowest priority devices suffer starvation.",
+      "Asynchronous Handshaking: Non-clocked data transfer using bidirectional `strobe` or two-way request/acknowledge signals.",
+      "Von Neumann Bottleneck: CPU throughput constrained because instruction fetch and data read share the same physical bus.",
+      "Arithmetic Shift Left: Multiplies signed 2's complement binary integer by 2; overflow occurs if sign bit flips.",
+      "Arithmetic Shift Right: Divides signed integer by 2; sign bit is replicated into most significant position.",
+      "Exam Scoring Tip: In bus bandwidth problems, calculate bandwidth as $\\text{Data Bus Width (bytes)} \\times \\text{Bus Frequency (Hz)}$."
+    ]
+  },
+  "Computer Organization & Architecture:::2": {
+    "title": "Instruction Sets & Addressing",
+    "highlights": [
+      "Instruction Set Architecture (ISA) Taxonomy: Contract between hardware and software; CISC (Complex Instruction Set Computer: variable length, memory-to-memory ops, complex addressing, microcoded, e.g. x86) vs RISC (Reduced Instruction Set Computer: fixed length 32-bit, load-store architecture, single-cycle execution, hardwired, e.g. ARM, MIPS, RISC-V).",
+      "Instruction Formats & Field Decomposition: Opcode field, register specifiers, immediate operand field, displacement/address field; Opcode expansion techniques to support variable-length operand specifications.",
+      "Addressing Modes: Immediate Mode (operand in instruction), Direct / Absolute Mode ($EA = A$), Indirect Mode ($EA = M[A]$), Register Direct Mode ($EA = R$), Register Indirect Mode ($EA = M[R]$).",
+      "Displacement Addressing Modes: Relative Addressing / PC-Relative ($EA = \\text{PC} + A$, used for local branches and position-independent code); Base-Register Addressing ($EA = R_{\\text{base}} + A$, used for relocation); Index Addressing ($EA = R_{\\text{index}} + A$, used for array traversal).",
+      "Auto-Increment and Auto-Decrement Modes: $EA = R$, followed by $R \\leftarrow R + d$ or preceding $R \\leftarrow R - d$; Useful for implementing runtime software stacks and string processing loops.",
+      "Data Transfer & Manipulation Instructions: Load, Store, Move, Push, Pop; Arithmetic (Add, Sub, Mul, Div); Logical (And, Or, Xor, Not); Shift/Rotate (ROL, ROR, RCR, RCL).",
+      "Program Control & Branching: Unconditional jump (`JMP`), Conditional branch based on condition code flags ($Z, N, C, V$); Subroutine call (`CALL`) and return (`RET`); Parameter passing mechanisms (registers, call stack).",
+      "Status Register / Condition Code Flags: Zero flag ($Z = 1$ if result is zero); Negative flag ($N = 1$ if MSB is 1); Carry flag ($C = 1$ if unsigned arithmetic generated carry/borrow); Overflow flag ($V = 1$ if signed 2's complement overflow occurred: $V = C_{in} \\oplus C_{out}$).",
+      "RISC Load-Store Architecture Principle: Only dedicated `LOAD` and `STORE` instructions access main memory; all computational instructions operate exclusively on registers.",
+      "University Examination Strategy: Solve effective address calculation problems across diverse addressing modes, design an expanding opcode scheme for a given instruction set specification, and compare RISC vs CISC architectures."
+    ],
+    "keyPoints": [
+      "Effective Address Formulation: PC-Relative: $EA = \\text{PC} + \\text{Offset}$; Base-Index: $EA = R_{\\text{base}} + R_{\\text{index}} + \\text{Disp}$.",
+      "Signed Overflow Formula: $V = C_n \\oplus C_{n-1}$ (overflow occurs when carry into sign bit differs from carry out).",
+      "Expanding Opcode Rule: Unused bit patterns in an $n$-bit opcode field are used as prefixes to expand subsequent operand bit lengths.",
+      "Immediate Addressing Speed: Fastest access speed because operand is fetched simultaneously with the instruction itself.",
+      "Indirect Addressing Overhead: Requires two sequential memory read cycles: first to fetch address pointer, second to fetch operand.",
+      "Auto-Decrement Stack Push: Decrement stack pointer before write: $SP \\leftarrow SP - 1; M[SP] \\leftarrow R$.",
+      "Auto-Increment Stack Pop: Read data before incrementing stack pointer: $R \\leftarrow M[SP]; SP \\leftarrow SP + 1$.",
+      "Position-Independent Code (PIC): Relies on PC-relative addressing so code executes correctly at any loaded memory base address.",
+      "RISC Design Philosophy: Large register file ($\\ge 32$ registers), fixed instruction format, single-cycle execution of simple instructions.",
+      "Exam Gold Tip: Always distinguish between Carry ($C$, for unsigned overflow) and Overflow ($V$, for signed 2's complement overflow)."
+    ]
+  },
+  "Computer Organization & Architecture:::3": {
+    "title": "Arithmetic & Logic Unit",
+    "highlights": [
+      "Binary Arithmetic in Signed Number Systems: Signed magnitude, 1's complement, and 2's complement representations; 2's complement range for $n$ bits: $[-2^{n-1}, 2^{n-1}-1]$; Addition and subtraction using 2's complement parallel adders.",
+      "Adder Architectures: Half Adder and Full Adder; Ripple Carry Adder (RCA): propagation delay $t = 2n \\Delta t$; Carry Lookahead Adder (CLA): Generate term $G_i = A_i B_i$, Propagate term $P_i = A_i \\oplus B_i$; Carry recurrence $C_{i+1} = G_i + P_i C_i$; Constant delay $O(1)$ independent of word size; Carry Select and Carry Skip Adders.",
+      "Multiplication of Unsigned Numbers: Sequential shift-and-add multiplier; Datapath incorporating multiplicand register, multiplier register, accumulator, and control sequencer; Total execution time $n$ clock cycles.",
+      "Booth's Multiplication Algorithm for Signed Numbers: Encodes multiplier bit pairs $(Q_i, Q_{i-1})$: $00 \\implies \\text{no op}$, $11 \\implies \\text{no op}$, $01 \\implies A \\leftarrow A + M$, $10 \\implies A \\leftarrow A - M$; Followed by arithmetic shift right $[A, Q]$; Accelerates runs of consecutive 1s.",
+      "Modified Booth's Multiplication (Radix-4): Examines overlapping triplets of bits $(Q_{2i+1}, Q_{2i}, Q_{2i-1})$; Reduces partial products from $n$ to $n/2$, doubling multiplication speed; Operations: $\\{0, \\pm M, \\pm 2M\\}$.",
+      "Array Multipliers & Wallace Tree: Combinational multiplication; Carry Save Adder (CSA) arrays reducing partial products; Wallace Tree multiplier summing $n$ partial products in $O(\\log n)$ levels using full adders as $3:2$ compressors.",
+      "Division Algorithms: Restoring Division (subtract divisor, if remainder negative restore by adding divisor back and set quotient bit 0; else set 1); Non-Restoring Division (if remainder positive, shift left and subtract; if negative, shift left and add; eliminates restoration step).",
+      "Fast Division Schemes: SRT Division (lookup tables, redundant digit sets); Newton-Raphson reciprocal approximation and Goldschmidt multiplicative division.",
+      "IEEE 754 Floating-Point Standard: Single precision (32-bit: 1 sign, 8 exponent with bias 127, 23 mantissa/fraction with implicit leading 1); Double precision (64-bit: 1 sign, 11 exponent with bias 1023, 52 fraction); Value: $(-1)^S \\times 1.M \\times 2^{E - \\text{bias}}$; Special values: $\\pm 0, \\pm \\infty$, NaN, Denormalized numbers.",
+      "University Examination Strategy: Multiply positive and negative signed integers using Booth's algorithm step-by-step, trace Non-Restoring division with register tables, and convert decimal numbers to IEEE 754 32-bit single-precision hex."
+    ],
+    "keyPoints": [
+      "2's Complement Range: For $n$ bits: $-2^{n-1} \\le X \\le 2^{n-1}-1$.",
+      "Carry Lookahead Expressions: $C_1 = G_0 + P_0 C_0, \\quad C_2 = G_1 + P_1 G_0 + P_1 P_0 C_0$.",
+      "Booth Recoding Table: $00 \\to \\text{Shift}$, $01 \\to \\text{Add } M + \\text{Shift}$, $10 \\to \\text{Sub } M + \\text{Shift}$, $11 \\to \\text{Shift}$.",
+      "Radix-4 Partial Product Reduction: Triplet recoding cuts the total number of partial product additions by exactly 50%.",
+      "Wallace Tree Reduction Ratio: Uses full adders as $3:2$ compressors, reducing partial product matrix height by factor of $1.5$ per stage.",
+      "Non-Restoring Division Rule: If $A \\ge 0$, shift left and subtract divisor; if $A < 0$, shift left and add divisor.",
+      "IEEE 754 Single-Precision Format: Bit 31 = Sign, Bits 30-23 = Exponent (bias 127), Bits 22-0 = Normalized Mantissa.",
+      "IEEE 754 Zero and Infinity: All 0s in exponent and mantissa represents $\\pm 0$; all 1s exponent with 0 mantissa represents $\\pm \\infty$.",
+      "IEEE 754 NaN Definition: Exponent all 1s and non-zero mantissa represents Not-a-Number (NaN) produced by invalid operations (e.g. $0/0$).",
+      "Exam Gold Tip: In IEEE 754 single precision conversion, remember to add 127 to the real exponent before converting to binary."
+    ]
+  },
+  "Computer Organization & Architecture:::4": {
+    "title": "Memory Hierarchy",
+    "highlights": [
+      "Memory Hierarchy Taxonomy & Trade-offs: Hierarchy levels: Registers $\\to$ L1/L2/L3 Cache $\\to$ Main Memory (DRAM) $\\to$ Secondary Storage (SSD/HDD); Cost, speed, and capacity trade-offs; Principle of Locality: Temporal locality (recently referenced items reused soon) vs Spatial locality (nearby memory items accessed soon).",
+      "Main Memory Technology: SRAM (Static RAM: 6-transistor bistable latch, fast, no refresh, high power, used in cache) vs DRAM (Dynamic RAM: 1-transistor 1-capacitor cell, periodic capacitor refresh required, high density, low cost); Synchronous DRAM (SDRAM), DDR4/DDR5 burst transfers.",
+      "Cache Memory Organization: Cache line / block size; Cache mapping functions: (1) Direct Mapping ($Index = Block \\bmod NumberOfLines$); (2) Fully Associative Mapping (block placed in any cache line, tag compared in parallel); (3) Set-Associative Mapping ($Set = Block \\bmod NumberOfSets$, $k$-way set associative).",
+      "Cache Address Decomposition: Address split into Tag, Set/Index, and Word/Byte Offset fields; Size formulas: Offset bits = $\\log_2(\\text{block size})$, Index bits = $\\log_2(\\text{number of sets})$, Tag bits = $\\text{Address bits} - \\text{Index} - \\text{Offset}$.",
+      "Cache Write Policies: Write-Through (write to cache and main memory simultaneously, consistent memory, slower, mitigated by write buffers) vs Write-Back (write only to cache, mark dirty bit, update main memory only upon block eviction); Write Allocation: Write-Allocate (fetch on write miss, paired with write-back) vs No-Write-Allocate (write around, paired with write-through).",
+      "Cache Replacement Algorithms: Least Recently Used (LRU, hardware age counters / matrix), First-In First-Out (FIFO), Least Frequently Used (LFU), Random; Optimal replacement (Belady's min algorithm as theoretical upper bound).",
+      "Average Memory Access Time (AMAT): Formula: $\\text{AMAT} = \\text{Hit Time} + \\text{Miss Rate} \\times \\text{Miss Penalty}$; Multi-level cache AMAT: $\\text{AMAT} = T_{h1} + M_1 (T_{h2} + M_2 \\times T_{mem})$; The 3 C's of cache misses: Compulsory (cold start), Capacity (cache size limits), Conflict (collision in mapping).",
+      "Virtual Memory Concepts: Paged virtual memory; Virtual address space mapped to physical frames; Page Table, Page Table Entry (PTE: frame number, valid/invalid bit, dirty bit, protection bits); Translation Lookaside Buffer (TLB: high-speed associative hardware cache for page table translations).",
+      "Effective Memory Access Time (EMAT) with TLB: $\\text{EMAT} = \\text{TLB hit ratio} \\times (T_{TLB} + T_m) + (1 - \\text{hit ratio}) \\times (T_{TLB} + 2 T_m)$ for single-level page tables; Multi-level page tables for large 64-bit address spaces.",
+      "University Examination Strategy: Calculate Tag, Index, and Offset bit allocations for Direct and $k$-way Set-Associative caches, compute multi-level cache AMAT, and solve EMAT numericals involving TLB hit rates and page faults."
+    ],
+    "keyPoints": [
+      "AMAT Governing Formula: $\\text{AMAT} = \\text{Hit Time} + \\text{Miss Rate} \\times \\text{Miss Penalty}$.",
+      "Two-Level Cache AMAT: $\\text{AMAT} = T_{L1} + M_{L1} [T_{L2} + M_{L2} \\cdot T_{\\text{DRAM}}]$.",
+      "Direct Mapped Cache Index Bits: $\\text{Index Bits} = \\log_2(\\text{Number of Cache Lines})$.",
+      "Set Associative Index Bits: $\\text{Index Bits} = \\log_2(\\text{Lines} / k) = \\log_2(\\text{Sets})$.",
+      "Offset Bits Formula: $\\text{Offset Bits} = \\log_2(\\text{Block Size in Bytes})$.",
+      "Tag Bits Calculation: $\\text{Tag} = \\text{Physical Address Bits} - \\text{Index Bits} - \\text{Offset Bits}$.",
+      "Dirty Bit Function: In write-back caches, dirty bit = 1 signifies modified line requiring memory write-back upon replacement.",
+      "Compulsory Miss Elimination: Cannot be avoided by increasing cache size; only mitigated by prefetching larger blocks.",
+      "TLB EMAT Formula: $\\text{EMAT} = h_{TLB}(t_{TLB} + t_m) + (1 - h_{TLB})(t_{TLB} + 2 t_m)$.",
+      "Exam Gold Tip: Always pay attention to whether the memory is byte-addressable or word-addressable when determining offset bits."
+    ]
+  },
+  "Computer Organization & Architecture:::5": {
+    "title": "I/O Organization & Pipelining",
+    "highlights": [
+      "I/O Addressing Schemes: Memory-Mapped I/O (I/O ports share same address space and load/store instructions with memory, larger address decoded) vs Isolated / Port-Mapped I/O (separate address space, dedicated `IN` and `OUT` machine instructions, separate control lines `IOR` and `IOW`).",
+      "I/O Data Transfer Modes: (1) Programmed I/O (CPU continuously polls device status register, waste of CPU clock cycles); (2) Interrupt-Driven I/O (device interrupts CPU when ready, eliminates busy waiting); (3) Direct Memory Access (DMA).",
+      "Interrupt Architecture & Handling: Vectored interrupts (device supplies vector address pointing to Interrupt Service Routine ISR) vs Non-vectored interrupts (fixed ISR address, software polls devices); Hardware interrupt priority: Daisy chain priority, Priority interrupt controller (PIC 8259).",
+      "Direct Memory Access (DMA) Mechanics: DMA Controller (DMAC) takes control of system buses to transfer data blocks directly between I/O device and main memory without passing through CPU; Bus request (`BR`) and Bus grant (`BG`); Transfer modes: Burst transfer (entire block), Cycle stealing (one word per CPU cycle), Transparent mode.",
+      "Instruction Pipelining Fundamentals: Concept of overlapping instruction execution; Classic 5-stage RISC pipeline: IF (Instruction Fetch), ID (Instruction Decode / Register Read), EX (Execute / ALU), MEM (Memory Access), WB (Write Back); Pipeline speedup: $S = \\frac{n \\cdot k}{k + n - 1} \\xrightarrow{n \\to \\infty} k$.",
+      "Pipeline Structural Hazards: Hardware resource conflict when two stages attempt to use same functional unit simultaneously (e.g. simultaneous memory access in IF and MEM); Resolved by separate instruction/data caches (Harvard architecture) or inserting pipeline bubbles (stalls).",
+      "Pipeline Data Hazards & RAW/WAR/WAW: Read-After-Write (RAW, true dependency), Write-After-Read (WAR, anti-dependency), Write-After-Write (WAW, output dependency); Solutions to RAW: Hardware data forwarding / bypassing (forwarding result directly from EX/MEM or MEM/WB to ALU input), Compiler instruction scheduling, Pipeline interlocks (stalls).",
+      "Pipeline Control / Branch Hazards: Arises from branch instructions where next PC is unknown until ID or EX stage; Solutions: Branch penalty stalls, Branch prediction (static: predict never taken, predict taken; dynamic: 1-bit, 2-bit saturating branch history state machine, Branch Target Buffer BTB), Delayed branching with branch delay slots.",
+      "Advanced Superscalar & Dynamic Execution: Multiple instruction issue per cycle; In-order issue with out-of-order completion; Tomasulo's algorithm (reservation stations, Common Data Bus CDB, register renaming eliminating WAR and WAW hazards); Reorder Buffer (ROB) ensuring precise interrupts.",
+      "University Examination Strategy: Draw space-time reservation diagrams for 5-stage pipelines, compute theoretical vs actual speedup and efficiency with stalls, resolve data hazards via operand forwarding paths, and explain DMA controller operation."
+    ],
+    "keyPoints": [
+      "Ideal Pipeline Speedup: $S_k = \\frac{n \\cdot k \\cdot \\tau}{(k + n - 1) \\tau} \\approx k$ as number of instructions $n \\gg k$.",
+      "Pipeline Efficiency: $\\eta = \\frac{\\text{Actual Speedup}}{k} = \\frac{n}{k + n - 1}$.",
+      "Pipeline Throughput: $\\text{Throughput} = \\frac{n}{(k + n - 1) \\tau}$.",
+      "5-Stage RISC Datapath: IF (Fetch) $\\to$ ID (Decode/Reg) $\\to$ EX (ALU/Branch) $\\to$ MEM (Load/Store) $\\to$ WB (Register Write).",
+      "Data Forwarding Elimination: Bypasses result of ALU operation in EX stage directly to ALU input of subsequent instruction without memory wait.",
+      "Load-Use Stall Requirement: Forwarding cannot eliminate a 1-cycle stall when a load instruction is immediately followed by an instruction using that register.",
+      "2-Bit Dynamic Branch Predictor: Requires two consecutive mispredictions to change prediction state (Strongly Taken $\\leftrightarrow$ Weakly Taken $\\leftrightarrow$ Weakly Not Taken $\\leftrightarrow$ Strongly Not Taken).",
+      "Cycle Stealing DMA: DMAC steals single bus cycles from CPU during internal instruction execution phases.",
+      "Precise Interrupts via ROB: Speculative out-of-order execution instructions commit architectural state in strict in-order program sequence.",
+      "Exam Gold Tip: In branch penalty calculations, branch cost in lost cycles equals the stage where branch target is computed minus 1."
+    ]
+  },
+  "Database Management Systems:::1": {
+    "title": "ER Model",
+    "highlights": [
+      "Database System Architecture & Abstraction: Three-schema architecture (Internal/Physical level, Conceptual/Logical level, External/View level); Physical data independence vs Logical data independence; Data Definition Language (DDL) and Data Manipulation Language (DML).",
+      "Entity-Relationship (ER) Modeling Concepts: Entity sets, Weak vs Strong entities (identifying relationship, partial discriminator key); Attributes (simple, composite, single-valued, multi-valued, derived); Domain constraints.",
+      "Relationship Constraints & Cardinality: Mapping cardinality ratios ($1:1, 1:N, N:1, M:N$); Participation constraints (Total participation indicated by double lines vs Partial participation); Degree of relationship (binary, ternary, recursive).",
+      "Enhanced ER (EER) Modeling Concepts: Specialization and Generalization; Attribute inheritance; Disjointness constraints (disjoint vs overlapping subclasses); Completeness constraints (total vs partial specialization); Category / Union types.",
+      "Mapping ER Diagrams to Relational Tables: Strong entity mapping; Multi-valued attribute mapping to separate relation with foreign key; Weak entity mapping with identifying composite primary key; Binary $1:N$ mapping (foreign key in $N$-side relation); Binary $M:N$ mapping (junction table with composite primary key).",
+      "Integrity Constraints in Relational Databases: Domain constraints, Key constraints (Superkey, Candidate key, Primary key), Entity integrity constraint (Primary key cannot be null), Referential integrity constraint (Foreign key must reference valid primary key or be null).",
+      "Relational Algebra Core Operations: Selection ($\\sigma_{\\text{condition}}(R)$), Projection ($\\pi_{\\text{attributes}}(R)$), Cartesian Product ($R \\times S$), Set Union ($R \\cup S$), Set Difference ($R - S$), Rename ($\\rho$).",
+      "Derived Relational Algebra Operations: Natural Join ($R \\bowtie S$), Theta Join ($R \\bowtie_\\theta S$), Equi-join, Set Intersection ($R \\cap S$), Division operator ($R \\div S$, representing universal 'for all' queries).",
+      "Tuple Relational Calculus (TRC) & Domain Relational Calculus (DRC): Declarative query languages; Non-procedural query expressions $\\{ t \\mid P(t) \\}$; Safety of relational calculus queries; Codd's Equivalence Theorem.",
+      "University Examination Strategy: Convert complex business narrative requirements into standard ER diagrams with explicit cardinality/participation constraints, convert ER schemas to normalized relational tables, and write relational algebra queries with selection/projection optimization."
+    ],
+    "keyPoints": [
+      "Three-Schema Principle: Isolates internal storage structures from logical application views, enabling physical data independence.",
+      "Weak Entity Identification: Primary key consists of partial discriminator combined with the owner entity's primary key.",
+      "Total Participation Definition: Every entity in the entity set must participate in at least one relationship instance.",
+      "ER to Table 1:N Rule: Place the primary key of the 1-side as a foreign key attribute inside the N-side table.",
+      "ER to Table M:N Rule: Requires a separate bridge/junction table containing composite foreign keys referencing both participating entities.",
+      "Entity Integrity Rule: No primary key component can take a NULL value ($PK \\ne \\text{NULL}$).",
+      "Referential Integrity Rule: If foreign key $FK$ in relation $R_1$ references $PK$ in $R_2$, then $FK$ must equal an existing $PK$ or be NULL.",
+      "Relational Division Operator: $R \\div S$ retrieves all tuples in $R$ that are associated with all tuples in relation $S$.",
+      "Derived Attribute Notation: Represented as dashed/dotted ovals in Chen ER notation; computed dynamically from stored attributes.",
+      "Exam Gold Tip: In ER mapping, remember to create a separate independent table for every multi-valued attribute."
+    ]
+  },
+  "Database Management Systems:::2": {
+    "title": "Relational Model & SQL",
+    "highlights": [
+      "Relational Model Foundations: Relations as mathematical tables; Tuples (rows), Attributes (columns); Cardinality (number of tuples) vs Degree/Arity (number of attributes); Atomic attribute value rule (First Normal Form requirement).",
+      "SQL Data Definition Language (DDL): Statements: `CREATE TABLE`, `ALTER TABLE`, `DROP TABLE`, `TRUNCATE TABLE`; Table constraints: `PRIMARY KEY`, `FOREIGN KEY ... REFERENCES ... ON DELETE CASCADE / SET NULL`, `UNIQUE`, `NOT NULL`, `CHECK` constraints.",
+      "SQL Data Manipulation Language (DML): Statements: `SELECT`, `INSERT INTO`, `UPDATE ... SET`, `DELETE FROM`; Set operators: `UNION`, `INTERSECT`, `EXCEPT` / `MINUS` (default duplicate elimination vs `UNION ALL`).",
+      "SQL Aggregation & Grouping Semantics: Aggregate functions: `COUNT(*)`, `SUM()`, `AVG()`, `MIN()`, `MAX()`; `GROUP BY` clause mechanics; `HAVING` clause vs `WHERE` clause (filtering aggregated groups vs individual rows); Execution order: FROM $\\to$ WHERE $\\to$ GROUP BY $\\to$ HAVING $\\to$ SELECT $\\to$ ORDER BY.",
+      "SQL Join Operations: Inner Join (`INNER JOIN`), Natural Join (`NATURAL JOIN`), Outer Joins: Left Outer Join (`LEFT JOIN`), Right Outer Join (`RIGHT JOIN`), Full Outer Join (`FULL OUTER JOIN`); Cross Join (Cartesian Product); Self Joins.",
+      "Nested Subqueries & Correlated Subqueries: Scalar subqueries, subqueries returning sets; Set comparison operators: `IN`, `NOT IN`, `ANY` / `SOME`, `ALL`; Correlated subqueries evaluated row-by-row; Existence testing with `EXISTS` and `NOT EXISTS`.",
+      "Views & View Update Rules: Virtual relations created via `CREATE VIEW`; Security, logical data independence; Updatable views criteria (single base table, includes primary key, no aggregation, no `GROUP BY` or `DISTINCT`).",
+      "SQL Advanced Features: Common Table Expressions (CTE) with `WITH` clause; Recursive CTEs; Window analytic functions (`ROW_NUMBER()`, `RANK()`, `DENSE_RANK()`, `OVER (PARTITION BY ... ORDER BY ...)`).",
+      "Triggers and Stored Procedures: Active database rules; Event-Condition-Action (ECA) model; `BEFORE` vs `AFTER` triggers; `FOR EACH ROW` vs `FOR EACH STATEMENT`; Stored procedures and PL/SQL cursors.",
+      "University Examination Strategy: Write nested SQL queries using `EXISTS` and `GROUP BY ... HAVING`, solve outer join query output tracing problems, and write PL/SQL trigger procedures with integrity constraint validation."
+    ],
+    "keyPoints": [
+      "SQL Execution Sequence: FROM $\\to$ JOIN $\\to$ WHERE $\\to$ GROUP BY $\\to$ HAVING $\\to$ SELECT $\\to$ DISTINCT $\\to$ ORDER BY $\\to$ LIMIT.",
+      "WHERE vs HAVING Distinction: WHERE filters rows prior to aggregation; HAVING filters aggregated groups after GROUP BY.",
+      "NOT IN with NULL Trap: If subquery returns a NULL value, `NOT IN` evaluates to UNKNOWN for all outer rows, returning empty set.",
+      "EXISTS Optimization: Evaluates to TRUE as soon as the first matching tuple is found, avoiding full table scans.",
+      "ON DELETE CASCADE Action: Automatically deletes child rows in referencing table when corresponding parent row is deleted.",
+      "RANK vs DENSE_RANK: RANK skips subsequent rank numbers after ties (1, 1, 3); DENSE_RANK does not skip numbers (1, 1, 2).",
+      "COUNT(*) vs COUNT(column): `COUNT(*)` counts all rows including NULLs; `COUNT(column)` ignores NULL values in that column.",
+      "Correlated Subquery Mechanism: Re-evaluated once for each candidate tuple considered by the outer query.",
+      "Updatable View Rule: View cannot be updated directly if it involves aggregate functions, `GROUP BY`, `UNION`, or `DISTINCT`.",
+      "Exam Scoring Tip: In SQL query writing, always specify table aliases when joining multiple tables sharing common column names."
+    ]
+  },
+  "Database Management Systems:::3": {
+    "title": "Normalization",
+    "highlights": [
+      "Relational Database Anomalies & Redundancy: Update anomalies, Insertion anomalies, Deletion anomalies caused by poorly designed schemas; Objective of normalization: eliminate redundancy while preserving functional dependencies and lossless joins.",
+      "Functional Dependencies (FD): Formal definition: $X \\to Y$ holds if for any tuples $t_1, t_2$, $t_1[X] = t_2[X] \\implies t_1[Y] = t_2[Y]$; Trivial vs non-trivial FDs; Full functional dependency vs partial functional dependency; Transitive dependency.",
+      "Armstrong's Axioms for FD Inference: Sound and complete inference rules: (1) Reflexivity: if $Y \\subseteq X$, then $X \\to Y$; (2) Augmentation: if $X \\to Y$, then $X Z \\to Y Z$; (3) Transitivity: if $X \\to Y$ and $Y \\to Z$, then $X \\to Z$; Derived rules: Union, Decomposition, Pseudo-transitivity.",
+      "Attribute Closure Algorithm: Algorithm to compute $X^+$ under a set of FDs $F$; Used to test if $X$ is a superkey, test membership of an FD in $F^+$, and discover all candidate keys of a relation in polynomial time.",
+      "First Normal Form (1NF) & Second Normal Form (2NF): 1NF: All attribute values must be atomic (no repeating groups or composite values); 2NF: Relation in 1NF and every non-prime attribute is fully functionally dependent on every candidate key (no partial dependencies).",
+      "Third Normal Form (3NF): Relation in 2NF and for every non-trivial FD $X \\to Y$, either $X$ is a superkey or $Y$ is a prime attribute (part of some candidate key); Eliminates transitive dependencies for non-prime attributes.",
+      "Boyce-Codd Normal Form (BCNF): Stricter than 3NF; For every non-trivial FD $X \\to Y$, $X$ must be a superkey; Resolves anomalies when candidate keys overlap; Every relation in BCNF is in 3NF, but converse is false.",
+      "Decomposition Properties: (1) Lossless-Join Decomposition (guaranteed if $R_1 \\cap R_2 \\to R_1$ or $R_1 \\cap R_2 \\to R_2$); (2) Dependency Preservation (decomposition preserves all original FDs if $(F_1 \\cup F_2)^+ = F^+$); 3NF always achieves both; BCNF guarantees lossless-join but may not preserve dependencies.",
+      "Higher Normal Forms: Multi-Valued Dependencies (MVD: $X \\twoheadrightarrow Y$) and Fourth Normal Form (4NF); Join Dependencies (JD) and Fifth Normal Form (5NF / Project-Join Normal Form).",
+      "University Examination Strategy: Find all candidate keys of a relation using attribute closure, determine the highest normal form of a schema, decompose relations into 3NF and BCNF, and prove whether a decomposition is lossless and dependency preserving."
+    ],
+    "keyPoints": [
+      "Functional Dependency Definition: $X \\to Y \\iff \\forall t_1, t_2 \\in R, t_1[X] = t_2[X] \\implies t_1[Y] = t_2[Y]$.",
+      "Transitivity Axiom: $X \\to Y \\land Y \\to Z \\implies X \\to Z$.",
+      "Superkey Criterion: $X$ is a superkey of relation $R$ if and only if $X^+ = R$.",
+      "Candidate Key Definition: A minimal superkey (no proper subset of $X$ has closure equal to $R$).",
+      "2NF Condition: No non-prime attribute may depend on a proper subset of any candidate key (no partial dependency).",
+      "3NF Condition: For every non-trivial $X \\to Y$, $X$ is superkey OR $Y$ is a prime attribute.",
+      "BCNF Condition: For every non-trivial $X \\to Y$, $X$ must be a superkey.",
+      "Lossless Join Theorem: Decomposition of $R$ into $R_1, R_2$ is lossless $\\iff (R_1 \\cap R_2 \\to R_1) \\in F^+$ or $(R_1 \\cap R_2 \\to R_2) \\in F^+$.",
+      "BCNF Dependency Trade-off: BCNF guarantees zero redundancy from functional dependencies but cannot always preserve dependencies.",
+      "Exam Gold Tip: In 3NF checks, if the right-hand side attribute $Y$ is prime, the dependency automatically satisfies 3NF."
+    ]
+  },
+  "Database Management Systems:::4": {
+    "title": "Transactions",
+    "highlights": [
+      "Transaction Concept & ACID Properties: Atomicity (all-or-nothing execution, ensured by recovery manager / undo logs); Consistency (preserves database integrity constraints); Isolation (concurrent transactions do not interfere, ensured by concurrency control); Durability (committed changes persist across crashes, ensured by redo logs).",
+      "Transaction State Diagram: Active $\\to$ Partially Committed (after final operation executed) $\\to$ Committed; Active $\\to$ Failed (hardware/logic error) $\\to$ Aborted (rolled back) $\\to$ Terminated.",
+      "Schedules & Serializability: Serial schedule (transactions execute sequentially, no concurrency); Concurrent schedules; Conflict serializability: two operations conflict if they belong to different transactions, access same data item, and at least one is a write ($W_i(X)$ and $R_j(X)$, $W_i(X)$ and $W_j(X)$).",
+      "Precedence (Conflict) Graph Algorithm: Directed graph $G = (V, E)$ where nodes are transactions; Directed edge $T_i \\to T_j$ exists if an operation in $T_i$ conflicts with and precedes an operation in $T_j$; Schedule is conflict serializable if and only if precedence graph is acyclic (contains no directed cycles); Topological sort produces equivalent serial schedule.",
+      "View Serializability & Blind Writes: Schedule is view serializable if view equivalent to some serial schedule (same initial reads, same updated-read pairs, same final writes); Every conflict serializable schedule is view serializable; Testing view serializability is NP-complete; Enabled by blind writes ($W(X)$ without preceding $R(X)$).",
+      "Recoverability of Schedules: Recoverable schedule (if $T_j$ reads data written by $T_i$, $T_i$ commits before $T_j$ commits); Cascading rollback / Cascadeless schedule (transaction only reads committed data, preventing domino rollbacks); Strict schedule (transaction cannot read or write data until the previous writer commits/aborts).",
+      "Concurrency Control Locking Protocols: Shared Lock ($S$, read-only) and Exclusive Lock ($X$, read-write); Lock compatibility matrix; Two-Phase Locking (2PL): Growing Phase (locks acquired, no locks released) and Shrinking Phase (locks released, no locks acquired); 2PL guarantees conflict serializability.",
+      "Strict 2PL & Rigorous 2PL: Strict 2PL holds all Exclusive locks until transaction commit/abort (guarantees conflict serializability and cascadeless recovery); Rigorous 2PL holds all Shared and Exclusive locks until commit (easiest to implement).",
+      "Deadlock Handling in Databases: Deadlock detection using Wait-For Graph (WFG, cycle indicates deadlock); Deadlock prevention: Wait-Die scheme (non-preemptive: older waits, younger dies) vs Wound-Wait scheme (preemptive: older wounds younger, younger waits).",
+      "Database Recovery Techniques: Write-Ahead Logging (WAL: log record must reach non-volatile storage before corresponding database disk block is written); Undo/Redo recovery algorithms; Checkpointing (fuzzy checkpoints) to truncate log scan during crash recovery."
+    ],
+    "keyPoints": [
+      "ACID Responsibility: Atomicity & Durability via Recovery Manager; Consistency via Application/DB constraints; Isolation via Concurrency Control.",
+      "Conflict Operations Condition: Same data item, different transactions, at least one write operation.",
+      "Conflict Serializability Test: A schedule is conflict serializable $\\iff$ its Precedence Graph has no cycles.",
+      "2PL Basic Rule: Once a transaction releases any lock, it can never acquire any new locks (Growing $\\to$ Shrinking).",
+      "Strict 2PL Benefit: Holding all $X$-locks until transaction end eliminates cascading aborts.",
+      "Wait-Die Scheme: Older transaction requests lock held by younger: older waits; Younger requests older: younger dies.",
+      "Wound-Wait Scheme: Older requests lock held by younger: older wounds (preempts) younger; Younger requests older: younger waits.",
+      "Recoverable Schedule Rule: $T_j$ reads from $T_i \\implies Commit(T_i) < Commit(T_j)$.",
+      "WAL Protocol Invariant: Log record for an update must be flushed to disk before the dirty database page is written to disk.",
+      "Exam Gold Tip: To find conflict equivalent serial schedule, perform topological sort on the acyclic precedence graph."
+    ]
+  },
+  "Database Management Systems:::5": {
+    "title": "Indexing & Storage",
+    "highlights": [
+      "Physical Storage Hierarchy & File Organization: Memory hierarchy in DBMS: Buffer pool in RAM, Disk pages / blocks on SSD/HDD; Slotted-page architecture for variable-length records; Heap file organization vs Sequential sorted file organization; Unclustered vs Clustered files.",
+      "Indexing Foundations: Primary Index (built on primary key of ordered file, sparse index), Clustering Index (built on non-key ordering field, sparse), Secondary Index (built on non-ordering field, strictly dense index); Dense index (entry for every search key) vs Sparse index (entry for each data block).",
+      "Multi-Level Indexing: Indexing the index file; Reduces disk block accesses from $O(B)$ to $O(\\log_b B)$; Motivates dynamic balanced tree indices.",
+      "B-Tree Data Structure & Indexing: Balanced multi-way search tree; All leaf nodes at same depth; Node of order $m$: at most $m$ children and $m-1$ keys; Internal nodes have at least $\\lceil m/2 \\rceil$ children; Keys and record pointers stored in internal nodes as well as leaf nodes.",
+      "B+ Tree Architecture & Indexing: Superior to B-Tree for DBMS; Data record pointers stored strictly in leaf nodes; Leaf nodes linked sequentially via doubly linked list pointers for high-performance range queries; Internal nodes store search keys and child pointers only, providing higher fan-out and lower tree height.",
+      "B+ Tree Insertion and Deletion Mechanics: Insertion: split node when keys exceed $m-1$, push middle key up; Deletion: borrow key from sibling or merge with sibling when keys drop below $\\lceil m/2 \\rceil - 1$; Tree height typically $3-4$ levels even for billions of records; Search cost $O(\\log_B N)$.",
+      "Static and Dynamic Hashing: Static hashing (bucket overflow handled by overflow chaining); Extendible Hashing (directory of pointers, global depth $d$ and local depth $d'$, bucket splits double directory only when $d' = d$); Linear Hashing (split pointer $p$ systematically rounds through buckets, avoids directory).",
+      "Query Processing & Optimization: Query processing phases: Parsing & Translation $\\to$ Optimization $\\to$ Execution; Query execution plan / operator tree; Cost metric based on disk block transfers and seek time; Evaluation of selection algorithms (linear scan vs index scan) and join algorithms (nested-loop join, block nested-loop, index nested-loop, sort-merge join, hash join).",
+      "Buffer Management & Replacement Policies: Buffer pool manager; Frame table, dirty bit, pin count; Buffer replacement strategies: LRU, Clock algorithm (Second Chance), Buffer pool hit ratio.",
+      "University Examination Strategy: Calculate maximum keys, minimum keys, and order $m$ for B+ trees given disk block size and pointer lengths, trace B+ tree insertion and deletion splits step-by-step, and compute cost comparisons for Nested Loop vs Hash Join."
+    ],
+    "keyPoints": [
+      "Dense vs Sparse Index Rule: Sparse index requires the data file to be physically sorted on the index search key.",
+      "Secondary Index Constraint: Must always be a dense index because data file is not ordered by the secondary key.",
+      "B+ Tree Fan-Out Formula: Fan-out $p$ satisfies: $p \\cdot P_{block} + (p - 1) \\cdot K \\le B_{size}$.",
+      "B+ Tree Leaf Node Range: Every leaf node contains between $\\lceil(m-1)/2\\rceil$ and $m-1$ record pointers.",
+      "B+ Tree Internal Node Range: Every internal node (except root) has between $\\lceil m/2 \\rceil$ and $m$ children.",
+      "B+ Tree Range Query Advantage: Leaf nodes form a continuous linked chain, allowing range scans without traversing internal tree nodes.",
+      "Extendible Hashing Directory Doubling: Occurs only when an overflowing bucket has local depth equal to global depth ($d' = d$).",
+      "Block Nested-Loop Join Cost: $B(R) + \\frac{B(R)}{M - 2} \\times B(S)$ disk block I/Os, where $M$ is buffer frames.",
+      "Hash Join Block Cost: $3 [B(R) + B(S)]$ I/Os for two-pass in-memory hash join.",
+      "Exam Gold Tip: In B+ tree calculations, remember that the root node is an exception: it can have as few as 2 children."
+    ]
+  },
+  "Digital Logic Design:::1": {
+    "title": "Number Systems & Codes",
+    "highlights": [
+      "Positional Number Systems: Radix / base $r$; Binary ($r=2$), Octal ($r=8$), Decimal ($r=10$), Hexadecimal ($r=16$); Fractional conversions via repeated multiplication; Radix complements: $(r-1)$'s complement and $r$'s complement.",
+      "Binary Arithmetic in Complements: Unsigned subtraction using 1's and 2's complement; End-around carry in 1's complement vs discarding carry in 2's complement; Overflow detection: $V = C_{in} \\oplus C_{out}$ across MSB.",
+      "Binary Codes & Classifications: Weighted codes (BCD 8421, 2421, 5421) vs Non-weighted codes (Excess-3, Gray code); BCD addition rules (adding $0110_2 = 6_{10}$ when intermediate sum $> 9$ or generates carry).",
+      "Reflected Gray Code: Unit distance code (single bit changes between consecutive states); Binary to Gray conversion ($G_i = B_i \\oplus B_{i+1}$) and Gray to Binary conversion ($B_i = B_{i+1} \\oplus G_i$); Optical shaft encoders.",
+      "Error Detection and Correction Codes: Parity bits (even and odd); Hamming Code $(7, 4)$ single error correction double error detection (SEC-DED); Parity check matrix $H$, Generator matrix $G$, Syndrome decoding $S = r H^T$.",
+      "Alphanumeric Character Codes: 7-bit ASCII code, Extended 8-bit ASCII, EBCDIC, Unicode UTF-8 encoding standards; Baudot code historical context.",
+      "Fixed-Point vs Floating-Point Representation: Signed magnitude, 1's complement, 2's complement numeric ranges; Precision vs dynamic range trade-offs.",
+      "Binary Logic & Logic Voltage Levels: Positive logic (High = 1, Low = 0) vs Negative logic (High = 0, Low = 1); TTL noise margins ($V_{OH}, V_{OL}, V_{IH}, V_{IL}$); Fan-in and Fan-out constraints.",
+      "Integrated Circuit Families: TTL (Transistor-Transistor Logic, 7400 series, high speed, bipolar), CMOS (Complementary MOS, 4000 series, ultra-low static power, wide voltage range), ECL (Emitter-Coupled Logic, highest speed, high power dissipation).",
+      "University Examination Strategy: Convert fractional decimal numbers to octal/hex, solve 2's complement arithmetic with explicit overflow flag analysis, encode 4-bit data words into 7-bit Hamming SEC-DED codewords, and correct single-bit corrupted transmission vectors."
+    ],
+    "keyPoints": [
+      "r's Complement Formula: $(r^n - N)$ for integers, or $(r-1)$'s complement $+ 1$.",
+      "BCD Correction Rule: Add 6 ($0110_2$) whenever nibble sum exceeds 9 or produces an auxiliary carry.",
+      "Binary to Gray Conversion: $G_n = B_n$, and $G_i = B_i \\oplus B_{i+1}$ for $i < n$.",
+      "Gray to Binary Conversion: $B_n = G_n$, and $B_i = B_{i+1} \\oplus G_i$ for $i < n$.",
+      "Hamming Parity Bit Positions: Parity bits placed strictly at powers of 2 ($P_1$ at 1, $P_2$ at 2, $P_4$ at 4, $P_8$ at 8).",
+      "Hamming Parity Bit Formula: $2^p \\ge m + p + 1$, where $m$ is message bits and $p$ is parity bits.",
+      "Syndrome Decoding: Syndrome $S = 000$ indicates zero error; non-zero binary value gives exact erroneous bit index.",
+      "TTL High Noise Margin: $NM_H = V_{OH} - V_{IH} = 2.4\\text{ V} - 2.0\\text{ V} = 0.4\\text{ V}$.",
+      "TTL Low Noise Margin: $NM_L = V_{IL} - V_{OL} = 0.8\\text{ V} - 0.4\\text{ V} = 0.4\\text{ V}$.",
+      "Exam Gold Tip: In BCD arithmetic, remember each decimal digit must be coded in a strictly separate 4-bit nibble."
+    ]
+  },
+  "Digital Logic Design:::2": {
+    "title": "Boolean Algebra & Logic Gates",
+    "highlights": [
+      "Boolean Algebra Postulates & Huntington's Axioms: Closure, Identity elements ($0$ for OR, $1$ for AND), Commutative laws, Distributive laws ($A + (B \\cdot C) = (A + B) \\cdot (A + C)$), Complement laws ($A + A' = 1, A \\cdot A' = 0$).",
+      "Fundamental Boolean Theorems: Idempotent law ($A + A = A$), Boundedness / Dominance ($A + 1 = 1, A \\cdot 0 = 0$), Involution ($(A')' = A$), Absorption laws ($A + A B = A$, $A (A + B) = A$), De Morgan's Laws ($(A + B)' = A' B'$, $(A B)' = A' + B'$).",
+      "Duality Principle: Any valid Boolean algebraic relation remains valid when AND and OR operators are interchanged, and 0 and 1 are interchanged, keeping literals unchanged.",
+      "Canonical and Standard Forms: Minterms ($m_i$, product terms evaluating to 1 for single row) and Maxterms ($M_i$, sum terms evaluating to 0 for single row); Canonical Sum-of-Products (SOP: $\\sum m$) and Product-of-Sums (POS: $\\prod M$); Conversion between SOP and POS forms ($m_i' = M_i$).",
+      "Standard Logic Gates: Basic gates: AND, OR, NOT (Inverter); Universal gates: NAND and NOR (can synthesize all fundamental logic operations); Derived gates: XOR (Odd parity checker: $A \\oplus B = A' B + A B'$) and XNOR (Equivalence detector: $(A \\oplus B)' = A B + A' B'$).",
+      "Karnaugh Map (K-Map) Minimization: Graphical method using Gray code adjacent cells; 2, 3, 4, and 5-variable K-maps; Cell adjacency (toroidal wrap-around); Grouping subcubes of size $2^k$ (pairs, quads, octets); Prime Implicants (PI) and Essential Prime Implicants (EPI).",
+      "Don't-Care Conditions in K-Maps: Incompletely specified functions; Don't-care minterms ($d$ or $X$); Included in groupings only when they help enlarge subcubes to simplify literal counts; Left ungrouped otherwise.",
+      "Quine-McCluskey (Tabular) Minimization: Algorithmic minimization for large variable counts ($n \\ge 5$); Columnar grouping by number of 1s; Elimination of matching terms differing by single bit; Prime implicant chart; Petrick's method for cyclic prime implicant tables.",
+      "NAND-NAND and NOR-NOR Multi-Level Synthesis: Two-level SOP realized directly with NAND-NAND logic; Two-level POS realized directly with NOR-NOR logic; Bubble pushing method (De Morgan's graphical equivalence).",
+      "University Examination Strategy: Simplify complex 4-variable and 5-variable Boolean expressions using K-maps with don't-care terms, extract Essential Prime Implicants using prime implicant tables, and implement logic exclusively using two-input NAND gates."
+    ],
+    "keyPoints": [
+      "Distributive Law Formulation: $A + B C = (A + B)(A + C)$ (unique to Boolean algebra).",
+      "De Morgan's SOP Inversion: $(A_1 + A_2 + \\dots + A_n)' = A_1' \\cdot A_2' \\cdot \\dots \\cdot A_n'$.",
+      "Consensus Theorem: $A B + A' C + B C = A B + A' C$ (the term $B C$ is redundant).",
+      "Minterm-Maxterm Complement Relation: $m_j' = M_j$, and $\\sum m(d_1, d_2) = \\prod M(\\text{remaining indices})$.",
+      "Universal NAND Inverter: Connect both NAND inputs together: $(A \\cdot A)' = A'$.",
+      "Universal NAND to OR: Apply De Morgan: $(A' \\cdot B')' = A + B$ (requires 3 NAND gates).",
+      "K-Map Gray Code Sequence: Rows and columns must be labeled strictly as $00, 01, 11, 10$ to ensure unit Hamming distance.",
+      "Essential Prime Implicant Criterion: A prime implicant that covers at least one minterm not covered by any other prime implicant.",
+      "XOR Gate Parity Property: $A \\oplus B \\oplus C$ evaluates to 1 if and only if an odd number of variables are 1.",
+      "Exam Gold Tip: Never include groups containing only don't-cares; don't-cares should only be enclosed to expand valid minterm groups."
+    ]
+  },
+  "Digital Logic Design:::3": {
+    "title": "Combinational Circuits",
+    "highlights": [
+      "Combinational Logic Principles: Output depends strictly on current inputs; No feedback loops, no internal memory states; Design procedure: Problem specification $\\to$ Truth table $\\to$ K-Map minimization $\\to$ Logic circuit diagram.",
+      "Arithmetic Combinational Circuits: Half Adder ($S = A \\oplus B, C = A B$) and Full Adder ($S = A \\oplus B \\oplus C_{in}, C_{out} = A B + C_{in}(A \\oplus B)$); Half Subtractor and Full Subtractor; 4-bit Binary Parallel Adder (7483 RCA) and Adder-Subtractor using XOR mode control.",
+      "Lookahead Carry Adders (CLA): Fast parallel addition; Carry generate $G_i = A_i B_i$, Carry propagate $P_i = A_i \\oplus B_i$; Unrolls carry recurrence to compute all carries simultaneously in two gate delays ($O(1)$ delay vs $O(n)$ in ripple carry).",
+      "BCD Adder Architecture: Adds two 4-bit BCD numbers; Generates tentative binary sum; Correction detector circuit: $C_{corr} = K + S_3 S_2 + S_3 S_1$; Adds $0110_2$ via second 4-bit adder when $C_{corr} = 1$.",
+      "Magnitude Comparators: Compares two $n$-bit binary words $A$ and $B$; Outputs: $A > B, A = B, A < B$; Bitwise equality $x_i = A_i B_i + A_i' B_i' = (A_i \\oplus B_i)'$; Equality condition: $A = B \\iff x_3 x_2 x_1 x_0 = 1$; Commercial 4-bit comparator IC 7485 cascadability.",
+      "Decoders and Demultiplexers: $n$-to-$2^n$ line decoders; Active-high vs active-low enable inputs; 2-to-4 and 3-to-8 line decoders (74138); Full adder implementation using 3-to-8 decoder and OR gates; Demultiplexer as decoder with data on enable line.",
+      "Encoders and Priority Encoders: $2^n$-to-$n$ line encoders; Limitations of simple encoders (undefined multiple inputs, all-zero ambiguous output); Priority Encoder (74147, 74148): selects highest order active input; Valid output flag $V$.",
+      "Multiplexers (Data Selectors): $2^n$-to-1 multiplexers ($2:1, 4:1, 8:1, 16:1$); Function implementation: any Boolean function of $n$ variables can be synthesized using a $2^{n-1}$-to-1 MUX by connecting $n-1$ variables to select lines and remaining variable/constants to data inputs.",
+      "Parity Circuits & Combinational Hazards: Even and odd parity generator/checker trees using XOR gates; Logic hazards: Static-1 hazard (momentary glitch to 0), Static-0 hazard, and Dynamic hazards; Hazard elimination by adding consensus redundant prime implicants across adjacent K-map subcubes.",
+      "University Examination Strategy: Synthesize arbitrary 4-variable Boolean functions using single 8-to-1 MUX, design BCD adders with full correction logic, construct 4-to-16 decoders from 2-to-4 modules, and eliminate static-1 hazards using K-maps."
+    ],
+    "keyPoints": [
+      "Full Adder Carry Formula: $C_{out} = A B + B C_{in} + A C_{in} = A B + C_{in}(A \\oplus B)$.",
+      "Full Subtractor Difference & Borrow: $D = A \\oplus B \\oplus B_{in}, \\quad B_{out} = A' B + B_{in}(A \\oplus B)'$.",
+      "Adder-Subtractor Mode Control: Feed operand $B$ through XOR gates with mode line $M$; $M=0 \\implies \\text{Add}$, $M=1 \\implies \\text{Subtract}$.",
+      "BCD Correction Formula: $Correction = C_{out} + S_3 S_2 + S_3 S_1$.",
+      "Comparator Bit Equality: $x_i = A_i B_i + A_i' B_i' = (A_i \\oplus B_i)'$.",
+      "Comparator A > B Condition: $A_3 B_3' + x_3 A_2 B_2' + x_3 x_2 A_1 B_1' + x_3 x_2 x_1 A_0 B_0'$.",
+      "Decoder Expansion Rule: An $m$-to-$2^m$ decoder can be built from smaller decoders using tree hierarchy with enable pins.",
+      "Multiplexer Equation (4:1 MUX): $Y = S_1' S_0' I_0 + S_1' S_0 I_1 + S_1 S_0' I_2 + S_1 S_0 I_3$.",
+      "Static-1 Hazard Elimination: Enclose adjacent 1-cells in K-map that belong to separate implicants with a redundant bridging implicant.",
+      "Exam Gold Tip: When implementing functions on a MUX, set select lines to the first $k$ variables and derive data inputs from truth table partition."
+    ]
+  },
+  "Digital Logic Design:::4": {
+    "title": "Sequential Circuits (Flip-Flops, Counters)",
+    "highlights": [
+      "Sequential Circuit Principles: Outputs depend on both present inputs and past history (internal memory state); Synchronous sequential circuits (clocked, state changes simultaneously on active clock edge) vs Asynchronous sequential circuits (unclocked, event-driven).",
+      "Latches vs Flip-Flops: SR Latch with NOR gates (forbidden state $S=R=1$ leads to race condition) and NAND gates; Gated SR latch; Transparent D latch; Master-Slave flip-flop configuration eliminating race-around condition; Edge-triggered flip-flops.",
+      "Flip-Flop Architectures & Conversions: D Flip-Flop (Delay: $Q_{next} = D$); T Flip-Flop (Toggle: $Q_{next} = T \\oplus Q$); JK Flip-Flop ($Q_{next} = J Q' + K' Q$); Race-around condition in level-triggered JK flip-flops when $J=K=1$ and pulse width $t_p > t_{pd}$; Conversion algorithms between arbitrary flip-flops.",
+      "Flip-Flop Characteristic and Excitation Tables: Characteristic equations; Excitation tables (defining required inputs for state transitions $0 \\to 0, 0 \\to 1, 1 \\to 0, 1 \\to 1$); Essential tool for sequential counter and state machine synthesis.",
+      "Sequential Circuit Analysis & State Models: State table, State diagram, State equations; Mealy Model (outputs depend on present state AND present inputs) vs Moore Model (outputs depend EXCLUSIVELY on present state); State minimization using row elimination and implication tables.",
+      "State Assignment Techniques: Assigning binary codes to symbolic states; Binary, Gray, and One-Hot state assignments ($N$ flip-flops for $N$ states, simplifies next-state combinational logic).",
+      "Synchronous Counter Design: Design algorithm: State diagram $\\to$ Excitation table $\\to$ K-Maps for flip-flop inputs $\\to$ Logic implementation; Modulo-$N$ counters, Up/Down counters, BCD decade counter (7490, 74160/74163); Handling unused states and lock-out prevention.",
+      "Asynchronous (Ripple) Counters: Flip-flops connected in cascade, output of one drives clock of next; Propagation delay accumulation limits maximum operating frequency: $f_{max} = \\frac{1}{n \\cdot t_{pd}}$; Modulo truncation using asynchronous reset (`CLEAR`) gates.",
+      "Shift Registers & Timing Ring Counters: Universal shift register (74194) supporting SISO, SIPO, PISO, PIPO modes; Ring counters ($N$ states for $N$ flip-flops) and Johnson twisted ring counters ($2N$ states with $50\\%$ duty cycle self-decoding timing sequences).",
+      "University Examination Strategy: Convert JK flip-flop to D and T flip-flops using excitation tables, design synchronous Mod-6 and BCD decade counters using JK/T flip-flops with lock-out analysis, and synthesize Mealy sequence detectors."
+    ],
+    "keyPoints": [
+      "JK Characteristic Equation: $Q_{next} = J Q' + K' Q$.",
+      "D Characteristic Equation: $Q_{next} = D$.",
+      "T Characteristic Equation: $Q_{next} = T \\oplus Q = T Q' + T' Q$.",
+      "JK Excitation Table: $0 \\to 0: (0, X); 0 \\to 1: (1, X); 1 \\to 0: (X, 1); 1 \\to 1: (X, 0)$.",
+      "T Excitation Table: $0 \\to 0: 0; \\quad 0 \\to 1: 1; \\quad 1 \\to 0: 1; \\quad 1 \\to 1: 0$.",
+      "D Excitation Table: $Q_{next} = D$ (input $D$ equals target next state).",
+      "Race-Around Condition Criteria: Occurs in level-triggered JK flip-flops when $J=K=1$, clock pulse $t_p > t_{pd}$, and $t_p$ exceeds propagation delay.",
+      "Moore Machine State Output: Output is associated directly with the state node and does not change until clock edge changes state.",
+      "Johnson Counter Modulus: An $N$-stage Johnson counter generates $2N$ timing sequences with $50\\%$ duty cycle.",
+      "Exam Gold Tip: In synchronous counter design, always check unused states to ensure counter does not enter a permanent dead-lock loop."
+    ]
+  },
+  "Digital Logic Design:::5": {
+    "title": "Memory & Programmable Logic",
+    "highlights": [
+      "Semiconductor Memory Hierarchy: Primary RAM (SRAM, DRAM) and ROM (Masked ROM, PROM, EPROM UV erasable, EEPROM electrical byte-erasable, Flash memory block-erasable); Memory capacity formulation: $2^k \\times n$ (where $k$ is address lines, $n$ is data bits).",
+      "Random Access Memory Architecture: Internal decoder layout; 2D memory cell array ($2^k$ words of $n$ bits); Coincident decoding ($X-Y$ matrix decoders reducing line drivers from $2^k$ to $2^{k/2} + 2^{k/2}$); Read and write cycle timing diagrams.",
+      "Memory Expansion Techniques: Word size expansion (combining memory chips in parallel to increase data bus width, e.g. two $1\\text{K} \\times 4$ to build $1\\text{K} \\times 8$); Word capacity expansion (combining chips using high-order address bits through a decoder to increase addressable words, e.g. two $1\\text{K} \\times 8$ to build $2\\text{K} \\times 8$).",
+      "Programmable Logic Devices (PLD) Taxonomy: Read-Only Memory (ROM: fixed AND array, programmable OR array); Programmable Array Logic (PAL: programmable AND array, fixed OR array); Programmable Logic Array (PLA: programmable AND array, programmable OR array).",
+      "Programmable Array Logic (PAL) Design: Commercial PAL architectures; Fixed OR gates summing fixed number of product terms (typically 2 to 4); Unused inputs tied to don't-care; Output logic macrocells (OLMC) providing registered/combinational programmable polarity.",
+      "Programmable Logic Array (PLA) Design: High architectural flexibility; Both AND and OR arrays programmable; Shared product terms across multiple output functions; Program table specification (Product terms, AND inputs, OR outputs).",
+      "CPLD & FPGA Architectures: CPLDs feature multiple PAL-like function blocks interconnected via central switch matrices (non-volatile, predictable delays); FPGAs feature large arrays of Configurable Logic Blocks (CLBs with 4/6-input LUTs, multiplexers, and flip-flops) surrounded by IOBs and programmable routing channels.",
+      "FPGA Configurable Logic Block (CLB) Internal Datapath: Look-Up Tables (LUT, typically 4-input or 6-input implementing arbitrary truth tables), Wide multiplexers, Dedicated carry logic for fast arithmetic adders, Programmable D flip-flops.",
+      "Hardware Description Languages (HDL): VHDL and Verilog fundamentals; Structural modeling (netlists of gates/modules), Dataflow modeling (Boolean concurrent assignments), Behavioral modeling (`always` blocks, process statements, state machines); Synthesis vs Simulation.",
+      "University Examination Strategy: Design combinational functions using PLA program tables, expand memory chips to larger address and word sizes with chip-select decoding, implement logic on PAL architectures, and write Verilog code for a 4-bit synchronous counter."
+    ],
+    "keyPoints": [
+      "Memory Capacity Calculation: Address lines $k \\implies 2^k$ words; total bits $= 2^k \\times n$.",
+      "ROM PLD Structure: Fixed full AND array (decoding all $2^n$ minterms) + Programmable OR array.",
+      "PAL Structure: Programmable AND array + Fixed OR array (fastest, most widely deployed small PLD).",
+      "PLA Structure: Programmable AND array + Programmable OR array (most flexible, allows product term sharing).",
+      "LUT Principle in FPGA: An $n$-input LUT is an SRAM memory storing $2^n \\times 1$ bits, capable of synthesizing ANY $n$-variable logic function.",
+      "Coincident Memory Decoding: Divides $k$ address lines into $k/2$ row and $k/2$ column decoders, drastically reducing gate counts.",
+      "SRAM 6T Storage Cell: Composed of two cross-coupled CMOS inverters and two NMOS access pass transistors.",
+      "DRAM 1T-1C Refresh Requirement: Charge stored on storage capacitor leaks via sub-threshold conduction; must be refreshed every 64 ms.",
+      "Word Capacity Memory Expansion: High-order address bits are fed into an external decoder whose outputs drive active-low Chip Select ($\\overline{CS}$) lines.",
+      "Exam Gold Tip: In PLA design tables, identify and reuse identical product terms across multiple outputs to minimize total AND gate count."
+    ]
+  },
+  "Discrete Mathematics:::1": {
+    "title": "Set Theory & Logic",
+    "highlights": [
+      "Set Theoretic Fundamentals: Sets, elements, subsets, power set $\\mathcal{P}(S)$ with cardinality $|\\mathcal{P}(S)| = 2^n$; Set operations (Union, Intersection, Set difference, Symmetric difference $A \\oplus B$); Cartesian products $A \\times B$; Venn diagrams and algebraic identities.",
+      "Principle of Inclusion-Exclusion: Two sets: $|A \\cup B| = |A| + |B| - |A \\cap B|$; Three sets: $|A \\cup B \\cup C| = |A| + |B| + |C| - (|A \\cap B| + |B \\cap C| + |A \\cap C|) + |A \\cap B \\cap C|$; General formulation for $n$ finite sets; Applications in counting derangements $D_n = n! \\sum_{k=0}^n \\frac{(-1)^k}{k!}$.",
+      "Propositional Logic & Connectives: Propositions (declarative statements having truth value); Logical operators: Negation ($\\neg$), Conjunction ($\\land$), Disjunction ($\\lor$), Conditional / Implication ($p \\to q \\equiv \\neg p \\lor q$), Biconditional ($p \\leftrightarrow q$); Converse ($q \\to p$), Inverse ($\\neg p \\to \\neg q$), and Contrapositive ($\\neg q \\to \\neg p$).",
+      "Truth Tables & Logical Equivalence: Construction of truth tables; Tautologies (always true), Contradictions (always false), Contingencies; Proving logical equivalences via algebraic laws (De Morgan's, Distributive, Absorption).",
+      "Normal Forms in Propositional Logic: Conjunctive Normal Form (CNF, product of sum clauses) and Disjunctive Normal Form (DNF, sum of product clauses); Clause form; Satisfiability problem (SAT, Cook-Levin theorem).",
+      "Rules of Inference & Formal Proofs: Modus Ponens ($p, p \\to q \\implies q$), Modus Tollens ($\\neg q, p \\to q \\implies \\neg p$), Hypothetical Syllogism ($p \\to q, q \\to r \\implies p \\to r$), Disjunctive Syllogism ($p \\lor q, \\neg p \\implies q$), Resolution principle.",
+      "Predicate Logic & Quantifiers: Predicates $P(x)$, Universe of Discourse; Universal quantifier ($\\forall x P(x)$) and Existential quantifier ($\\exists x P(x)$); Negation of quantified statements: $\\neg(\\forall x P(x)) \\equiv \\exists x \\neg P(x)$ and $\\neg(\\exists x P(x)) \\equiv \\forall x \\neg P(x)$; Nested quantifiers.",
+      "Mathematical Proof Methods: Direct proof ($p \\implies q$); Proof by Contraposition (assume $\\neg q$, prove $\\neg p$); Proof by Contradiction (Reductio ad absurdum: assume $p \\land \\neg q$, derive contradiction); Proof by Cases; Counterexamples.",
+      "Mathematical Induction Principles: First Principle of Mathematical Induction (Weak Induction: base step $P(0)$ or $P(1)$, inductive hypothesis $P(k)$, inductive step $P(k) \\implies P(k+1)$); Second Principle of Induction (Strong Induction); Well-Ordering Principle of positive integers.",
+      "University Examination Strategy: Prove logical equivalences without using truth tables using Boolean deduction rules, test argument validity via rules of inference, apply mathematical induction to summation and inequality proofs, and calculate derangements using inclusion-exclusion."
+    ],
+    "keyPoints": [
+      "Power Set Cardinality: If $|S| = n$, then $|\\mathcal{P}(S)| = 2^n$.",
+      "Symmetric Difference Definition: $A \\oplus B = (A - B) \\cup (B - A) = (A \\cup B) - (A \\cap B)$.",
+      "Implication Equivalence: $p \\to q \\equiv \\neg p \\lor q$.",
+      "Contrapositive Equivalence: $p \\to q \\equiv \\neg q \\to \\neg p$ (logically identical).",
+      "Modus Ponens Inference: $[p \\land (p \\to q)] \\implies q$.",
+      "Modus Tollens Inference: [\\neg q \\land (p \\to q)] \\implies \\neg p$.",
+      "Quantifier De Morgan Negation: $\\neg(\\forall x P(x)) \\equiv \\exists x \\neg P(x)$.",
+      "Derangement Formula (Inclusion-Exclusion): $D_n = n! \\left[ 1 - \\frac{1}{1!} + \\frac{1}{2!} - \\dots + \\frac{(-1)^n}{n!} \\right]$.",
+      "Inclusion-Exclusion 3-Set Formula: $|A \\cup B \\cup C| = \\sum |A| - \\sum |A \\cap B| + |A \\cap B \\cap C|$.",
+      "Exam Gold Tip: In mathematical induction proofs, clearly distinguish between the Inductive Hypothesis and the Inductive Step."
+    ]
+  },
+  "Discrete Mathematics:::2": {
+    "title": "Relations & Functions",
+    "highlights": [
+      "Binary Relations Foundations: Binary relation $R \\subseteq A \\times B$; Domain, Codomain, Range; Inverse relation $R^{-1}$; Matrix representation $M_R$ (Boolean matrix) and Directed Graph (Digraph) representation.",
+      "Properties of Binary Relations: (1) Reflexive ($\\forall a \\in A, (a, a) \\in R$); Irreflexive ($\\forall a, (a, a) \\notin R$); (2) Symmetric ($(a, b) \\in R \\implies (b, a) \\in R$); Antisymmetric ($(a, b) \\in R \\land (b, a) \\in R \\implies a = b$); Asymmetric; (3) Transitive ($(a, b) \\in R \\land (b, c) \\in R \\implies (a, c) \\in R$).",
+      "Closures of Relations: Reflexive closure ($R \\cup \\Delta$); Symmetric closure ($R \\cup R^{-1}$); Transitive closure ($R^+ = \\bigcup_{i=1}^n R^i$); Warshall's Algorithm for transitive closure using Boolean matrix multiplication in $O(n^3)$ operations.",
+      "Equivalence Relations & Partitions: Relation $R$ is an equivalence relation if and only if it is Reflexive, Symmetric, and Transitive; Equivalence classes $[a] = \\{ x \\in A \\mid (x, a) \\in R \\}$; Fundamental Theorem of Equivalence Relations (equivalence classes partition set $A$ into disjoint non-empty subsets).",
+      "Partial Order Relations (Posets): Relation $R$ on set $P$ is a Partial Order if it is Reflexive, Antisymmetric, and Transitive; Poset denoted as $(P, \\le)$; Strict partial orders; Total / Linear orders (every pair of elements is comparable).",
+      "Hasse Diagrams of Posets: Graphical representation of finite posets; Transitive and reflexive edges omitted; Elements drawn with directed edges pointing strictly upward; Maximal, Minimal, Greatest (Maximum), and Least (Minimum) elements of posets.",
+      "Lattices as Posets: Poset $(L, \\le)$ is a Lattice if every two-element subset $\\{a, b\\}$ has a unique Least Upper Bound (LUB / Join: $a \\lor b$) and unique Greatest Lower Bound (GLB / Meet: $a \\land b$); Complete lattices, Bounded lattices ($0$ and $1$).",
+      "Special Lattice Structures: Distributive lattices ($a \\land (b \\lor c) = (a \\land b) \\lor (a \\land c)$); Complemented lattices (every element $a$ has complement $a'$ such that $a \\lor a' = 1$ and $a \\land a' = 0$); Boolean Algebras (distributive and complemented lattices).",
+      "Functions & Mappings: Definition of function $f: A \\to B$; Injective (One-to-One: $f(x_1) = f(x_2) \\implies x_1 = x_2$), Surjective (Onto: $\\forall y \\in B, \\exists x \\in A \\text{ s.t. } f(x) = y$), Bijective (One-to-One and Onto); Inverse functions $f^{-1}$; Composition of functions $(g \\circ f)(x) = g(f(x))$.",
+      "University Examination Strategy: Test relations for equivalence and partial order properties, compute transitive closure using Warshall's algorithm step-by-step, draw Hasse diagrams for divisor posets ($D_n$), and verify lattice properties via GLB/LUB evaluation."
+    ],
+    "keyPoints": [
+      "Equivalence Relation Axioms: Reflexive ($(a, a) \\in R$), Symmetric ($(a, b) \\in R \\implies (b, a) \\in R$), Transitive ($(a, b), (b, c) \\in R \\implies (a, c) \\in R$).",
+      "Partial Order Relation Axioms: Reflexive, Antisymmetric ($(a, b), (b, a) \\in R \\implies a = b$), Transitive.",
+      "Warshall's Algorithm Step: $W_k[i, j] = W_{k-1}[i, j] \\lor (W_{k-1}[i, k] \\land W_{k-1}[k, j])$.",
+      "Greatest vs Maximal Element: A poset can have multiple maximal elements, but at most ONE greatest element.",
+      "Least vs Minimal Element: A poset can have multiple minimal elements, but at most ONE least element.",
+      "Lattice Definition: A poset where every pair of elements has a unique supremum (join) and infimum (meet).",
+      "Distributive Lattice Characterization: A lattice is distributive $\\iff$ it contains no sublattice isomorphic to pentagon lattice $N_5$ or diamond lattice $M_3$.",
+      "Boolean Algebra Cardinality: Any finite Boolean algebra has exactly $2^n$ elements for some positive integer $n$.",
+      "Bijective Function Invertibility: A function $f: A \\to B$ possesses a unique inverse function $f^{-1}: B \\to A \\iff f$ is bijective.",
+      "Exam Gold Tip: In Hasse diagrams, an element is maximal if no other element lies strictly above it connected by an edge."
+    ]
+  },
+  "Discrete Mathematics:::3": {
+    "title": "Graph Theory",
+    "highlights": [
+      "Graph Theoretic Terminology: Graph $G = (V, E)$; Vertices, Edges, Directed vs Undirected graphs; Simple graphs, Multigraphs, Pseudographs (loops); Degree of vertex $\\deg(v)$; In-degree $\\deg^-(v)$ and out-degree $\\deg^+(v)$ in digraphs.",
+      "Handshaking Theorem: For any undirected graph, $\\sum_{v \\in V} \\deg(v) = 2 |E|$; Corollary: Every graph has an even number of vertices with odd degree; Directed graph degree sum: $\\sum \\deg^+(v) = \\sum \\deg^-(v) = |E|$.",
+      "Special Graph Families: Complete graphs $K_n$ ($n(n-1)/2$ edges); Cycles $C_n$; Wheels $W_n$; Bipartite graphs (vertices partitioned into $V_1, V_2$ with edges strictly between sets); Complete bipartite graphs $K_{m, n}$ ($m n$ edges); Regular graphs ($k$-regular).",
+      "Graph Isomorphism & Subgraphs: Two graphs $G_1, G_2$ are isomorphic if there exists a bijection $f: V_1 \\to V_2$ preserving adjacency; Isomorphism invariants (vertex count, edge count, degree sequence, cycle lengths); Induced subgraphs, Spanning subgraphs.",
+      "Connectivity, Paths, and Cycles: Walks, Trails (distinct edges), Paths (distinct vertices); Connected components; Cut-vertices (articulation points) and Cut-edges (bridges); Vertex connectivity $\\kappa(G)$ and Edge connectivity $\\lambda(G)$; Whitney's inequality: $\\kappa(G) \\le \\lambda(G) \\le \\delta(G)$.",
+      "Eulerian Graphs & Fleury's Algorithm: Euler Path (traverses every edge exactly once) and Euler Circuit (closed Euler path); Euler's Theorem: Connected undirected graph has an Euler circuit $\\iff$ every vertex has even degree; Has Euler path $\\iff$ exactly two vertices have odd degree.",
+      "Hamiltonian Graphs: Hamiltonian Path (visits every vertex exactly once) and Hamiltonian Cycle; Dirac's Theorem (if $n \\ge 3$ and $\\deg(v) \\ge n/2$ for all $v$, then $G$ is Hamiltonian); Ore's Theorem (if $\\deg(u) + \\deg(v) \\ge n$ for all non-adjacent $u, v$, then $G$ is Hamiltonian); Traveling Salesperson Problem (NP-hard).",
+      "Planar Graphs & Euler's Formula: Planar representation (edges cross only at vertices); Euler's planar formula: $V - E + F = 2$ for connected planar graphs; Corollaries: $E \\le 3V - 6$ (for $V \\ge 3$) and $E \\le 2V - 4$ (if bipartite/triangle-free); Kuratowski's Theorem: $G$ is planar $\\iff$ it contains no subgraph homeomorphic to $K_5$ or $K_{3, 3}$.",
+      "Graph Coloring & Chromatic Number: Vertex coloring, proper coloring (adjacent vertices receive distinct colors); Chromatic number $\\chi(G)$; Four Color Theorem (every planar graph has $\\chi(G) \\le 4$); Chromatic polynomial $P(G, k)$; Dual graphs.",
+      "Trees and Spanning Trees: Tree definitions (connected acyclic graph, unique simple path between any pair, $|E| = |V| - 1$); Rooted trees, binary trees; Spanning trees; Cayley's formula: number of labeled trees on $n$ vertices is $n^{n-2}$; Matrix Tree Theorem (Kirchhoff's theorem using Laplacian matrix)."
+    ],
+    "keyPoints": [
+      "Handshaking Theorem Formulation: $\\sum_{v \\in V} \\deg(v) = 2 |E|$.",
+      "Odd Degree Vertex Parity: Any graph must possess an even number of vertices of odd degree.",
+      "Bipartite Graph Characterization: A graph is bipartite if and only if it contains NO odd-length cycles.",
+      "Euler Circuit Condition: A connected graph is Eulerian $\\iff$ all vertex degrees are even numbers.",
+      "Dirac's Hamiltonian Condition: If each vertex satisfies $\\deg(v) \\ge n/2$ for $n \\ge 3$, the graph is Hamiltonian.",
+      "Euler's Planar Formula: $V - E + F = 2$ for any connected planar graph.",
+      "Planar Edge Upper Bound: $E \\le 3V - 6$ for simple planar graphs with $V \\ge 3$.",
+      "Kuratowski's Non-Planar Subgraphs: Complete graph $K_5$ and utility complete bipartite graph $K_{3, 3}$.",
+      "Cayley's Tree Formula: There are $n^{n-2}$ distinct labeled trees on $n$ vertices.",
+      "Exam Gold Tip: To prove a graph is non-planar, show that it violates $E \\le 3V - 6$ or find a topological minor homeomorphic to $K_5$ or $K_{3, 3}$."
+    ]
+  },
+  "Discrete Mathematics:::4": {
+    "title": "Combinatorics",
+    "highlights": [
+      "Basic Counting Principles: Rule of Sum (Addition Principle: disjoint events, $|A \\cup B| = |A| + |B|$) and Rule of Product (Multiplication Principle: sequential independent stages, $|A \\times B| = |A| \\times |B|$); Subtraction Principle; Division Principle.",
+      "Permutations and Combinations: Linear permutations of $n$ distinct objects taken $r$ at a time: $P(n, r) = \\frac{n!}{(n-r)!}$; Combinations (unordered selections): $C(n, r) = \\binom{n}{r} = \\frac{n!}{r!(n-r)!}$; Pascal's Identity: $\\binom{n}{r} = \\binom{n-1}{r-1} + \\binom{n-1}{r}$; Vandermonde's Identity: $\\binom{m+n}{r} = \\sum_{k=0}^r \\binom{m}{k}\\binom{n}{r-k}$.",
+      "Permutations with Repetition & Indistinguishable Objects: Permutations of $n$ items with $n_1$ of type 1, $n_2$ of type 2: $\\frac{n!}{n_1! n_2! \\dots n_k!}$; Circular permutations ($(n-1)!$ for distinct, $(n-1)!/2$ for reversible beads/keychains).",
+      "Combinations with Repetition (Stars and Bars): Selecting $r$ objects from $n$ distinct categories with replacement; Equivalent to non-negative integer solutions to $x_1 + x_2 + \\dots + x_n = r$; Formula: $\\binom{n + r - 1}{r}$; Positive integer solutions ($x_i \\ge 1$): $\\binom{r - 1}{n - 1}$.",
+      "Pigeonhole Principle (PHP): Dirichlet's box principle; Basic PHP: if $n+1$ pigeons placed into $n$ holes, at least one hole contains $\\ge 2$ pigeons; Generalized Pigeonhole Principle: placing $N$ objects into $k$ boxes guarantees at least one box contains $\\lceil N / k \\rceil$ objects.",
+      "Binomial Theorem & Multinomial Theorem: Binomial expansion: $(x + y)^n = \\sum_{k=0}^n \\binom{n}{k} x^{n-k} y^k$; Identities: $\\sum_{k=0}^n \\binom{n}{k} = 2^n$ and $\\sum_{k=0}^n (-1)^k \\binom{n}{k} = 0$; Multinomial expansion $(x_1 + x_2 + \\dots + x_m)^n = \\sum \\binom{n}{n_1, n_2, \\dots, n_m} x_1^{n_1} \\dots x_m^{n_m}$.",
+      "Generating Functions in Combinatorics: Ordinary Generating Functions (OGF): $G(x) = \\sum_{n=0}^\\infty a_n x^n$; Formal power series manipulations; Modeling distribution problems with polynomial factor products; Exponential Generating Functions (EGF) for ordered structures.",
+      "Recurrence Relations Formulation: Modeling recursive problems (Tower of Hanoi $T(n) = 2T(n-1) + 1$, Fibonacci numbers $F_n = F_{n-1} + F_{n-2}$); Order and degree of recurrence relations.",
+      "Solving Linear Recurrence Relations: Characteristic equation method for homogeneous linear recurrences ($r^k - c_1 r^{k-1} - \\dots = 0$) handling distinct and repeated roots; Non-homogeneous recurrences solved by summing homogeneous and particular solutions using undetermined coefficients.",
+      "University Examination Strategy: Solve integer partition problems using stars and bars, apply generalized Pigeonhole Principle to geometric and numeric guarantees, and solve second-order non-homogeneous recurrence relations with initial boundary conditions."
+    ],
+    "keyPoints": [
+      "Stars and Bars Formula (Non-Negative): $\\binom{n + r - 1}{r} = \\binom{n + r - 1}{n - 1}$ for $x_1 + \\dots + x_n = r, x_i \\ge 0$.",
+      "Stars and Bars Formula (Strictly Positive): $\\binom{r - 1}{n - 1}$ for $x_1 + \\dots + x_n = r, x_i \\ge 1$.",
+      "Generalized Pigeonhole Formula: At least one container holds $\\lceil N / k \\rceil$ items.",
+      "Pascal's Combinatorial Identity: $\\binom{n}{r} = \\binom{n-1}{r} + \\binom{n-1}{r-1}$.",
+      "Binomial Coefficient Sum: $\\sum_{k=0}^n \\binom{n}{k} = 2^n$.",
+      "Circular Permutations Formula: $(n - 1)!$ for directional arrangements; $\\frac{(n - 1)!}{2}$ for non-directional arrangements.",
+      "Tower of Hanoi Closed Form: $T(n) = 2^n - 1$.",
+      "Fibonacci Closed Binet's Formula: $F_n = \\frac{1}{\\sqrt{5}}\\left[ \\left(\\frac{1+\\sqrt{5}}{2}\\right)^n - \\left(\\frac{1-\\sqrt{5}}{2}\\right)^n \\right]$.",
+      "Non-Homogeneous Recurrence Trial Form: If $f(n) = s^n$ and $s$ is a root of characteristic equation with multiplicity $m$, choose $a_n^{(p)} = C n^m s^n$.",
+      "Exam Gold Tip: In Pigeonhole Principle proofs, clearly identify what represents the pigeons and what represents the pigeonholes."
+    ]
+  },
+  "Discrete Mathematics:::5": {
+    "title": "Algebraic Structures",
+    "highlights": [
+      "Binary Operations & Axiomatic Foundations: Binary operation $*: S \\times S \\to S$; Closure property; Associativity ($a * (b * c) = (a * b) * c$); Commutativity ($a * b = b * a$); Identity element $e$ ($a * e = e * a = a$, unique if exists); Inverse element $a^{-1}$ ($a * a^{-1} = a^{-1} * a = e$).",
+      "Algebraic Structures Hierarchy: Algebraic System $(S, *)$; Semigroup (closed and associative); Monoid (semigroup with identity element $e$); Group (monoid where every element possesses an inverse); Abelian Group / Commutative Group ($a * b = b * a$).",
+      "Finite Groups & Cayley Tables: Latin square property of Cayley operation tables; Order of group $|G|$; Order of an element $O(a)$ (smallest positive integer $k$ such that $a^k = e$); Cyclic groups: $G = \\langle a \\rangle = \\{ a^k \\mid k \\in \\mathbb{Z} \\}$; Generator properties.",
+      "Subgroups & Lagrange's Theorem: Subgroup $H \\le G$ (subset forming group under induced operation); Two-step and one-step subgroup tests ($a b^{-1} \\in H$); Lagrange's Theorem: For any finite group $G$, the order of every subgroup $H$ divides the order of $G$ ($|G| = |H| \\cdot [G : H]$); Corollaries: Order of every element divides group order ($a^{|G|} = e$); Groups of prime order are strictly cyclic.",
+      "Cosets and Normal Subgroups: Left coset $a H = \\{ a h \\mid h \\in H \\}$ and Right coset $H a = \\{ h a \\mid h \\in H \\}$; Properties: Cosets partition group $G$; Index $[G : H] = |G| / |H|$; Normal subgroup $N \\triangleleft G$ ($g N g^{-1} = N$ or $g N = N g$ for all $g \\in G$).",
+      "Quotient Groups / Factor Groups: If $N \\triangleleft G$, the set of cosets $G / N = \\{ g N \\mid g \\in G \\}$ forms a group under coset multiplication $(a N)(b N) = (a b) N$; Order of quotient group $|G / N| = |G| / |N|$.",
+      "Group Homomorphisms and Isomorphisms: Homomorphism $\\phi: (G, *) \\to (G', \\circ)$ satisfies $\\phi(a * b) = \\phi(a) \\circ \\phi(b)$; Properties: $\\phi(e_G) = e_{G'}$ and $\\phi(a^{-1}) = (\\phi(a))^{-1}$; Kernel of homomorphism $\\ker(\\phi) = \\{ g \\in G \\mid \\phi(g) = e_{G'} \\}$; Normalcy of kernel: $\\ker(\\phi) \\triangleleft G$; First Isomorphism Theorem: $G / \\ker(\\phi) \\cong \\text{Im}(\\phi)$.",
+      "Rings and Fields Foundations: Ring $(R, +, \\cdot)$ (Abelian group under $+$, Semigroup under $\\cdot$, Left and right distributive laws); Commutative rings, Rings with identity; Zero divisors ($a \\cdot b = 0$ with $a \\ne 0, b \\ne 0$); Integral Domain (commutative ring with identity having NO zero divisors).",
+      "Fields and Galois Fields: Field $(F, +, \\cdot)$ (Integral domain where every non-zero element has multiplicative inverse, forming Abelian group under $\\cdot$); Characteristic of ring/field; Finite fields $GF(p^n)$ (Galois Fields) of order $p^n$ where $p$ is prime; Applications in cryptography and error-correcting codes.",
+      "University Examination Strategy: Prove whether algebraic sets form groups or Abelian groups using Cayley tables, verify subgroup criteria using the one-step test $a b^{-1} \\in H$, apply Lagrange's theorem to deduce element orders, and compute kernels of homomorphisms."
+    ],
+    "keyPoints": [
+      "Semigroup Axioms: Closure + Associativity.",
+      "Monoid Axioms: Closure + Associativity + Identity.",
+      "Group Axioms: Closure + Associativity + Identity + Inverses.",
+      "Abelian Group Axiom: Group + Commutativity.",
+      "Lagrange's Theorem Formulation: $|G| = |H| \\times [G : H]$ (subgroup order divides group order).",
+      "Prime Order Group Theorem: Any group of prime order is cyclic and hence Abelian.",
+      "Normal Subgroup Criterion: $N \\triangleleft G \\iff \\forall g \\in G, \\forall n \\in N, g n g^{-1} \\in N$.",
+      "First Isomorphism Theorem: $G / \\ker(\\phi) \\cong \\phi(G)$.",
+      "Integral Domain Definition: Commutative ring with identity containing no zero divisors ($a b = 0 \\implies a=0$ or $b=0$).",
+      "Exam Gold Tip: In group proofs, remember that the identity element is unique and each element has a unique inverse."
+    ]
+  }
+}

@@ -11,6 +11,12 @@ import { getUnit } from "./mock-data";
 import type { RevisionPoint } from "./content";
 import { btechSem1Knowledge } from "./content-btech-sem1";
 import { btechSem2Knowledge } from "./content-btech-sem2";
+import { getBTechSem3UnitKnowledge } from "./content-btech-sem3";
+import { getBTechSem4UnitKnowledge } from "./content-btech-sem4";
+import { getBTechSem5UnitKnowledge } from "./content-btech-sem5";
+import { getBTechSem6UnitKnowledge } from "./content-btech-sem6";
+import { getBTechSem7UnitKnowledge } from "./content-btech-sem7";
+import { getBTechSem8UnitKnowledge } from "./content-btech-sem8";
 
 export interface TopicKnowledge {
   highlights: string[];
@@ -484,7 +490,23 @@ export function getBTechUnitPoints(unitId: string): RevisionPoint[] {
   if (!found) return [];
 
   const { subject, unit } = found;
-  const knowledge = generateTechnicalTopic(subject.name, unit.title, unit.unit_number);
+  let knowledge: TopicKnowledge | null = null;
+  if (subject.semester === 3) {
+    knowledge = getBTechSem3UnitKnowledge(subject.name, unit.unit_number);
+  } else if (subject.semester === 4) {
+    knowledge = getBTechSem4UnitKnowledge(subject.name, unit.unit_number);
+  } else if (subject.semester === 5) {
+    knowledge = getBTechSem5UnitKnowledge(subject.name, unit.unit_number);
+  } else if (subject.semester === 6) {
+    knowledge = getBTechSem6UnitKnowledge(subject.name, unit.unit_number);
+  } else if (subject.semester === 7) {
+    knowledge = getBTechSem7UnitKnowledge(subject.name, unit.unit_number);
+  } else if (subject.semester === 8) {
+    knowledge = getBTechSem8UnitKnowledge(subject.name, unit.unit_number);
+  }
+  if (!knowledge) {
+    knowledge = generateTechnicalTopic(subject.name, unit.title, unit.unit_number);
+  }
 
   const points: RevisionPoint[] = [];
 

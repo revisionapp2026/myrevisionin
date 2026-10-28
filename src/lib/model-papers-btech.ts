@@ -7,6 +7,12 @@ import { getSubject } from "./mock-data";
 import type { DbPaper, DbQuestion } from "./content";
 import { getBTechSem1PaperQuestions } from "./model-papers-btech-sem1";
 import { getBTechSem2PaperQuestions } from "./model-papers-btech-sem2";
+import { getBTechSem3PaperQuestions } from "./model-papers-btech-sem3";
+import { getBTechSem4PaperQuestions } from "./model-papers-btech-sem4";
+import { getBTechSem5PaperQuestions } from "./model-papers-btech-sem5";
+import { getBTechSem6PaperQuestions } from "./model-papers-btech-sem6";
+import { getBTechSem7PaperQuestions } from "./model-papers-btech-sem7";
+import { getBTechSem8PaperQuestions } from "./model-papers-btech-sem8";
 
 /**
  * Return model papers list for a B.Tech subject.
@@ -81,6 +87,48 @@ export function getBTechPaperDetail(paperId: string): { paper: DbPaper; question
     const sem2Questions = getBTechSem2PaperQuestions(subject.name, isSet1);
     if (sem2Questions) {
       return { paper, questions: sem2Questions };
+    }
+  }
+
+  if (subject.semester === 3) {
+    const sem3Questions = getBTechSem3PaperQuestions(subject.name, isSet1);
+    if (sem3Questions) {
+      return { paper, questions: sem3Questions };
+    }
+  }
+
+  if (subject.semester === 4) {
+    const sem4Questions = getBTechSem4PaperQuestions(subject.name, isSet1);
+    if (sem4Questions) {
+      return { paper, questions: sem4Questions };
+    }
+  }
+
+  if (subject.semester === 5) {
+    const sem5Questions = getBTechSem5PaperQuestions(subject.name, isSet1);
+    if (sem5Questions) {
+      return { paper, questions: sem5Questions };
+    }
+  }
+
+  if (subject.semester === 6) {
+    const sem6Questions = getBTechSem6PaperQuestions(subject.name, isSet1);
+    if (sem6Questions) {
+      return { paper, questions: sem6Questions };
+    }
+  }
+
+  if (subject.semester === 7) {
+    const sem7Questions = getBTechSem7PaperQuestions(subject.name, isSet1);
+    if (sem7Questions) {
+      return { paper, questions: sem7Questions };
+    }
+  }
+
+  if (subject.semester === 8) {
+    const sem8Questions = getBTechSem8PaperQuestions(subject.name, isSet1);
+    if (sem8Questions) {
+      return { paper, questions: sem8Questions };
     }
   }
 

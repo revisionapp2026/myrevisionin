@@ -18,6 +18,10 @@ import { bscSem1LifeKnowledge } from "./content-bsc-sem1-life";
 import { bscSem1CoreKnowledge } from "./content-bsc-sem1-core";
 import { bscSem1AlliedKnowledge } from "./content-bsc-sem1-allied";
 import { bscSem2Knowledge } from "./content-bsc-sem2";
+import { getBScSem3UnitKnowledge } from "./content-bsc-sem3";
+import { getBScSem4UnitKnowledge } from "./content-bsc-sem4";
+import { getBScSem5UnitKnowledge } from "./content-bsc-sem5";
+import { getBScSem6UnitKnowledge } from "./content-bsc-sem6";
 
 export interface TopicKnowledge {
   highlights: string[];
@@ -1023,7 +1027,19 @@ export function getBScUnitPoints(unitId: string): RevisionPoint[] {
   if (!found) return [];
 
   const { subject, unit } = found;
-  const knowledge = generateBScTopic(subject.name, unit.title, unit.unit_number);
+  let knowledge: TopicKnowledge | null = null;
+  if (subject.semester === 3) {
+    knowledge = getBScSem3UnitKnowledge(subject.name, unit.unit_number);
+  } else if (subject.semester === 4) {
+    knowledge = getBScSem4UnitKnowledge(subject.name, unit.unit_number);
+  } else if (subject.semester === 5) {
+    knowledge = getBScSem5UnitKnowledge(subject.name, unit.unit_number);
+  } else if (subject.semester === 6) {
+    knowledge = getBScSem6UnitKnowledge(subject.name, unit.unit_number);
+  }
+  if (!knowledge) {
+    knowledge = generateBScTopic(subject.name, unit.title, unit.unit_number);
+  }
 
   const points: RevisionPoint[] = [];
 

@@ -1,0 +1,542 @@
+{
+  "Electrical Machines \u2014 I:::1": {
+    "title": "DC Generators",
+    "highlights": [
+      "Operating Principle and EMF Derivation: Faraday's law of electromagnetic induction; Fleming's right-hand rule; Derivation of generated EMF: $E_g = \\frac{\\Phi Z N P}{60 A}$ (where $\\Phi$ is flux per pole, $Z$ total conductors, $N$ speed in rpm, $P$ poles, $A$ parallel paths: $A=2$ for wave, $A=P$ for lap winding).",
+      "Armature Winding Architectures: Simplex Lap winding ($A = P$, high current, low voltage applications; equalizer rings for circulating current suppression) vs Simplex Wave winding ($A = 2$, high voltage, low current applications; dummy coils for mechanical dynamic balance).",
+      "Armature Reaction: Distortion and weakening of main magnetic flux due to MMF produced by armature conductors; Cross-magnetizing effect (shifts Magnetic Neutral Axis MNA in direction of rotation) and Demagnetizing effect; Demagnetizing AT per pole: $AT_d = \\frac{Z I_a}{2 P} \\left(\\frac{2\\theta_m}{180^\\circ}\\right)$; Cross-magnetizing AT per pole: $AT_c = \\frac{Z I_a}{2 P} \\left(1 - \\frac{2\\theta_m}{180^\\circ}\\right)$.",
+      "Commutation Process & Sparking Mitigation: Reversal of current in coil undergoing commutation during time $T_c$; Reactance voltage $V_r = L \\frac{di}{dt}$; Delayed / Under-commutation causing sparking at trailing brush edge; Mitigation techniques: (1) Resistance commutation (high-resistance carbon brushes); (2) Voltage commutation using Interpoles / Commutating poles in series with armature.",
+      "Compensating Windings: Conductors embedded in main pole shoes carrying armature current in opposing direction; Neutralizes armature cross-magnetizing MMF directly under pole faces; Prevents flashover between adjacent commutator segments under severe load surges; Turns per pole $Z_{cw} = \\frac{Z}{2 P} \\left(\\frac{\\text{Pole arc}}{\\text{Pole pitch}}\\right)$.",
+      "Types of DC Generators: Separately excited generators; Self-excited generators (Shunt, Series, Cumulative Compound, Differential Compound); Voltage build-up criteria in self-excited shunt generator: residual magnetism, critical field resistance ($R_c$), and critical speed ($N_c$).",
+      "DC Generator Characteristics: Open-Circuit Characteristic (OCC / Magnetization curve: $E_0$ vs $I_f$ at constant speed); Internal characteristic ($E$ vs $I_a$); External characteristic ($V$ vs $I_L$); Voltage regulation: $VR = \\frac{V_{NL} - V_{FL}}{V_{FL}} \\times 100\\%$.",
+      "Compound Generator Behavior: Level-compounded (flat terminal voltage from no-load to full-load), Over-compounded (terminal voltage rises with load to compensate line drop), and Under-compounded; Differential compound generator (drooping terminal voltage, used in arc welding).",
+      "Parallel Operation of DC Generators: Conditions for parallel operation of shunt generators; Stable load sharing governed by drooping external characteristics; Parallel operation of compound generators: necessity of Equalizer Bar connecting series field windings to prevent hunting and motorization.",
+      "University Examination Strategy: Derive the generated EMF equation with parallel paths distinction, calculate demagnetizing and cross-magnetizing ampere-turns per pole, analyze voltage build-up failure modes in shunt generators, and solve load-sharing problems for parallel generators."
+    ],
+    "keyPoints": [
+      "DC Generator EMF Formula: $E_g = \\frac{\\Phi Z N P}{60 A}$ ($A=P$ lap, $A=2$ wave).",
+      "Demagnetizing AT per Pole: $AT_d = \\frac{Z I_a}{2 P} \\left(\\frac{2\\theta_m}{180^\\circ}\\right)$.",
+      "Cross-Magnetizing AT per Pole: $AT_c = \\frac{Z I_a}{2 P} \\left(1 - \\frac{2\\theta_m}{180^\\circ}\\right)$.",
+      "Brush Shift Direction: Shift brushes forward in direction of rotation in generators to track shifted MNA.",
+      "Reactance Voltage Formula: $V_r = L \\frac{2 I_c}{T_c}$ (for linear commutation).",
+      "Compensating Windings Formula: $AT_{cw} = AT_a \\times \\left(\\frac{\\text{Pole Arc}}{\\text{Pole Pitch}}\\right)$.",
+      "Voltage Build-up Condition: Shunt field resistance must be strictly LESS than critical field resistance ($R_f < R_c$).",
+      "Equalizer Ring Purpose: Equalizes unequal induced EMFs in parallel paths of lap windings to prevent circulating currents.",
+      "Equalizer Bar in Compound Generators: Low-resistance bus connecting series field inputs to enforce proportional load division.",
+      "Exam Gold Tip: If a shunt generator fails to build up voltage, check for absence of residual magnetism, reversed field connections, or field resistance exceeding $R_c$."
+    ]
+  },
+  "Electrical Machines \u2014 I:::2": {
+    "title": "DC Motors",
+    "highlights": [
+      "Motor Operating Principle & Back EMF: Lorentz force equation ($\\mathbf{F} = I (\\mathbf{L} \times \\mathbf{B})$); Fleming's left-hand rule; Back EMF / Counter EMF $E_b = \frac{\\Phi Z N P}{60 A}$; Voltage balance equation: $V = E_b + I_a R_a$; Back EMF acts as self-regulating governor controlling armature current $I_a = \frac{V - E_b}{R_a}$.",
+      "Electromagnetic Torque Derivation: Power balance: $V I_a = E_b I_a + I_a^2 R_a$; Internal mechanical power developed $P_{mech} = E_b I_a = T_e \\omega_m$; Electromagnetic torque equation: $T_e = \frac{1}{2\\pi} \\left(\frac{P}{A}\right) \\Phi Z I_a = 0.159 \\Phi Z I_a \\left(\frac{P}{A}\right)$ N-m; Shaft torque $T_{sh} = \frac{P_{out}}{\\omega_m} = T_e - T_{lost}$.",
+      "DC Motor Characteristics: (1) Torque vs Armature Current ($T_a$ vs $I_a$); (2) Speed vs Armature Current ($N$ vs $I_a$); (3) Speed vs Torque ($N$ vs $T_a$); Shunt motor: essentially constant speed ($\\Delta N \u0007pprox 5-8\\%$ drop from no load to full load); Series motor: high starting torque ($T_a \\propto I_a^2$), dangerous dangerously high speed at no load ($N \\propto 1/\\Phi \to \\infty$); Cumulative compound motor.",
+      "Starting of DC Motors: High inrush starting current ($I_{start} = V / R_a$ since $E_b = 0$ at standstill); Necessity of external starting resistance; Three-Point Starter (schematic, No-Volt Coil NVC connected in series with shunt field, Over-Load Release OLR); Four-Point Starter (NVC connected directly across supply through protective resistor, overcoming field weakening tripping).",
+      "Speed Control Methods of DC Motors: Fundamental speed equation: $N = \frac{V - I_a R_a}{k \\Phi}$; (1) Armature Resistance Control (rheostatic control in armature circuit, below rated speed, low energy efficiency); (2) Field Flux Control (field rheostat weakening flux $\\Phi$, above rated speed, constant power drive); (3) Armature Voltage Control (Ward-Leonard System: wide range, smooth bidirectional control from zero to full speed in both directions, high capital cost).",
+      "Solid-State DC Motor Drives: Single-phase and three-phase thyristor phase-controlled converters for variable armature voltage; DC-DC Chopper drives (buck converters) for four-quadrant regenerative motoring and braking.",
+      "Electric Braking of DC Motors: (1) Regenerative Braking ($E_b > V$, motor operates as generator feeding power back into AC/DC mains, energy conservation); (2) Dynamic / Rheostatic Braking (armature disconnected from mains and connected across external braking resistor $R_b$, kinetic energy dissipated as heat); (3) Plugging / Reverse Current Braking (armature terminal supply reversed, $I_a = \frac{V + E_b}{R_a + R_{ext}}$, rapid stop, high electrical stress).",
+      "Losses and Efficiency in DC Machines: Copper losses ($I_a^2 R_a, I_f^2 R_f, I_{se}^2 R_{se}$, brush contact loss); Iron / Core losses (Hysteresis loss $P_h = \\eta B_{max}^{1.6} f V$ and Eddy current loss $P_e = K_e B_{max}^2 f^2 t^2 V$ in rotating armature core); Mechanical losses (friction and windage); Stray load losses ($1\\%$ of output); Condition for maximum efficiency: Constant losses = Variable losses ($W_c = I_a^2 R_a$).",
+      "Testing of DC Machines \u2014 Direct & Indirect Methods: Brake test (direct loading, limited to small fractional HP motors); Swinburne's Test (indirect method, no-load test on shunt motor, calculates constant losses, predetermines efficiency at any load as generator or motor, cannot detect temperature rise under load).",
+      "Regenerative Testing \u2014 Hopkinson's Test: Back-to-back regenerative test on two identical mechanically coupled and electrically interconnected shunt machines; One operates as motor driving second as generator feeding back power; Mains supply provides only lost power ($P_{mains} = \text{Total losses}$); Full-load temperature rise determination without enormous power dissipation; Field's test for series motors."
+    ],
+    "keyPoints": [
+      "DC Motor Torque Expression: $T_e = \frac{P \\Phi Z I_a}{2\\pi A}$ N-m.",
+      "Motor Speed Formulation: $N = \frac{V - I_a R_a}{k \\Phi}$ rpm.",
+      "Series Motor Starting Danger: At no load, $I_a \\to 0 \\implies \\Phi \\to 0$, causing speed $N \\to \\infty$ (runaway dangerous overspeed).",
+      "Max Efficiency Condition: $I_a^2 R_a = W_{constant}$ (variable copper loss equals constant rotational and iron loss).",
+      "Armature Resistance Control Profile: Constant torque drive, operating exclusively below base speed with poor efficiency.",
+      "Field Weakening Profile: Constant power drive, operating exclusively above base speed.",
+      "Plugging Armature Voltage: At moment of plugging, total effective driving voltage is $V + E_b \\approx 2 V$.",
+      "Swinburne's Constant Losses: $W_c = V I_0 - I_{a0}^2 R_a$, where $I_0$ is no-load supply current.",
+      "Hopkinson's Test Power Drawn: Power from mains equals strictly the total combined electrical and mechanical losses of both machines.",
+      "Exam Gold Tip: Never start a DC series motor on no-load or with belt drives that could break, because runaway speed can mechanically destroy the armature."
+    ]
+  },
+  "Electrical Machines \u2014 I:::3": {
+    "title": "Single Phase Transformers",
+    "highlights": [
+      "Working Principle & Faraday's Law: Static electromagnetic device transferring AC electrical energy between circuits via mutual flux; Core type vs Shell type constructions; High-permeability Cold Rolled Grain Oriented (CRGO) silicon steel laminations ($0.27-0.35\\text{ mm}$ thickness) minimizing eddy currents.",
+      "EMF Equation of a Transformer: Sinusoidal core flux $\\Phi(t) = \\Phi_m \\sin(\\omega t)$; Primary induced EMF $e_1 = -N_1 \\frac{d\\Phi}{dt} = -N_1 \\omega \\Phi_m \\cos(\\omega t)$; RMS induced EMF: $E_1 = 4.44 f N_1 \\Phi_m$ and $E_2 = 4.44 f N_2 \\Phi_m$; Transformation ratio $K = \\frac{E_2}{E_1} = \\frac{N_2}{N_1} = \\frac{I_1}{I_2}$.",
+      "Ideal vs Practical Transformer: Ideal transformer (zero winding resistance, infinite core permeability $\\mu_r \\to \\infty$, zero leakage flux, zero iron loss); Practical transformer considerations (finite winding resistances $R_1, R_2$, leakage fluxes creating leakage reactances $X_1, X_2$, core hysteresis and eddy current losses).",
+      "Transformer on No-Load & Magnetizing Inrush: No-load primary current $I_0 = \\sqrt{I_c^2 + I_m^2}$ ($3-5\\%$ of rated $I_1$); Core-loss component $I_c = I_0 \\cos\\phi_0$ (in phase with $V_1$), Magnetizing component $I_m = I_0 \\sin\\phi_0$ (in quadrature with $V_1$); Non-linear $B-H$ curve producing peaked magnetizing current with pronounced 3rd harmonic; Magnetizing inrush current phenomenon during sudden energization at voltage zero-crossing.",
+      "Transformer on Load & Phasor Diagrams: Armature mmf balance: $N_1 I_1' = N_2 I_2$ where $I_1'$ is load component of primary current; Total primary current $\\mathbf{I}_1 = \\mathbf{I}_0 + \\mathbf{I}_1'$; Complete phasor diagrams for Unity, Lagging (inductive), and Leading (capacitive) power factor loads.",
+      "Equivalent Circuit Modeling: Exact equivalent circuit containing primary parameters ($R_1, X_1$), core shunt parameters ($R_c, X_m$), and secondary parameters ($R_2, X_2$); Referring secondary parameters to primary: $R_2' = R_2 / K^2, X_2' = X_2 / K^2, V_2' = V_2 / K, I_2' = K I_2$; Approximate equivalent circuit shifting shunt branch to input terminals.",
+      "Voltage Regulation of Transformer: Percentage voltage change from no-load to full-load: $VR = \\frac{E_2 - V_2}{E_2} \\times 100\\%$; Approximate regulation formula referred to secondary: $VR \\approx \\frac{I_2 (R_{eq2} \\cos\\phi_2 \\pm X_{eq2} \\sin\\phi_2)}{E_2} \\times 100\\%$ ($+$ for lagging, $-$ for leading); Zero voltage regulation condition: $\\tan\\phi_2 = -R_{eq2} / X_{eq2}$ (leading PF); Maximum voltage regulation condition: $\\tan\\phi_2 = X_{eq2} / R_{eq2}$ (lagging PF).",
+      "Efficiency and Maximum Efficiency Condition: Efficiency $\\eta = \\frac{V_2 I_2 \\cos\\phi_2}{V_2 I_2 \\cos\\phi_2 + P_i + I_2^2 R_{eq2}}$; Core iron loss $P_i$ (constant) vs copper loss $P_{cu}$ (variable with load squared); Condition for maximum efficiency: $P_i = I_2^2 R_{eq2} = P_{cu}$; Fraction of full load for maximum efficiency: $x = \\sqrt{\\frac{P_i}{P_{cu(FL)}}}$.",
+      "All-Day (Energy) Efficiency: Commercial distribution transformers energized 24 hours daily with fluctuating load cycles; All-Day Efficiency $\\eta_{all-day} = \\frac{\\text{Total Energy Output in } kWh \\text{ over 24 hours}}{\\text{Total Energy Input in } kWh \\text{ over 24 hours}}$; Design optimization: core loss minimized at expense of copper loss ($x \\approx 50-70\\%$ full load).",
+      "University Examination Strategy: Derive the transformer EMF equation, construct complete phasor diagrams for lagging/leading loads, calculate primary and secondary equivalent circuit impedances, determine voltage regulation at specified power factors, and solve all-day energy efficiency problems."
+    ],
+    "keyPoints": [
+      "Transformer EMF Formula: $E = 4.44 f N \\Phi_m = 4.44 f N B_m A_c$.",
+      "Transformation Ratio: $K = \\frac{E_2}{E_1} = \\frac{N_2}{N_1} = \\frac{I_1}{I_2}$.",
+      "No-Load Current Components: $I_c = I_0 \\cos\\phi_0$ and $I_m = I_0 \\sin\\phi_0$.",
+      "Secondary Impedance Referred to Primary: $R_2' = R_2 / K^2$ and $X_2' = X_2 / K^2$.",
+      "Voltage Regulation Formula: $VR \\approx \\frac{I_2(R_{eq2}\\cos\\phi_2 \\pm X_{eq2}\\sin\\phi_2)}{V_2} \\times 100\\%$.",
+      "Condition for Zero Voltage Regulation: Occurs at leading power factor with $\\tan\\phi_2 = -\\frac{R_{eq}}{X_{eq}}$.",
+      "Condition for Maximum Voltage Regulation: Occurs at lagging power factor with $\\tan\\phi_2 = \\frac{X_{eq}}{R_{eq}}$.",
+      "Max Efficiency Loading Fraction: $x = \\sqrt{\\frac{P_{iron}}{P_{cu,FL}}}$.",
+      "All-Day Efficiency Definition: $\\eta_{energy} = \\frac{\\text{Output in kWh (24h)}}{\\text{Input in kWh (24h)}} \\times 100\\%$.",
+      "Exam Gold Tip: For voltage regulation, use a positive sign ($+$) for lagging power factor loads and a negative sign ($-$) for leading power factor loads."
+    ]
+  },
+  "Electrical Machines \u2014 I:::4": {
+    "title": "Auto Transformers",
+    "highlights": [
+      "Auto-Transformer Construction & Theory: Single continuous winding tapped at intermediate points, shared between primary and secondary circuits; Magnetic core; Conductive connection plus magnetic coupling between input and output.",
+      "Step-Down and Step-Up Configurations: Step-down: full winding $N_1$ acts as primary, tapped section $N_2$ acts as secondary; Step-up: tapped section acts as primary, full winding acts as secondary; Turns ratio $k = V_2 / V_1 = N_2 / N_1$.",
+      "Power Transfer Mechanism \u2014 Conductive vs Inductive: Total apparent power transferred $S_{total} = V_1 I_1 = V_2 I_2$; Inductively transferred power (transformed via core magnetic flux): $S_{ind} = V_1 I_1 (1 - k)$; Conductively transferred power (conducted directly via copper winding): $S_{cond} = V_1 I_1 k$; High efficiency when $k \\to 1$.",
+      "Copper Saving in Auto-Transformers: Weight of copper is proportional to turns $\\times$ current ($W_{cu} \\propto N I$); Weight ratio: $\\frac{W_{auto}}{W_{2-winding}} = 1 - k$; Copper saved $= k \\times W_{2-winding}$; Maximum copper economy achieved when transformation ratio $k$ is close to unity (e.g. $k = 0.8-0.9$).",
+      "Equivalent Circuit and Impedance Scaling: Internal leakage reactance and winding resistance of auto-transformer; Short-circuit impedance of auto-transformer is $(1 - k)$ times that of equivalent two-winding transformer; Higher short-circuit fault currents.",
+      "Advantages and Operational Merits: Substantially higher efficiency (lower core and copper losses for identical kVA rating), superior voltage regulation (smaller internal percentage impedance drop), smaller physical footprint and weight, lower manufacturing capital cost.",
+      "Disadvantages and Safety Hazards: Loss of electrical isolation between high-voltage (HV) and low-voltage (LV) systems; Direct hazard: an open circuit in common winding section subjects LV load terminals to full HV primary supply voltage; Higher fault current levels requiring high-breaking-capacity switchgear.",
+      "Conversion Between Two-Winding and Auto-Transformer: Reconnecting standard two-winding transformer as an auto-transformer (Additive polarity vs Subtractive polarity); Significant increase in kVA rating: $kVA_{auto} = kVA_{2-wdg} \\times \\frac{1}{1 - k}$ (for additive step-up).",
+      "Applications of Auto-Transformers: Variable AC voltage supply (Variac / Dimmerstat for laboratory voltage control); Induction motor starters (auto-transformer starting reducing starting current by factor $x^2$); Interconnecting transmission grids at similar voltage tiers (e.g. 400 kV to 220 kV); Booster transformers in electric railway traction.",
+      "University Examination Strategy: Derive the copper saving ratio $1 - k$ step-by-step, calculate inductive and conductive power components for given ratings, and determine the enhanced kVA capacity and efficiency when reconnecting a two-winding transformer as an auto-transformer."
+    ],
+    "keyPoints": [
+      "Auto-Transformer Copper Saving: $\\text{Copper Saved} = k \\times W_{2-winding}$.",
+      "Weight of Copper Ratio: $\\frac{W_{auto}}{W_{2-winding}} = 1 - k$, where $k = \\frac{N_2}{N_1} < 1$.",
+      "Conductively Transferred Power: $P_{cond} = k \\times P_{total}$.",
+      "Inductively Transformed Power: $P_{ind} = (1 - k) \\times P_{total}$.",
+      "Enhanced kVA Rating (Additive): $kVA_{auto} = \\frac{V_1 + V_2}{V_1} \\times kVA_{2-wdg}$.",
+      "Internal Impedance Reduction: $Z_{eq(auto)} = (1 - k)^2 Z_{eq(2-wdg)}$.",
+      "Auto-Transformer Regulation: Substantially smaller percentage voltage drop compared to equivalent 2-winding unit.",
+      "Variac Operating Principle: Toroidal core with continuously adjustable carbon brush sliding along uninsulated copper turns.",
+      "Safety Isolation Warning: Auto-transformers lack electrical galvanic isolation; neutral grounding must be strictly verified.",
+      "Exam Gold Tip: The closer the voltage ratio $k$ is to 1, the greater the copper savings and the higher the proportion of power transferred conductively."
+    ]
+  },
+  "Electrical Machines \u2014 I:::5": {
+    "title": "Testing of Transformers",
+    "highlights": [
+      "Open-Circuit (OC) Test / No-Load Test: High-Voltage (HV) winding left open-circuited; Low-Voltage (LV) winding supplied at rated voltage $V_1$ and rated frequency; Instruments on LV side: Voltmeter ($V_1$), Ammeter ($I_0$), Wattmeter ($W_0$, Low Power Factor LPF wattmeter); Wattmeter reading measures core iron loss $P_i = W_0$ (copper loss negligibly small).",
+      "OC Test Parameter Calculations: No-load power factor $\\cos\\phi_0 = \\frac{W_0}{V_1 I_0}$; Core loss component $I_c = I_0 \\cos\\phi_0$; Magnetizing component $I_m = I_0 \\sin\\phi_0 = \\sqrt{I_0^2 - I_c^2}$; Shunt core resistance $R_c = \\frac{V_1}{I_c}$; Shunt magnetizing reactance $X_m = \\frac{V_1}{I_m}$.",
+      "Short-Circuit (SC) Test / Impedance Test: Low-Voltage (LV) winding short-circuited with thick copper strip; High-Voltage (HV) winding supplied with reduced variable voltage ($5-10\\%$ of rated $V_{HV}$) to circulate rated full-load current $I_{sc} = I_{FL}$; Instruments on HV side: Voltmeter ($V_{sc}$), Ammeter ($I_{sc}$), Wattmeter ($W_{sc}$, Normal/Unity PF wattmeter); Wattmeter reading measures full-load copper loss $P_{cu(FL)} = W_{sc}$ (iron loss negligibly small at low flux density).",
+      "SC Test Parameter Calculations: Equivalent series resistance referred to HV: $R_{eq} = \\frac{W_{sc}}{I_{sc}^2}$; Equivalent series impedance $Z_{eq} = \\frac{V_{sc}}{I_{sc}}$; Equivalent series leakage reactance $X_{eq} = \\sqrt{Z_{eq}^2 - R_{eq}^2}$; Short-circuit power factor $\\cos\\phi_{sc} = \\frac{R_{eq}}{Z_{eq}}$.",
+      "Pre-determination of Efficiency and Regulation: Combining OC and SC test results to predetermine efficiency at any fraction of full load $x$ and any power factor $\\cos\\phi$: $\\eta = \\frac{x S_{rated} \\cos\\phi}{x S_{rated} \\cos\\phi + W_0 + x^2 W_{sc}}$; Predetermining percentage voltage regulation without ever loading the machine physically.",
+      "Sumpner's Test (Back-to-Back Test): Regenerative thermal testing of two identical transformers; Primaries connected in parallel across rated voltage supply (draws combined core loss $W_1 = 2 P_i$); Secondaries connected in phase opposition (series opposing, zero net circulating voltage) and excited via auxiliary booster transformer (draws combined full-load copper loss $W_2 = 2 P_{cu}$); Full-load temperature rise determination with minimal energy consumption.",
+      "Polarity Test on Transformers: Additive vs Subtractive polarity; Standard polarity markings ($H_1, H_2$ for HV; $X_1, X_2$ for LV); Voltmeter method: connect $H_1$ to $X_1$, measure $V_{32}$ between $H_2$ and $X_2$; If $V_{32} = V_{HV} - V_{LV} \\implies$ Subtractive polarity (standard Indian/IEEE convention); If $V_{32} = V_{HV} + V_{LV} \\implies$ Additive polarity.",
+      "Parallel Operation of Single-Phase Transformers: Conditions for successful parallel operation: (1) Mandatory: identical voltage ratings and transformation ratios, identical polarities (prevent massive circulating currents); (2) Desirable: identical per-unit impedances (for proportional load sharing: $S_A = S_{total} \\frac{Z_B}{Z_A + Z_B}$), identical $X/R$ ratios (prevents phase angle differences between currents).",
+      "Circulating Currents in Parallel Transformers: Circulating current caused by unequal voltage ratios: $I_c = \\frac{E_A - E_B}{Z_A + Z_B}$; Circulates even at zero external load, causing unnecessary heating and overloading.",
+      "University Examination Strategy: Calculate shunt branch parameters ($R_c, X_m$) and series branch parameters ($R_{eq}, X_{eq}$) from raw OC/SC test meter readings, calculate efficiency and regulation at 0.8 PF lagging, draw Sumpner's test circuit schematic, and solve parallel load-sharing problems."
+    ],
+    "keyPoints": [
+      "OC Test Core Resistance: $R_c = \\frac{V_1^2}{W_0}$ (parameters on LV side).",
+      "OC Test Magnetizing Reactance: $X_m = \\frac{V_1}{I_m} = \\frac{V_1}{\\sqrt{I_0^2 - (W_0/V_1)^2}}$.",
+      "SC Test Series Resistance: $R_{eq} = \\frac{W_{sc}}{I_{sc}^2}$ (parameters on HV side).",
+      "SC Test Series Reactance: $X_{eq} = \\sqrt{\\left(\\frac{V_{sc}}{I_{sc}}\\right)^2 - R_{eq}^2}$.",
+      "Sumpner's Auxiliary Wattmeter Reading: $W_2 = 2 P_{cu(FL)}$ (total copper loss of both transformers).",
+      "Sumpner's Main Wattmeter Reading: $W_1 = 2 P_i$ (total core iron loss of both transformers).",
+      "Subtractive Polarity Test: $V = V_{HV} - V_{LV}$ (standard preferred convention).",
+      "Parallel Load Sharing Formula: $S_A = S_{load} \\times \\frac{Z_B}{Z_A + Z_B}$.",
+      "No-Load Circulating Current: $I_{circ} = \\frac{E_A - E_B}{Z_A + Z_B}$.",
+      "Exam Gold Tip: Low-voltage side is chosen for OC test because rated LV voltage is safe and convenient; high-voltage side is chosen for SC test because rated HV current is smaller and easily measurable."
+    ]
+  },
+  "Electrical Machines:::1": {
+    "title": "DC Machines",
+    "highlights": [
+      "Electromechanical Energy Conversion: Energy balance principle: $d W_{elec} = d W_{mech} + d W_{fld} + d W_{loss}$; Field energy and co-energy concepts in singly and doubly excited magnetic systems; Force and torque formulation from magnetic co-energy: $T_e = \\frac{\\partial W_f'(i, \\theta)}{\\partial \\theta}$.",
+      "DC Machine Structural Datapath: Magnetic frame / Yoke (cast iron or cast steel flux return path), Pole cores and laminated pole shoes, Armature core (slotted silicon steel laminations), Commutator (hard-drawn copper segments insulated with mica), Carbon brushes with phosphor-bronze tension springs.",
+      "Unified EMF and Torque Equations: Generated EMF: $E = \\frac{\\Phi Z N P}{60 A}$; Electromagnetic torque: $T = \\frac{\\Phi Z I_a P}{2\\pi A}$; Interrelationship: $E I_a = T \\omega_m$ (internal mechanical power developed).",
+      "Operational Topologies of DC Machines: Shunt, Series, Compound (Long-shunt and Short-shunt configurations); Cumulative vs Differential compounding; Operating as generator vs operating as motor.",
+      "Torque-Speed Operating Envelopes: Shunt motor: linear slight speed droop ($\\% N_{reg} = \\frac{N_{NL} - N_{FL}}{N_{FL}} \\times 100\\% < 8\\%$); Series motor: inverse hyperbola ($N \\propto 1/\\sqrt{T}$), massive starting torque for traction; Compound motor: tailored droop.",
+      "Speed Control Architectures: Armature resistance rheostat method (below base speed, low efficiency); Field flux control (above base speed, constant horsepower drive); Ward-Leonard variable voltage system for crane and hoist drives.",
+      "Starting Mechanisms for DC Motors: Starting resistance necessity ($I_{st} = V / R_a$); Three-point starter internal schematic (Hold-in electromagnet No-Volt Coil in series with shunt field, Over-load trip relay); Four-point starter overcoming high-speed field weakening nuisance trips.",
+      "Losses and Efficiency Formulations: Copper losses ($I_a^2 R_a, I_{sh}^2 R_{sh}, I_{se}^2 R_{se}$), Core losses (Hysteresis loss $\\propto f B_m^{1.6}$, Eddy current loss $\\propto f^2 B_m^2 t^2$), Mechanical losses (bearing friction, brush friction, windage); Efficiency curves as function of load; Peak efficiency condition: Variable copper losses equal Constant rotational losses.",
+      "Braking Modes in Industrial Drives: Regenerative braking (feeding power back into DC supply grid when overhauling load drives motor above no-load speed); Dynamic braking (dissipating armature kinetic energy across dynamic resistor bank); Plugging (reversing armature polarity, generating heavy stopping torque).",
+      "University Examination Strategy: Derive electromechanical torque from co-energy formulations, compare three-point vs four-point starters with complete wiring schematics, and calculate full-load efficiency and speed regulation for DC shunt and series motors."
+    ],
+    "keyPoints": [
+      "Co-Energy Torque Formula: $T_e = +\\left.\\frac{\\partial W_f'(i, \\theta)}{\\partial \\theta}\\right|_{i = \\text{const}}$.",
+      "Unified DC Machine Torque: $T_e = \\frac{P \\Phi Z I_a}{2\\pi A}$ N-m.",
+      "Internal Power Balance: $P_{mech} = E_b I_a = T_e \\omega_m$.",
+      "Shunt Motor Speed Droop: Small speed drop ($5-8\\%$) with load due to low armature resistance $R_a$.",
+      "Four-Point Starter Advantage: NVC current is independent of field rheostat adjustments, preventing unwanted trips.",
+      "Core Loss Breakdown: Hysteresis loss $P_h = k_h f B_m^{1.6} V$ + Eddy current loss $P_e = k_e f^2 B_m^2 t^2 V$.",
+      "Max Efficiency Loading Criterion: Occurs when $I_a^2 R_a = P_{constant}$.",
+      "Traction Drive Choice: DC Series motor selected for electric trains due to extreme starting torque ($T \\propto I_a^2$).",
+      "Plugging Current Surge: $I_{plug} = \\frac{V + E_b}{R_a + R_{ext}}$ (requires high external series resistance).",
+      "Exam Gold Tip: Always remember that in DC motors, back EMF $E_b$ is always slightly smaller than terminal voltage $V$, whereas in DC generators, generated EMF $E_g$ is always slightly larger than terminal voltage $V$."
+    ]
+  },
+  "Electrical Machines:::2": {
+    "title": "Transformers",
+    "highlights": [
+      "Transformer Physics & Core Topologies: Magnetic circuit fundamentals; Magnetomotive force ($MMF = N I$), Reluctance ($\\mathcal{R} = l / (\\mu A)$); Core-type (two-legged core with concentric windings) vs Shell-type (three-legged core with sandwich / interleaved windings); Step-up, step-down, and isolation transformers.",
+      "Faraday's Law & Unified EMF Formula: Sinusoidal core flux linkage; Primary and secondary induced voltages: $E_1 = 4.44 f N_1 \\Phi_m$, $E_2 = 4.44 f N_2 \\Phi_m$; Volts-per-turn equality: $\\frac{E_1}{N_1} = \\frac{E_2}{N_2} = 4.44 f \\Phi_m$; Flux density limits to prevent saturation ($B_m \\approx 1.5-1.7\\text{ T}$).",
+      "Equivalent Circuit Representation: Primary resistance and leakage reactance ($R_1, X_1$); Shunt magnetizing branch ($R_c, X_m$); Referred secondary parameters ($R_2' = R_2 / K^2, X_2' = X_2 / K^2$); Phasor diagrams under resistive, inductive, and capacitive loading conditions.",
+      "Performance Metrics \u2014 Regulation & Efficiency: Percentage voltage regulation: $VR = \\frac{V_{2,NL} - V_{2,FL}}{V_{2,FL}} \\times 100\\% \\approx \\frac{I_2(R_{eq2}\\cos\\phi_2 \\pm X_{eq2}\\sin\\phi_2)}{V_2} \\times 100\\%$; Efficiency calculation $\\eta = \\frac{\\text{Output}}{\\text{Output} + P_i + P_{cu}}$; Condition for maximum efficiency ($P_i = P_{cu}$).",
+      "Open-Circuit & Short-Circuit Testing: OC test on LV side (measures no-load current $I_0$, core iron loss $P_i$, gives $R_c, X_m$); SC test on HV side (measures short-circuit current $I_{sc}$, full-load copper loss $P_{cu(FL)}$, gives $R_{eq}, X_{eq}$); Predetermination of performance curves.",
+      "Three-Phase Transformer Connections: Three single-phase units vs Three-phase three-limb core unit; Standard connection topologies: Star-Star ($Y-Y$, neutral grounding), Delta-Delta ($\\Delta-\\Delta$, third harmonic circulation), Star-Delta ($Y-\\Delta$, step-down distribution), Delta-Star ($\\Delta-Y$, generation step-up and 4-wire distribution); Phase displacement and vector groups (Dyn11, Ynd1).",
+      "Scott Connection (T-Connection): Conversion of three-phase to two-phase power using two single-phase transformers (Main transformer center-tapped at $50\\%$, Teaser transformer tapped at $86.6\\%$ / $\\frac{\\sqrt{3}}{2}$ of turns); Symmetrical balanced two-phase output under balanced three-phase input.",
+      "Open-Delta ($V-V$) Connection: Operation of Delta-Delta bank with one single-phase transformer removed; Available bank capacity reduces to $\\frac{1}{\\sqrt{3}} = 57.7\\%$ of original delta bank rating (operates at $86.6\\%$ of combined rating of remaining two transformers).",
+      "Auto-Transformer Comparisons: Operating mechanism combining conductive and inductive power transfer; Significant copper reduction: $\\text{Copper Saved} = k \\times W_{2-wdg}$; Increased kVA throughput; Lack of galvanic isolation limitation.",
+      "University Examination Strategy: Calculate transformer equivalent circuit parameters from OC and SC test data, calculate voltage regulation and efficiency at various power factors, analyze phase shifts in three-phase vector groups, and solve Scott connection power delivery problems."
+    ],
+    "keyPoints": [
+      "Volts Per Turn Invariant: $\\frac{E_1}{N_1} = \\frac{E_2}{N_2} = 4.44 f \\Phi_m$.",
+      "Max Efficiency Loading Point: $S_{max\\,\\eta} = S_{rated} \\times \\sqrt{\\frac{P_i}{P_{cu(FL)}}}$.",
+      "Zero Voltage Regulation Power Factor: Leading PF with $\\cos\\phi_2 = \\frac{X_{eq}}{\\sqrt{R_{eq}^2 + X_{eq}^2}}$.",
+      "Max Voltage Regulation Power Factor: Lagging PF with $\\cos\\phi_2 = \\frac{R_{eq}}{\\sqrt{R_{eq}^2 + X_{eq}^2}}$.",
+      "Star-Delta Line Voltage Ratio: $K_{line} = \\frac{V_{L2}}{V_{L1}} = \\frac{K_{ph}}{\\sqrt{3}}$ for $Y-\\Delta$.",
+      "Delta-Star Line Voltage Ratio: $K_{line} = \\sqrt{3} K_{ph}$ for $\\Delta-Y$.",
+      "Scott Connection Teaser Turns: Teaser winding turns $N_T = \\frac{\\sqrt{3}}{2} N_M \\approx 0.866 N_M$.",
+      "Open-Delta ($V-V$) Capacity Ratio: $\\frac{kVA_{V-V}}{kVA_{\\Delta-\\Delta}} = \\frac{1}{\\sqrt{3}} \\approx 57.7\\%$.",
+      "CRGO Core Lamination Benefit: Reduces hysteresis loss through grain orientation and eddy current loss via thin insulating coating.",
+      "Exam Gold Tip: In Open-Delta connection, the two transformers operate at a power factor of $\\cos(30^\\circ \\pm \\theta)$, meaning they do not share load at the load's nominal power factor."
+    ]
+  },
+  "Electrical Machines:::3": {
+    "title": "Induction Motors",
+    "highlights": [
+      "Three-Phase Rotating Magnetic Field (RMF): Principle of rotating stator MMF generated by 3-phase balanced spatial windings displaced by $120^\\circ$ carrying balanced 3-phase currents displaced by $120^\\circ$ in time; Constant magnitude of resultant magnetic flux: $\\Phi_{resultant} = 1.5 \\Phi_m$; Synchronous speed: $N_s = \\frac{120 f}{P}$ rpm.",
+      "Operating Principle of Induction Motor: Asynchronous operation; Relative speed between rotating stator flux and stationary rotor conductors induces rotor EMF and currents; Rotor accelerates in direction of stator field according to Lenz's law; Slip definition: $s = \\frac{N_s - N}{N_s}$; Rotor frequency: $f_r = s f$.",
+      "Rotor Construction Varieties: (1) Squirrel-Cage Rotor (uninsulated copper or aluminum bars short-circuited by end rings, rugged, brushless, maintenance-free, skewed slots reducing cogging and crawling); (2) Wound Rotor / Slip-Ring Rotor (3-phase insulated winding brought out to external slip rings, allows insertion of external starting resistances).",
+      "Equivalent Circuit Modeling of Induction Motor: Stator impedance ($R_1, X_1$); Shunt magnetizing branch ($R_c, X_m$); Rotor impedance referred to stator ($R_2'/s, X_2'$); Electrical representation of mechanical load: variable resistance $R_L' = R_2' \\left(\\frac{1 - s}{s}\\right)$; Power flow stages: Stator input $\\to$ Stator copper/iron loss $\\to$ Air-gap power $P_g \\to$ Rotor copper loss $s P_g \\to$ Gross mechanical power $(1-s)P_g \\to$ Friction/windage $\\to$ Shaft output.",
+      "Torque-Slip and Torque-Speed Characteristics: Torque equation: $T_e = \\frac{3}{\\omega_s} \\frac{V_{th}^2 (R_2'/s)}{(R_{th} + R_2'/s)^2 + (X_{th} + X_2')^2}$; Motoring region ($0 < s < 1$), Generating region ($s < 0$), Braking / Plugging region ($s > 1$); Stable vs unstable operating regions on torque-slip curve.",
+      "Maximum Breakdown Torque & Starting Torque: Slip at maximum torque: $s_{max} \\approx \\frac{R_2'}{X_2'}$; Maximum torque value: $T_{max} = \\frac{3}{2\\omega_s} \\frac{V^2}{2 X_2'}$ (independent of rotor resistance $R_2$); Effect of adding external rotor resistance in slip-ring motor: shifts peak torque toward standstill ($s = 1$) without altering $T_{max}$ magnitude.",
+      "Starting Methods of Three-Phase Induction Motors: High inrush current ($5-7$ times $I_{FL}$); Starting methods: (1) Direct-On-Line (DOL, limited to $<5\\text{ kW}$); (2) Star-Delta Starter (starting phase voltage reduced to $1/\\sqrt{3}$, starting current and torque reduced to $1/3$); (3) Auto-Transformer Starter ($I_{st} = x^2 I_{sc}$, $T_{st} = x^2 T_{sc}$); (4) Rotor Resistance Starter (slip-ring motors, maintains high starting torque).",
+      "Speed Control of Three-Phase Induction Motors: (1) Stator Voltage Control; (2) Variable Voltage Variable Frequency (V/f Control: constant air-gap flux up to base speed, flux weakening above base speed); (3) Pole Changing (Dahlander winding); (4) Rotor Resistance Control; (5) Slip Power Recovery Schemes (Kramer and Scherbius drives).",
+      "Parasitic Phenomena \u2014 Cogging and Crawling: Cogging (magnetic locking occurring when stator slots equal rotor slots $S_s = S_r$, prevented by choosing $S_s \\ne S_r$ and skewing rotor slots); Crawling (motor runs steadily at sub-synchronous speed $N_s/7$ due to 7th space harmonic harmonic torque).",
+      "University Examination Strategy: Prove that a 3-phase winding produces an RMF of constant magnitude $1.5 \\Phi_m$, derive induction motor torque-slip equation and maximum torque expression, calculate power flow distribution ($P_g : P_{cu,rotor} : P_{mech} = 1 : s : 1-s$), and compare starting methods."
+    ],
+    "keyPoints": [
+      "Resultant RMF Amplitude: $\\Phi_{resultant} = \\frac{3}{2} \\Phi_m = 1.5 \\Phi_m$ (constant magnitude rotating at $N_s$).",
+      "Synchronous Speed Equation: $N_s = \\frac{120 f}{P}$ rpm.",
+      "Slip Frequency Relation: $f_r = s \\times f$.",
+      "Power Flow Ratio: $P_g : P_{cu,rotor} : P_{mech} = 1 : s : (1 - s)$.",
+      "Slip at Maximum Torque: $s_{mT} = \\frac{R_2'}{\\sqrt{R_{th}^2 + (X_{th} + X_2')^2}} \\approx \\frac{R_2'}{X_2'}$.",
+      "Maximum Torque Invariant: $T_{max} \\propto \\frac{V^2}{2 X_{eq}}$ (strictly independent of rotor resistance $R_2$).",
+      "Star-Delta Starter Reduction: Starting current and starting torque are both reduced to exactly $\\frac{1}{3}$ of DOL values.",
+      "Auto-Transformer Starting Ratio: $T_{st} = x^2 T_{sc}$ and $I_{line,st} = x^2 I_{sc}$.",
+      "Crawling Harmonic Speed: Motor crawls at $\\frac{1}{7} N_s$ caused by forward-rotating 7th stator space harmonic.",
+      "Exam Gold Tip: Adding resistance to the rotor circuit increases starting torque and shifts the maximum torque point closer to $s=1$, but does NOT change the magnitude of maximum breakdown torque."
+    ]
+  },
+  "Electrical Machines:::4": {
+    "title": "Synchronous Machines",
+    "highlights": [
+      "Synchronous Generator (Alternator) Principle: Synchronous speed operation: rotor driven by prime mover at $N_s = \\frac{120 f}{P}$; Stationary armature 3-phase stator winding (eliminates heavy high-voltage slip rings), rotating DC-excited field electromagnet; Advantages of stationary armature design.",
+      "Rotor Construction Varieties: (1) Salient-Pole Rotor (projecting poles, large diameter, short axial length, low-to-medium speed hydro-turbines $100-500\\text{ rpm}$, non-uniform air gap, damper windings in pole faces); (2) Cylindrical / Non-Salient Rotor (smooth round rotor, small diameter, long axial length, high-speed steam turbo-generators $1500-3000\\text{ rpm}$, uniform air gap).",
+      "Alternator Induced EMF & Winding Factors: Pitch factor / Chording factor: $k_p = \\cos(\\alpha / 2)$ where $\\alpha$ is chording angle (eliminates specific slot harmonics, e.g. $\\alpha = 60^\\circ$ eliminates 3rd harmonic); Distribution / Breadth factor: $k_d = \\frac{\\sin(m \\beta / 2)}{m \\sin(\\beta / 2)}$; RMS generated EMF per phase: $E_{ph} = 4.44 k_p k_d f T_{ph} \\Phi$.",
+      "Armature Reaction in Synchronous Machines: Effect of load power factor on main field flux: (1) Unity PF: purely cross-magnetizing (distorts field flux); (2) Zero PF lagging: purely demagnetizing (drastically reduces terminal voltage); (3) Zero PF leading: purely magnetizing (raises terminal voltage); Intermediate power factors produce combined cross and demagnetizing/magnetizing effects.",
+      "Synchronous Impedance & Voltage Regulation: Synchronous impedance $Z_s = \\sqrt{R_a^2 + X_s^2}$ where synchronous reactance $X_s = X_l + X_a$ ($X_l$ leakage reactance, $X_a$ fictitious armature reaction reactance); Percentage Voltage Regulation: $VR = \\frac{E_0 - V}{V} \\times 100\\%$; Methods of predetermining regulation: (1) Synchronous Impedance / EMF method (pessimistic); (2) Ampere-Turn / MMF method (optimistic); (3) Zero Power Factor / Potier Triangle method (most accurate, separates $X_l$ and armature reaction MMF).",
+      "Two-Reaction Theory of Salient-Pole Alternators: Blondel's two-reaction theory; Decomposition of armature MMF into direct axis ($d$-axis, minimum air-gap permeance) and quadrature axis ($q$-axis, maximum air-gap reluctance); Direct axis reactance $X_d$ and Quadrature axis reactance $X_q$ ($X_d > X_q$); Phasor diagram and power-angle relation: $P = \\frac{E V}{X_d} \\sin\\delta + \\frac{V^2}{2} \\left(\\frac{1}{X_q} - \\frac{1}{X_d}\\right) \\sin(2\\delta)$ (includes reluctance power component).",
+      "Parallel Operation & Synchronization of Alternators: Conditions for paralleling: identical line voltage, identical frequency, identical phase sequence, phase coincidence; Synchronizing methods: Dark lamp method, Bright lamp method, Synchroscope; Synchronizing power and synchronizing torque coefficients.",
+      "Synchronous Motor Operating Principle: Non-self-starting nature (stator field rotates at $N_s$, rotor inertia prevents instantaneous lock-on); Starting methods using amortisseur / damper windings as induction motor, or auxiliary pony motor; Pull-in torque and synchronous pull-out torque.",
+      "V-Curves and Inverted V-Curves: Effect of varying DC field excitation at constant mechanical load; (1) Normal excitation ($\\text{PF} = 1$); (2) Under-excitation (draws lagging reactive power, operates at lagging PF); (3) Over-excitation (supplies reactive power, operates at leading PF); V-curves plot $I_a$ vs $I_f$; Inverted V-curves plot $\\cos\\phi$ vs $I_f$; Application as Synchronous Condenser (unloaded over-excited synchronous motor for power factor correction).",
+      "University Examination Strategy: Calculate winding pitch and distribution factors, determine voltage regulation using EMF and Potier methods, derive the power-angle equation for salient-pole alternators showing reluctance power, and sketch synchronous motor V-curves indicating stability limits."
+    ],
+    "keyPoints": [
+      "Pitch Factor Formula: $k_p = \\cos\\left(\\frac{\\alpha}{2}\\right)$.",
+      "Distribution Factor Formula: $k_d = \\frac{\\sin(m \\beta / 2)}{m \\sin(\\beta / 2)}$.",
+      "Alternator Induced EMF: $E_{ph} = 4.44 k_p k_d f T_{ph} \\Phi$.",
+      "Synchronous Reactance Definition: $X_s = X_l + X_a$ (leakage + armature reaction reactances).",
+      "Zero PF Lagging Armature Reaction: Purely demagnetizing effect on main field flux.",
+      "Zero PF Leading Armature Reaction: Purely magnetizing effect, boosting internal field flux.",
+      "Salient Pole Power-Angle Formula: $P = \\frac{E_0 V}{X_d} \\sin\\delta + \\frac{V^2(X_d - X_q)}{2 X_d X_q} \\sin(2\\delta)$.",
+      "Reluctance Power Term: $\\frac{V^2(X_d - X_q)}{2 X_d X_q} \\sin(2\\delta)$ (operates even if field excitation $E_0 = 0$).",
+      "Synchronous Condenser Operation: Over-excited synchronous motor running at no-load with leading power factor.",
+      "Exam Gold Tip: In synchronous motors, increasing DC field excitation causes the power factor to become more leading; in alternators, increasing field excitation causes the power factor to become more lagging."
+    ]
+  },
+  "Electrical Machines:::5": {
+    "title": "Fractional Horsepower Motors",
+    "highlights": [
+      "Single-Phase Induction Motors Fundamentals: Inability to self-start on single-phase AC supply; Pulsating stator magnetic field; Double-Revolving Field Theory (pulsating field decomposed into two counter-rotating fields of equal magnitude $\\Phi_m/2$ rotating at $\\pm N_s$); Forward slip $s_f = s$ and backward slip $s_b = 2 - s$; Resultant starting torque is strictly zero.",
+      "Split-Phase Induction Motor: Stator provided with two windings displaced by $90^\\circ$ electrical: Main winding (low resistance, high inductive reactance) and Auxiliary / Starting winding (high resistance, low inductive reactance); Phase split $\\alpha \\approx 30^\\circ$; Centrifugal switch disconnects auxiliary winding at $75-80\\%$ synchronous speed; Moderate starting torque ($1.5-2 \\times T_{FL}$).",
+      "Capacitor-Start Induction Motor: High-value electrolytic capacitor connected in series with auxiliary winding; Phase angle displacement between main and auxiliary currents increases to nearly $90^\\circ$; High starting torque ($3-4.5 \\times T_{FL}$); Centrifugal switch disconnects starting winding after run-up; Applications in compressors, pumps, and refrigerators.",
+      "Capacitor-Run & Permanent Split Capacitor (PSC) Motors: Paper/polypropylene continuous-duty capacitor permanently connected in series with auxiliary winding; Centrifugal switch eliminated; Smooth, quiet, vibration-free operation; High running power factor and efficiency; Ideal for ceiling fans and blowers.",
+      "Shaded-Pole Induction Motor: Extremely simple construction; Salient stator poles with one portion surrounded by a low-resistance copper shading band (shading coil); Induced currents in shading ring delay flux through shaded portion; Produces weak shifting magnetic field sweeping from unshaded to shaded pole section; Very low starting torque ($50\\%$ of $T_{FL}$), low efficiency ($20-30\\%$); Small cooling fans, hair dryers.",
+      "Universal Motor (AC Series Motor): Operates on either DC or single-phase AC supply; Series connected armature and field windings; Modifications for AC operation: laminated stator and rotor frames reducing eddy current heating, fewer field turns minimizing inductive reactance, compensating winding neutralizing armature reaction reactance; High speed ($3000-20000\\text{ rpm}$); Vacuum cleaners, food blenders, portable power drills.",
+      "Stepper Motors: Precise discrete incremental angular motion per input electrical pulse; Step angle $\\beta = \\frac{N_s - N_r}{N_s N_r} \\times 360^\\circ$; Topologies: (1) Variable Reluctance (VR) stepper motor; (2) Permanent Magnet (PM) stepper motor; (3) Hybrid stepper motor (combines PM rotor with toothed steel poles, high torque, fine step angles e.g. $1.8^\\circ$); Microstepping techniques.",
+      "Brushless DC (BLDC) Motors: Permanent magnet rotor with electronically commutated 3-phase stator winding; Hall effect sensors or sensorless back-EMF sensing for rotor position tracking; Inverter bridge switching replaces mechanical commutator and carbon brushes; High power density, high reliability, zero sparking; Drones, electric vehicles, computer cooling fans.",
+      "Switched Reluctance Motors (SRM): Doubly salient construction (salient poles on both stator and rotor); Concentrated stator phase windings, rotor has no windings or permanent magnets; Operates on principle of minimum reluctance alignment; Fault-tolerant, high-temperature capability, rugged.",
+      "University Examination Strategy: Explain single-phase induction motor operation using double revolving field theory with complete torque-slip curves, compare capacitor-start vs capacitor-run motors, derive stepper motor step angle relations, and explain BLDC electronic commutation."
+    ],
+    "keyPoints": [
+      "Double Revolving Field Theorem: Pulsating field $\\Phi(t) = \\Phi_m \\cos(\\omega t)$ splits into two fields of magnitude $\\frac{\\Phi_m}{2}$ rotating in opposite directions.",
+      "Backward Slip Formula: $s_b = 2 - s$ (where $s$ is forward slip).",
+      "Capacitor Start Motor Phase Angle: Capacitor shifts auxiliary current phase leading main current by nearly $90^\\circ$.",
+      "Shaded Pole Sweeping Flux: Flux shifts direction strictly from the unshaded segment toward the shaded segment.",
+      "Universal Motor AC Speed: Runs faster on DC than AC for identical applied RMS voltage due to AC reactance drops.",
+      "Stepper Motor Step Angle: $\\theta_s = \\frac{360^\\circ}{m N_r}$ where $m$ is phases and $N_r$ is rotor teeth.",
+      "Hybrid Stepper Resolution: Standard hybrid stepper motor possesses 50 rotor teeth yielding $\\theta_s = 1.8^\\circ$ (200 steps/rev).",
+      "BLDC Electronic Commutation: Employs 3 Hall sensors spaced at $120^\\circ$ to switch 6-transistor inverter bridge every $60^\\circ$ electrical.",
+      "Centrifugal Switch Disconnect Speed: Trips open at approximately $75\\%$ to $80\\%$ of rated synchronous speed.",
+      "Exam Gold Tip: Shaded-pole motors cannot have their direction of rotation reversed electrically because rotation direction is physically fixed from unshaded to shaded pole."
+    ]
+  },
+  "Electromagnetic Fields:::1": {
+    "title": "Static Electric Fields",
+    "highlights": [
+      "Vector Calculus in Coordinate Systems: Cartesian $(x,y,z)$, Cylindrical $(\\rho, \\phi, z)$, and Spherical $(r, \\theta, \\phi)$ coordinates; Differential length, surface, and volume elements; Del operator $\\nabla$; Gradient of scalar field ($\\nabla V$), Divergence of vector field ($\\nabla \\cdot \\mathbf{D}$), Curl of vector field ($\\nabla \\times \\mathbf{E}$); Divergence Theorem (Gauss-Ostrogradsky) and Stokes' Theorem.",
+      "Coulomb's Law and Electric Field Intensity: Coulomb's inverse square law: $\\mathbf{F}_{12} = \\frac{q_1 q_2}{4\\pi \\epsilon_0 R^2} \\hat{\\mathbf{a}}_R$; Permittivity of free space $\\epsilon_0 \\approx 8.854 \\times 10^{-12}\\text{ F/m}$; Electric field intensity $\\mathbf{E} = \\mathbf{F}/q$; Field due to discrete point charges and continuous charge distributions (line charge $\\rho_L$, surface charge $\\rho_S$, volume charge $\\rho_v$).",
+      "Electric Flux Density and Gauss's Law: Electric flux $\\Psi = Q$; Electric flux density vector $\\mathbf{D} = \\epsilon_0 \\mathbf{E}$; Gauss's Law in integral form: $\\oint_S \\mathbf{D} \\cdot d\\mathbf{S} = Q_{enclosed}$; Gauss's Law in point/differential form: $\\nabla \\cdot \\mathbf{D} = \\rho_v$ (Maxwell's First Equation for electrostatics).",
+      "Applications of Gauss's Law: Analytical field determination for symmetric charge geometries: (1) Infinite line charge: $\\mathbf{E} = \\frac{\\rho_L}{2\\pi \\epsilon_0 \\rho} \\hat{\\mathbf{a}}_\\rho$; (2) Infinite planar surface charge: $\\mathbf{E} = \\frac{\\rho_S}{2 \\epsilon_0} \\hat{\\mathbf{a}}_n$; (3) Uniformly charged spherical shell and solid sphere.",
+      "Electric Potential and Potential Gradient: Work done moving test charge against electric field: $W = -q \\int_A^B \\mathbf{E} \\cdot d\\mathbf{L}$; Electric potential $V = \\frac{q}{4\\pi \\epsilon_0 R}$; Conservative nature of electrostatic field: $\\oint \\mathbf{E} \\cdot d\\mathbf{L} = 0 \\implies \\nabla \\times \\mathbf{E} = 0$; Electric field as negative gradient of electric potential: $\\mathbf{E} = -\\nabla V$.",
+      "Electric Dipole and Dipole Moment: Pair of equal and opposite charges $\\pm q$ separated by small distance $d$; Electric dipole moment $\\mathbf{p} = q \\mathbf{d}$; Dipole potential: $V = \\frac{\\mathbf{p} \\cdot \\hat{\\mathbf{a}}_r}{4\\pi \\epsilon_0 r^2} = \\frac{p \\cos\\theta}{4\\pi \\epsilon_0 r^2}$; Dipole electric field: $\\mathbf{E} = \\frac{p}{4\\pi \\epsilon_0 r^3} (2\\cos\\theta \\hat{\\mathbf{a}}_r + \\sin\\theta \\hat{\\mathbf{a}}_\\theta)$ ($1/r^3$ distance decay).",
+      "Electrostatic Energy and Energy Density: Potential energy stored in discrete charge assembly: $W_E = \\frac{1}{2} \\sum_{i=1}^n q_i V_i$; Continuous electrostatic energy integral: $W_E = \\frac{1}{2} \\int_{vol} \\mathbf{D} \\cdot \\mathbf{E} dv = \\frac{1}{2} \\int_{vol} \\epsilon |\\mathbf{E}|^2 dv$; Electrostatic energy density: $w_E = \\frac{1}{2} \\mathbf{D} \\cdot \\mathbf{E} = \\frac{1}{2} \\epsilon E^2$ in Joules per cubic meter ($J/m^3$).",
+      "Poisson's and Laplace's Equations: Derivation from Gauss's differential law and potential gradient: $\\nabla \\cdot (\\epsilon \\nabla V) = -\\rho_v$; Poisson's Equation: $\\nabla^2 V = -\\frac{\\rho_v}{\\epsilon}$; Laplace's Equation (in charge-free regions $\\rho_v = 0$): $\\nabla^2 V = 0$; Laplacian operator $\\nabla^2$ expressions across rectangular, cylindrical, and spherical coordinates.",
+      "Uniqueness Theorem: Proof that any solution to Laplace's or Poisson's equation satisfying specified boundary conditions (Dirichlet, Neumann, or mixed boundary conditions) is the unique physical solution; Applications in electrostatic boundary value problem solutions.",
+      "University Examination Strategy: Apply Gauss's law to evaluate $\\mathbf{D}$ and $\\mathbf{E}$ for cylindrical coaxial and spherical geometries, derive $\\mathbf{E} = -\\nabla V$ and prove $\\nabla \\times \\mathbf{E} = 0$, calculate electrostatic energy stored in capacitor configurations, and solve one-dimensional Laplace equations."
+    ],
+    "keyPoints": [
+      "Coulomb's Force Law: $\\mathbf{F} = \\frac{q_1 q_2}{4\\pi \\epsilon_0 R^2} \\hat{\\mathbf{a}}_R$.",
+      "Gauss's Law (Differential Form): $\\nabla \\cdot \\mathbf{D} = \\rho_v$.",
+      "Gauss's Law (Integral Form): $\\oint_S \\mathbf{D} \\cdot d\\mathbf{S} = Q_{enc}$.",
+      "Infinite Line Charge Field: $\\mathbf{E} = \\frac{\\rho_L}{2\\pi \\epsilon_0 \\rho} \\hat{\\mathbf{a}}_\\rho$.",
+      "Infinite Sheet Charge Field: $\\mathbf{E} = \\frac{\\rho_S}{2 \\epsilon_0} \\hat{\\mathbf{a}}_n$.",
+      "Electric Potential Gradient: $\\mathbf{E} = -\\nabla V$.",
+      "Dipole Electric Field: $\\mathbf{E} = \\frac{p}{4\\pi \\epsilon_0 r^3}(2\\cos\\theta \\hat{\\mathbf{a}}_r + \\sin\\theta \\hat{\\mathbf{a}}_\\theta)$.",
+      "Electrostatic Energy Density: $w_E = \\frac{1}{2} \\mathbf{D} \\cdot \\mathbf{E} = \\frac{1}{2} \\epsilon E^2$ $\\text{J/m}^3$.",
+      "Poisson's Differential Equation: $\\nabla^2 V = -\\frac{\\rho_v}{\\epsilon}$.",
+      "Exam Gold Tip: In electrostatic fields, the curl of $\\mathbf{E}$ is identically zero ($\\nabla \\times \\mathbf{E} = 0$), which proves the electrostatic field is strictly conservative."
+    ]
+  },
+  "Electromagnetic Fields:::2": {
+    "title": "Conductors & Dielectrics",
+    "highlights": [
+      "Conductors in Electrostatic Fields: Conduction mechanisms; Drift velocity and Ohm's law in point form: $\\mathbf{J} = \\sigma \\mathbf{E}$; Internal electric field within static perfect conductor is identically zero ($\\mathbf{E} = 0$ inside conductor); Conductor surface is an equipotential surface; Excess charges reside exclusively on external conductor boundary.",
+      "Dielectric Materials and Polarization: Non-polar vs polar dielectric molecules; Electric polarization vector $\\mathbf{P} = \\lim_{\\Delta v \\to 0} \\frac{\\sum \\mathbf{p}_i}{\\Delta v}$; Bound surface charge density $\\rho_{sb} = \\mathbf{P} \\cdot \\hat{\\mathbf{a}}_n$; Bound volume charge density $\\rho_{vb} = -\\nabla \\cdot \\mathbf{P}$; Total electric flux density: $\\mathbf{D} = \\epsilon_0 \\mathbf{E} + \\mathbf{P} = \\epsilon_0 (1 + \\chi_e) \\mathbf{E} = \\epsilon_0 \\epsilon_r \\mathbf{E}$.",
+      "Dielectric Properties and Breakdown: Relative permittivity / dielectric constant $\\epsilon_r$; Electric susceptibility $\\chi_e = \\epsilon_r - 1$; Dielectric strength (critical electric field intensity causing avalanche dielectric breakdown, e.g. $3\\text{ MV/m}$ for air); Corona discharge and dielectric losses.",
+      "Continuity Equation and Relaxation Time: Conservation of electric charge: $\\nabla \\cdot \\mathbf{J} = -\\frac{\\partial \\rho_v}{\\partial t}$; Combining with Ohm's law and Gauss's law yields: $\\frac{\\partial \\rho_v}{\\partial t} + \\frac{\\sigma}{\\epsilon} \\rho_v = 0$; Solution: $\\rho_v(t) = \\rho_{v0} e^{-t / T_r}$; Dielectric relaxation time constant $T_r = \\frac{\\epsilon}{\\sigma}$ (extremely small $\\sim 10^{-19}\\text{ s}$ for copper).",
+      "Electrostatic Boundary Conditions: (1) Dielectric-Dielectric Interface: Tangential $\\mathbf{E}$ continuity: $E_{t1} = E_{t2}$ ($\\frac{D_{t1}}{\\epsilon_1} = \\frac{D_{t2}}{\\epsilon_2}$); Normal $\\mathbf{D}$ jump discontinuity: $D_{n1} - D_{n2} = \\rho_s$ (if interface is charge-free $\\rho_s = 0 \\implies D_{n1} = D_{n2}$); Law of Refraction of electric flux lines: $\\frac{\\tan\\theta_1}{\\tan\\theta_2} = \\frac{\\epsilon_{r1}}{\\epsilon_{r2}}$.",
+      "Conductor-Dielectric Boundary Conditions: Since $\\mathbf{E}=0$ inside conductor: Tangential electric field at surface is zero: $E_t = 0$; Normal flux density equals free surface charge density: $D_n = \\rho_s$ ($E_n = \\rho_s / \\epsilon$); Electric field lines always terminate perpendicular to conductor surfaces.",
+      "Capacitance Derivation: Definition $C = Q / V$; Step-by-step capacitance derivation flow: Assume $Q \\to$ find $\\mathbf{E}$ via Gauss $\\to$ integrate potential $V = -\\int \\mathbf{E} \\cdot d\\mathbf{L} \\to$ evaluate ratio $C = Q / V$; Parallel-plate capacitor ($C = \\frac{\\epsilon A}{d}$); Coaxial cylindrical cable ($C = \\frac{2\\pi \\epsilon L}{\\ln(b/a)}$); Concentric spherical capacitor ($C = \\frac{4\\pi \\epsilon}{\\frac{1}{a} - \\frac{1}{b}}$); Isolated conducting sphere ($C = 4\\pi \\epsilon R$).",
+      "Multi-Dielectric Capacitors: Capacitors with composite dielectric layers; Dielectrics in series (boundary parallel to plates: $C_{eq} = \\frac{C_1 C_2}{C_1 + C_2}$); Dielectrics in parallel (boundary perpendicular to plates: $C_{eq} = C_1 + C_2$).",
+      "Method of Images: Solution of electrostatic boundary value problems without solving partial differential equations; Point charge $+q$ near infinite grounded conducting plane replaced by original charge $+q$ at $z=d$ and fictitious mirror image charge $-q$ at $z=-d$; Point charge near grounded conducting sphere; Line charge near grounded cylindrical conductor.",
+      "University Examination Strategy: Derive boundary conditions across dielectric interfaces with complete pillbox and rectangular loop sketches, calculate capacitance of composite coaxial transmission lines, and solve method of images for point charges near planar conductors evaluating surface charge distribution."
+    ],
+    "keyPoints": [
+      "Point Form Ohm's Law: $\\mathbf{J} = \\sigma \\mathbf{E}$.",
+      "Dielectric Flux Density: $\\mathbf{D} = \\epsilon_0 \\mathbf{E} + \\mathbf{P} = \\epsilon_0 \\epsilon_r \\mathbf{E}$.",
+      "Bound Surface Charge: $\\rho_{sb} = \\mathbf{P} \\cdot \\hat{\\mathbf{a}}_n$.",
+      "Bound Volume Charge: $\\rho_{vb} = -\\nabla \\cdot \\mathbf{P}$.",
+      "Dielectric Relaxation Time: $T_r = \\frac{\\epsilon}{\\sigma}$.",
+      "Tangential Field Continuity: $E_{t1} = E_{t2}$.",
+      "Normal Flux Discontinuity: $D_{n1} - D_{n2} = \\rho_s$ ($D_{n1} = D_{n2}$ if $\\rho_s = 0$).",
+      "Refraction of Field Lines: $\\frac{\\tan\\theta_1}{\\tan\\theta_2} = \\frac{\\epsilon_1}{\\epsilon_2}$.",
+      "Coaxial Cable Capacitance: $C = \\frac{2\\pi \\epsilon L}{\\ln(b/a)}$.",
+      "Exam Gold Tip: Under electrostatic equilibrium, electric field lines must intersect any conducting surface at strictly right angles ($90^\\circ$)."
+    ]
+  },
+  "Electromagnetic Fields:::3": {
+    "title": "Static Magnetic Fields",
+    "highlights": [
+      "Biot-Savart Law: Magnetic field generated by steady electric current element: $d\\mathbf{B} = \\frac{\\mu_0 I d\\mathbf{L} \\times \\hat{\\mathbf{a}}_R}{4\\pi R^2} = \\frac{\\mu_0 I d\\mathbf{L} \\times \\mathbf{R}}{4\\pi R^3}$; Permeability of free space $\\mu_0 = 4\\pi \\times 10^{-7}\\text{ H/m}$; Magnetic field intensity $\\mathbf{H} = \\mathbf{B} / \\mu_0$; Biot-Savart law for surface current $\\mathbf{K}$ and volume current $\\mathbf{J}$.",
+      "Applications of Biot-Savart Law: (1) Straight filamentary current of finite length: $H = \\frac{I}{4\\pi \\rho} (\\sin\\alpha_2 - \\sin\\alpha_1)$; Infinite straight wire: $H = \\frac{I}{2\\pi \\rho} \\hat{\\mathbf{a}}_\\phi$; (2) Circular current loop on axis: $H_z = \\frac{I R^2}{2 (R^2 + z^2)^{3/2}}$; (3) Solenoid of finite length and infinite length ($H = n I$).",
+      "Ampere's Circuital Law (ACL): Line integral of magnetic field intensity around any closed contour equals total enclosed conduction current: $\\oint_C \\mathbf{H} \\cdot d\\mathbf{L} = I_{enclosed} = \\int_S \\mathbf{J} \\cdot d\\mathbf{S}$; Differential / point form via Stokes' theorem: $\\nabla \\times \\mathbf{H} = \\mathbf{J}$ (Maxwell's Third Equation for magnetostatics).",
+      "Applications of Ampere's Circuital Law: (1) Infinite coaxial cable carrying forward current $I$ in inner conductor and return current $I$ in outer cylindrical sheath (evaluation of $\\mathbf{H}$ across all 4 radial zones); (2) Infinite current sheet carrying surface current $\\mathbf{K} = K_y \\hat{\\mathbf{a}}_y \\implies \\mathbf{H} = \\pm \\frac{1}{2} K_y \\hat{\\mathbf{a}}_z$; (3) Toroidal coil with rectangular and circular cross-sections.",
+      "Magnetic Flux and Gauss's Law for Magnetism: Total magnetic flux $\\Phi = \\int_S \\mathbf{B} \\cdot d\\mathbf{S}$ in Webers ($Wb$); Non-existence of isolated magnetic monopoles (magnetic flux lines are continuous closed loops); Integral form: $\\oint_S \\mathbf{B} \\cdot d\\mathbf{S} = 0$; Point / differential form via Divergence theorem: $\\nabla \\cdot \\mathbf{B} = 0$ (Maxwell's Second Equation).",
+      "Magnetic Vector Potential (A): Since $\\nabla \\cdot \\mathbf{B} = 0$ and divergence of curl is identically zero, magnetic flux density can be defined as curl of vector potential: $\\mathbf{B} = \\nabla \\times \\mathbf{A}$; Units of $\\mathbf{A}$ in $\\text{Wb/m}$ or $\\text{V}\\cdot\\text{s/m}$; Vector Poisson's Equation: $\\nabla^2 \\mathbf{A} = -\\mu_0 \\mathbf{J}$ (under Coulomb gauge $\\nabla \\cdot \\mathbf{A} = 0$); Integral expression: $\\mathbf{A} = \\frac{\\mu_0}{4\\pi} \\int_{vol} \\frac{\\mathbf{J} dv}{R}$.",
+      "Evaluation of Magnetic Flux via Vector Potential: Application of Stokes' Theorem: $\\Phi = \\int_S \\mathbf{B} \\cdot d\\mathbf{S} = \\int_S (\\nabla \\times \\mathbf{A}) \\cdot d\\mathbf{S} = \\oint_C \\mathbf{A} \\cdot d\\mathbf{L}$; Eliminates area surface integration in complex boundary problems.",
+      "Magnetic Scalar Potential ($V_m$): Defined strictly in current-free regions where $\\mathbf{J} = 0$: $\\nabla \\times \\mathbf{H} = 0 \\implies \\mathbf{H} = -\\nabla V_m$; Satisfies Laplace's equation $\\nabla^2 V_m = 0$; Multi-valued nature when encircling closed paths enclosing currents.",
+      "Magnetic Dipole and Dipole Moment: Small planar closed loop of area $S$ carrying current $I$; Magnetic dipole moment vector: $\\mathbf{m} = I S \\hat{\\mathbf{a}}_n$; Vector potential of dipole: $\\mathbf{A} = \\frac{\\mu_0 m \\sin\\theta}{4\\pi r^2} \\hat{\\mathbf{a}}_\\phi$; Magnetic flux density: $\\mathbf{B} = \\frac{\\mu_0 m}{4\\pi r^3} (2\\cos\\theta \\hat{\\mathbf{a}}_r + \\sin\\theta \\hat{\\mathbf{a}}_\\theta)$ (formal duality with electric dipole).",
+      "University Examination Strategy: Apply Biot-Savart law to derive magnetic field intensity along the axis of circular current loops, use Ampere's circuital law to compute field distribution across coaxial transmission lines, verify $\\nabla \\cdot \\mathbf{B} = 0$, and evaluate vector potential $\\mathbf{A}$ for symmetrical currents."
+    ],
+    "keyPoints": [
+      "Biot-Savart Differential Formula: $d\\mathbf{H} = \\frac{I d\\mathbf{L} \\times \\hat{\\mathbf{a}}_R}{4\\pi R^2}$.",
+      "Ampere's Circuital Law (Integral): $\\oint_C \\mathbf{H} \\cdot d\\mathbf{L} = I_{enc}$.",
+      "Ampere's Law (Point Form): $\\nabla \\times \\mathbf{H} = \\mathbf{J}$.",
+      "Gauss's Law for Magnetism: $\\nabla \\cdot \\mathbf{B} = 0$ (no magnetic monopoles).",
+      "Infinite Wire Magnetic Field: $H_\\phi = \\frac{I}{2\\pi \\rho}$.",
+      "Solenoid Axial Magnetic Field: $H_z = n I = \\frac{N I}{L}$.",
+      "Magnetic Vector Potential Definition: $\\mathbf{B} = \\nabla \\times \\mathbf{A}$.",
+      "Vector Poisson Equation: $\\nabla^2 \\mathbf{A} = -\\mu \\mathbf{J}$ (under Coulomb gauge $\\nabla \\cdot \\mathbf{A} = 0$).",
+      "Magnetic Flux via Line Integral: $\\Phi = \\oint_C \\mathbf{A} \\cdot d\\mathbf{L}$.",
+      "Exam Gold Tip: Always specify the Coulomb gauge condition $\\nabla \\cdot \\mathbf{A} = 0$ when reducing the magnetic vector wave equation to Poisson's equation."
+    ]
+  },
+  "Electromagnetic Fields:::4": {
+    "title": "Magnetic Forces & Materials",
+    "highlights": [
+      "Lorentz Force Equation: Total electromagnetic force acting on moving charged particle: $\\mathbf{F} = q (\\mathbf{E} + \\mathbf{v} \\times \\mathbf{B})$; Magnetic force $\\mathbf{F}_m = q (\\mathbf{v} \\times \\mathbf{B})$ does zero mechanical work since $\\mathbf{F}_m \\perp \\mathbf{v}$; Causes circular cyclotron motion with radius $r = \\frac{m v}{q B}$ and cyclotron frequency $\\omega_c = \\frac{q B}{m}$.",
+      "Magnetic Force on Current Elements: Force on differential line current: $d\\mathbf{F} = I d\\mathbf{L} \\times \\mathbf{B}$; Force on surface current: $d\\mathbf{F} = \\mathbf{K} \\times \\mathbf{B} dS$; Force on volume current: $d\\mathbf{F} = \\mathbf{J} \\times \\mathbf{B} dv$; Force between two parallel infinite current-carrying wires: $F/L = \\frac{\\mu_0 I_1 I_2}{2\\pi d}$ (attractive for parallel currents, repulsive for anti-parallel currents; SI definition of Ampere).",
+      "Magnetic Torque on Closed Planar Loops: Torque on planar current loop in uniform magnetic field: $\\mathbf{T} = \\mathbf{m} \\times \\mathbf{B}$ (where magnetic dipole moment $\\mathbf{m} = I A \\hat{\\mathbf{a}}_n$); Tends to align magnetic dipole with external magnetic field; Basis of galvanometer and electric motor operations.",
+      "Magnetization in Materials: Atomic magnetic dipoles (orbital electron motion and electron spin); Magnetization vector $\\mathbf{M} = \\lim_{\\Delta v \\to 0} \\frac{\\sum \\mathbf{m}_i}{\\Delta v}$ in $\\text{A/m}$; Bound volume current density $\\mathbf{J}_b = \\nabla \\times \\mathbf{M}$; Bound surface current density $\\mathbf{K}_b = \\mathbf{M} \\times \\hat{\\mathbf{a}}_n$; Total magnetic flux density: $\\mathbf{B} = \\mu_0 (\\mathbf{H} + \\mathbf{M}) = \\mu_0 (1 + \\chi_m) \\mathbf{H} = \\mu_0 \\mu_r \\mathbf{H}$.",
+      "Classification of Magnetic Materials: (1) Diamagnetic ($\\mu_r \\lesssim 1, \\chi_m < 0$, weak repulsion, e.g. Cu, Bi); (2) Paramagnetic ($\\mu_r \\gtrsim 1, \\chi_m > 0$, weak attraction, e.g. Al, Pt); (3) Ferromagnetic ($\\mu_r \\gg 1$, domain alignment, spontaneous magnetization, non-linear $B-H$ curve, Curie temperature $T_c$, e.g. Fe, Ni, Co); Antiferromagnetic and Ferrimagnetic (ferrites).",
+      "Magnetic Boundary Conditions: (1) Normal components: continuity of magnetic flux density: $B_{n1} = B_{n2}$ ($\\mu_1 H_{n1} = \\mu_2 H_{n2}$); (2) Tangential components: jump discontinuity due to surface current: $(\\mathbf{H}_1 - \\mathbf{H}_2) \\times \\hat{\\mathbf{a}}_{n12} = \\mathbf{K}$ (if interface has no surface current $\\mathbf{K}=0 \\implies H_{t1} = H_{t2}$); Law of Refraction for magnetic field lines: $\\frac{\\tan\\theta_1}{\\tan\\theta_2} = \\frac{\\mu_{r1}}{\\mu_{r2}}$.",
+      "Inductance and Mutual Inductance: Self-inductance $L = \\frac{\\Lambda}{I} = \\frac{N \\Phi}{I}$; Energy formulation: $L = \\frac{2 W_H}{I^2}$; Mutual inductance between two coupled circuits: $M_{12} = \\frac{\\Lambda_{12}}{I_2} = \\frac{N_1 \\Phi_{12}}{I_2}$; Neumann's formula: $M_{12} = \\frac{\\mu_0}{4\\pi} \\oint_{C1} \\oint_{C2} \\frac{d\\mathbf{L}_1 \\cdot d\\mathbf{L}_2}{R}$; Inductance of coaxial cable ($L = \\frac{\\mu L}{2\\pi}\\ln(b/a)$) and toroid.",
+      "Magnetic Energy and Energy Density: Energy stored in magnetic field: $W_H = \\frac{1}{2} L I^2$; Continuous field formulation: $W_H = \\frac{1}{2} \\int_{vol} \\mathbf{B} \\cdot \\mathbf{H} dv = \\frac{1}{2} \\int_{vol} \\mu |\\mathbf{H}|^2 dv$; Magnetic energy density: $w_H = \\frac{1}{2} \\mathbf{B} \\cdot \\mathbf{H} = \\frac{1}{2} \\mu H^2$ in $\\text{J/m}^3$.",
+      "Magnetic Circuits and Reluctance: Analogy between electric and magnetic circuits: MMF $\\mathcal{F} = N I$ (analogous to EMF $V$), Magnetic flux $\\Phi$ (analogous to current $I$), Reluctance $\\mathcal{R} = \\frac{l}{\\mu A}$ (analogous to resistance $R$); Hopkinson's Law: $\\mathcal{F} = \\Phi \\mathcal{R}$; Air gap reluctance and fringing effects; Lifting power of electromagnets: $F = \\frac{B^2 A}{2\\mu_0}$.",
+      "University Examination Strategy: Calculate forces and torques on arbitrary loop conductors in uniform magnetic fields, derive magnetic boundary conditions across media interfaces, calculate self-inductance and stored magnetic energy of coaxial cables, and solve magnetic circuits with air gaps."
+    ],
+    "keyPoints": [
+      "Lorentz Force Equation: $\\mathbf{F} = q(\\mathbf{E} + \\mathbf{v} \\times \\mathbf{B})$.",
+      "Magnetic Force on Conductor: $\\mathbf{F} = I \\int d\\mathbf{L} \\times \\mathbf{B}$.",
+      "Parallel Wires Mutual Force: $\\frac{F}{L} = \\frac{\\mu_0 I_1 I_2}{2\\pi d}$ (attracts for parallel currents).",
+      "Magnetic Dipole Torque: $\\mathbf{T} = \\mathbf{m} \\times \\mathbf{B}$, where $\\mathbf{m} = I S \\hat{\\mathbf{a}}_n$.",
+      "Bound Surface Current: $\\mathbf{K}_b = \\mathbf{M} \\times \\hat{\\mathbf{a}}_n$.",
+      "Bound Volume Current: $\\mathbf{J}_b = \\nabla \\times \\mathbf{M}$.",
+      "Normal Magnetic Boundary: $B_{n1} = B_{n2}$.",
+      "Tangential Magnetic Boundary: $H_{t1} - H_{t2} = K$ ($H_{t1} = H_{t2}$ if $K = 0$).",
+      "Magnetic Energy Density: $w_H = \\frac{1}{2} \\mathbf{B} \\cdot \\mathbf{H} = \\frac{1}{2} \\mu H^2$ $\\text{J/m}^3$.",
+      "Exam Gold Tip: Magnetic forces do zero work on moving point charges because magnetic force is always perpendicular to instantaneous velocity ($\\mathbf{F}_m \\cdot \\mathbf{v} = 0$)."
+    ]
+  },
+  "Electromagnetic Fields:::5": {
+    "title": "Time-Varying Fields & Maxwell's Equations",
+    "highlights": [
+      "Faraday's Law of Electromagnetic Induction: Time-varying magnetic fields induce electric fields; Lenz's Law; Induced EMF in closed circuit: $\\mathcal{E} = -\\frac{d\\lambda}{dt} = -N \\frac{d\\Phi}{dt}$; Integral form: $\\oint_C \\mathbf{E} \\cdot d\\mathbf{L} = -\\int_S \\frac{\\partial \\mathbf{B}}{\\partial t} \\cdot d\\mathbf{S}$; Differential / point form: $\\nabla \\times \\mathbf{E} = -\\frac{\\partial \\mathbf{B}}{\\partial t}$.",
+      "Transformer EMF and Motional EMF: Total induced EMF: $\\mathcal{E} = \\oint_C \\mathbf{E} \\cdot d\\mathbf{L} = -\\int_S \\frac{\\partial \\mathbf{B}}{\\partial t} \\cdot d\\mathbf{S} + \\oint_C (\\mathbf{v} \\times \\mathbf{B}) \\cdot d\\mathbf{L}$; Transformer EMF (stationary circuit in time-varying magnetic field); Motional / Generator EMF (moving conductor in static magnetic field); Combined EMF in rotating machine windings.",
+      "Maxwell's Inconsistency & Displacement Current: Inadequacy of Ampere's circuital law $\\nabla \\times \\mathbf{H} = \\mathbf{J}$ for time-varying fields: divergence of curl is identically zero ($\\nabla \\cdot (\\nabla \\times \\mathbf{H}) = 0$), but continuity equation requires $\\nabla \\cdot \\mathbf{J} = -\\frac{\\partial \\rho_v}{\\partial t} \\ne 0$; Maxwell's resolution: addition of Displacement Current Density $\\mathbf{J}_d = \\frac{\\partial \\mathbf{D}}{\\partial t}$.",
+      "Total Current Density in Ampere-Maxwell Law: $\\mathbf{J}_{total} = \\mathbf{J}_{c} + \\mathbf{J}_{d} = \\sigma \\mathbf{E} + \\frac{\\partial \\mathbf{D}}{\\partial t}$; Conduction current vs displacement current in parallel-plate capacitor dielectric; Displacement current ensures continuity of total current across capacitor plates.",
+      "Maxwell's Four Equations: Complete formulation in Differential Form: (1) $\\nabla \\cdot \\mathbf{D} = \\rho_v$, (2) $\\nabla \\cdot \\mathbf{B} = 0$, (3) $\\nabla \\times \\mathbf{E} = -\\frac{\\partial \\mathbf{B}}{\\partial t}$, (4) $\\nabla \\times \\mathbf{H} = \\mathbf{J} + \\frac{\\partial \\mathbf{D}}{\\partial t}$; Integral Form via Divergence and Stokes' theorems; Time-harmonic phasor form ($\\partial / \\partial t \\to j\\omega$).",
+      "Retarded Potentials and Wave Equations: Electromagnetic potentials in dynamic fields; Lorentz Gauge Condition: $\\nabla \\cdot \\mathbf{A} = -\\mu \\epsilon \\frac{\\partial V}{\\partial t}$; Decoupled Inhomogeneous Wave Equations: $\\nabla^2 V - \\mu \\epsilon \\frac{\\partial^2 V}{\\partial t^2} = -\\frac{\\rho_v}{\\epsilon}$ and $\\nabla^2 \\mathbf{A} - \\mu \\epsilon \\frac{\\partial^2 \\mathbf{A}}{\\partial t^2} = -\\mu \\mathbf{J}$; Retarded potential solutions accounting for propagation delay $t' = t - R/u$.",
+      "Poynting's Theorem & Electromagnetic Power Flow: Derivation from Maxwell's curl equations: $-\\nabla \\cdot (\\mathbf{E} \\times \\mathbf{H}) = \\mathbf{J} \\cdot \\mathbf{E} + \\frac{\\partial}{\\partial t}\\left(\\frac{1}{2}\\epsilon E^2 + \\frac{1}{2}\\mu H^2\\right)$; Poynting Vector $\\mathbf{S} = \\mathbf{E} \\times \\mathbf{H}$ representing instantaneous directional power density in $\\text{W/m}^2$; Time-average Poynting vector: $\\mathbf{S}_{avg} = \\frac{1}{2} \\text{Re}\\{\\mathbf{E} \\times \\mathbf{H}^*\\}$.",
+      "Electromagnetic Plane Waves in Lossless Media: Helmholtz wave equations in source-free lossless dielectric: $\\nabla^2 \\mathbf{E} - \\mu \\epsilon \\frac{\\partial^2 \\mathbf{E}}{\\partial t^2} = 0$; Uniform Plane Wave (UPW) propagating in $+z$ direction: $\\mathbf{E}(z,t) = E_0 \\cos(\\omega t - \\beta z) \\hat{\\mathbf{a}}_x$; Phase velocity $u_p = \\frac{1}{\\sqrt{\\mu \\epsilon}} = c / \\sqrt{\\mu_r \\epsilon_r}$; Phase constant $\\beta = \\omega \\sqrt{\\mu \\epsilon} = \\frac{2\\pi}{\\lambda}$; Intrinsic / Wave Impedance $\\eta = \\sqrt{\\frac{\\mu}{\\epsilon}}$ ($377\\ \\Omega$ in free space); Transverse Electromagnetic (TEM) wave nature ($\\mathbf{E} \\perp \\mathbf{H} \\perp \\hat{\\mathbf{a}}_k$).",
+      "Wave Propagation in Lossy Media and Conductors: Complex permittivity and loss tangent $\\tan\\theta = \\frac{\\sigma}{\\omega \\epsilon}$; Propagation constant $\\gamma = \\alpha + j\\beta = \\sqrt{j\\omega\\mu(\\sigma + j\\omega\\epsilon)}$; Attenuation constant $\\alpha$ (nepers/m); Good dielectrics ($\\sigma \\ll \\omega \\epsilon$) vs Good conductors ($\\sigma \\gg \\omega \\epsilon$); Skin depth / penetration depth in conductors: $\\delta = \\sqrt{\\frac{2}{\\omega \\mu \\sigma}} = \\frac{1}{\\alpha}$; Surface resistance $R_s = \\frac{1}{\\sigma \\delta}$.",
+      "University Examination Strategy: State and prove Maxwell's equations in both point and integral forms, derive the wave equation for electric and magnetic fields in dielectric media, compute displacement current density in capacitors, and calculate skin depth, wave impedance, and average power density."
+    ],
+    "keyPoints": [
+      "Faraday's Law (Point Form): $\\nabla \\times \\mathbf{E} = -\\frac{\\partial \\mathbf{B}}{\\partial t}$.",
+      "Maxwell-Ampere Law: $\\nabla \\times \\mathbf{H} = \\mathbf{J} + \\frac{\\partial \\mathbf{D}}{\\partial t}$.",
+      "Displacement Current Density: $\\mathbf{J}_d = \\frac{\\partial \\mathbf{D}}{\\partial t} = \\epsilon \\frac{\\partial \\mathbf{E}}{\\partial t}$.",
+      "Lorentz Gauge Condition: $\\nabla \\cdot \\mathbf{A} = -\\mu \\epsilon \\frac{\\partial V}{\\partial t}$.",
+      "Poynting Vector: $\\mathbf{S} = \\mathbf{E} \\times \\mathbf{H}$ (in $\\text{W/m}^2$).",
+      "Average Poynting Vector: $\\mathbf{S}_{avg} = \\frac{1}{2} \\text{Re}\\{\\mathbf{E} \\times \\mathbf{H}^*\\}$.",
+      "Free Space Intrinsic Impedance: $\\eta_0 = \\sqrt{\\frac{\\mu_0}{\\epsilon_0}} \\approx 120\\pi \\approx 377\\ \\Omega$.",
+      "Speed of Light in Free Space: $c = \\frac{1}{\\sqrt{\\mu_0 \\epsilon_0}} \\approx 3 \\times 10^8\\text{ m/s}$.",
+      "Conductor Skin Depth: $\\delta = \\sqrt{\\frac{2}{\\omega \\mu \\sigma}} = \\frac{1}{\\sqrt{\\pi f \\mu \\sigma}}$.",
+      "Exam Gold Tip: In a good conductor, the magnetic field lags the electric field by exactly $45^\\circ$ ($j\\omega\\mu/(\\sigma + j\\omega\\epsilon) \\approx \\sqrt{\\omega\\mu/\\sigma} \\angle 45^\\circ$)."
+    ]
+  },
+  "Sensors & Transducers:::1": {
+    "title": "Characteristics & Errors",
+    "highlights": [
+      "Sensor and Transducer Taxonomies: Functional distinction: Sensor (detects physical stimulus and converts to measurable signal) vs Transducer (converts energy from one domain to another, typically electrical); Primary vs secondary transducers; Active (self-generating, e.g. thermocouple, piezoelectric) vs Passive (requires external excitation, e.g. strain gauge, LVDT); Analog vs digital transducers.",
+      "Static Performance Characteristics: (1) Accuracy (closeness to true value) and Precision (repeatability / repeatability of measurements); (2) Sensitivity ($S = \\Delta q_o / \\Delta q_i$, slope of static calibration curve); (3) Linearity (maximum deviation from best-fit straight line); (4) Resolution (smallest detectable change in input); (5) Threshold; (6) Hysteresis (difference in output for ascending vs descending inputs); (7) Dead zone / Dead band; (8) Drift (zero drift, span drift, zonal drift).",
+      "Dynamic Performance Characteristics: Response to time-varying inputs; Mathematical modeling via linear ordinary differential equations: $a_n \\frac{d^n q_o}{dt^n} + \\dots + a_1 \\frac{dq_o}{dt} + a_0 q_o = b_m \\frac{d^m q_i}{dt^m} + \\dots + b_0 q_i$; Operational classification: Zero-order, First-order, and Second-order instrument systems.",
+      "Zero-Order Systems: Output is directly proportional to input at all frequencies with zero time lag: $q_o(t) = K q_i(t)$; Static sensitivity $K$; Ideal potentiometer displacement sensor.",
+      "First-Order Systems: Governed by differential equation: $\\tau \\frac{dq_o}{dt} + q_o = K q_i$; Time constant $\\tau$; Step response: $q_o(t) = K Q_0 (1 - e^{-t/\\tau})$; Frequency response: $M(\\omega) = \\frac{K}{\\sqrt{1 + (\\omega\\tau)^2}}$, phase lag $\\phi(\\omega) = -\\tan^{-1}(\\omega\\tau)$; Dynamic error: $e(t) = q_i(t) - q_o(t)/K$; Mercury thermometer, bare thermocouple.",
+      "Second-Order Systems: Governed by: $\\frac{1}{\\omega_n^2} \\frac{d^2 q_o}{dt^2} + \\frac{2\\zeta}{\\omega_n} \\frac{dq_o}{dt} + q_o = K q_i$; Undamped natural frequency $\\omega_n$ and Damping ratio $\\zeta$; Step response regimes (Overdamped $\\zeta > 1$, Critically damped $\\zeta = 1$, Underdamped $\\zeta < 1$); Dynamic specifications: Rise time $t_r$, Settling time $t_s$, Maximum peak overshoot $M_p = e^{-\\frac{\\pi\\zeta}{\\sqrt{1-\\zeta^2}}}$; Accelerometers, pressure transducers.",
+      "Measurement Errors and Classification: (1) Gross Errors (human blunders, improper instrument setup, parallax errors; eliminated by procedural discipline); (2) Systematic / Deterministic Errors (instrumental calibration offsets, environmental temperature/humidity effects, loading errors; corrected via calibration curves); (3) Random / Residual Errors (stochastic electrical thermal noise, structural vibrations; analyzed using statistical methods).",
+      "Statistical Error Analysis: Sample mean $\\bar{x} = \\frac{1}{N}\\sum x_i$; Residual deviation $d_i = x_i - \\bar{x}$; Variance $s^2 = \\frac{1}{N-1}\\sum d_i^2$; Standard deviation $s$; Gaussian normal distribution curve; Probable error $r = 0.6745 s$; Chauvenet's criterion for rejecting statistical outlier data points.",
+      "Uncertainty Propagation in Measurement Systems: Kline and McClintock method for multi-variable experimental uncertainty; Result $R = f(x_1, x_2, \\dots, x_n)$ with parameter uncertainties $w_1, w_2, \\dots, w_n$; Total root-sum-square uncertainty: $w_R = \\sqrt{\\left(\\frac{\\partial R}{\\partial x_1} w_1\\right)^2 + \\left(\\frac{\\partial R}{\\partial x_2} w_2\\right)^2 + \\dots + \\left(\\frac{\\partial R}{\\partial x_n} w_n\\right)^2}$.",
+      "University Examination Strategy: Differentiate accuracy vs precision with target diagrams, derive the step and frequency response of first-order thermal sensors, calculate dynamic error and time lag, and apply uncertainty propagation formulas to compound electrical power measurements."
+    ],
+    "keyPoints": [
+      "Static Sensitivity Formula: $S = \\frac{d q_o}{d q_i}$.",
+      "First-Order Step Response: $q_o(t) = K(1 - e^{-t/\\tau})$.",
+      "First-Order Time Constant $\\tau$: Time required for output to reach $63.2\\%$ of its final steady-state value.",
+      "Second-Order Damped Frequency: $\\omega_d = \\omega_n \\sqrt{1 - \\zeta^2}$.",
+      "Optimal Instrument Damping: $\\zeta \\approx 0.6$ to $0.7$ for fastest response with minimal overshoot ($<5\\%$).",
+      "Standard Deviation Formula: $s = \\sqrt{\\frac{\\sum_{i=1}^N (x_i - \\bar{x})^2}{N - 1}}$.",
+      "Probable Error Relation: $r = 0.6745 \\times s$ for Gaussian distribution.",
+      "RSS Uncertainty Propagation: $w_R = \\sqrt{\\sum \\left(\\frac{\\partial R}{\\partial x_i} w_i\\right)^2}$.",
+      "Zero Drift vs Span Drift: Zero drift shifts baseline parallelly; span drift alters the slope of the calibration curve.",
+      "Exam Gold Tip: Never confuse accuracy with precision: high precision means repeatable clustered readings, but they may be completely inaccurate if systematic zero error is present."
+    ]
+  },
+  "Sensors & Transducers:::2": {
+    "title": "Resistive & Capacitive Transducers",
+    "highlights": [
+      "Potentiometric Resistive Transducers: Translatory and rotary wire-wound, cermet, and conductive plastic potentiometers; Loading error analysis: output voltage under meter load resistance $R_L$: $\\frac{V_o}{V_s} = \\frac{k}{1 + \\frac{R_p}{R_L} k (1 - k)}$; Non-linearity minimized by requiring $R_L \\gg R_p$ ($R_L / R_p > 100$); Electrical noise and resolution limits.",
+      "Strain Gauges & Piezoresistive Effect: Piezoresistive effect in metallic conductors and semiconductors; Electrical resistance change with axial strain: $\\frac{\\Delta R}{R} = \\frac{\\Delta L}{L} - \\frac{\\Delta A}{A} + \\frac{\\Delta \\rho}{\\rho} = \\epsilon (1 + 2\\nu) + \\frac{\\Delta \\rho / \\rho}{\\epsilon}$; Poisson's ratio $\\nu$; Gauge Factor $GF = \\frac{\\Delta R / R}{\\epsilon} = 1 + 2\\nu + \\frac{\\Delta \\rho / \\rho}{\\epsilon}$.",
+      "Metallic vs Semiconductor Strain Gauges: Metallic bonded foil gauges ($GF \\approx 2.0-2.2$, low temperature coefficient, highly linear, low sensitivity); Semiconductor / Piezoresistive silicon gauges ($GF \\approx 100-200$, extreme sensitivity, pronounced non-linearity, high temperature drift requiring active compensation).",
+      "Strain Gauge Bridge Topologies: Quarter-bridge (single active gauge, output $V_o = \\frac{V_s}{4} GF \\cdot \\epsilon$, vulnerable to lead wire and temperature drift); Half-bridge (two active gauges in push-pull tension-compression, doubles sensitivity, self-compensates temperature); Full-bridge (four active gauges, quadruples sensitivity $V_o = V_s GF \\cdot \\epsilon$, eliminates non-linearity and bending strains).",
+      "Resistance Temperature Detectors (RTD): Positive temperature coefficient of metals; Callendar-Van Dusen equation: $R(T) = R_0 [1 + A T + B T^2 + C(T - 100) T^3]$; Industrial Platinum Pt100 ($100\\ \\Omega$ at $0^\\circ\\text{C}, \\alpha = 0.00385\\ \\Omega/\\Omega/^\\circ\\text{C}$); Two-wire, three-wire (lead compensation), and four-wire Kelvin bridge configurations.",
+      "Thermistors (Thermally Sensitive Resistors): Sintered metal oxides (Mn, Ni, Co, Fe); Negative Temperature Coefficient (NTC) characteristics: $R(T) = R_0 e^{\\beta (1/T - 1/T_0)}$; High temperature sensitivity ($-3\\% \\text{ to } -5\\% / ^\\circ\\text{C}$), compact bead packaging, fast response; Linearization circuits; Positive Temperature Coefficient (PTC) switching thermistors.",
+      "Capacitive Transducer Fundamentals: Parallel plate capacitance $C = \\frac{\\epsilon_0 \\epsilon_r A}{d}$; Three transduction modes: (1) Variation of plate separation $d$; (2) Variation of plate overlapping area $A$; (3) Variation of dielectric medium permittivity $\\epsilon_r$.",
+      "Displacement Sensing via Variable Plate Separation: Capacitance inverse relation $C \\propto 1/d$ produces hyperbolic non-linearity; Sensitivity $S = \\frac{dC}{dd} = -\\frac{\\epsilon A}{d^2}$; Linearization via Differential / Push-Pull Capacitive Transducers: differential output $\\Delta C = C_1 - C_2 = 2 C_0 \\frac{\\Delta d}{d}$, perfectly linear for small displacements; High input impedance AC bridge readout.",
+      "Displacement Sensing via Variable Area & Dielectric: Angular displacement rotary capacitor ($C \\propto \\theta$, linear); Liquid level sensing using coaxial cylindrical capacitor with rising dielectric liquid level ($C(h) = \\frac{2\\pi \\epsilon_0 [\\epsilon_{air}(L-h) + \\epsilon_{liquid} h]}{\\ln(r_2/r_1)}$).",
+      "University Examination Strategy: Derive the gauge factor equation for metal strain gauges including Poisson's ratio, design temperature-compensated 3-wire RTD bridge circuits, derive the linearity of push-pull differential capacitive transducers, and calculate loading errors in potentiometers."
+    ],
+    "keyPoints": [
+      "Metallic Gauge Factor Formula: $GF = 1 + 2\\nu + \\frac{\\Delta\\rho/\\rho}{\\epsilon} \\approx 2.0$.",
+      "Full-Bridge Strain Output: $V_o = V_{supply} \\times GF \\times \\epsilon$ (four active arms).",
+      "Pt100 Alpha Coefficient: $\\alpha = 0.00385\\ ^\\circ\\text{C}^{-1}$ ($R_{100} = 138.5\\ \\Omega$).",
+      "NTC Thermistor Characteristic: $R(T) = R_0 \\exp\\left[\\beta\\left(\\frac{1}{T} - \\frac{1}{T_0}\\right)\\right]$ (temperatures in Kelvin).",
+      "Three-Wire RTD Advantage: Eliminates identical lead wire resistance drops in balanced Wheatstone bridges.",
+      "Parallel Plate Capacitance: $C = \\frac{\\epsilon_0 \\epsilon_r A}{d}$.",
+      "Differential Capacitance Linearity: $\\frac{C_1 - C_2}{C_1 + C_2} = \\frac{\\Delta d}{d_0}$ (strictly linear output).",
+      "Capacitive Sensitivity: $S_d = -\\frac{\\epsilon A}{d^2}$ (diverges rapidly as air gap approaches zero).",
+      "Liquid Level Capacitive Equation: $C(h) = C_0 + \\frac{2\\pi \\epsilon_0 (\\epsilon_r - 1) h}{\\ln(r_2/r_1)}$.",
+      "Exam Gold Tip: Always specify temperatures in Kelvin ($K = ^\\circ\\text{C} + 273.15$) when applying thermistor exponential $\\beta$ equations."
+    ]
+  },
+  "Sensors & Transducers:::3": {
+    "title": "Inductive & Piezoelectric Transducers",
+    "highlights": [
+      "Inductive Transducer Operating Principles: Self-inductance variations ($L = \\frac{N^2}{\\mathcal{R}} = \\frac{N^2 \\mu A}{l}$); Mutual inductance variations ($M = k\\sqrt{L_1 L_2}$); Eddy current proximity sensors (high-frequency RF oscillator field induces eddy currents in conductive target, damping oscillations).",
+      "Linear Variable Differential Transformer (LVDT): Primary coil excited by AC carrier ($1-10\\text{ kHz}, 3-15\\text{ V}$), two symmetrical secondary coils connected in series opposition; High-permeability nickel-iron ferromagnetic core moves axially inside non-magnetic bobbin.",
+      "LVDT Output Mechanics & Null Voltage: At center null position, equal and opposite secondary EMFs cancel: $E_o = E_{s1} - E_{s2} = 0$; Axial displacement $\\pm x$ produces linearly proportional AC output voltage with phase indicating direction ($0^\\circ$ or $180^\\circ$ relative to primary); Residual Null Voltage phenomenon (caused by harmonic distortion in excitation and stray inter-winding capacitance; minimized by shielding and synchronous phase-sensitive demodulation).",
+      "LVDT Performance Features: High linearity over operating range ($\\pm 0.25\\%$), infinite theoretical resolution, frictionless core movement (no mechanical contact or wear), extreme mechanical ruggedness, wide temperature capability; Rotary Variable Differential Transformer (RVDT) for angular measurements ($\\pm 40^\\circ$ linear span).",
+      "Synchros and Resolvers: Synchro Transmitter (TX) and Control Transformer (CT); Three-phase spatial stator windings with single-phase rotor excitation; Error detection in angular servo tracking loops; Resolvers with two orthogonal quadrature stator windings providing sine and cosine angular shaft voltages.",
+      "Piezoelectric Transducer Fundamentals: Non-centrosymmetric crystalline structures; Direct piezoelectric effect (applied mechanical stress produces electric surface charge $q = d \\cdot F$); Inverse piezoelectric effect (applied electric field causes physical mechanical deformation $\\Delta x = d \\cdot V$); Piezoelectric materials: Natural single crystals (Quartz, Tourmaline), Synthetic ferroelectric ceramics (Lead Zirconate Titanate PZT, Barium Titanate $\\text{BaTiO}_3$), Polymers (PVDF).",
+      "Piezoelectric Coefficients: Charge sensitivity coefficient $d$ in $\\text{C/N}$; Voltage sensitivity coefficient $g = \\frac{d}{\\epsilon} = \\frac{V/t}{F/A}$ in $\\text{V}\\cdot\\text{m/N}$; Electromechanical coupling factor $k^2 = \\frac{\\text{Mechanical energy converted}}{\\text{Electrical energy input}}$.",
+      "Equivalent Circuit of Piezoelectric Transducers: Modeled as charge generator $q = d F$ in parallel with internal capacitance $C_p = \\frac{\\epsilon A}{t}$ and leakage resistance $R_p$; Open-circuit output voltage $V_o = \\frac{q}{C_p} = \\frac{d F}{\\epsilon A / t} = g \\cdot \\sigma \\cdot t$; Inability to measure purely static forces due to charge dissipation through finite load impedance.",
+      "Signal Conditioning for Piezoelectric Transducers: (1) Voltage Amplifier (high input impedance FET amplifier, output heavily attenuated by cable shunt capacitance $C_c$); (2) Charge Amplifier (inverting op-amp with feedback capacitor $C_f$, output voltage $V_o = -\\frac{q}{C_f} = -\\frac{d F}{C_f}$, completely independent of cable length and cable capacitance).",
+      "University Examination Strategy: Explain LVDT construction, derive series-opposition secondary voltage equations, explain the causes and suppression of residual null voltage, derive piezoelectric voltage output $V_o = g \\sigma t$, and prove why charge amplifiers eliminate cable capacitance dependencies."
+    ],
+    "keyPoints": [
+      "LVDT Series Opposition Output: $e_o = e_{s1} - e_{s2}$.",
+      "LVDT Phase Inversion: Output phase shifts by $180^\\circ$ when passing through physical null position.",
+      "Residual Null Voltage Causes: Stray magnetic saturation harmonics and inter-winding parasitic capacitances.",
+      "Direct Piezoelectric Charge: $q = d \\times F = d \\times (\\sigma A)$ Coulombs.",
+      "Piezoelectric Voltage Sensitivity: $g = \\frac{d}{\\epsilon_0 \\epsilon_r}$ in $\\text{V}\\cdot\\text{m/N}$.",
+      "Piezoelectric Open Circuit Voltage: $V_o = g \\times \\sigma \\times t$ Volts.",
+      "Static Limitation of Piezoelectrics: Incapable of DC static measurement due to finite insulation leakage discharge.",
+      "Charge Amplifier Output: $V_o = -\\frac{q}{C_f} = -\\frac{d \\cdot F}{C_f}$ (strictly independent of cable capacitance $C_c$).",
+      "Curie Temperature Limit: Temperature above which piezoelectric ceramics lose spontaneous polarization permanently.",
+      "Exam Gold Tip: Always recommend a charge amplifier over a voltage amplifier for piezoelectric sensors because cable length variations do not affect the calibration factor."
+    ]
+  },
+  "Sensors & Transducers:::4": {
+    "title": "Optical & Thermal Sensors",
+    "highlights": [
+      "Thermoelectric Effects & Thermocouples: Seebeck Effect: closed circuit of two dissimilar metals produces thermoelectric EMF when junctions are maintained at different temperatures; Peltier Effect (reversible absorption/liberation of heat at junction carrying current); Thomson Effect (absorption/evolution of heat along continuous conductor with temperature gradient); Thermoelectric laws: Law of Intermediate Metals, Law of Intermediate Temperatures.",
+      "Thermocouple Types and Cold Junction Compensation: Standard ANSI calibrations: Type K (Chromel-Alumel, $-200\\text{ to }+1250^\\circ\\text{C}, 41\\ \\mu\\text{V}/^\\circ\\text{C}$), Type J (Iron-Constantan), Type T (Copper-Constantan), Type R/S (Platinum-Rhodium, up to $1600^\\circ\\text{C}$); Cold / Reference junction compensation using ice baths, thermistor bridges, or dedicated ICs (AD595); Extension and compensating leads.",
+      "Radiation Pyrometers: Non-contact high-temperature measurement; Stefan-Boltzmann radiation law: $E = \\epsilon \\sigma T^4$ (total emissive power); Planck's radiation law and Wien's displacement law ($\\lambda_{max} T = 2898\\ \\mu\\text{m}\\cdot\\text{K}$); Total radiation pyrometer vs Optical disappearing filament pyrometer (monochromatic sensing at $\\lambda = 0.65\\ \\mu\\text{m}$); Emissivity correction errors.",
+      "Photoconductive Cells (Light Dependent Resistors - LDR): Cadmium Sulfide (CdS) and Cadmium Selenide (CdSe); Incident photons with energy exceeding bandgap ($h\\nu \\ge E_g$) generate electron-hole pairs, reducing bulk resistance: $R = R_0 L^{-\\alpha}$ (resistance drops from $>1\\text{ M}\\Omega$ in dark to $<1\\text{ k}\\Omega$ in sunlight); Spectral response matched to human eye; Slow response time ($10-100\\text{ ms}$).",
+      "Photodiodes and Phototransistors: Reverse-biased PN junction operating in photoconductive mode; Reverse dark saturation current $I_d$; Incident photon flux generates electron-hole pairs in depletion layer, producing proportional photocurrent: $I_{ph} = R_e \\cdot P_{opt} = \\frac{\\eta q \\lambda}{h c} P_{opt}$ ($R_e$ responsivity in A/W); PIN photodiodes (wide intrinsic layer, high speed, gigahertz bandwidth) and Avalanche Photodiodes (APD, internal avalanche multiplication gain $M \\approx 100-200$).",
+      "Photovoltaic Cells: Unbiased large-area PN junctions converting radiant photon energy directly into electrical energy; Open-circuit voltage $V_{oc} = \\frac{k T}{q} \\ln\\left(\\frac{I_{sc}}{I_0} + 1\\right)$; Short-circuit current $I_{sc} \\propto$ illuminance; Solar cells, optical tachometers, and optical power meters.",
+      "Optical Encoders for Position Sensing: Incremental encoders (ruled optical disc with alternate transparent/opaque slits, dual quadrature optical sensors $A$ and $B$ displaced by $90^\\circ$ for bidirectional motion tracking, index pulse $Z$ for home reference); Absolute encoders (concentric tracks generating unique binary or Gray code word for each angular sector, prevents loss of position after power interruption; Gray code prevents multi-bit transition ambiguity).",
+      "Fiber Optic Sensors: Intrinsic (fiber acts as sensing medium) vs Extrinsic (fiber acts as light transmission pipe to external modulator); Sensing mechanisms: Intensity modulated, Phase modulated (Mach-Zehnder and Sagnac interferometers for fiber optic gyroscopes), Wavelength modulated (Fiber Bragg Grating FBG for structural strain/temperature monitoring); Immune to electromagnetic interference (EMI), chemically inert.",
+      "Infrared (IR) and Pyroelectric Sensors: Passive Infrared (PIR) motion detectors; Pyroelectric crystals (Lithium Tantalate $\\text{LiTaO}_3$, TGS) generating electric charge in response to changing infrared thermal radiation ($dq/dt = p A \\frac{dT}{dt}$); Segmented Fresnel lenses focusing moving human infrared radiation.",
+      "University Examination Strategy: State thermoelectric laws and derive cold junction compensation equations, compare LDR vs photodiode vs phototransistor, explain optical disappearing filament pyrometer operating mechanisms, and compare binary vs Gray code absolute optical encoders."
+    ],
+    "keyPoints": [
+      "Seebeck Thermoelectric Formula: $E_{AB} = \\alpha \\Delta T + \\frac{1}{2} \\beta (\\Delta T)^2$.",
+      "Law of Intermediate Metals: Inserting a third metal into thermocouple circuit causes zero net EMF change if both new junctions are at identical temperatures.",
+      "Stefan-Boltzmann Radiation Law: $E = \\epsilon \\sigma T^4$ (where $\\sigma = 5.67 \\times 10^{-8}\\text{ W/m}^2\\text{K}^4$).",
+      "Wien's Displacement Law: $\\lambda_{max} T = 2898\\ \\mu\\text{m}\\cdot\\text{K}$.",
+      "Photodiode Responsivity: $R_e = \\frac{\\eta q \\lambda}{h c}$ A/W.",
+      "Solar Cell Open Circuit Voltage: $V_{oc} = \\frac{n k T}{q}\\ln\\left(\\frac{I_{ph}}{I_0} + 1\\right)$.",
+      "Gray Code Advantage: Only a single binary bit changes state between adjacent angular positions, eliminating reading glitches.",
+      "Incremental Encoder Quadrature: Channel A and Channel B are spaced $90^\\circ$ apart to resolve motion direction.",
+      "Fiber Bragg Grating (FBG) Reflection: $\\lambda_B = 2 n_{eff} \\Lambda$ (shifts with strain and temperature).",
+      "Exam Gold Tip: Standard binary encoders produce severe false transient reading spikes at boundaries where multiple bits flip simultaneously (e.g. 0111 to 1000); always specify Gray code for absolute encoders."
+    ]
+  },
+  "Sensors & Transducers:::5": {
+    "title": "Signal Conditioning & Smart Sensors",
+    "highlights": [
+      "Signal Conditioning Architectures: Functional role: amplifies, filters, linearizes, isolates, and converts raw sensor outputs into standardized industrial signals ($0-5\\text{ V}, 0-10\\text{ V}, 4-20\\text{ mA}$); Voltage dividers, bridge circuits, active filter topologies, and isolation barriers.",
+      "Instrumentation Amplifiers (In-Amp): High input impedance ($\\sim 10^{10}\\ \\Omega$), extremely high Common Mode Rejection Ratio ($CMRR > 100\\text{ dB}$), low input offset voltage drift; Three-op-amp topology: input buffer stage (two non-inverting op-amps sharing gain resistor $R_G$) followed by differential difference stage; Overall closed-loop gain: $A_v = \\left(1 + \\frac{2 R_1}{R_G}\\right) \\frac{R_3}{R_2}$; Single external resistor $R_G$ sets gain without compromising bridge balance.",
+      "Carrier Frequency Amplifiers & Demodulators: Low-noise amplification of weak low-frequency sensor signals (LVDT, variable reluctance); Modulating sensor signal onto high-frequency carrier suppresses $1/f$ flicker noise; Synchronous Phase-Sensitive Demodulation (PSD / Lock-In Amplifier) recovering amplitude and phase polarity followed by lowpass filtering.",
+      "Industrial 4-20 mA Current Loop Transmission: Two-wire current transmitter topology; Current loop advantages: immunity to lead wire resistance voltage drops, high noise immunity in hostile industrial plants, built-in 'live zero' ($4\\text{ mA}$ represents zero scale, permitting cable break / open circuit detection when current drops to $0\\text{ mA}$); Loop power supply ($24\\text{ V}$ DC).",
+      "Galvanic Isolation Techniques: Preventing dangerous ground loops and protecting low-voltage acquisition electronics from high-voltage surges; Optocouplers (LED-phototransistor optical isolation), Isolation transformers, and Capacitive barrier isolators; Creepage and clearance safety distances.",
+      "Analog-to-Digital Conversion (ADC) in Sensor Systems: Resolution (number of bits $N$, quantization step $q = V_{ref} / 2^N$), Conversion speed; Architectures: (1) Successive Approximation Register (SAR, $N$ clock cycles, balanced speed and resolution, general instrumentation); (2) Delta-Sigma ($\\Sigma-\\Delta$, oversampling, noise shaping, 16-24 bit extreme resolution, seismic and precision RTD sensing); (3) Dual-Slope Integrating (inherent $50/60\\text{ Hz}$ powerline noise rejection).",
+      "Smart Sensor Systems & IEEE 1451 Standards: Integrated transducer comprising sensing element, analog signal conditioning, microcontroller, analog-to-digital converter, and digital communication interface; Transducer Electronic Data Sheet (TEDS / IEEE 1451.4) storing calibration coefficients, serial number, and dynamic ranges in onboard EEPROM; Self-calibration, self-testing, and automatic range shifting.",
+      "Micro-Electro-Mechanical Systems (MEMS) Sensors: Silicon micro-machining (bulk and surface micromachining); Capacitive MEMS accelerometers (comb-finger structure detecting proof mass displacement under acceleration), MEMS gyroscopes (Coriolis acceleration sensing on vibrating proof masses), and MEMS piezoresistive pressure sensors.",
+      "Digital Sensor Communication Protocols: I2C (Inter-Integrated Circuit: 2-wire serial bus, SDA/SCL, multi-master, pull-up resistors), SPI (Serial Peripheral Interface: 4-wire high-speed synchronous bus, MOSI/MISO/SCK/CS), CAN bus (Controller Area Network: differential two-wire balanced bus, highly robust, automotive and industrial automation), and HART protocol (Highway Addressable Remote Transducer: FSK digital signal superimposed onto standard 4-20 mA analog loop).",
+      "University Examination Strategy: Derive the voltage gain equation for the 3-op-amp instrumentation amplifier, explain the operational merits of industrial 4-20 mA two-wire current loops, compare SAR vs Delta-Sigma ADCs for sensor interfacing, and detail smart sensor architecture according to IEEE 1451."
+    ],
+    "keyPoints": [
+      "Three-Op-Amp In-Amp Gain: $A_v = \\left(1 + \\frac{2 R_1}{R_G}\\right) \\left(\\frac{R_3}{R_2}\\right)$.",
+      "In-Amp CMRR Metric: $\\text{CMRR} = 20\\log_{10}\\left|\\frac{A_d}{A_{cm}}\\right|$ dB.",
+      "Live Zero 4-20 mA Purpose: $4\\text{ mA}$ indicates true $0\\%$ process variable; $0\\text{ mA}$ indicates an open-circuit loop fault.",
+      "SAR Conversion Clock Cycles: Requires exactly $N$ clock cycles for an $N$-bit analog-to-digital conversion.",
+      "Delta-Sigma ADC Advantage: Employs oversampling and noise shaping to achieve ultra-high 24-bit resolution.",
+      "TEDS IEEE 1451 Definition: Transducer Electronic Data Sheet containing factory calibration matrix embedded in sensor EEPROM.",
+      "Dual-Slope ADC Noise Rejection: Integrator run-down interval cancels $50\\text{ Hz}$ or $60\\text{ Hz}$ power line interference.",
+      "MEMS Comb Finger Capacitance: $\\Delta C = \\frac{2 \\epsilon_0 N A}{d_0^2} \\times \\Delta x$.",
+      "HART FSK Frequencies: Bell 202 tones of $1200\\text{ Hz}$ (binary 1) and $2200\\text{ Hz}$ (binary 0) overlaid on 4-20 mA loop.",
+      "Exam Gold Tip: In a 3-op-amp instrumentation amplifier, changing gain via $R_G$ modifies only the differential gain without disturbing the high CMRR balance of the output difference stage."
+    ]
+  }
+}

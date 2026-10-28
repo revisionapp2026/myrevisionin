@@ -9,6 +9,10 @@ import { getSubject } from "./mock-data";
 import type { DbPaper, DbQuestion } from "./content";
 import { getBScSem1PaperQuestions } from "./model-papers-bsc-sem1";
 import { getBScSem2PaperQuestions } from "./model-papers-bsc-sem2";
+import { getBScSem3PaperQuestions } from "./model-papers-bsc-sem3";
+import { getBScSem4PaperQuestions } from "./model-papers-bsc-sem4";
+import { getBScSem5PaperQuestions } from "./model-papers-bsc-sem5";
+import { getBScSem6PaperQuestions } from "./model-papers-bsc-sem6";
 
 /**
  * Return model papers list for a B.Sc subject.
@@ -83,6 +87,34 @@ export function getBScPaperDetail(paperId: string): { paper: DbPaper; questions:
     const sem2Questions = getBScSem2PaperQuestions(subject.name, isSet1);
     if (sem2Questions) {
       return { paper, questions: sem2Questions };
+    }
+  }
+
+  if (subject.semester === 3) {
+    const sem3Questions = getBScSem3PaperQuestions(subject.name, isSet1);
+    if (sem3Questions) {
+      return { paper, questions: sem3Questions };
+    }
+  }
+
+  if (subject.semester === 4) {
+    const sem4Questions = getBScSem4PaperQuestions(subject.name, isSet1);
+    if (sem4Questions) {
+      return { paper, questions: sem4Questions };
+    }
+  }
+
+  if (subject.semester === 5) {
+    const sem5Questions = getBScSem5PaperQuestions(subject.name, isSet1);
+    if (sem5Questions) {
+      return { paper, questions: sem5Questions };
+    }
+  }
+
+  if (subject.semester === 6) {
+    const sem6Questions = getBScSem6PaperQuestions(subject.name, isSet1);
+    if (sem6Questions) {
+      return { paper, questions: sem6Questions };
     }
   }
 

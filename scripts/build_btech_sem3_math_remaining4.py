@@ -1,0 +1,512 @@
+import json
+
+data = {}
+
+def add(sub, num, title, hl, bm):
+    assert len(hl) == 10, f"{sub} U{num} hl count {len(hl)}"
+    assert len(bm) == 10, f"{sub} U{num} bm count {len(bm)}"
+    key = f"{sub}:::Unit {num}"
+    data[key] = {
+        "subject": sub,
+        "unitNumber": num,
+        "unitTitle": title,
+        "highlights": hl,
+        "bookmarks": bm
+    }
+
+# ==============================================================================
+# 2. Numerical Methods (5 units)
+# ==============================================================================
+add("Numerical Methods", 1, "Error Analysis", [
+    "Numbers and Floating-Point Representation: Real numbers stored in normalized floating-point form $x = \\pm (0.d_1 d_2 \\dots d_t) \\times \\beta^e$ in base $\\beta$ with $t$ mantissa digits; IEEE 754 standard for single (32-bit, 24-bit mantissa) and double precision (64-bit, 53-bit mantissa).",
+    "Absolute, Relative, and Percentage Errors: Exact value $x$ and approximation $x^*$: Absolute error $E_a = |x - x^*|$; Relative error $E_r = \\frac{|x - x^*|}{|x|}$; Percentage error $E_p = E_r \\times 100\\%$; Number of significant digits determined by $E_r < \\frac{1}{2} \\times 10^{-k}$.",
+    "Sources of Numerical Errors: (1) Inherent/Input errors in physical measurement; (2) Truncation errors arising from truncating infinite mathematical series to finite terms; (3) Round-off errors caused by finite word-length machine registers; Chopping vs rounding arithmetic.",
+    "Taylor Series and Truncation Error: Function expansion $f(x) = \\sum_{k=0}^n \\frac{f^{(k)}(x_0)}{k!} (x - x_0)^k + R_n(x)$; Lagrange remainder term $R_n(x) = \\frac{f^{(n+1)}(\\xi)}{(n+1)!} (x - x_0)^{n+1}$ defining exact truncation error bound of order $O(h^{n+1})$.",
+    "Propagation of Errors in Arithmetic Operations: Addition/Subtraction: $E_a(x \\pm y) \\approx E_a(x) + E_a(y)$; Multiplication: $E_r(x \\cdot y) \\approx E_r(x) + E_r(y)$; Division: $E_r(x / y) \\approx E_r(x) + E_r(y)$; Power: $E_r(x^n) \\approx n E_r(x)$.",
+    "Catastrophic Cancellation & Loss of Significance: Subtraction of two nearly equal floating-point numbers ($x - y$) causes dramatic loss of significant digits; Remedied algebraically via rationalization (e.g., $\\sqrt{x+1} - \\sqrt{x} = \\frac{1}{\\sqrt{x+1} + \\sqrt{x}}$) or Taylor expansions.",
+    "General Error Formula for Multivariable Functions: For $u = f(x_1, x_2, \\dots, x_n)$, maximum absolute error is $E_a(u) = \\sum_{i=1}^n \\left| \\frac{\\partial f}{\\partial x_i} \\right| E_a(x_i)$; Relative error $E_r(u) = \\sum_{i=1}^n \\left| \\frac{x_i}{f} \\frac{\\partial f}{\\partial x_i} \\right| E_r(x_i)$.",
+    "Conditioning and Stability: Condition number of problem measures sensitivity of output to small perturbations in input: $\\text{cond}(f) = \\frac{|x f'(x)|}{|f(x)|}$; Ill-conditioned problems ($\\text{cond} \\gg 1$) produce unreliable outputs regardless of numerical algorithm; Algorithmic numerical stability ensures errors do not amplify across successive steps.",
+    "Computer Arithmetic Hazards: Underflow (numbers smaller than machine minimum flushed to zero) and Overflow (numbers exceeding maximum causing execution halt or NaN/Inf); Machine epsilon $\\epsilon_{mach} = \\beta^{1-t}$ representing distance between $1.0$ and next representable float.",
+    "University Examination Strategy: Calculate absolute, relative, and percentage errors for mathematical constants, prove significant digits conditions, apply general error propagation formulas to geometric shapes (volume of spheres, resistance formulas), and rewrite algebraic expressions to prevent catastrophic loss of significance."
+], [
+    "Absolute Error: $E_a = |x - x^*|$.",
+    "Relative Error: $E_r = \\frac{|x - x^*|}{|x|}$.",
+    "Percentage Error: $E_p = \\frac{|x - x^*|}{|x|} \\times 100\\%$.",
+    "Significant Digits Rule: $E_r < \\frac{1}{2} \\times 10^{-k}$ guarantees $k$ significant digits.",
+    "Taylor Remainder Error: $R_n(x) = \\frac{f^{(n+1)}(\\xi)}{(n+1)!} h^{n+1} = O(h^{n+1})$.",
+    "Error Propagation in Product: $E_r(x y) \\approx E_r(x) + E_r(y)$.",
+    "General Multivariable Error: $E_a(u) = \\sum \\left| \\frac{\\partial f}{\\partial x_i} \\right| E_a(x_i)$.",
+    "Problem Condition Number: $\\text{cond}(f) = \\left| \\frac{x f'(x)}{f(x)} \\right|$.",
+    "Machine Epsilon: $\\epsilon_{mach} = \\beta^{1-t}$ ($2^{-23}$ single, $2^{-52}$ double).",
+    "Exam Gold Tip: In multi-variable error propagation $u = x^a y^b / z^c$, the relative error is simply $E_r(u) = |a| E_r(x) + |b| E_r(y) + |c| E_r(z)$, evaluated using absolute values of powers."
+])
+
+add("Numerical Methods", 2, "Roots of Equations", [
+    "Bisection Method (Bolzano's Method): Bracketing method based on Intermediate Value Theorem: if $f(a) \\cdot f(b) < 0$, root exists in $[a, b]$; Midpoint approximation $c = \\frac{a+b}{2}$; Guaranteed linear convergence with rate $\\frac{1}{2}$; Number of iterations required for tolerance $\\epsilon$: $n \\ge \\frac{\\log(b-a) - \\log\\epsilon}{\\log 2}$.",
+    "Regula Falsi Method (False Position Method): Interpolates endpoints with secant line connecting $(a, f(a))$ and $(b, f(b))$; Next root estimate $c = \\frac{a f(b) - b f(a)}{f(b) - f(a)}$; Guarantees convergence like bisection while utilizing function values, though convergence remains linear and one endpoint can become stagnant.",
+    "Fixed-Point Iteration Method: Rewriting algebraic equation $f(x) = 0$ into equivalent fixed-point form $x = g(x)$; Iteration scheme $x_{n+1} = g(x_n)$; Banach Fixed-Point Theorem: convergence to unique fixed point $\\alpha$ guaranteed if $|g'(x)| \\le k < 1$ for all $x$ in neighborhood of $\\alpha$; Convergence is linear.",
+    "Newton-Raphson Method: Open method derived from linear Taylor expansion: $x_{n+1} = x_n - \\frac{f(x_n)}{f'(x_n)}$; Geometrically represents tangent line intersection with x-axis; Requires single initial guess $x_0$; Fails when derivative vanishes $f'(x_n) \\approx 0$ or exhibits cycle oscillations.",
+    "Order of Convergence of Newton-Raphson: Quadratic convergence (order $p = 2$); Error recurrence: $\\epsilon_{n+1} \\approx \\frac{f''(\\alpha)}{2 f'(\\alpha)} \\epsilon_n^2$; Number of accurate significant decimal digits roughly doubles with every single iteration near simple root $\\alpha$.",
+    "Modified Newton-Raphson for Multiple Roots: For root of multiplicity $m > 1$ where $f(\\alpha) = f'(\\alpha) = \\dots = f^{(m-1)}(\\alpha) = 0$: standard N-R degrades to linear convergence; Modified scheme $x_{n+1} = x_n - m \\frac{f(x_n)}{f'(x_n)}$ restores quadratic convergence; Alternatively use $u(x) = \\frac{f(x)}{f'(x)}$.",
+    "Secant Method: Quasi-Newton technique replacing analytic derivative with finite difference quotient: $x_{n+1} = x_n - f(x_n) \\frac{x_n - x_{n-1}}{f(x_n) - f(x_{n-1})}$; Requires two initial guesses but no derivative calculations; Superlinear order of convergence equal to golden ratio $p = \\frac{1+\\sqrt{5}}{2} \\approx 1.618$.",
+    "Müller's Method for Complex Roots: Generalization of secant method that passes parabola through three consecutive points $(x_0, f_0), (x_1, f_1), (x_2, f_2)$; Intersects quadratic curve with x-axis using quadratic formula; Successfully locates real and complex roots of polynomials; Order of convergence $p \\approx 1.84$.",
+    "Graeffe's Root-Squaring Method: Direct method for polynomial roots $P_n(x) = 0$ that squares roots repeatedly: $P(x) P(-x) = Q(x^2)$; After $k$ squarings, roots are separated by orders of magnitude, allowing magnitude estimation directly from polynomial coefficients without initial guesses.",
+    "University Examination Strategy: Perform 3 to 4 iterations of Bisection and Regula Falsi methods to isolate roots to 3 decimal places, test $|g'(x)| < 1$ condition for fixed-point convergence, derive the quadratic order of convergence $\\epsilon_{n+1} \\propto \\epsilon_n^2$ for Newton-Raphson, and solve polynomial roots using Secant method."
+], [
+    "Bisection Iteration Count: $n \\ge \\frac{\\log(b-a) - \\log\\epsilon}{\\log 2}$.",
+    "Regula Falsi Formula: $c = \\frac{a f(b) - b f(a)}{f(b) - f(a)}$.",
+    "Fixed-Point Convergence Condition: $|g'(x)| \\le k < 1$.",
+    "Newton-Raphson Iteration: $x_{n+1} = x_n - \\frac{f(x_n)}{f'(x_n)}$.",
+    "Newton-Raphson Error Recurrence: $\\epsilon_{n+1} = \\frac{f''(\\alpha)}{2 f'(\\alpha)} \\epsilon_n^2$ (order 2).",
+    "Secant Method Iteration: $x_{n+1} = x_n - f(x_n) \\frac{x_n - x_{n-1}}{f(x_n) - f(x_{n-1})}$.",
+    "Secant Order of Convergence: $p = \\frac{1+\\sqrt{5}}{2} \\approx 1.618$.",
+    "Modified N-R for Multiple Root $m$: $x_{n+1} = x_n - m \\frac{f(x_n)}{f'(x_n)}$.",
+    "Newton-Raphson Reciprocal Algorithm: $x_{n+1} = x_n(2 - N x_n)$ for finding $1/N$ without division.",
+    "Exam Gold Tip: To compute square root $\\sqrt{N}$ using Newton-Raphson, set $f(x) = x^2 - N = 0$, yielding the classic Babylonian iteration $x_{n+1} = \\frac{1}{2}\\left(x_n + \\frac{N}{x_n}\\right)$ with quadratic convergence."
+])
+
+add("Numerical Methods", 3, "Linear Systems", [
+    "Formulation of Linear Systems: Matrix equation $A x = b$ where $A \\in \\mathbb{R}^{n \\times n}$, $x, b \\in \\mathbb{R}^n$; Existence and uniqueness governed by Rouché-Capelli theorem: system consistent iff $\\text{rank}(A) = \\text{rank}([A|b])$; Unique solution if $\\text{rank}(A) = n$, infinite solutions if $\\text{rank} < n$.",
+    "Gaussian Elimination with Partial Pivoting: Forward elimination reduces augmented matrix $[A|b]$ to upper triangular form $U x = y$, followed by back-substitution; Partial pivoting swaps rows at step $k$ to locate pivot with maximum absolute magnitude $|a_{ik}| = \\max_{j \\ge k} |a_{jk}|$, suppressing round-off error propagation.",
+    "Gauss-Jordan Elimination: Eliminates both lower and upper triangular coefficients simultaneously, transforming augmented matrix directly into $[I | A^{-1} b]$; Computes matrix inverse $A^{-1}$ by augmenting $A$ with identity matrix $[A | I] \\to [I | A^{-1}]$; Computational complexity $\\frac{n^3}{2}$ vs $\\frac{n^3}{3}$ for Gaussian elimination.",
+    "LU Decomposition (Doolittle's and Crout's Methods): Factorization $A = L U$; Doolittle's algorithm specifies unit lower triangular matrix ($l_{ii} = 1$); Crout's algorithm specifies unit upper triangular matrix ($u_{ii} = 1$); Solves system in two $O(n^2)$ triangular sweeps: forward solve $L y = b$ and back solve $U x = y$.",
+    "Cholesky Decomposition: Factorization for symmetric and positive-definite matrices ($A = A^T, x^T A x > 0$): $A = L L^T$ where $L$ is a real lower triangular matrix with strictly positive diagonal elements $l_{ii} = \\sqrt{a_{ii} - \\sum_{k=1}^{i-1} l_{ik}^2}$; Requires half the floating-point operations ($n^3/6$) and is unconditionally stable without pivoting.",
+    "Thomas Algorithm for Tridiagonal Systems: Specialized Gaussian elimination for band matrices where non-zero entries exist only on main diagonal $b_i$, superdiagonal $c_i$, and subdiagonal $a_i$; Executes in optimal $O(n)$ time complexity and memory, essential in 1D heat equation finite difference modeling.",
+    "Gauss-Jacobi Iterative Method: Decoupled iteration solving each equation for diagonal variable: $x_i^{(k+1)} = \\frac{1}{a_{ii}} \\left( b_i - \\sum_{j \\ne i} a_{ij} x_j^{(k)} \\right)$; Requires storing full previous iteration vector; Strictly converges if coefficient matrix $A$ is strictly diagonally dominant: $|a_{ii}| > \\sum_{j \\ne i} |a_{ij}|$.",
+    "Gauss-Seidel Iterative Method: Successive replacement iteration using newly computed components immediately within the same iteration: $x_i^{(k+1)} = \\frac{1}{a_{ii}} \\left( b_i - \\sum_{j < i} a_{ij} x_j^{(k+1)} - \\sum_{j > i} a_{ij} x_j^{(k)} \\right)$; Converges roughly twice as fast as Jacobi method for diagonally dominant or symmetric positive-definite matrices.",
+    "Power Method for Dominant Eigenvalue: Iterative algorithm computing dominant eigenvalue $\\lambda_1$ (largest magnitude) and corresponding eigenvector: $y_{k+1} = A x_k$, $\\lambda^{(k+1)} = \\max(y_{k+1})$, $x_{k+1} = y_{k+1} / \\lambda^{(k+1)}$; Rate of convergence governed by ratio $|\\lambda_2 / \\lambda_1|$; Inverse Power Method applied to $(A - q I)^{-1}$ finds eigenvalue nearest to shift $q$.",
+    "University Examination Strategy: Solve $3 \\times 3$ linear systems using Gaussian elimination with partial pivoting, compute LU decomposition using Doolittle's method, solve symmetric systems via Cholesky method, execute 3 iterations of Gauss-Seidel method verifying diagonal dominance, and estimate dominant eigenvalue using Power method."
+], [
+    "Doolittle's LU Factorization: $A = L U$ ($l_{ii} = 1$, unit lower).",
+    "Crout's LU Factorization: $A = L U$ ($u_{ii} = 1$, unit upper).",
+    "Cholesky Factorization: $A = L L^T$ ($A = A^T$, positive definite).",
+    "Cholesky Diagonal Term: $l_{ii} = \\sqrt{a_{ii} - \\sum_{k=1}^{i-1} l_{ik}^2}$.",
+    "Strict Diagonal Dominance: $|a_{ii}| > \\sum_{j \\ne i} |a_{ij}|$ for all $i$.",
+    "Gauss-Jacobi Update: $x_i^{(k+1)} = \\frac{1}{a_{ii}} (b_i - \\sum_{j \\ne i} a_{ij} x_j^{(k)})$.",
+    "Gauss-Seidel Update: $x_i^{(k+1)} = \\frac{1}{a_{ii}} (b_i - \\sum_{j < i} a_{ij} x_j^{(k+1)} - \\sum_{j > i} a_{ij} x_j^{(k)})$.",
+    "Thomas Tridiagonal Complexity: $O(n)$ operations vs $O(n^3)$ general.",
+    "Power Method Iteration: $x_{k+1} = \\frac{A x_k}{\\|A x_k\\|}$ ($\\|x\\|_\\infty$ normalization).",
+    "Exam Gold Tip: If coefficient matrix $A$ is not diagonally dominant, interchange rows to ensure largest absolute elements lie along main diagonal before applying Gauss-Seidel iteration to guarantee rapid convergence."
+])
+
+add("Numerical Methods", 4, "Interpolation & Integration", [
+    "Finite Difference Calculus: Forward difference operator $\\Delta f_i = f_{i+1} - f_i$; Backward difference $\\nabla f_i = f_i - f_{i-1}$; Shift operator $E f_i = f_{i+1}$; Central difference $\\delta f_i = f_{i+1/2} - f_{i-1/2}$; Operator relations: $E = 1 + \\Delta = (1 - \\nabla)^{-1} = e^{h D}$ where $D = \\frac{d}{dx}$.",
+    "Newton-Gregory Forward Difference Interpolation: For equispaced nodes $x_i = x_0 + i h$ with $u = \\frac{x - x_0}{h}$: $P_n(x) = y_0 + u \\Delta y_0 + \\frac{u(u-1)}{2!} \\Delta^2 y_0 + \\dots + \\frac{u(u-1)\\dots(u-n+1)}{n!} \\Delta^n y_0$; Ideal for interpolation near start of data table.",
+    "Newton-Gregory Backward Difference Interpolation: For points near end of equispaced table with $v = \\frac{x - x_n}{h}$: $P_n(x) = y_n + v \\nabla y_n + \\frac{v(v+1)}{2!} \\nabla^2 y_n + \\dots + \\frac{v(v+1)\\dots(v+n-1)}{n!} \\nabla^n y_n$.",
+    "Central Difference Interpolation Formulas: Stirling's formula (mean of Gauss forward and backward formulas) for points near table center ($-\\frac{1}{2} \\le u \\le \\frac{1}{2}$); Bessel's formula (ideal for $\\frac{1}{4} \\le u \\le \\frac{3}{4}$); Both provide superior accuracy by minimizing truncation error coefficients.",
+    "Divided Differences for Unequally Spaced Nodes: Divided difference table $f[x_0, x_1] = \\frac{f(x_1) - f(x_0)}{x_1 - x_0}$; Higher orders: $f[x_0, \\dots, x_k] = \\frac{f[x_1, \\dots, x_k] - f[x_0, \\dots, x_{k-1}]}{x_k - x_0}$; Newton's Divided Difference polynomial: $P_n(x) = f(x_0) + (x-x_0)f[x_0, x_1] + \\dots + (x-x_0)\\dots(x-x_{n-1})f[x_0, \\dots, x_n]$.",
+    "Newton-Cotes Closed Quadrature Formulas: Numerical integration $\\int_a^b f(x) dx \\approx \\sum_{i=0}^n w_i f(x_i)$ by integrating $n$-th degree interpolating polynomial over equispaced nodes $h = \\frac{b-a}{n}$; Includes Trapezoidal rule ($n=1$), Simpson's 1/3rd ($n=2$), and Simpson's 3/8th ($n=3$).",
+    "Simpson's 3/8th Rule: Fitting cubic polynomial over three intervals ($n=3, 6, 9, \\dots$): $\\int_a^b f(x) dx \\approx \\frac{3h}{8} [f_0 + 3 f_1 + 3 f_2 + 2 f_3 + 3 f_4 + 3 f_5 + 2 f_6 + \\dots + f_n]$; Truncation error $E_T = -\\frac{3}{80} h^5 f^{(4)}(\\xi) = -\\frac{(b-a) h^4}{80} f^{(4)}(\\xi)$.",
+    "Boole's Rule and Weddle's Rule: Boole's 5-point rule ($n=4$): $\\int_{x_0}^{x_4} f(x) dx \\approx \\frac{2h}{45} [7 f_0 + 32 f_1 + 12 f_2 + 32 f_3 + 7 f_4]$; Weddle's 7-point rule ($n=6$): $\\int_{x_0}^{x_6} f(x) dx \\approx \\frac{3h}{10} [f_0 + 5 f_1 + f_2 + 6 f_3 + f_4 + 5 f_5 + f_6]$ with truncation error $O(h^6)$.",
+    "Romberg Integration and Richardson Extrapolation: Accelerating Trapezoidal approximations $T(h)$ and $T(h/2)$: Extrapolation formula $R_{k,j} = \\frac{4^j R_{k, j-1} - R_{k-1, j-1}}{4^j - 1}$; Eliminates successive higher-order terms ($h^2, h^4, h^6$) from Euler-Maclaurin expansion to obtain high-precision integrals with minimal function evaluations.",
+    "University Examination Strategy: Construct forward/backward difference tables and interpolate values, formulate divided difference polynomials for unequally spaced points, apply Simpson's $1/3$rd and $3/8$th rules to evaluate definite integrals, and compute accelerated integral tables using Romberg integration."
+], [
+    "Shift and Difference Operator Relation: $E = 1 + \\Delta = e^{h D}$.",
+    "Newton Forward Interpolation: $P(x) = y_0 + u \\Delta y_0 + \\frac{u(u-1)}{2!} \\Delta^2 y_0 + \\dots$.",
+    "Newton Backward Interpolation: $P(x) = y_n + v \\nabla y_n + \\frac{v(v+1)}{2!} \\nabla^2 y_n + \\dots$.",
+    "Newton Divided Difference: $f[x_0, x_1] = \\frac{f(x_1) - f(x_0)}{x_1 - x_0}$.",
+    "Trapezoidal Rule Error: $E_T = -\\frac{(b-a) h^2}{12} f''(\\xi) = O(h^2)$.",
+    "Simpson's 1/3rd Rule Error: $E_S = -\\frac{(b-a) h^4}{180} f^{(4)}(\\xi) = O(h^4)$.",
+    "Simpson's 3/8th Formula: $\\int_a^b f(x) dx \\approx \\frac{3h}{8} [f_0 + 3\\sum f_{not\\,div\\,3} + 2\\sum f_{div\\,3} + f_n]$.",
+    "Weddle's Rule Weight Multipliers: $\\frac{3h}{10} [1, 5, 1, 6, 1, 5, 1]$.",
+    "Richardson Extrapolation: $I \\approx \\frac{4 T(h/2) - T(h)}{3}$ (eliminates $O(h^2)$ error).",
+    "Exam Gold Tip: Simpson's 3/8th rule requires the total number of subintervals $n$ to be a multiple of 3, whereas Simpson's 1/3rd rule requires $n$ to be even (multiple of 2)."
+])
+
+add("Numerical Methods", 5, "ODE Solutions", [
+    "Initial Value Problems for First-Order ODEs: Differential equation $\\frac{dy}{dx} = f(x, y)$ subject to initial condition $y(x_0) = y_0$; Picard's existence and uniqueness theorem: unique solution exists in domain if $f(x,y)$ satisfies Lipschitz condition $|f(x, y_1) - f(x, y_2)| \\le L |y_1 - y_2|$.",
+    "Taylor Series Method: Direct series expansion $y(x_{n+1}) = y_n + h y'_n + \\frac{h^2}{2!} y''_n + \\frac{h^3}{3!} y'''_n + \\dots$; Successive derivatives evaluated analytically: $y' = f(x,y)$, $y'' = f_x + f f_y$; Highly accurate but computationally tedious for complex non-linear functions.",
+    "Picard's Method of Successive Approximations: Integral formulation $y(x) = y_0 + \\int_{x_0}^x f(t, y(t)) dt$; Iteration scheme: $y^{(k+1)}(x) = y_0 + \\int_{x_0}^x f(t, y^{(k)}(t)) dt$ initialized with $y^{(0)}(x) = y_0$; Yields analytical polynomial approximations.",
+    "Euler's and Modified Euler's Methods: Standard Euler (Explicit): $y_{n+1} = y_n + h f(x_n, y_n)$ with local error $O(h^2)$ and global error $O(h)$; Modified Euler (Heun's Predictor-Corrector): Predictor $y_{n+1}^{(p)} = y_n + h f(x_n, y_n)$, Corrector $y_{n+1} = y_n + \\frac{h}{2} [f(x_n, y_n) + f(x_{n+1}, y_{n+1}^{(p)})]$ with global error $O(h^2)$.",
+    "Runge-Kutta Second-Order (RK2) Methods: General formulation $y_{n+1} = y_n + h (w_1 k_1 + w_2 k_2)$ matching Taylor series up to $h^2$; Includes Heun's method ($w_1 = w_2 = 1/2$), Midpoint method ($w_1 = 0, w_2 = 1$), and Ralston's method ($w_1 = 1/3, w_2 = 2/3$ minimizing truncation error).",
+    "Runge-Kutta Fourth-Order (RK4) Method: Industry benchmark single-step method: $y_{n+1} = y_n + \\frac{h}{6} (k_1 + 2 k_2 + 2 k_3 + k_4)$ where $k_1 = f(x_n, y_n)$, $k_2 = f(x_n + \\frac{h}{2}, y_n + \\frac{h}{2} k_1)$, $k_3 = f(x_n + \\frac{h}{2}, y_n + \\frac{h}{2} k_2)$, and $k_4 = f(x_n + h, y_n + h k_3)$; Local truncation error $O(h^5)$, global error $O(h^4)$.",
+    "Milne-Simpson Predictor-Corrector Method: Multi-step method requiring 4 prior starting values $(y_0, y_1, y_2, y_3)$ generated via RK4; Milne Predictor: $y_{n+1}^{(p)} = y_{n-3} + \\frac{4h}{3} [2 f_n - f_{n-1} + 2 f_{n-2}]$; Simpson Corrector: $y_{n+1}^{(c)} = y_{n-1} + \\frac{h}{3} [f_{n+1}^{(p)} + 4 f_n + f_{n-1}]$; Truncation error $O(h^5)$.",
+    "Adams-Bashforth-Moulton Multi-Step Method: 4th-order Adams-Bashforth Predictor: $y_{n+1}^{(p)} = y_n + \\frac{h}{24} [55 f_n - 59 f_{n-1} + 37 f_{n-2} - 9 f_{n-3}]$; Adams-Moulton Corrector: $y_{n+1}^{(c)} = y_n + \\frac{h}{24} [9 f_{n+1}^{(p)} + 19 f_n - 5 f_{n-1} + f_{n-2}]$; Exhibits superior numerical stability compared to Milne's method.",
+    "Higher-Order ODEs and Systems of First-Order ODEs: Second-order ODE $\\frac{d^2 y}{dx^2} = g(x, y, y')$ converted to equivalent system of two first-order ODEs: $\\frac{dy}{dx} = z$ and $\\frac{dz}{dx} = g(x, y, z)$; Solved concurrently using vector RK4 stepping.",
+    "University Examination Strategy: Solve initial value problems up to 3 terms using Taylor series and Picard's method, execute 2 step iterations of Modified Euler, perform detailed RK4 calculations identifying individual $k_1, k_2, k_3, k_4$ slope values, and apply Milne's predictor-corrector formulas."
+], [
+    "Picard Successive Approximation: $y^{(k+1)}(x) = y_0 + \\int_{x_0}^x f(t, y^{(k)}(t)) dt$.",
+    "Euler's Forward Method: $y_{n+1} = y_n + h f(x_n, y_n)$ (global error $O(h)$).",
+    "Modified Euler (Heun's) Formula: $y_{n+1} = y_n + \\frac{h}{2}[f_n + f(x_{n+1}, y_n + h f_n)]$.",
+    "RK4 Weighted Step Formula: $y_{n+1} = y_n + \\frac{h}{6}(k_1 + 2 k_2 + 2 k_3 + k_4)$.",
+    "RK4 Slope Components: $k_1=f_n, k_2=f(x_n+\\frac{h}{2}, y_n+\\frac{h}{2}k_1), k_3=f(x_n+\\frac{h}{2}, y_n+\\frac{h}{2}k_2), k_4=f(x_n+h, y_n+h k_3)$.",
+    "Milne Predictor: $y_{n+1}^{(p)} = y_{n-3} + \\frac{4h}{3}[2 f_n - f_{n-1} + 2 f_{n-2}]$.",
+    "Milne Corrector: $y_{n+1}^{(c)} = y_{n-1} + \\frac{h}{3}[f_{n+1} + 4 f_n + f_{n-1}]$.",
+    "Adams-Bashforth 4th-Order Predictor: $y_{n+1}^{(p)} = y_n + \\frac{h}{24}[55 f_n - 59 f_{n-1} + 37 f_{n-2} - 9 f_{n-3}]$.",
+    "Adams-Moulton 4th-Order Corrector: $y_{n+1}^{(c)} = y_n + \\frac{h}{24}[9 f_{n+1} + 19 f_n - 5 f_{n-1} + f_{n-2}]$.",
+    "Exam Gold Tip: In Milne's Predictor-Corrector method, the error estimate is given by $E = \\frac{1}{29}|y_{n+1}^{(c)} - y_{n+1}^{(p)}|$, providing an immediate check on truncation error during exam computations."
+])
+
+# ==============================================================================
+# 3. Linear Algebra & Probability (5 units)
+# ==============================================================================
+add("Linear Algebra & Probability", 1, "Vector Spaces", [
+    "Vector Spaces and Subspace Criteria: Vector space $V$ over real field $\\mathbb{R}$ satisfying 10 axioms (closure under addition and scalar multiplication, associativity, commutativity, identity, invertibility, distributivity); Subspace criterion: non-empty subset $W \\subseteq V$ is subspace iff $\\alpha u + \\beta v \\in W$ for all $\\alpha, \\beta \\in \\mathbb{R}$ and $u, v \\in W$.",
+    "Linear Combinations and Span: Linear combination $v = \\sum_{i=1}^k c_i v_i$; Linear span $\\text{span}(S)$ is the smallest subspace containing subset $S$; Spanning set theorem: if vector in $S$ is linear combination of others, removing it leaves span unchanged.",
+    "Linear Independence and Dependence: Set $\\{v_1, \\dots, v_k\\}$ is linearly independent iff $c_1 v_1 + \\dots + c_k v_k = 0$ implies $c_1 = c_2 = \\dots = c_k = 0$; Linearly dependent iff at least one vector can be expressed as linear combination of the remaining vectors; Wronskian determinant test for function spaces.",
+    "Basis and Dimension: Subset $B$ is basis of $V$ iff (1) $B$ is linearly independent, and (2) $\\text{span}(B) = V$; Every basis of finite-dimensional space $V$ contains identical number of vectors, defined as dimension $\\dim(V)$; Dimension of $\\mathbb{R}^n$ is $n$; Dimension of matrix space $\\mathbb{R}^{m \\times n}$ is $m n$.",
+    "Coordinates and Change of Basis: Unique coordinate vector $[v]_B = [c_1, \\dots, c_n]^T$ relative to basis $B = \\{b_1, \\dots, b_n\\}$; Transition (change-of-basis) matrix $P_{B \\to C} = [[b_1]_C \\; [b_2]_C \\; \\dots \\; [b_n]_C]$ satisfying $[v]_C = P_{B \\to C} [v]_B$; Inverse transition matrix $P_{C \\to B} = (P_{B \\to C})^{-1}$.",
+    "Fundamental Subspaces of Matrix $A \\in \\mathbb{R}^{m \\times n}$: (1) Row space $\\text{Row}(A) \\subseteq \\mathbb{R}^n$; (2) Column space $\\text{Col}(A) \\subseteq \\mathbb{R}^m$; (3) Null space $\\text{Null}(A) = \\{x \\in \\mathbb{R}^n : A x = 0\\}$; (4) Left null space $\\text{Null}(A^T) \\subseteq \\mathbb{R}^m$.",
+    "Rank-Nullity Theorem: Fundamental theorem of linear algebra: $\\dim(\\text{Col}(A)) = \\dim(\\text{Row}(A)) = \\text{rank}(A)$; Rank-Nullity equation: $\\text{rank}(A) + \\text{nullity}(A) = n$ (where $n$ is number of columns / dimension of domain).",
+    "Orthogonality and Orthogonal Complements: Two vectors orthogonal if inner product $\\langle u, v \\rangle = u^T v = 0$; Orthogonal complement $W^\\perp = \\{v \\in V : \\langle v, w \\rangle = 0 \\;\\forall w \\in W\\}$; Fundamental orthogonal decomposition: $\\text{Row}(A)^\\perp = \\text{Null}(A)$ and $\\text{Col}(A)^\\perp = \\text{Null}(A^T)$.",
+    "Gram-Schmidt Orthonormalization Process: Converts linearly independent basis $\\{v_1, \\dots, v_k\\}$ into orthonormal basis $\\{u_1, \\dots, u_k\\}$: $u_1 = \\frac{v_1}{\\|v_1\\|}$; Step $k$: $w_k = v_k - \\sum_{j=1}^{k-1} \\langle v_k, u_j \\rangle u_j$, followed by normalization $u_k = \\frac{w_k}{\\|w_k\\|}$.",
+    "University Examination Strategy: Test given subsets for subspace criteria, determine whether vectors form linearly independent spanning sets, calculate bases and dimensions of row/column/null spaces, verify Rank-Nullity theorem for given rectangular matrices, and orthonormalize vectors using Gram-Schmidt."
+], [
+    "Subspace Test: $W \\ne \\emptyset$, $u, v \\in W \\implies \\alpha u + \\beta v \\in W$.",
+    "Linear Independence Condition: $\\sum c_i v_i = 0 \\implies c_i = 0$ for all $i$.",
+    "Coordinate Transformation: $[v]_C = P_{B \\to C} [v]_B$.",
+    "Rank-Nullity Theorem: $\\text{rank}(A) + \\text{nullity}(A) = n$.",
+    "Column Space Dimension: $\\dim(\\text{Col}(A)) = \\text{rank}(A)$.",
+    "Null Space Definition: $\\text{Null}(A) = \\{x : A x = 0\\}$.",
+    "Fundamental Orthogonality: $\\text{Row}(A) \\perp \\text{Null}(A)$ in $\\mathbb{R}^n$.",
+    "Gram-Schmidt Orthogonal Vector: $w_k = v_k - \\sum_{j=1}^{k-1} \\langle v_k, u_j \\rangle u_j$.",
+    "Orthonormal Normalization: $u_k = \\frac{w_k}{\\|w_k\\|}$.",
+    "Exam Gold Tip: The rank of matrix $A$ equals the number of non-zero pivot rows in its row-echelon form (REF), and nullity equals the number of free variables (columns without pivots)."
+])
+
+add("Linear Algebra & Probability", 2, "Matrices & Eigenvalues", [
+    "Linear Transformations and Representations: Mapping $T: V \\to W$ satisfying $T(\\alpha u + \\beta v) = \\alpha T(u) + \\beta T(v)$; Matrix representation $[T]_{B,C} = [[T(b_1)]_C \\; \\dots \\; [T(b_n)]_C]$; Kernel $\\ker(T) = \\{v \\in V : T(v) = 0\\}$ and Range $\\text{range}(T) = \\{T(v) : v \\in V\\}$; Rank-Nullity for transformations: $\\dim(\\ker(T)) + \\dim(\\text{range}(T)) = \\dim(V)$.",
+    "Characteristic Equation and Eigenvalues: For square matrix $A \\in \\mathbb{R}^{n \\times n}$, scalar $\\lambda$ is eigenvalue with non-zero eigenvector $v$ iff $A v = \\lambda v \\iff (A - \\lambda I) v = 0$; Characteristic polynomial: $p(\\lambda) = \\det(A - \\lambda I) = 0$; Sum of eigenvalues equals trace $\\sum \\lambda_i = \\text{Tr}(A)$; Product of eigenvalues equals determinant $\\prod \\lambda_i = \\det(A)$.",
+    "Algebraic vs Geometric Multiplicity: Algebraic multiplicity $m_a(\\lambda)$: multiplicity of $\\lambda$ as root of characteristic polynomial; Geometric multiplicity $m_g(\\lambda)$: dimension of eigenspace $E_\\lambda = \\text{Null}(A - \\lambda I)$; Inequality: $1 \\le m_g(\\lambda) \\le m_a(\\lambda)$; Defective matrix if $m_g(\\lambda) < m_a(\\lambda)$ for any eigenvalue.",
+    "Diagonalization Theorem: Matrix $A$ is diagonalizable ($A = P D P^{-1}$ with diagonal $D$) iff $A$ has $n$ linearly independent eigenvectors iff $m_g(\\lambda) = m_a(\\lambda)$ for every eigenvalue; If $A$ has $n$ distinct eigenvalues, $A$ is guaranteed diagonalizable.",
+    "Cayley-Hamilton Theorem & Minimal Polynomial: Every square matrix satisfies its characteristic equation: $p(A) = 0$; Minimal polynomial $m(\\lambda)$ is monic polynomial of lowest degree such that $m(A) = 0$; $A$ is diagonalizable iff its minimal polynomial has only non-repeated linear factors.",
+    "Symmetric Matrices and Spectral Theorem: For real symmetric matrix $A = A^T$: (1) All eigenvalues are strictly real; (2) Eigenvectors corresponding to distinct eigenvalues are mutually orthogonal; (3) Orthogonally diagonalizable: $A = Q \\Lambda Q^T$ where $Q$ is orthogonal matrix ($Q^T Q = I$) of orthonormal eigenvectors.",
+    "Quadratic Forms and Canonical Reduction: Quadratic form $Q(x) = x^T A x = \\sum_{i=1}^n \\sum_{j=1}^n a_{ij} x_i x_j$ with symmetric $A$; Orthogonal coordinate transformation $x = Q y$ reduces $Q(x)$ to canonical sum of squares: $Q(y) = \\lambda_1 y_1^2 + \\lambda_2 y_2^2 + \\dots + \\lambda_n y_n^2$.",
+    "Classification of Quadratic Forms: (1) Positive definite: $Q(x) > 0$ for all $x \\ne 0$ (all $\\lambda_i > 0$); (2) Negative definite: $Q(x) < 0$ for all $x \\ne 0$ (all $\\lambda_i < 0$); (3) Positive/Negative semidefinite (eigenvalues $\\ge 0$ or $\\le 0$); (4) Indefinite: eigenvalues have mixed signs.",
+    "Sylvester's Criterion of Definiteness: Symmetric matrix $A$ is positive definite iff all leading principal minors $\\Delta_k = \\det(A_{1..k, 1..k}) > 0$ for $k=1, 2, \\dots, n$; Negative definite iff leading principal minors alternate in signs: $(-1)^k \\Delta_k > 0$ ($\\Delta_1 < 0, \\Delta_2 > 0, \\Delta_3 < 0$).",
+    "University Examination Strategy: Determine eigenvalues and eigenvectors of $3 \\times 3$ matrices, verify Cayley-Hamilton theorem and compute $A^{-1}$ and $A^3$, diagonalize matrices via modal matrix $P$, orthogonally reduce quadratic forms to canonical forms, and classify definiteness using Sylvester's criterion."
+], [
+    "Characteristic Equation: $\\det(A - \\lambda I) = 0$.",
+    "Eigenvalue Trace Relation: $\\sum \\lambda_i = \\text{Tr}(A)$.",
+    "Eigenvalue Determinant Relation: $\\prod \\lambda_i = \\det(A)$.",
+    "Matrix Diagonalization: $A = P D P^{-1}$ ($P$ columns are eigenvectors).",
+    "Cayley-Hamilton Identity: $p(A) = A^n + c_{n-1} A^{n-1} + \\dots + c_0 I = 0$.",
+    "Orthogonal Diagonalization: $A = Q \\Lambda Q^T$ ($Q^T = Q^{-1}$).",
+    "Quadratic Form Canonical Form: $Q(y) = \\sum_{i=1}^n \\lambda_i y_i^2$.",
+    "Sylvester's Positive Definite Test: $\\Delta_1 > 0, \\Delta_2 > 0, \\dots, \\Delta_n > 0$.",
+    "Geometric Multiplicity: $m_g(\\lambda) = n - \\text{rank}(A - \\lambda I)$.",
+    "Exam Gold Tip: If matrix $A$ is symmetric, its eigenvectors from different eigenvalues are automatically orthogonal; simply normalize them to form the orthogonal transformation matrix $Q$."
+])
+
+add("Linear Algebra & Probability", 3, "Probability Distributions", [
+    "Probability Axioms and Sample Spaces: Sample space $S$; Kolmogorov axioms: (1) $P(A) \\ge 0$, (2) $P(S) = 1$, (3) For mutually exclusive events $P(\\bigcup A_i) = \\sum P(A_i)$; Conditional probability $P(A|B) = \\frac{P(A \\cap B)}{P(B)}$; Multiplication rule $P(A \\cap B) = P(B) P(A|B)$.",
+    "Total Probability and Bayes' Theorem: Partition $B_1, \\dots, B_k$ of sample space: $P(A) = \\sum P(B_i) P(A|B_i)$; Bayes' rule for posterior probability: $P(B_j|A) = \\frac{P(B_j) P(A|B_j)}{\\sum_{i=1}^k P(B_i) P(A|B_i)}$.",
+    "Discrete Random Variables and Mass Functions: Random variable $X: S \\to \\mathbb{R}$; Probability mass function (PMF) $p(x) = P(X = x)$ satisfying $p(x) \\ge 0$ and $\\sum p(x) = 1$; Cumulative distribution function (CDF) $F(x) = P(X \\le x) = \\sum_{t \\le x} p(t)$; Step-function properties.",
+    "Mathematical Expectation and Moments: Expected value $E[X] = \\sum x p(x)$; Variance $\\text{Var}(X) = E[(X-\\mu)^2] = E[X^2] - (E[X])^2$; Properties: $E[a X + b] = a E[X] + b$; $\\text{Var}(a X + b) = a^2 \\text{Var}(X)$; Standard deviation $\\sigma = \\sqrt{\\text{Var}(X)}$.",
+    "Bernoulli and Binomial Distributions: Bernoulli trial with success probability $p$; Binomial distribution $X \\sim B(n, p)$ representing successes in $n$ independent trials: $P(X = k) = \\binom{n}{k} p^k (1-p)^{n-k}$; Mean $\\mu = n p$; Variance $\\sigma^2 = n p q$; MGF $M_X(t) = (q + p e^t)^n$.",
+    "Poisson Distribution: Limiting form of Binomial as $n \\to \\infty, p \\to 0$ with $\\lambda = n p = \\text{constant}$; PMF: $P(X = k) = \\frac{\\lambda^k e^{-\\lambda}}{k!}$ ($k = 0, 1, 2, \\dots$); Unique property: mean equals variance $E[X] = \\text{Var}(X) = \\lambda$; MGF $M_X(t) = e^{\\lambda(e^t - 1)}$.",
+    "Geometric Distribution: Number of Bernoulli trials $X$ until first success occurs: $P(X = k) = (1-p)^{k-1} p$ ($k = 1, 2, \\dots$); Mean $E[X] = \\frac{1}{p}$; Variance $\\text{Var}(X) = \\frac{1-p}{p^2}$; Memoryless property: $P(X > s + t \\mid X > s) = P(X > t)$.",
+    "Negative Binomial & Hypergeometric Distributions: Negative Binomial: trials until $r$-th success occurs: $P(X = k) = \\binom{k-1}{r-1} p^r (1-p)^{k-r}$; Hypergeometric distribution modeling sampling without replacement from population $N$ containing $K$ successes: $P(X = k) = \\frac{\\binom{K}{k} \\binom{N-K}{n-k}}{\\binom{N}{n}}$.",
+    "Moment Generating Function (MGF) and Characteristic Function: MGF $M_X(t) = E[e^{t X}] = \\sum e^{t x} p(x)$; Generates raw moments via differentiation: $E[X^r] = \\left. \\frac{d^r M_X(t)}{dt^r} \\right|_{t=0}$; For independent variables $X, Y$: $M_{X+Y}(t) = M_X(t) M_Y(t)$.",
+    "University Examination Strategy: Solve diagnostic and signal detection problems using Bayes' theorem, compute mean and variance from arbitrary discrete PMFs, calculate probabilities of defect rates using Binomial and Poisson formulas, apply memoryless property of Geometric distribution, and derive moments using MGF."
+], [
+    "Bayes' Formula: $P(B_j|A) = \\frac{P(B_j) P(A|B_j)}{\\sum P(B_i) P(A|B_i)}$.",
+    "Variance Formula: $\\text{Var}(X) = E[X^2] - (E[X])^2$.",
+    "Linearity of Expectation: $E[a X + b] = a E[X] + b$.",
+    "Binomial PMF: $P(X=k) = \\binom{n}{k} p^k q^{n-k}$.",
+    "Binomial Parameters: $\\mu = n p$, $\\sigma^2 = n p q$.",
+    "Poisson PMF: $P(X=k) = \\frac{e^{-\\lambda} \\lambda^k}{k!}$.",
+    "Poisson Identity: $E[X] = \\text{Var}(X) = \\lambda$.",
+    "Geometric Distribution PMF: $P(X=k) = q^{k-1} p$ ($k=1, 2, \\dots$).",
+    "Geometric Memoryless Property: $P(X > s+t \\mid X > s) = P(X > t)$.",
+    "Exam Gold Tip: For Poisson distribution, $P(X = k+1) = \\frac{\\lambda}{k+1} P(X = k)$; use this recurrence relation to rapidly generate successive Poisson probabilities during exam calculations."
+])
+
+add("Linear Algebra & Probability", 4, "Random Variables", [
+    "Continuous Random Variables and Density Functions: Continuous random variable $X$ taking uncountable continuum of values; Probability density function (PDF) $f(x)$ satisfying $f(x) \\ge 0$ and $\\int_{-\\infty}^\\infty f(x) dx = 1$; Probability defined over intervals: $P(a \\le X \\le b) = \\int_a^b f(x) dx$; Single point probability is identically zero $P(X = c) = 0$.",
+    "Cumulative Distribution Function (CDF): $F(x) = P(X \\le x) = \\int_{-\\infty}^x f(t) dt$; Fundamental theorem of calculus links PDF and CDF: $f(x) = \\frac{d F(x)}{dx}$; Properties: non-decreasing, $\\lim_{x \\to -\\infty} F(x) = 0$, $\\lim_{x \\to +\\infty} F(x) = 1$, and $P(a < X \\le b) = F(b) - F(a)$.",
+    "Continuous Expectation, Variance, and Moments: Mean $\\mu = E[X] = \\int_{-\\infty}^\\infty x f(x) dx$; Variance $\\sigma^2 = \\text{Var}(X) = \\int_{-\\infty}^\\infty (x - \\mu)^2 f(x) dx$; $n$-th raw moment $\\mu'_n = E[X^n]$; $n$-th central moment $\\mu_n = E[(X-\\mu)^n]$.",
+    "Continuous Uniform Distribution: $X \\sim U(a, b)$ with constant PDF $f(x) = \\frac{1}{b-a}$ for $a \\le x \\le b$, and $0$ elsewhere; Mean $\\mu = \\frac{a+b}{2}$; Variance $\\sigma^2 = \\frac{(b-a)^2}{12}$; Cumulative distribution $F(x) = \\frac{x-a}{b-a}$; Models quantization noise in analog-to-digital converters.",
+    "Exponential Distribution: $X \\sim \\text{Exp}(\\lambda)$ with PDF $f(x) = \\lambda e^{-\\lambda x}$ ($x \\ge 0$); Mean $\\mu = \\frac{1}{\\lambda}$; Variance $\\sigma^2 = \\frac{1}{\\lambda^2}$; CDF $F(x) = 1 - e^{-\\lambda x}$; Memoryless continuous distribution $P(X > s+t \\mid X > s) = P(X > t)$; Models component lifetime and time between Poisson events.",
+    "Normal (Gaussian) Distribution: $X \\sim \\mathcal{N}(\\mu, \\sigma^2)$ with bell-shaped symmetric PDF $f(x) = \\frac{1}{\\sigma \\sqrt{2\\pi}} \\exp\\left( -\\frac{(x-\\mu)^2}{2\\sigma^2} \\right)$; Mean $\\mu$, variance $\\sigma^2$; Points of inflection at $x = \\mu \\pm \\sigma$; Skewness $\\beta_1 = 0$, Kurtosis $\\beta_2 = 3$.",
+    "Standard Normal Variable and Z-Scores: Standard normal $Z = \\frac{X - \\mu}{\\sigma} \\sim \\mathcal{N}(0, 1)$ with PDF $\\phi(z) = \\frac{1}{\\sqrt{2\\pi}} e^{-z^2 / 2}$; Standard CDF $\\Phi(z) = P(Z \\le z)$; Empirical rule: $P(\\mu-\\sigma \\le X \\le \\mu+\\sigma) \\approx 68.27\\%$, $P(\\mu-2\\sigma \\le X \\le \\mu+2\\sigma) \\approx 95.45\\%$, $P(\\mu-3\\sigma \\le X \\le \\mu+3\\sigma) \\approx 99.73\\%$.",
+    "Probability Inequalities (Markov and Chebyshev): Markov's inequality for non-negative random variable $X$: $P(X \\ge a) \\le \\frac{E[X]}{a}$; Chebyshev's inequality: $P(|X - \\mu| \\ge k \\sigma) \\le \\frac{1}{k^2}$ or $P(|X - \\mu| < k \\sigma) \\ge 1 - \\frac{1}{k^2}$; Provides distribution-free bounds on probabilities.",
+    "Laws of Large Numbers: Weak Law of Large Numbers (WLLN): for sequence of i.i.d. random variables with mean $\\mu$, sample mean $\\bar{X}_n = \\frac{1}{n} \\sum X_i$ converges in probability to $\\mu$: $\\lim_{n \\to \\infty} P(|\\bar{X}_n - \\mu| \\ge \\epsilon) = 0$; Strong Law of Large Numbers (SLLN): almost sure convergence $P(\\lim_{n \\to \\infty} \\bar{X}_n = \\mu) = 1$.",
+    "University Examination Strategy: Normalize continuous PDF functions to evaluate unknown normalization constant $k$, calculate expectation and variance for piecewise continuous distributions, evaluate exponential lifetime probabilities, compute standard normal $Z$-score probabilities from statistical tables, and apply Chebyshev's inequality to establish minimum probability bounds."
+], [
+    "PDF Normalization Axiom: $\\int_{-\\infty}^\\infty f(x) dx = 1$.",
+    "CDF Derivative Link: $f(x) = \\frac{d F(x)}{dx}$.",
+    "Uniform Distribution Variance: $\\sigma^2 = \\frac{(b-a)^2}{12}$.",
+    "Exponential PDF: $f(x) = \\lambda e^{-\\lambda x}$ ($x \\ge 0$).",
+    "Exponential CDF: $F(x) = 1 - e^{-\\lambda x}$.",
+    "Gaussian PDF: $f(x) = \\frac{1}{\\sigma \\sqrt{2\\pi}} \\exp\\left(-\\frac{(x-\\mu)^2}{2\\sigma^2}\\right)$.",
+    "Standard Normal Transform: $Z = \\frac{X - \\mu}{\\sigma}$.",
+    "Markov's Inequality: $P(X \\ge a) \\le \\frac{E[X]}{a}$ ($X \\ge 0$).",
+    "Chebyshev's Inequality: $P(|X - \\mu| \\ge k \\sigma) \\le \\frac{1}{k^2}$.",
+    "Exam Gold Tip: For standard normal distribution $\\Phi(-z) = 1 - \\Phi(z)$ by bell curve symmetry; this allows evaluating probabilities for negative $Z$-values directly from positive $Z$ tables."
+])
+
+add("Linear Algebra & Probability", 5, "Statistical Inference", [
+    "Population and Random Sampling: Target population with parameters (mean $\\mu$, variance $\\sigma^2$, proportion $p$); Random sample $X_1, X_2, \\dots, X_n$ of i.i.d. observations; Sample statistics: Sample mean $\\bar{X} = \\frac{1}{n} \\sum_{i=1}^n X_i$; Sample variance $S^2 = \\frac{1}{n-1} \\sum_{i=1}^n (X_i - \\bar{X})^2$ (Bessel's correction for unbiasedness).",
+    "Sampling Distribution of Mean and Central Limit Theorem: Expectation $E[\\bar{X}] = \\mu$; Standard Error $SE(\\bar{X}) = \\frac{\\sigma}{\\sqrt{n}}$; Central Limit Theorem (CLT): for sample size $n \\ge 30$, sample mean $\\bar{X}$ is approximately normally distributed $\\bar{X} \\sim \\mathcal{N}\\left(\\mu, \\frac{\\sigma^2}{n}\\right)$ regardless of population shape.",
+    "Point Estimation & Properties of Good Estimators: Estimator $\\hat{\\theta} = g(X_1, \\dots, X_n)$: (1) Unbiasedness: $E[\\hat{\\theta}] = \\theta$; (2) Consistency: $\\lim_{n \\to \\infty} P(|\\hat{\\theta} - \\theta| < \\epsilon) = 1$; (3) Efficiency: smallest variance among all unbiased estimators (Cramér-Rao lower bound); (4) Sufficiency: contains all sample information about $\\theta$.",
+    "Method of Moments Estimation: Equating sample moments $m_k = \\frac{1}{n} \\sum X_i^k$ to theoretical population moments $\\mu'_k = E[X^k]$; Solving resulting system of algebraic equations for unknown distribution parameters (e.g., for Gamma, Beta, and Uniform distributions).",
+    "Maximum Likelihood Estimation (MLE): Likelihood function $L(\\theta) = \\prod_{i=1}^n f(x_i; \\theta)$; Log-likelihood $\\ln L(\\theta) = \\sum_{i=1}^n \\ln f(x_i; \\theta)$; Score equation $\\frac{d \\ln L(\\theta)}{d\\theta} = 0$; Second derivative test $\\frac{d^2 \\ln L}{d\\theta^2} < 0$; Invariance property of MLE: if $\\hat{\\theta}$ is MLE, then $g(\\hat{\\theta})$ is MLE of $g(\\theta)$.",
+    "Interval Estimation & Confidence Intervals: Interval $[\\hat{\\theta}_L, \\hat{\\theta}_U]$ capturing true parameter with confidence level $1 - \\alpha$; Two-sided $(1-\\alpha)100\\%$ confidence interval for mean $\\mu$ with known $\\sigma$: $\\bar{x} \\pm z_{\\alpha/2} \\frac{\\sigma}{\\sqrt{n}}$; Critical values: $z_{0.025} = 1.96$ ($95\\%$), $z_{0.005} = 2.576$ ($99\\%$).",
+    "Student's t-Distribution for Unknown Variance: For small samples ($n < 30$) from normal population with unknown $\\sigma$: statistic $T = \\frac{\\bar{X} - \\mu}{S / \\sqrt{n}}$ follows Student's $t$-distribution with $\\nu = n-1$ degrees of freedom; Confidence interval: $\\bar{x} \\pm t_{\\alpha/2, n-1} \\frac{S}{\\sqrt{n}}$; Heavier tails than normal distribution.",
+    "Confidence Intervals for Population Proportion: For large sample from Bernoulli population: sample proportion $\\hat{p} = \\frac{X}{n}$; Standard error $SE(\\hat{p}) = \\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}}$; $(1-\\alpha)100\\%$ confidence interval: $\\hat{p} \\pm z_{\\alpha/2} \\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}}$.",
+    "Confidence Intervals for Population Variance: Chi-Square distribution: statistic $\\chi^2 = \\frac{(n-1)S^2}{\\sigma^2}$ follows $\\chi^2$ distribution with $\\nu = n-1$ degrees of freedom; $(1-\\alpha)100\\%$ confidence interval for $\\sigma^2$: $\\left[ \\frac{(n-1)S^2}{\\chi^2_{\\alpha/2, n-1}}, \\frac{(n-1)S^2}{\\chi^2_{1-\\alpha/2, n-1}} \\right]$.",
+    "University Examination Strategy: Apply Central Limit Theorem to compute sample mean probabilities, prove that sample variance $S^2$ is an unbiased estimator of $\\sigma^2$, derive MLE estimators for Poisson parameter $\\lambda$ and Normal parameters $(\\mu, \\sigma^2)$, and construct $95\\%$ and $99\\%$ confidence intervals for population means using $Z$ and $t$ tables."
+], [
+    "Sample Mean Estimator: $\\bar{X} = \\frac{1}{n} \\sum X_i$ ($E[\\bar{X}] = \\mu$).",
+    "Sample Variance Unbiased: $S^2 = \\frac{1}{n-1} \\sum (X_i - \\bar{X})^2$ ($E[S^2] = \\sigma^2$).",
+    "Standard Error of Mean: $SE(\\bar{X}) = \\frac{\\sigma}{\\sqrt{n}}$.",
+    "Central Limit Theorem: $\\frac{\\bar{X} - \\mu}{\\sigma / \\sqrt{n}} \\xrightarrow{d} \\mathcal{N}(0, 1)$.",
+    "MLE Score Equation: $\\frac{d \\ln L(\\theta)}{d\\theta} = 0$.",
+    "Confidence Interval Mean (Known $\\sigma$): $\\bar{x} \\pm z_{\\alpha/2} \\frac{\\sigma}{\\sqrt{n}}$.",
+    "Small Sample $t$-Statistic: $T = \\frac{\\bar{X} - \\mu}{S / \\sqrt{n}}$ ($df = n-1$).",
+    "Confidence Interval Mean (Unknown $\\sigma$): $\\bar{x} \\pm t_{\\alpha/2, n-1} \\frac{S}{\\sqrt{n}}$.",
+    "Confidence Interval for Proportion: $\\hat{p} \\pm z_{\\alpha/2} \\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}}$.",
+    "Exam Gold Tip: For $95\\%$ confidence interval with known variance, use $z = 1.96$; for $90\\%$ use $z = 1.645$; for $99\\%$ use $z = 2.576$."
+])
+
+# ==============================================================================
+# 4. Statistics & Probability (5 units)
+# ==============================================================================
+add("Statistics & Probability", 1, "Descriptive Statistics", [
+    "Data Classification and Frequency Distributions: Raw data organization; Qualitative vs quantitative data; Discrete and continuous frequency distributions; Class boundaries, class intervals, and class midpoints; Cumulative frequency distributions (less-than and more-than ogives); Graphical representation via Histograms, Frequency Polygons, and Frequency Curves.",
+    "Measures of Central Tendency (Averages): Arithmetic Mean: $\\bar{x} = \\frac{\\sum f_i x_i}{N}$; Median: middle value dividing ranked dataset into two equal halves (for grouped data: $M = L + \\frac{\\frac{N}{2} - F}{f} \\times h$); Mode: most frequently occurring value ($M_o = L + \\frac{f_1 - f_0}{2f_1 - f_0 - f_2} \\times h$); Empirical relationship: $\\text{Mode} \\approx 3\\text{Median} - 2\\text{Mean}$.",
+    "Geometric Mean and Harmonic Mean: Geometric Mean: $GM = \\left( \\prod x_i^{f_i} \\right)^{1/N}$ (used for percentage growth rates and index numbers); Harmonic Mean: $HM = \\frac{N}{\\sum \\frac{f_i}{x_i}}$ (used for average speeds and rates); Fundamental inequality: $AM \\ge GM \\ge HM$, equality holding only when all observations are identical.",
+    "Measures of Dispersion (Spread): Range $R = x_{\\max} - x_{\\min}$; Quartile Deviation (Semi-Interquartile Range) $QD = \\frac{Q_3 - Q_1}{2}$; Mean Absolute Deviation $MAD = \\frac{\\sum f_i |x_i - \\bar{x}|}{N}$; Standard Deviation $\\sigma = \\sqrt{\\frac{\\sum f_i (x_i - \\bar{x})^2}{N}}$ and Variance $\\sigma^2$.",
+    "Relative Measures of Dispersion & Coefficient of Variation: Coefficient of Variation $CV = \\frac{\\sigma}{\\bar{x}} \\times 100\\%$; Dimensionless measure used to compare consistency, stability, and variability across datasets with differing units or scales; Lower $CV$ indicates greater consistency and uniformity.",
+    "Moments of a Frequency Distribution: $r$-th raw moment about origin: $\\mu'_r = \\frac{\\sum f_i x_i^r}{N}$; $r$-th central moment about mean: $\\mu_r = \\frac{\\sum f_i (x_i - \\bar{x})^r}{N}$; Moment relations: $\\mu_1 = 0$, $\\mu_2 = \\sigma^2 = \\mu'_2 - (\\mu'_1)^2$, $\\mu_3 = \\mu'_3 - 3 \\mu'_2 \\mu'_1 + 2 (\\mu'_1)^3$, $\\mu_4 = \\mu'_4 - 4 \\mu'_3 \\mu'_1 + 6 \\mu'_2 (\\mu'_1)^2 - 3 (\\mu'_1)^4$.",
+    "Sheppard's Corrections for Grouping: For continuous grouped data, grouping introduces errors in moments; Corrected moments: $\\mu_2^{(corr)} = \\mu_2 - \\frac{h^2}{12}$, $\\mu_3^{(corr)} = \\mu_3$, $\\mu_4^{(corr)} = \\mu_4 - \\frac{1}{2} h^2 \\mu_2 + \\frac{7}{240} h^4$ (where $h$ is class interval width).",
+    "Skewness and Asymmetry Measures: Skewness reflects lack of symmetry around mean; Karl Pearson's coefficient: $S_k = \\frac{\\text{Mean} - \\text{Mode}}{\\sigma} = \\frac{3(\\text{Mean} - \\text{Median})}{\\sigma} \\in [-3, +3]$; Bowley's quartile coefficient: $S_B = \\frac{Q_3 + Q_1 - 2 M}{Q_3 - Q_1}$; Moment-based skewness $\\beta_1 = \\frac{\\mu_3^2}{\\mu_2^3}$ and $\\gamma_1 = \\frac{\\mu_3}{\\sigma^3}$ (positive if right-tailed, negative if left-tailed).",
+    "Kurtosis and Peakedness: Peakedness of distribution relative to normal distribution; Moment coefficient of kurtosis $\\beta_2 = \\frac{\\mu_4}{\\mu_2^2}$ and excess kurtosis $\\gamma_2 = \\beta_2 - 3$; Classification: Mesokurtic ($\\beta_2 = 3$, normal curve), Leptokurtic ($\\beta_2 > 3$, sharp peak, heavy tails), Platykurtic ($\\beta_2 < 3$, flat-topped).",
+    "University Examination Strategy: Calculate Mean, Median, and Mode for grouped frequency tables, compute Standard Deviation and compare consistency via Coefficient of Variation, derive the first four central moments from raw moments, and evaluate coefficients of skewness and kurtosis to characterize distribution shape."
+], [
+    "Grouped Median Formula: $M = L + \\frac{\\frac{N}{2} - F}{f} \\times h$.",
+    "Empirical Mode-Mean-Median: $\\text{Mode} \\approx 3\\text{Median} - 2\\text{Mean}$.",
+    "Pythagorean Means Inequality: $AM \\ge GM \\ge HM$.",
+    "Coefficient of Variation: $CV = \\frac{\\sigma}{\\bar{x}} \\times 100\\%$.",
+    "Second Central Moment (Variance): $\\mu_2 = \\mu'_2 - (\\mu'_1)^2$.",
+    "Third Central Moment: $\\mu_3 = \\mu'_3 - 3 \\mu'_2 \\mu'_1 + 2 (\\mu'_1)^3$.",
+    "Karl Pearson's Skewness: $S_k = \\frac{\\text{Mean} - \\text{Mode}}{\\sigma}$.",
+    "Bowley's Quartile Skewness: $S_B = \\frac{Q_3 + Q_1 - 2 M}{Q_3 - Q_1}$.",
+    "Kurtosis Coefficient: $\\beta_2 = \\frac{\\mu_4}{\\mu_2^2}$ (normal $= 3$).",
+    "Exam Gold Tip: If a dataset is symmetric, the odd central moments are identically zero ($\\mu_1 = 0, \\mu_3 = 0$), so $\\text{Mean} = \\text{Median} = \\text{Mode}$ and skewness $S_k = 0$."
+])
+
+add("Statistics & Probability", 2, "Probability Distributions", [
+    "Random Variables and Axiomatic Foundations: Discrete vs continuous sample spaces; Cumulative distribution functions $F(x)$ and boundary conditions; Expectation of linear combinations $E[a X + b Y] = a E[X] + b E[Y]$; Variance of independent variables $\\text{Var}(X \\pm Y) = \\text{Var}(X) + \\text{Var}(Y)$.",
+    "Binomial Probability Distribution: Probability mass function $P(X = x) = \\binom{n}{x} p^x q^{n-x}$ ($x = 0, 1, \\dots, n; q = 1-p$); Mean $\\mu = n p$; Variance $\\sigma^2 = n p q$; Standard deviation $\\sigma = \\sqrt{n p q}$; Skewness $\\beta_1 = \\frac{(q-p)^2}{n p q}$; Kurtosis $\\beta_2 = 3 + \\frac{1 - 6 p q}{n p q}$.",
+    "Fitting a Binomial Distribution to Data: Expected frequencies calculated by $N \\times P(X = x)$; Initial parameter $p$ estimated from sample mean $\\bar{x} = n p \\implies p = \\bar{x} / n$; Recurrence relation for rapid frequency generation: $P(X = x+1) = \\frac{n - x}{x + 1} \\frac{p}{q} P(X = x)$.",
+    "Poisson Probability Distribution: Model for rare events in large trials: $P(X = x) = \\frac{e^{-\\lambda} \\lambda^x}{x!}$ ($x = 0, 1, 2, \\dots$); Limiting distribution of Binomial as $n \\to \\infty, p \\to 0$ with $n p = \\lambda$; Mean and variance are identical $\\mu = \\sigma^2 = \\lambda$; Skewness $\\beta_1 = 1/\\lambda$; Kurtosis $\\beta_2 = 3 + 1/\\lambda$.",
+    "Fitting a Poisson Distribution to Data: Expected frequencies $N \\times P(X = x)$ where $\\lambda$ is estimated by sample mean $\\bar{x}$; Recurrence formula: $P(X = x+1) = \\frac{\\lambda}{x + 1} P(X = x)$; Tested against observed counts using Chi-square goodness of fit.",
+    "Normal Distribution Characteristics: Continuous bell-shaped distribution $X \\sim \\mathcal{N}(\\mu, \\sigma^2)$ with PDF $f(x) = \\frac{1}{\\sigma \\sqrt{2\\pi}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}$; Total area under curve is 1; Symmetric around $x = \\mu$ with $\\text{Mean} = \\text{Median} = \\text{Mode} = \\mu$; Maximum ordinate at $x = \\mu$ equal to $\\frac{1}{\\sigma \\sqrt{2\\pi}}$; Inflection points at $\\mu \\pm \\sigma$.",
+    "Standard Normal Curve Computations: Standard variable $Z = \\frac{X - \\mu}{\\sigma} \\sim \\mathcal{N}(0, 1)$; Area property: $P(0 \\le Z \\le 1) \\approx 0.3413$, $P(0 \\le Z \\le 2) \\approx 0.4772$, $P(0 \\le Z \\le 3) \\approx 0.4987$; Normal approximation to Binomial with continuity correction factor of $\\pm 0.5$ when $n p \\ge 5$ and $n q \\ge 5$.",
+    "Fitting a Normal Distribution to Grouped Data: Estimating parameters $\\hat{\\mu} = \\bar{x}$ and $\\hat{\\sigma} = s$; Converting class boundaries into standard $Z$-scores $z_i = \\frac{x_i - \\bar{x}}{s}$; Finding interval probabilities $\\Delta \\Phi(z) = \\Phi(z_{i+1}) - \\Phi(z_i)$; Multiplying by total frequency $N$ to yield expected theoretical frequencies.",
+    "Exponential & Hypergeometric Distributions: Exponential distribution $f(t) = \\lambda e^{-\\lambda t}$ modeling waiting times between events with mean $1/\\lambda$; Hypergeometric distribution $P(X = k) = \\frac{\\binom{K}{k} \\binom{N-K}{n-k}}{\\binom{N}{n}}$ modeling quality control acceptance sampling without replacement.",
+    "University Examination Strategy: Calculate Binomial probabilities for quality inspection pass/fail rates, fit Binomial distributions using recurrence relations, calculate Poisson probabilities for rare defects per unit area, fit Poisson distributions, convert raw scores to standard normal $Z$-scores, and evaluate normal tail probabilities using standard tables."
+], [
+    "Binomial Distribution Variance: $\\sigma^2 = n p q$ ($q = 1-p$).",
+    "Binomial Recurrence Relation: $P(x+1) = \\frac{n-x}{x+1} \\frac{p}{q} P(x)$.",
+    "Poisson Mean and Variance Identity: $\\mu = \\sigma^2 = \\lambda$.",
+    "Poisson Recurrence Relation: $P(x+1) = \\frac{\\lambda}{x+1} P(x)$.",
+    "Poisson Zero-Event Probability: $P(0) = e^{-\\lambda}$.",
+    "Normal Distribution PDF: $f(x) = \\frac{1}{\\sigma \\sqrt{2\\pi}} \\exp\\left(-\\frac{(x-\\mu)^2}{2\\sigma^2}\\right)$.",
+    "Standard Normal Z-Transformation: $Z = \\frac{X - \\mu}{\\sigma}$.",
+    "Continuity Correction: $P(X \\le k) \\approx P(X_{norm} \\le k + 0.5)$.",
+    "Normal 95% Confidence Spread: $\\mu \\pm 1.96 \\sigma$.",
+    "Exam Gold Tip: When approximating Binomial probabilities with Normal distribution, always apply continuity correction: replace discrete $X = k$ with interval $[k - 0.5, k + 0.5]$ before converting to $Z$."
+])
+
+add("Statistics & Probability", 3, "Sampling", [
+    "Census vs Sample Survey: Complete enumeration (census) vs sample survey; Advantages of sampling: reduced cost, accelerated speed, greater scope, and higher operational accuracy; Destructive testing necessitates sampling (e.g., tensile strength, bulb life).",
+    "Sampling and Non-Sampling Errors: Sampling error: error inherent in estimating population parameter from sample, decreases as sample size $n$ increases ($SE \\propto 1/\\sqrt{n}$); Non-sampling error: errors due to faulty questionnaire design, respondent bias, interviewer fraud, data entry errors; Can occur in both census and sample surveys.",
+    "Probability Sampling Methods: (1) Simple Random Sampling with Replacement (SRSWR) and without Replacement (SRSWOR); (2) Stratified Random Sampling: population divided into non-overlapping homogeneous strata, samples drawn from each stratum proportionally ($n_i = n \\frac{N_i}{N}$); (3) Systematic Sampling: selecting every $k$-th item after random start; (4) Cluster Sampling: population divided into heterogeneous clusters, complete clusters sampled.",
+    "Sampling Distribution and Standard Error: Sampling distribution is probability distribution of a sample statistic (mean, proportion, variance) across all possible samples of size $n$; Standard Error ($SE$) is standard deviation of sampling distribution; Measures precision of estimator: smaller $SE$ implies higher precision.",
+    "Sampling Distribution of the Mean: Mean of sample means equals population mean: $E[\\bar{X}] = \\mu$; Standard error under SRSWOR: $SE(\\bar{X}) = \\frac{\\sigma}{\\sqrt{n}} \\sqrt{\\frac{N - n}{N - 1}}$; Finite Population Correction (FPC) factor $\\sqrt{\\frac{N - n}{N - 1}}$ applied when sample fraction $\\frac{n}{N} > 0.05$; As $N \\to \\infty$, FPC approaches $1$, yielding $SE = \\frac{\\sigma}{\\sqrt{n}}$.",
+    "Central Limit Theorem (CLT) Application: If random samples of size $n \\ge 30$ drawn from any population with finite mean $\\mu$ and variance $\\sigma^2$, distribution of sample mean $\\bar{X}$ is approximately normal $\\mathcal{N}\\left(\\mu, \\frac{\\sigma^2}{n}\\right)$; Enables statistical inference on non-normal populations.",
+    "Sampling Distribution of Proportions: For sample proportion $p = \\frac{X}{n}$ drawn from population with proportion $P$: $E[p] = P$; Standard error: $SE(p) = \\sqrt{\\frac{P(1 - P)}{n}}$ for infinite population; For finite population: $SE(p) = \\sqrt{\\frac{P(1 - P)}{n}} \\sqrt{\\frac{N - n}{N - 1}}$.",
+    "Sampling Distribution of Differences: (1) Difference between two independent sample means: $E[\\bar{X}_1 - \\bar{X}_2] = \\mu_1 - \\mu_2$, $SE(\\bar{X}_1 - \\bar{X}_2) = \\sqrt{\\frac{\\sigma_1^2}{n_1} + \\frac{\\sigma_2^2}{n_2}}$; (2) Difference between two independent proportions: $E[p_1 - p_2] = P_1 - P_2$, $SE(p_1 - p_2) = \\sqrt{\\frac{P_1(1-P_1)}{n_1} + \\frac{P_2(1-P_2)}{n_2}}$.",
+    "Sample Size Determination: Required sample size $n$ for estimating population mean within margin of error $E$ at $(1-\\alpha)$ confidence level: $n = \\left( \\frac{z_{\\alpha/2} \\sigma}{E} \\right)^2$; Required sample size for proportion: $n = \\frac{z_{\\alpha/2}^2 P(1-P)}{E^2}$ (taking $P = 0.5$ for most conservative maximum sample size).",
+    "University Examination Strategy: Differentiate sampling vs non-sampling errors, compute standard errors for sample means with and without finite population correction factor, calculate probability of sample mean exceeding given thresholds using CLT, evaluate sample size requirements for given precision, and determine sampling errors for proportions."
+], [
+    "Standard Error of Mean (Infinite): $SE(\\bar{X}) = \\frac{\\sigma}{\\sqrt{n}}$.",
+    "Finite Population Correction (FPC): $\\sqrt{\\frac{N - n}{N - 1}}$.",
+    "Standard Error of Proportion: $SE(p) = \\sqrt{\\frac{P(1 - P)}{n}}$.",
+    "SE of Difference Between Means: $SE(\\bar{X}_1 - \\bar{X}_2) = \\sqrt{\\frac{\\sigma_1^2}{n_1} + \\frac{\\sigma_2^2}{n_2}}$.",
+    "SE of Difference Between Proportions: $SE(p_1 - p_2) = \\sqrt{\\frac{P_1 Q_1}{n_1} + \\frac{P_2 Q_2}{n_2}}$.",
+    "Sample Size for Mean: $n = \\left(\\frac{z_{\\alpha/2} \\sigma}{E}\\right)^2$.",
+    "Sample Size for Proportion (Conservative): $n = \\frac{z_{\\alpha/2}^2 (0.25)}{E^2}$.",
+    "Stratified Proportional Allocation: $n_i = n \\frac{N_i}{N}$.",
+    "Central Limit Cutoff: $n \\ge 30$ ensures asymptotic normality.",
+    "Exam Gold Tip: Always check if sample fraction $n/N > 0.05$; if yes, multiply the standard error by the finite population correction factor $\\sqrt{\\frac{N-n}{N-1}}$, otherwise omit it."
+])
+
+add("Statistics & Probability", 4, "Hypothesis Testing", [
+    "Statistical Hypotheses and Decision Theory: Null hypothesis $H_0$ (statement of no effect, equality, or status quo) tested against Alternative hypothesis $H_1$ (statement of research interest); Two-tailed test ($H_1: \\theta \\ne \\theta_0$) vs One-tailed test (right-tailed $H_1: \\theta > \\theta_0$, left-tailed $H_1: \\theta < \\theta_0$).",
+    "Errors in Hypothesis Testing: Type I error ($\\alpha$, significance level): rejecting true null hypothesis $H_0$ (producer's risk); Type II error ($\\beta$): failing to reject false null hypothesis $H_0$ (consumer's risk); Power of test: $1 - \\beta = P(\\text{Reject } H_0 \\mid H_0 \\text{ is false})$; Trade-off: decreasing $\\alpha$ increases $\\beta$ for fixed sample size $n$.",
+    "Critical Regions and P-Value Approach: Critical value separates acceptance and rejection regions; Decision rule: reject $H_0$ if test statistic falls into critical region; P-value: probability of observing test statistic as extreme as, or more extreme than, sample value assuming $H_0$ true; Reject $H_0$ if $p\\text{-value} \\le \\alpha$.",
+    "Large Sample Tests for Means (Z-Test): For $n \\ge 30$: (1) Single mean: $Z_{cal} = \\frac{\\bar{x} - \\mu_0}{\\sigma / \\sqrt{n}}$ (use sample $s$ if $\\sigma$ unknown); (2) Difference of two means: $Z_{cal} = \\frac{(\\bar{x}_1 - \\bar{x}_2) - (\\mu_1 - \\mu_2)}{\\sqrt{\\frac{s_1^2}{n_1} + \\frac{s_2^2}{n_2}}}$; Critical $Z$ at $5\\%$: $1.96$ (two-tailed), $1.645$ (one-tailed); at $1\\%$: $2.576$ (two-tailed), $2.33$ (one-tailed).",
+    "Large Sample Tests for Proportions (Z-Test): (1) Single proportion: $Z_{cal} = \\frac{p - P_0}{\\sqrt{\\frac{P_0(1-P_0)}{n}}}$; (2) Difference of two proportions: $Z_{cal} = \\frac{p_1 - p_2}{\\sqrt{\\hat{P}\\hat{Q}\\left(\\frac{1}{n_1} + \\frac{1}{n_2}\\right)}}$ where pooled proportion $\\hat{P} = \\frac{n_1 p_1 + n_2 p_2}{n_1 + n_2}$.",
+    "Small Sample Test for Mean (Student's t-Test): For normal population with unknown $\\sigma$ and $n < 30$: $t_{cal} = \\frac{\\bar{x} - \\mu_0}{s / \\sqrt{n}}$ with degrees of freedom $\\nu = n-1$; Sample standard deviation $s = \\sqrt{\\frac{\\sum (x_i - \\bar{x})^2}{n-1}}$.",
+    "Difference of Two Means (Two-Sample t-Test & Paired t-Test): (1) Independent samples: $t_{cal} = \\frac{\\bar{x}_1 - \\bar{x}_2}{s_p \\sqrt{\\frac{1}{n_1} + \\frac{1}{n_2}}}$ with $\\nu = n_1 + n_2 - 2$ and pooled variance $s_p^2 = \\frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1 + n_2 - 2}$; (2) Paired $t$-test (dependent before-and-after samples): $t_{cal} = \\frac{\\bar{d}}{s_d / \\sqrt{n}}$ with $\\nu = n-1$ where $d_i = x_i - y_i$.",
+    "Snedecor's F-Test for Equality of Two Variances: Testing $H_0: \\sigma_1^2 = \\sigma_2^2$ vs $H_1: \\sigma_1^2 \\ne \\sigma_2^2$; Test statistic $F_{cal} = \\frac{s_1^2}{s_2^2}$ (placing larger variance in numerator so $F \\ge 1$) with degrees of freedom $\\nu_1 = n_1 - 1, \\nu_2 = n_2 - 1$.",
+    "Chi-Square Test ($\\chi^2$): (1) Goodness of fit: $\\chi^2 = \\sum_{i=1}^k \\frac{(O_i - E_i)^2}{E_i}$ with $\\nu = k - 1 - m$ (where $m$ is number of estimated parameters); (2) Contingency table test for independence of attributes: expected cell frequency $E_{ij} = \\frac{R_i \\times C_j}{N}$ with $\\nu = (r-1)(c-1)$; Condition: all $E_i \\ge 5$, apply Yates' continuity correction for $2 \\times 2$ table if needed.",
+    "University Examination Strategy: Formulate formal $H_0$ and $H_1$ statements, select appropriate test based on sample size and parameter, execute large-sample $Z$-tests for means and proportions, apply two-sample and paired $t$-tests to clinical/engineering experiments, test variance equality via $F$-test, and perform $\\chi^2$ independence tests on contingency tables."
+], [
+    "Type I & II Errors: $\\alpha = P(\\text{Reject } H_0 \\mid H_0 \\text{ true})$, $\\beta = P(\\text{Accept } H_0 \\mid H_0 \\text{ false})$.",
+    "Power of Test: $\\text{Power} = 1 - \\beta$.",
+    "Large Sample Single Mean Z: $Z = \\frac{\\bar{x} - \\mu_0}{\\sigma / \\sqrt{n}}$.",
+    "Pooled Proportion Formula: $\\hat{P} = \\frac{n_1 p_1 + n_2 p_2}{n_1 + n_2}$.",
+    "Small Sample Single Mean t: $t = \\frac{\\bar{x} - \\mu_0}{s / \\sqrt{n}}$ ($df = n-1$).",
+    "Pooled Variance for t-Test: $s_p^2 = \\frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1 + n_2 - 2}$.",
+    "Paired t-Test Formula: $t = \\frac{\\bar{d}}{s_d / \\sqrt{n}}$ ($df = n-1$).",
+    "F-Test Variance Ratio: $F = \\frac{s_1^2}{s_2^2}$ ($s_1^2 > s_2^2$).",
+    "Chi-Square Statistic: $\\chi^2 = \\sum \\frac{(O - E)^2}{E}$ ($df = (r-1)(c-1)$).",
+    "Exam Gold Tip: For a $2 \\times 2$ contingency table with cells $a, b, c, d$, the Chi-Square statistic can be computed directly without expected cells using $\\chi^2 = \\frac{N(a d - b c)^2}{(a+b)(c+d)(a+c)(b+d)}$."
+])
+
+add("Statistics & Probability", 5, "Regression", [
+    "Bivariate Data and Correlation Concept: Bivariate data $(x_1, y_1), \\dots, (x_n, y_n)$; Correlation measures strength and direction of linear association between two quantitative variables; Types: positive, negative, zero, linear, and non-linear; Scatter plot visualization.",
+    "Karl Pearson's Coefficient of Linear Correlation: Defined as $r = \\frac{\\text{Cov}(X,Y)}{\\sigma_x \\sigma_y} = \\frac{\\sum (x_i - \\bar{x})(y_i - \\bar{y})}{\\sqrt{\\sum (x_i - \\bar{x})^2 \\sum (y_i - \\bar{y})^2}}$; Computational formula: $r = \\frac{N \\sum x y - \\sum x \\sum y}{\\sqrt{[N \\sum x^2 - (\\sum x)^2][N \\sum y^2 - (\\sum y)^2]}}$.",
+    "Properties of Pearson's Correlation Coefficient: (1) Strictly bounded $-1 \\le r \\le +1$; $r = +1$ (perfect positive linear association), $r = -1$ (perfect negative linear association), $r = 0$ (no linear correlation); (2) Independent of change of origin and scale: $u = \\frac{x - a}{h}, v = \\frac{y - b}{k} \\implies r_{uv} = r_{xy}$; (3) Symmetric: $r_{xy} = r_{yx}$.",
+    "Spearman's Rank Correlation Coefficient: Non-parametric measure based on ranks: $\\rho = 1 - \\frac{6 \\sum d_i^2}{n(n^2 - 1)}$ where $d_i = R(x_i) - R(y_i)$ is difference between paired ranks; Tie correction factor: add $\\sum \\frac{m(m^2-1)}{12}$ to $\\sum d_i^2$ for tied rank groups of size $m$.",
+    "Concept of Regression: Regression establishes quantitative mathematical functional relationship between independent (predictor) variable $X$ and dependent (response) variable $Y$; Enables estimation and forecasting of response given predictor values.",
+    "Linear Regression Equations: Two distinct regression lines: (1) Regression line of $Y$ on $X$: $y - \\bar{y} = b_{yx} (x - \\bar{x})$; (2) Regression line of $X$ on $Y$: $x - \\bar{x} = b_{xy} (y - \\bar{y})$; Regression lines intersect precisely at point of sample means $(\\bar{x}, \\bar{y})$.",
+    "Regression Coefficients and Properties: $b_{yx} = r \\frac{\\sigma_y}{\\sigma_x} = \\frac{\\sum (x - \\bar{x})(y - \\bar{y})}{\\sum (x - \\bar{x})^2}$; $b_{xy} = r \\frac{\\sigma_x}{\\sigma_y} = \\frac{\\sum (x - \\bar{x})(y - \\bar{y})}{\\sum (y - \\bar{y})^2}$; Properties: (1) Correlation coefficient is geometric mean of regression coefficients: $r = \\pm \\sqrt{b_{yx} b_{xy}}$; (2) Both coefficients and $r$ must share identical algebraic sign; (3) If one coefficient exceeds $1$, other must be less than $1$ ($|b_{yx} b_{xy}| = r^2 \\le 1$); (4) Arithmetic mean of regression coefficients is greater than or equal to correlation coefficient: $\\frac{b_{yx} + b_{xy}}{2} \\ge r$.",
+    "Angle Between Two Regression Lines: Acute angle $\\theta$ between regression lines: $\\tan\\theta = \\left| \\frac{1 - r^2}{r} \\left( \\frac{\\sigma_x \\sigma_y}{\\sigma_x^2 + \\sigma_y^2} \\right) \\right|$; If $r = \\pm 1$, $\\tan\\theta = 0 \\implies \\theta = 0$ (lines coincide); If $r = 0$, $\\tan\\theta = \\infty \\implies \\theta = 90^\\circ$ (lines mutually perpendicular).",
+    "Standard Error of Estimate and Coefficient of Determination: Standard error of estimate: $s_{yx} = \\sigma_y \\sqrt{1 - r^2}$ and $s_{xy} = \\sigma_x \\sqrt{1 - r^2}$; Measures scatter of observed points around regression line; Coefficient of determination $r^2$: proportion of total variance in dependent variable explained by linear relationship with independent variable ($r^2 = \\frac{SSR}{SST}$).",
+    "University Examination Strategy: Calculate Karl Pearson's correlation coefficient from raw and grouped data, calculate Spearman's rank correlation for contest judges with and without ties, compute regression coefficients $b_{yx}$ and $b_{xy}$, construct both regression lines, estimate $y$ for given $x$, and evaluate the angle between regression lines."
+], [
+    "Pearson Correlation Formula: $r = \\frac{\\sum (x - \\bar{x})(y - \\bar{y})}{\\sqrt{\\sum (x - \\bar{x})^2 \\sum (y - \\bar{y})^2}}$.",
+    "Spearman Rank Correlation: $\\rho = 1 - \\frac{6 \\sum d_i^2}{n(n^2 - 1)}$.",
+    "Regression Line of Y on X: $y - \\bar{y} = b_{yx} (x - \\bar{x})$.",
+    "Regression Line of X on Y: $x - \\bar{x} = b_{xy} (y - \\bar{y})$.",
+    "Regression Coefficient $b_{yx}$: $b_{yx} = r \\frac{\\sigma_y}{\\sigma_x}$.",
+    "Regression Coefficient $b_{xy}$: $b_{xy} = r \\frac{\\sigma_x}{\\sigma_y}$.",
+    "Correlation Geometric Mean Relation: $r = \\pm \\sqrt{b_{yx} b_{xy}}$.",
+    "Regression Line Intersection: Always intersects at mean point $(\\bar{x}, \\bar{y})$.",
+    "Angle Between Regression Lines: $\\tan\\theta = \\left| \\frac{1 - r^2}{r} \\left( \\frac{\\sigma_x \\sigma_y}{\\sigma_x^2 + \\sigma_y^2} \\right) \\right|$.",
+    "Exam Gold Tip: Both regression coefficients $b_{yx}$ and $b_{xy}$ must always have the same sign as $r$; if exam calculations yield opposite signs, a sign error was made in covariance."
+])
+
+# ==============================================================================
+# 5. Engineering Mathematics III (5 units)
+# ==============================================================================
+add("Engineering Mathematics III", 1, "Numerical Methods", [
+    "Difference Operators and Symbolic Relations: Forward difference $\\Delta$, Backward difference $\\nabla$, Shift operator $E$, Central difference $\\delta$, Averaging operator $\\mu$, Differential operator $D$; Operator identities: $E = 1 + \\Delta = e^{h D}$, $\\nabla = 1 - E^{-1}$, $\\delta = E^{1/2} - E^{-1/2}$, $\\mu = \\frac{1}{2}(E^{1/2} + E^{-1/2})$; Separation of symbols method for proving difference identities.",
+    "Stirling's and Bessel's Central Difference Formulas: Central differences for values near table center ($x_0$); Stirling's formula (mean of Gauss forward and backward formulas): $y = y_0 + u \\frac{\\Delta y_0 + \\Delta y_{-1}}{2} + \\frac{u^2}{2!} \\Delta^2 y_{-1} + \\frac{u(u^2-1)}{3!} \\frac{\\Delta^3 y_{-1} + \\Delta^3 y_{-2}}{2} + \\dots$ for $-0.5 \\le u \\le 0.5$; Bessel's formula for $0.25 \\le u \\le 0.75$.",
+    "Everett's and Hermite Interpolation Formulas: Everett's formula using only even central differences; Hermite interpolation polynomial matching both function values $f(x_i)$ and first derivatives $f'(x_i)$ at $n$ points: $H_{2n+1}(x) = \\sum_{i=0}^n h_i(x) f(x_i) + \\sum_{i=0}^n \\bar{h}_i(x) f'(x_i)$.",
+    "Spline Interpolation: Cubic spline interpolation passing through $n+1$ points with continuous first and second derivatives ($C^2$ continuity) across entire interval; Natural spline boundary conditions: $S''(x_0) = S''(x_n) = 0$; Clamped spline conditions matching specified endpoint derivatives $S'(x_0) = f'_0, S'(x_n) = f'_n$.",
+    "Numerical Differentiation: Derivatives derived from Newton-Gregory forward difference formula: $\\frac{dy}{dx} = \\frac{1}{h} \\left[ \\Delta y_0 - \\frac{1}{2} \\Delta^2 y_0 + \\frac{1}{3} \\Delta^3 y_0 - \\frac{1}{4} \\Delta^4 y_0 + \\dots \\right]$; Second derivative: $\\frac{d^2 y}{dx^2} = \\frac{1}{h^2} \\left[ \\Delta^2 y_0 - \\Delta^3 y_0 + \\frac{11}{12} \\Delta^4 y_0 - \\dots \\right]$.",
+    "Numerical Solutions of Non-linear Transcendental Equations: Regula Falsi method and Newton-Raphson iteration $x_{n+1} = x_n - \\frac{f(x_n)}{f'(x_n)}$ applied to engineering transcendental equations containing exponential and trigonometric combinations; Criteria for convergence.",
+    "System of Non-Linear Equations via Multivariable Newton-Raphson: Solving simultaneous non-linear equations $f(x, y) = 0$ and $g(x, y) = 0$; Matrix iteration: $\\begin{bmatrix} x_{n+1} \\\\ y_{n+1} \\end{bmatrix} = \\begin{bmatrix} x_n \\\\ y_n \\end{bmatrix} - J^{-1} \\begin{bmatrix} f(x_n, y_n) \\\\ g(x_n, y_n) \\end{bmatrix}$ where Jacobian $J = \\begin{bmatrix} f_x & f_y \\\\ g_x & g_y \\end{bmatrix}$.",
+    "Finite Difference Approximations for Boundary Value Problems: Discretization of ordinary differential equations $y'' + p(x) y' + q(x) y = r(x)$ on equispaced grid using central differences: $y''_i \\approx \\frac{y_{i+1} - 2 y_i + y_{i-1}}{h^2}$ and $y'_i \\approx \\frac{y_{i+1} - y_{i-1}}{2 h}$; Reduces boundary value problem to tridiagonal linear system.",
+    "Numerical Solutions of Elliptic PDEs (Liebmann's Iteration): Discretization of 2D Poisson equation $\\nabla^2 u = u_{xx} + u_{yy} = f(x, y)$ on rectangular grid; Standard five-point finite difference formula: $u_{i+1,j} + u_{i-1,j} + u_{i,j+1} + u_{i,j-1} - 4 u_{i,j} = h^2 f_{i,j}$; Solved via Liebmann's iterative method (Gauss-Seidel relaxation).",
+    "University Examination Strategy: Establish algebraic operator relations between $E, \\Delta, \\nabla, \\delta, D$, apply Stirling's and Bessel's formulas to interpolate values at center of difference tables, evaluate first and second derivatives from tabulated data, execute multivariable Newton-Raphson iterations, and formulate finite difference equations for beam deflection BVPs."
+], [
+    "Differential Shift Operator Link: $E = e^{h D} = 1 + \\Delta$.",
+    "Central Difference Operator: $\\delta = E^{1/2} - E^{-1/2}$.",
+    "Averaging Operator: $\\mu = \\frac{1}{2}(E^{1/2} + E^{-1/2})$.",
+    "Stirling's Formula: $y = y_0 + u \\frac{\\Delta y_0 + \\Delta y_{-1}}{2} + \\frac{u^2}{2} \\Delta^2 y_{-1} + \\dots$.",
+    "First Derivative from Forward Differences: $y'(x_0) = \\frac{1}{h}[\\Delta y_0 - \\frac{1}{2} \\Delta^2 y_0 + \\frac{1}{3} \\Delta^3 y_0 - \\dots]$.",
+    "Second Derivative from Forward Differences: $y''(x_0) = \\frac{1}{h^2}[\\Delta^2 y_0 - \\Delta^3 y_0 + \\frac{11}{12} \\Delta^4 y_0 - \\dots]$.",
+    "Multivariable Newton-Raphson: $\\Delta x = -J^{-1} F(x)$.",
+    "Central Difference for $y''$: $y''_i = \\frac{y_{i+1} - 2 y_i + y_{i-1}}{h^2}$.",
+    "Five-Point Poisson Stencil: $u_{i+1,j} + u_{i-1,j} + u_{i,j+1} + u_{i,j-1} - 4 u_{i,j} = h^2 f_{i,j}$.",
+    "Exam Gold Tip: For maximum accuracy in numerical differentiation, always choose the base point $x_0$ closest to the desired evaluation point; if it lies near the middle, use central difference differentiation formulas."
+])
+
+add("Engineering Mathematics III", 2, "Partial Differential Equations", [
+    "Formation of Partial Differential Equations: Formation of PDEs by eliminating arbitrary constants $f(x, y, z, a, b) = 0$ (yielding order equal to number of constants); Formation by eliminating arbitrary functions $\\phi(u, v) = 0$ (yielding first-order or higher-order PDEs).",
+    "First-Order Linear PDEs (Lagrange's Linear Equation): Standard form $P p + Q q = R$ where $p = \\frac{\\partial z}{\\partial x}, q = \\frac{\\partial z}{\\partial y}$; Lagrange's auxiliary equations: $\\frac{dx}{P} = \\frac{dy}{Q} = \\frac{dz}{R}$; Method of multipliers ($l P + m Q + n R = 0$) and method of grouping to find independent integrals $u(x, y, z) = c_1$ and $v(x, y, z) = c_2$; General solution: $\\Phi(u, v) = 0$.",
+    "Non-Linear First-Order PDEs and Charpit's Method: Four standard forms: (1) $f(p, q) = 0$; (2) $f(z, p, q) = 0$; (3) $f(x, p) = g(y, q)$; (4) Clairaut's form $z = p x + q y + f(p, q)$ (complete integral $z = a x + b y + f(a, b)$); General method: Charpit's auxiliary equations $\\frac{dp}{f_x + p f_z} = \\frac{dq}{f_y + q f_z} = \\frac{dz}{-p f_p - q f_q} = \\frac{dx}{-f_p} = \\frac{dy}{-f_q}$.",
+    "Classification of Second-Order Linear PDEs: General form $A \\frac{\\partial^2 u}{\\partial x^2} + B \\frac{\\partial^2 u}{\\partial x \\partial y} + C \\frac{\\partial^2 u}{\\partial y^2} + D \\frac{\\partial u}{\\partial x} + E \\frac{\\partial u}{\\partial y} + F u = G$; Discriminant $\\Delta = B^2 - 4 A C$: (1) Elliptic if $B^2 - 4 A C < 0$ (Laplace equation); (2) Parabolic if $B^2 - 4 A C = 0$ (Heat equation); (3) Hyperbolic if $B^2 - 4 A C > 0$ (Wave equation).",
+    "Method of Separation of Variables: Assumption $u(x, t) = X(x) T(t)$; Decouples partial differential equation into two independent ordinary differential equations linked by separation constant $k$; Boundary conditions determine whether $k = 0, k = +\\lambda^2$, or $k = -\\lambda^2$ yields physically non-trivial solutions.",
+    "One-Dimensional Wave Equation (Vibrating String): Governing hyperbolic PDE: $\\frac{\\partial^2 u}{\\partial t^2} = c^2 \\frac{\\partial^2 u}{\\partial x^2}$ ($c^2 = T/\\rho$); Boundary conditions $u(0, t) = 0$ and $u(L, t) = 0$; Initial conditions $u(x, 0) = f(x)$ and $\\frac{\\partial u}{\\partial t}(x, 0) = g(x)$; Fourier series solution $u(x, t) = \\sum_{n=1}^\\infty \\left[ A_n \\cos\\left(\\frac{n \\pi c t}{L}\\right) + B_n \\sin\\left(\\frac{n \\pi c t}{L}\\right) \\right] \\sin\\left(\\frac{n \\pi x}{L}\\right)$.",
+    "D'Alembert's Solution of Wave Equation: Solution for infinite string: $u(x, t) = \\phi(x - c t) + \\psi(x + c t)$ representing superposition of forward-traveling and backward-traveling waves; Initial conditions $u(x, 0) = f(x)$ and $u_t(x, 0) = g(x)$ yield explicit formula: $u(x, t) = \\frac{1}{2}[f(x - c t) + f(x + c t)] + \\frac{1}{2 c} \\int_{x - c t}^{x + c t} g(s) ds$.",
+    "One-Dimensional Heat Conduction Equation: Governing parabolic PDE: $\\frac{\\partial u}{\\partial t} = \\alpha \\frac{\\partial^2 u}{\\partial x^2}$ (thermal diffusivity $\\alpha = k / (\\rho c_p)$); Boundary conditions for ends at zero temperature $u(0, t) = u(L, t) = 0$; Separation of variables yields exponentially decaying Fourier modes: $u(x, t) = \\sum_{n=1}^\\infty b_n \\exp\\left( -\\alpha \\frac{n^2 \\pi^2 t}{L^2} \\right) \\sin\\left( \\frac{n \\pi x}{L} \\right)$ where $b_n = \\frac{2}{L} \\int_0^L f(x) \\sin\\left( \\frac{n \\pi x}{L} \\right) dx$.",
+    "Two-Dimensional Laplace Equation (Steady-State Heat Flow): Governing elliptic PDE in rectangular plate: $\\nabla^2 u = \\frac{\\partial^2 u}{\\partial x^2} + \\frac{\\partial^2 u}{\\partial y^2} = 0$; Subject to Dirichlet boundary conditions: three edges kept at $0^\\circ\\text{C}$ and top edge at $u(x, b) = f(x)$; Product solution: $u(x, y) = \\sum_{n=1}^\\infty c_n \\sin\\left( \\frac{n \\pi x}{a} \\right) \\sinh\\left( \\frac{n \\pi y}{a} \\right)$.",
+    "University Examination Strategy: Form PDEs by eliminating arbitrary functions $z = f(x^2 + y^2)$, solve Lagrange's equations $P p + Q q = R$ using algebraic multipliers, classify second-order PDEs into elliptic/parabolic/hyperbolic types, solve vibrating string wave equations for plucked and struck strings, and compute temperature distributions in heat-conducting rods."
+], [
+    "Lagrange's Auxiliary Equations: $\\frac{dx}{P} = \\frac{dy}{Q} = \\frac{dz}{R}$.",
+    "Clairaut's Form Solution: $z = p x + q y + f(p, q) \\implies z = a x + b y + f(a, b)$.",
+    "PDE Discriminant: $\\Delta = B^2 - 4 A C$ ($<0$ Elliptic, $=0$ Parabolic, $>0$ Hyperbolic).",
+    "Wave Equation: $\\frac{\\partial^2 u}{\\partial t^2} = c^2 \\frac{\\partial^2 u}{\\partial x^2}$ (Hyperbolic).",
+    "Heat Equation: $\\frac{\\partial u}{\\partial t} = \\alpha \\frac{\\partial^2 u}{\\partial x^2}$ (Parabolic).",
+    "Laplace Equation: $\\frac{\\partial^2 u}{\\partial x^2} + \\frac{\\partial^2 u}{\\partial y^2} = 0$ (Elliptic).",
+    "Vibrating String Normal Modes: $u_n(x,t) = \\sin\\left(\\frac{n \\pi x}{L}\\right) \\cos\\left(\\frac{n \\pi c t}{L}\\right)$.",
+    "D'Alembert's Formula: $u(x,t) = \\frac{1}{2}[f(x-ct) + f(x+ct)] + \\frac{1}{2c} \\int_{x-ct}^{x+ct} g(s) ds$.",
+    "Heat Equation Fourier Coefficient: $b_n = \\frac{2}{L} \\int_0^L f(x) \\sin\\left(\\frac{n \\pi x}{L}\\right) dx$.",
+    "Exam Gold Tip: For one-dimensional heat conduction with insulated ends, the boundary conditions are zero derivatives $\\frac{\\partial u}{\\partial x}(0, t) = \\frac{\\partial u}{\\partial x}(L, t) = 0$, requiring Fourier cosine series solutions instead of sine series."
+])
+
+add("Engineering Mathematics III", 3, "Complex Analysis", [
+    "Analytic Functions and Cauchy-Riemann Equations: Function $f(z) = u(x,y) + i v(x,y)$ of complex variable $z = x + i y$; Necessary conditions for differentiability: Cauchy-Riemann equations in Cartesian form $\\frac{\\partial u}{\\partial x} = \\frac{\\partial v}{\\partial y}$ and $\\frac{\\partial u}{\\partial y} = -\\frac{\\partial v}{\\partial x}$; Polar form: $\\frac{\\partial u}{\\partial r} = \\frac{1}{r} \\frac{\\partial v}{\\partial \\theta}$ and $\\frac{\\partial v}{\\partial r} = -\\frac{1}{r} \\frac{\\partial u}{\\partial \\theta}$; Continuity of partial derivatives provides sufficient condition.",
+    "Harmonic Functions and Milne-Thomson Construction: Real and imaginary parts of analytic function satisfy 2D Laplace equation $\\nabla^2 u = u_{xx} + u_{yy} = 0$ and $\\nabla^2 v = 0$; $v(x,y)$ called harmonic conjugate of $u(x,y)$; Orthogonality of equipotential lines and stream lines: $\\nabla u \\cdot \\nabla v = 0$; Milne-Thomson method: constructs $f(z)$ directly without calculating $v(x,y)$: $f'(z) = u_x(z, 0) - i u_y(z, 0)$.",
+    "Conformal Mapping and Standard Transformations: Mapping $w = f(z)$ preserves magnitude and sense of angles between intersecting curves wherever $f'(z) \\ne 0$ (critical points where $f'(z) = 0$); Standard elementary conformal maps: (1) Translation $w = z + c$; (2) Rotation and magnification $w = c z$; (3) Inversion $w = 1/z$; (4) Power $w = z^2$; (5) Exponential $w = e^z$.",
+    "Bilinear (Möbius) Transformation: General linear fractional transformation $w = \\frac{a z + b}{c z + d}$ with $a d - b c \\ne 0$; Maps circles and straight lines in $z$-plane into circles and straight lines in $w$-plane; Invariance of cross-ratio: $\\frac{(w - w_1)(w_2 - w_3)}{(w - w_3)(w_2 - w_1)} = \\frac{(z - z_1)(z_2 - z_3)}{(z - z_3)(z_2 - z_1)}$ determines transformation mapping three specified points $z_1, z_2, z_3$ to $w_1, w_2, w_3$.",
+    "Complex Line Integrals & Cauchy's Integral Theorem: Line integral $\\int_C f(z) dz = \\int_C (u dx - v dy) + i \\int_C (v dx + u dy)$; Cauchy-Goursat Theorem: if $f(z)$ is analytic within and on simple closed contour $C$, then $\\oint_C f(z) dz = 0$; Independence of path in simply connected domains.",
+    "Cauchy's Integral Formula & Higher Derivatives: Value of analytic function inside closed contour: $f(z_0) = \\frac{1}{2 \\pi i} \\oint_C \\frac{f(z)}{z - z_0} dz$; Generalized formula for $n$-th derivative: $f^{(n)}(z_0) = \\frac{n!}{2 \\pi i} \\oint_C \\frac{f(z)}{(z - z_0)^{n+1}} dz$; Shows that analytic functions possess infinitely many continuous derivatives.",
+    "Taylor's and Laurent's Series Expansions: Taylor's theorem: expansion inside disc $|z - z_0| < R$: $f(z) = \\sum_{n=0}^\\infty a_n (z - z_0)^n$ where $a_n = \\frac{f^{(n)}(z_0)}{n!}$; Laurent's theorem: expansion in annulus $r < |z - z_0| < R$: $f(z) = \\sum_{n=0}^\\infty a_n (z - z_0)^n + \\sum_{n=1}^\\infty \\frac{b_n}{(z - z_0)^n}$; Principal part $\\sum \\frac{b_n}{(z - z_0)^n}$ characterizes singularity.",
+    "Classification of Singularities: Point $z_0$ where $f(z)$ fails to be analytic: (1) Removable singularity: all $b_n = 0$ (e.g., $\\frac{\\sin z}{z}$ at $z = 0$); (2) Pole of order $m$: $b_m \\ne 0$ and $b_{k>m} = 0$ (simple pole if $m=1$); (3) Essential singularity: infinitely many non-zero negative power terms (e.g., $e^{1/z}$ at $z=0$).",
+    "Cauchy's Residue Theorem and Contour Integration: Residue at pole $z_0$: coefficient $b_1$ of $\\frac{1}{z - z_0}$ in Laurent series; For simple pole: $\\text{Res}(f, z_0) = \\lim_{z \\to z_0} (z - z_0) f(z)$; For pole of order $m$: $\\text{Res}(f, z_0) = \\frac{1}{(m-1)!} \\lim_{z \\to z_0} \\frac{d^{m-1}}{dz^{m-1}} [(z - z_0)^m f(z)]$; Residue Theorem: $\\oint_C f(z) dz = 2 \\pi i \\sum_{k=1}^N \\text{Res}(f, z_k)$.",
+    "University Examination Strategy: Test functions for analyticity using Cauchy-Riemann equations, construct analytic functions using Milne-Thomson method given $u(x,y)$, find bilinear transformations mapping three points, evaluate contour integrals using Cauchy's integral formula, and solve definite trigonometric integrals $\\int_0^{2\\pi} \\frac{d\\theta}{a + b \\cos\\theta}$ via residue theorem."
+], [
+    "Cauchy-Riemann Equations (Cartesian): $u_x = v_y$ and $u_y = -v_x$.",
+    "Cauchy-Riemann Equations (Polar): $u_r = \\frac{1}{r} v_\\theta$ and $v_r = -\\frac{1}{r} u_\\theta$.",
+    "Milne-Thomson Formula: $f'(z) = u_x(z, 0) - i u_y(z, 0)$.",
+    "Bilinear Cross-Ratio: $\\frac{(w - w_1)(w_2 - w_3)}{(w - w_3)(w_2 - w_1)} = \\frac{(z - z_1)(z_2 - z_3)}{(z - z_3)(z_2 - z_1)}$.",
+    "Cauchy's Integral Theorem: $\\oint_C f(z) dz = 0$ (analytic inside and on $C$).",
+    "Cauchy's Generalized Formula: $f^{(n)}(z_0) = \\frac{n!}{2\\pi i} \\oint_C \\frac{f(z)}{(z - z_0)^{n+1}} dz$.",
+    "Residue at Simple Pole: $\\text{Res}(f, z_0) = \\lim_{z \\to z_0} (z - z_0) f(z)$.",
+    "Residue at Multiple Pole: $\\text{Res}(f, z_0) = \\frac{1}{(m-1)!} \\lim_{z \\to z_0} \\frac{d^{m-1}}{dz^{m-1}} [(z - z_0)^m f(z)]$.",
+    "Residue Theorem: $\\oint_C f(z) dz = 2 \\pi i \\sum \\text{Res}$.",
+    "Exam Gold Tip: When evaluating real integrals $\\int_0^{2\\pi} f(\\cos\\theta, \\sin\\theta) d\\theta$, substitute $z = e^{i \\theta}$, $d\\theta = \\frac{dz}{i z}$, $\\cos\\theta = \\frac{z + z^{-1}}{2}$, $\\sin\\theta = \\frac{z - z^{-1}}{2 i}$, transforming the problem into a contour integral around unit circle $|z|=1$."
+])
+
+add("Engineering Mathematics III", 4, "Probability", [
+    "Mathematical and Axiomatic Probability: Random experiments, sample spaces $\\Omega$, events; Mutually exclusive and exhaustive events; Classical, empirical, and axiomatic probability definitions; Addition theorem of probability: $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$; Extension to three events: $P(A \\cup B \\cup C)$.",
+    "Conditional Probability and Independence: Conditional probability $P(A|B) = \\frac{P(A \\cap B)}{P(B)}$ ($P(B) > 0$); Multiplication theorem: $P(A \\cap B) = P(A) P(B|A) = P(B) P(A|B)$; Independent events: $P(A \\cap B) = P(A) P(B)$; Pairwise vs mutual independence.",
+    "Law of Total Probability & Bayes' Theorem: Partition $\\{E_1, E_2, \\dots, E_n\\}$ of sample space; Law of total probability: $P(A) = \\sum_{i=1}^n P(E_i) P(A|E_i)$; Bayes' theorem for posterior probability: $P(E_k|A) = \\frac{P(E_k) P(A|E_k)}{\\sum_{i=1}^n P(E_i) P(A|E_i)}$.",
+    "Discrete Random Variables and Expectations: Discrete random variable $X$ with PMF $P(X = x_i) = p_i$; Mathematical expectation: $E[X] = \\sum x_i p_i$; Expectation of function: $E[g(X)] = \\sum g(x_i) p_i$; Variance: $\\sigma^2 = \\text{Var}(X) = E[X^2] - (E[X])^2$; Standard deviation $\\sigma = \\sqrt{\\text{Var}(X)}$.",
+    "Binomial Probability Model: Independent Bernoulli trials with success parameter $p$ ($q = 1-p$); PMF: $P(X = r) = \\binom{n}{r} p^r q^{n-r}$ ($r = 0, 1, \\dots, n$); Mean $\\mu = n p$; Variance $\\sigma^2 = n p q$; Moment Generating Function $M_X(t) = (q + p e^t)^n$; Conditions for applicability.",
+    "Poisson Probability Model: Model for rare events: $P(X = r) = \\frac{e^{-\\lambda} \\lambda^r}{r!}$ ($r = 0, 1, 2, \\dots$); Poisson parameter $\\lambda = n p$; Unique characteristic: mean equals variance $\\mu = \\sigma^2 = \\lambda$; Additive property of Poisson variables: if $X_1 \\sim P(\\lambda_1)$ and $X_2 \\sim P(\\lambda_2)$ are independent, then $X_1 + X_2 \\sim P(\\lambda_1 + \\lambda_2)$.",
+    "Continuous Random Variables and Probability Density: Continuous random variable $X$ with PDF $f(x)$ satisfying $f(x) \\ge 0$ and $\\int_{-\\infty}^\\infty f(x) dx = 1$; CDF: $F(x) = P(X \\le x) = \\int_{-\\infty}^x f(t) dt$; Relationship: $f(x) = F'(x)$; Expectation: $E[X] = \\int_{-\\infty}^\\infty x f(x) dx$; Variance: $\\text{Var}(X) = \\int_{-\\infty}^\\infty x^2 f(x) dx - (E[X])^2$.",
+    "Exponential Distribution Modeling: Continuous distribution with PDF $f(x) = \\lambda e^{-\\lambda x}$ for $x \\ge 0$, and $0$ elsewhere; CDF: $F(x) = 1 - e^{-\\lambda x}$; Mean $\\mu = 1/\\lambda$; Variance $\\sigma^2 = 1/\\lambda^2$; Memoryless property: $P(X > s + t \\mid X > s) = P(X > t)$; Widely applied in engineering reliability and queuing theory.",
+    "Normal Distribution Theory: Continuous symmetrical distribution $X \\sim \\mathcal{N}(\\mu, \\sigma^2)$ with PDF $f(x) = \\frac{1}{\\sigma \\sqrt{2\\pi}} \\exp\\left( -\\frac{(x-\\mu)^2}{2\\sigma^2} \\right)$; Mean $\\mu$, variance $\\sigma^2$; Standard normal transformation $Z = \\frac{X - \\mu}{\\sigma} \\sim \\mathcal{N}(0, 1)$; Area properties and computation of probabilities via standard normal distribution tables.",
+    "University Examination Strategy: Apply Bayes' theorem to engineering factory defect classification problems, compute probabilities using Binomial expansion for quality inspections, evaluate Poisson probabilities for component breakdown rates, calculate probabilities for exponential waiting times, and determine normal distribution areas using standard $Z$-tables."
+], [
+    "Addition Theorem: $P(A \\cup B) = P(A) + P(B) - P(A \\cap B)$.",
+    "Bayes' Rule: $P(E_k|A) = \\frac{P(E_k) P(A|E_k)}{\\sum P(E_i) P(A|E_i)}$.",
+    "Mathematical Expectation: $E[X] = \\sum x_i p_i$.",
+    "Variance Formula: $\\text{Var}(X) = E[X^2] - (E[X])^2$.",
+    "Binomial Mean and Variance: $\\mu = n p$, $\\sigma^2 = n p q$.",
+    "Poisson PMF: $P(X = r) = \\frac{e^{-\\lambda} \\lambda^r}{r!}$.",
+    "Poisson Additive Property: $X_1 + X_2 \\sim P(\\lambda_1 + \\lambda_2)$.",
+    "Exponential CDF: $F(x) = 1 - e^{-\\lambda x}$ ($x \\ge 0$).",
+    "Standard Normal Transform: $Z = \\frac{X - \\mu}{\\sigma}$.",
+    "Exam Gold Tip: For Poisson distribution with parameter $\\lambda$, the probability of at least one occurrence is $P(X \\ge 1) = 1 - P(X = 0) = 1 - e^{-\\lambda}$."
+])
+
+add("Engineering Mathematics III", 5, "Statistics", [
+    "Method of Least Squares and Curve Fitting: Principle of least squares: minimizing sum of squared residuals $S = \\sum [y_i - f(x_i)]^2$; Fitting straight line $y = a + b x$: Normal equations $\\sum y = n a + b \\sum x$ and $\\sum x y = a \\sum x + b \\sum x^2$; Solving simultaneous normal equations for coefficients $a$ and $b$.",
+    "Fitting Second-Degree Parabolas and Polynomials: Fitting parabola $y = a + b x + c x^2$: Normal equations: (1) $\\sum y = n a + b \\sum x + c \\sum x^2$; (2) $\\sum x y = a \\sum x + b \\sum x^2 + c \\sum x^3$; (3) $\\sum x^2 y = a \\sum x^2 + b \\sum x^3 + c \\sum x^4$; Simplification by shifting origin if $\\sum x = 0$.",
+    "Fitting Non-Linear Exponential and Power Curves: (1) Exponential curve $y = a e^{b x}$: linearizing via natural logarithms $\\ln y = \\ln a + b x \\iff Y = A + B x$; (2) General exponential $y = a b^x$: $\\log y = \\log a + x \\log b$; (3) Power curve $y = a x^b$: $\\log y = \\log a + b \\log x \\iff Y = A + b X$.",
+    "Correlation Analysis and Karl Pearson's Coefficient: Measure of linear association $r = \\frac{\\sum (x - \\bar{x})(y - \\bar{y})}{\\sqrt{\\sum (x - \\bar{x})^2 \\sum (y - \\bar{y})^2}} = \\frac{\\text{Cov}(X,Y)}{\\sigma_x \\sigma_y}$; Properties: bounded between $-1$ and $+1$; Independent of change of origin and scale; Interpretation: $r > 0$ positive, $r < 0$ negative, $r = 0$ uncorrelated.",
+    "Spearman's Rank Correlation: Correlation between ranked variables: $\\rho = 1 - \\frac{6 \\sum d_i^2}{n(n^2 - 1)}$ where $d_i$ is difference between paired ranks; Used when characteristics cannot be measured quantitatively (intelligence, beauty, judgment); Correction for tied ranks: $\\frac{m(m^2-1)}{12}$.",
+    "Linear Regression Analysis: Determining best-fit linear relationship to predict dependent variable; Line of regression of $y$ on $x$: $y - \\bar{y} = b_{yx} (x - \\bar{x})$ where regression coefficient $b_{yx} = r \\frac{\\sigma_y}{\\sigma_x} = \\frac{\\sum (x - \\bar{x})(y - \\bar{y})}{\\sum (x - \\bar{x})^2}$; Line of regression of $x$ on $y$: $x - \\bar{x} = b_{xy} (y - \\bar{y})$ where $b_{xy} = r \\frac{\\sigma_x}{\\sigma_y}$.",
+    "Properties of Regression Coefficients: (1) Geometric mean property: $r = \\pm \\sqrt{b_{yx} b_{xy}}$; (2) Identical signs: $b_{yx}$, $b_{xy}$, and $r$ must all possess identical sign; (3) Magnitude constraint: if one regression coefficient is greater than unity, other must be less than unity; (4) Mean property: $\\frac{b_{yx} + b_{xy}}{2} \\ge r$.",
+    "Angle Between Two Lines of Regression: Acute angle $\\theta$ between regression lines: $\\tan\\theta = \\left| \\frac{1 - r^2}{r} \\left( \\frac{\\sigma_x \\sigma_y}{\\sigma_x^2 + \\sigma_y^2} \\right) \\right|$; If $r = \\pm 1$, $\\tan\\theta = 0 \\implies \\theta = 0$ (perfect correlation, lines coincide); If $r = 0$, $\\tan\\theta = \\infty \\implies \\theta = \\pi/2$ (uncorrelated, lines perpendicular).",
+    "Standard Error of Estimate and Explained Variance: Standard error of estimate measuring scatter around regression lines: $S_{yx} = \\sigma_y \\sqrt{1 - r^2}$ and $S_{xy} = \\sigma_x \\sqrt{1 - r^2}$; Coefficient of determination $r^2 = \\frac{\\text{Explained Variance}}{\\text{Total Variance}}$ indicating percentage of variation in $y$ attributable to linear relationship with $x$.",
+    "University Examination Strategy: Fit straight lines and parabolas using method of least squares and solve normal equations, linearize and fit exponential curves $y = a e^{bx}$, compute Karl Pearson's correlation coefficient from experimental datasets, calculate Spearman's rank correlation with tied ranks, construct both lines of regression, and predict unknown variables."
+], [
+    "Straight Line Normal Equations: $\\sum y = n a + b \\sum x$ and $\\sum x y = a \\sum x + b \\sum x^2$.",
+    "Parabola Normal Equations: $\\sum y = n a + b \\sum x + c \\sum x^2$, etc.",
+    "Linearization of $y = a e^{bx}$: $\\ln y = \\ln a + b x$.",
+    "Linearization of $y = a x^b$: $\\log y = \\log a + b \\log x$.",
+    "Pearson Correlation Formula: $r = \\frac{\\sum (x - \\bar{x})(y - \\bar{y})}{\\sqrt{\\sum (x - \\bar{x})^2 \\sum (y - \\bar{y})^2}}$.",
+    "Spearman Rank Formula: $\\rho = 1 - \\frac{6 \\sum d_i^2}{n(n^2 - 1)}$.",
+    "Regression Line of Y on X: $y - \\bar{y} = b_{yx} (x - \\bar{x})$.",
+    "Regression Line of X on Y: $x - \\bar{x} = b_{xy} (y - \\bar{y})$.",
+    "Regression Coefficients Product: $r = \\pm \\sqrt{b_{yx} b_{xy}}$.",
+    "Exam Gold Tip: When fitting a straight line $y = a + bx$ to an odd number of equispaced data points, shift origin to middle year ($u = x - x_{mid}$) so $\\sum u = 0$, simplifying normal equations to $a = \\frac{\\sum y}{n}$ and $b = \\frac{\\sum u y}{\\sum u^2}$."
+])
+
+with open("scripts/sem3_btech_math_remaining4.json", "w", encoding="utf-8") as f:
+    json.dump(data, f, indent=2, ensure_ascii=False)
+
+print(f"Generated {len(data)} units for remaining 4 engineering math subjects!")
